@@ -16,7 +16,7 @@
 
  		//Initialisation de la table sql du model
 		if($this->table===false){
- 			$this->table = strtolower(get_class($this));
+ 			$this->table = strtolower(str_replace('Model','',get_class($this))); 
  		}
 
  		//Initalisation de la base sql a utilsier
@@ -28,9 +28,11 @@
  			$this->db = Model::$connections[$this->conf];
  			return true;	
  		} 
- 		//Sinon
+ 		
+ 		//Cache
+ 		$this->cacheModel = new Cache('D:/wamp/www/weSport/webroot/cache',60*24*7);
+ 		
  		//On essaye de se connecter a la base
-
  		try{
  			//Creation d'un objet PDO
  			$pdo = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['database'].';',
@@ -182,6 +184,12 @@
 
  	}
 
+ 	/*===========================================================	        
+ 	Delete
+ 	@param $obj = object of values 
+ 	@work delete from default table or $obj->table 
+ 	@work line with default key or $obj->key equal to $obj->id
+ 	============================================================*/
  	public function delete($obj){
 
  		if(is_numeric($obj)){
@@ -314,18 +322,22 @@
  		return $pre->fetch(PDO::FETCH_OBJ);
  	}
 
- 	public function validates($data, $rules = null){
+	public function validates($data, $rules = null, $field = null){
 
 
- 			$errors = array();
+			$errors = array();
 
- 			//On recupere les regles de validation
- 			if(!$rules){
- 				$validates = $this->validates;
- 			}
- 			else {
- 				$validates = $this->validates[$rules];
- 			}
+			//On recupere les regles de validation
+			if(!$rules){
+				$validates = $this->validates;
+			}
+			else {
+
+				if($field==null)
+					$validates = $this->validates[$rules];
+				else
+					$validates = array($field=>$this->validates[$rules][$field]);
+			}
  			
  			//Vérifie les regles de validation pour chaque champs
  			foreach ($validates  as $k => $v) { 

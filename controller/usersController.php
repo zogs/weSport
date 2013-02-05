@@ -393,24 +393,52 @@ class UsersController extends Controller{
 
 		$d = array();
 
-		if($this->request->data){
-			$data = $this->request->data;
+		if($this->request->get){
+
+			$data = $this->request->get;
 			$type = $data->type;
-			$value = $data->value;			
-			$user = $this->Users->findFirst(array(
-				'fields'=> $type,
-				'conditions' => array($type=>$value))
-			);
-			if(!empty($user)) {
-				$d['error'] = '<strong>'.$value."</strong> is already in use!";
+			$value = $data->value;	
+
+			//if empty
+			if(empty($value)){
+
+				$d['error'] = 'Must not be empty';
 			}
 			else {
-				$d['available'] = "Available !";
+				
+				//check validation model
+				$check = new stdClass();
+				$check->$type = $value;
+				if(!$this->Users->validates($check,'account_info',$type)){
+					
+					$d['error'] = $this->Users->errors[$type];
+				}
+
+				//check reserved words
+				if(in_array($value,Conf::$reserved[$type]['array'])){
+
+					$d['error'] = Conf::$reserved[$type]['errorMsg'];
+				}
 			}
-		}
-	
+
+			//if no error check existing
+			if(empty($d['error'])){
+
+				$user = $this->Users->findFirst(array('fields'=> $type,'conditions' => array($type=>$value)));
+
+					if(!empty($user)) {
+						$d['error'] = '<strong>'.$value."</strong> is already in use!";
+					}
+					else {
+						$d['available'] = "Available !";
+					}
+
+			}
+				
+		}	
 		$this->set($d);	
 	}
+
 
 
 	public function sendRecoveryMail($data)
@@ -419,15 +447,8 @@ class UsersController extends Controller{
 
 		$lien = "http://localhost/base/users/recovery?c=".urlencode(base64_encode($code))."&u=".urlencode(base64_encode($user_id));
 
-        //Création d'une instance de swift transport (SMTP)
-        $transport = Swift_SmtpTransport::newInstance()
-          ->setHost('smtp.manifeste.info')
-          ->setPort(25)
-          ->setUsername('admin@manifeste.info')
-          ->setPassword('XSgvEPbG');
-
         //Création d'une instance de swift mailer
-        $mailer = Swift_Mailer::newInstance($transport);
+        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
        
         //Récupère le template et remplace les variables
         $body = file_get_contents('../view/email/recoveryPassword.html');
@@ -458,18 +479,8 @@ class UsersController extends Controller{
 
 		$lien = "http://localhost/base/users/validate?c=".urlencode(base64_encode($codeactiv))."&u=".urlencode(base64_encode($user_id));
 
-        //Création d'une instance de swift transport (SMTP)
-        $transport = Swift_SmtpTransport::newInstance()
-          ->setHost('smtp.manifeste.info')
-          ->setPort(25)
-          ->setUsername('admin@manifeste.info')
-          ->setPassword('XSgvEPbG');
-
         //Création d'une instance de swift mailer
-        $mailer = Swift_Mailer::newInstance($transport);
-       
-        //Genère un mot de passe aléatoire
-        $pass = randomString(10);
+        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
        
         //Récupère le template et remplace les variables
         $body = file_get_contents('../view/email/validateAccount.html');

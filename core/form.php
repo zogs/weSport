@@ -36,7 +36,7 @@ class Form{
 		if($label=='submit') return $input;
 
 		//Bootstrap html
-		$html = '<div class="control-group '.$classError.'">';
+		$html = '<div class="control-group '.$classError.'" id="control-'.$id.'">';
 		$html .= '<label class="control-label">'.$label.'</label>';
 		$html .= '<div class="controls">';
 
@@ -295,12 +295,12 @@ class Form{
 	public function Radio( $id, $label, $options, $params = null){
 
 
-		$html = $this->wrapInput($id, $label, $this->_radio($id, $options, $params) ,$params);		
+		$html = $this->wrapInput($id, $label, $this->_radio($id, $label, $options, $params) ,$params);		
 
 		return $html;
 	}
 
-	public function _radio($id, $options, $params){
+	public function _radio($id, $label, $options, $params){
 
 		(isset($params['class']))? $class = "class='".$params['class']."'" : $class = '' ;
 		(isset($params['default']))? $default = $params['default'] : $default = '';
@@ -314,13 +314,15 @@ class Form{
 
 			$checked = '';
 				if(is_array($default)){
-					if(array_key_exists($value,$default)) $checked = 'checked="checked"';
+					if(in_array($value,$default)) $checked = 'checked="checked"';
 				}
 				elseif($value==$default) $checked = 'checked="checked"';
 			else $checked = '';
-			
+
+			(isset($params['openwrap']))? $html .= $params['openwrap'] : $html .= '';
 			$html .= '<input type="radio" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" '.$checked.' '.$javascript.'>';
 			$html .= '<label class="radio" for="'.$value.'">'.$text.'</label>';
+			(isset($params['closewrap']))? $html .= $params['closewrap'] : $html .= '';
 		}
 
 		return $html;
@@ -329,29 +331,32 @@ class Form{
 
 	public function Checkbox($id, $label, $options, $params = null){
 	
-		return $this->wrapInput($id, $label,$this->_checkbox($id, $options, $params),$params);
+		return $this->wrapInput($id, $label,$this->_checkbox($id, $label, $options, $params),$params);
 	
 	}
 
-	public function _checkbox($id, $options, $params=null){
+	public function _checkbox($id, $label, $options, $params=null){
 
 		(isset($params['class']))? $class = "class='".$params['class']."'" : $class = '' ;
 		(isset($params['default']))? $default = $params['default'] : $default = '';
 		(isset($arams['javascript']))? $javascript = $params['javascript'] : $javascript = '';
 
 		if(is_object($options)) $options = (array) $options;
-
+		
 		$html = '';
 			foreach($options as $value => $text){
 
 				$checked = '';
 				if(is_array($default)){
-					if(array_key_exists($value,$default)) $checked = 'checked="checked"';
+					if(in_array($value,$default)) $checked = 'checked="checked"';
 				}
-				elseif($value==$default) $checked = 'checked="checked"';
-
+				elseif($value==$default) {
+					$checked = 'checked="checked"';;
+				}
+				(isset($params['openwrap']))? $html .= $params['openwrap'] : $html .= '';
 				$html .= '<input type="checkbox" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" '.$checked.' '.$javascript.'>';
 				$html .= '<label class="checkbox" for="'.$value.'">'.$text.'</label>';
+				(isset($params['closewrap']))? $html .= $params['closewrap'] : $html .= '';
 			}
 
 		return $html;

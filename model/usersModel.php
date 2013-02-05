@@ -1,5 +1,5 @@
 <?php 
-class Users extends Model{
+class UsersModel extends Model{
 
 	public $primaryKey = 'user_id';
 
@@ -29,8 +29,8 @@ class Users extends Model{
 						'rule' => 'notEmpty',
 						'message' => 'Your login is empty'
 							),
-					array('rule' => '.{5,20}',
-						'message' => 'Login between 5 and 20 caracters'
+					array('rule' => '.{2,32}',
+						'message' => 'Login between 2 and 32 caracters'
 						)
 					)
 				),

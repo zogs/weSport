@@ -5,6 +5,7 @@ require 'session.php';
 require 'functions.php';
 require 'date.php';
 require 'form.php';
+require 'cache.php';
 require 'Router.php'; 
 require ROOT.DS.'config'.DS.'conf.php';
 require 'request.php';

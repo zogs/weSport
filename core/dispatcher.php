@@ -39,15 +39,11 @@ class Dispatcher{
 
 
 		
+		//nom du controller
 		$name = ucfirst($this->request->controller).'Controller'; //On recupere le nom du controller ( en lui mettant une majuscule ^^)
-		$file = ROOT.DS.'controller'.DS.$name.'.php'; //On recupere le fichier php du controller
-		if(!file_exists($file)){
-			$this->error('Le controller '.$this->request->controller.' n\'existe pas');
-		}
-		require $file; //  et on l'inclue
 
+		//autoload du controller
 		$controller =  new $name($this->request); //retourne une instance du bon controleur ( representé par le $name ! )
-
 
 		return $controller;
 	}

@@ -16,7 +16,9 @@
 
 		<?php echo $this->Form->input('title',"Intitulé de l'annonce",array('helper'=>"Petit match entre amis, ...")) ;?>
 		<?php echo $this->Form->select('sport','Quel sport ?',conf::$sportsAvailable,array('default'=>$event->sport,'helper'=>"Choississez un sport")); ?>
-		<?php $this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
+		<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
+		<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->city)) ;?>
+		<?php echo $this->Form->input("cityName","Ville",array("type"=>"text","required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 		<?php echo $this->Form->input('address','Adresse exacte',array('helper'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
 		<?php echo $this->Form->input('date',"Date de l'événement",array('type'=>'date','helper'=>'ex : 21/11/12')) ;?>
 		<?php echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','helper'=>'ex: 10h30, 6pm, ...')) ;?>

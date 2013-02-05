@@ -3,13 +3,7 @@
 class PagesController extends Controller {
 
 
-		public function __construct( $request = null ) {
 
-		parent::__construct($request);
-
-		$this->CookieSearch = new Cookie('Search',60*60*24*30,true);
-
-		}
 
 
 
@@ -18,26 +12,36 @@ class PagesController extends Controller {
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
+		
 
 			if($this->request->post()){
+				
+				foreach ($this->request->data as $key => $value) {
+					
+					$params[$key] = $value;
+				}				
 
-				$this->CookieSearch->write(array(
-													'sports'=>$this->request->post('sports'),
-													'date'=>$this->request->post('date'),
-													'CC1'=>$this->request->post('CC1'),
-													'ADM1'=>$this->request->post('ADM1'),
-													'ADM2'=>$this->request->post('ADM2'),
-													'ADM3'=>$this->request->post('ADM3'),
-													'ADM4'=>$this->request->post('ADM4'),
-													'city'=>$this->request->post('city'),
-													'cityName'=>$this->request->post('cityName')
-												)
-											);
+			}
+			else {
+				$params['sports'] = $this->cookieEventSearch->read('sports');
+				$params['date'] = date("Y-m-d");
+				$params['cityID'] = $this->cookieEventSearch->read('cityID');
+				$params['cityName'] = $this->cookieEventSearch->read('cityName');
+				$params['extend'] = $this->cookieEventSearch->read('extend');
+				$params['location'] = array(
+										'city' => $this->cookieEventSearch->read('city'),
+										'CC1'=> $this->cookieEventSearch->read('CC1'),
+										'ADM1'=> $this->cookieEventSearch->read('ADM1'),
+										'ADM2'=> $this->cookieEventSearch->read('ADM2'),
+										'ADM3'=> $this->cookieEventSearch->read('ADM3'),
+										'ADM4'=> $this->cookieEventSearch->read('ADM4')
+										);
+
 			}
 
-	
-
-			$d['params'] = $this->request->post();
+			$this->cookieEventSearch->write($params);		
+			
+			$d['params'] = $params;
 			$this->set($d);
 
 		}

@@ -1,5 +1,5 @@
 <?php
-class Posts extends Model{
+class PostsModel extends Model{
 
 
 	public $validates = array(

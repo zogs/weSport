@@ -37,6 +37,7 @@ class WorldController extends Controller
 				$obj->$key = '';
 		}
 		
+	
 		//find states that correspond to the object parameters
 		$states = $this->Worlds->findAllStates(array(
 								'CC1'=>$obj->CC1,
@@ -111,18 +112,42 @@ class WorldController extends Controller
 		$this->set($json);
 	}
 
+	public function citiesArround(){
+
+		$this->view = "none";
+		$this->layout ="default";
+		$this->loadModel('Worlds');
+		
+		if($this->request->get('cityID') && $this->request->get('arround')){
+
+			$city = $this->Worlds->findFirst(array('table'=>'world_cities','fields'=>array('LATITUDE','LONGITUDE'),'conditions'=>array('UNI'=>$this->request->get('cityID'))));
+			$params = array();
+			$params['arround'] = $this->request->get('arround');
+			$params['Lat'] = $city->LATITUDE;
+			$params['Lon'] = $city->LONGITUDE;
+			$params['location'] = array('CC1'=>'FR','ADM1'=>'A1');
+			$params['km'] = true;
+
+			$cities = $this->Worlds->findCitiesArround($params);
+
+			return $cities;
+		}
+	}
+
 	public function nextStateLevel(){
 
  		$this->loadModel('Worlds');
  		$this->layout = 'none';
  		 
- 		$ADM = $this->request->get('ADM'); 		
+ 		$ADM = $this->request->get('ADM'); 
+ 		if($ADM=='city') return false;		
  		$ADM1 = '';
  		$ADM2 = '';
  		$ADM3 = '';
  		$ADM4 = '';
  		$ADM_PARENT = '';
 
+ 		//set next ADM
  		if($ADM == 'CC1') $ADM = 'ADM1';
  		elseif($ADM == 'ADM1') $ADM = 'ADM2';
  		elseif($ADM == 'ADM2') $ADM = 'ADM3';
@@ -160,20 +185,22 @@ class WorldController extends Controller
  		//Find the state in the database , using the get data 		
  		$d['state'] = $this->Worlds->findStates(array(
 										 			'CC1'=>$CC1,
-										 			'ADM_PARENT'=>$ADM_PARENT,
-										 			'ADM'=>$ADM
+										 			'parent'=>$ADM_PARENT,
+										 			'level'=>$ADM
  			));
 
  		//If there is no state, we look for a city
  		if(empty($d['state']['list'])) {
 
  			$ADM = 'city';
- 			$d['state'] = $this->Worlds->findCities($CC1,array(									 				
+ 			$d['state'] = $this->Worlds->findCities($CC1,array(	
+ 													'CC1' =>$CC1,								 				
 									 				'ADM1'=>$ADM1,
 									 				'ADM2'=>$ADM2,
 									 				'ADM3'=>$ADM3,
 									 				'ADM4'=>$ADM4
 			));
+
  		}
 		
  		//If there is no city at all we are done

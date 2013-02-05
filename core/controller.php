@@ -13,6 +13,8 @@ class Controller {
 		$this->session = new Session($this);	
 		$this->Form = new Form($this);
 		$this->Date = new Date($this->session);
+		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
+		$this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
 
 		if($request){
 			$this->request = $request; //ON stocke la request dans l'instance
@@ -79,15 +81,13 @@ class Controller {
 
 
 	//Permet de charger un model
-	public function loadModel($name){
- 	
-		$file = ROOT.DS.'model'.DS.$name.'Model.php';
+	public function loadModel($name){ 	
 		
-		require_once($file);
-		
+		$classname = $name.'Model';
+
 		if(!isset($this->$name)) {
 				
-			$this->$name = new $name();
+			$this->$name = new $classname();
 
 			if(isset($this->Form)){
 				$this->$name->Form = $this->Form;	

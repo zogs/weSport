@@ -23,6 +23,18 @@ function debug($var){
 
 }
 
+function day($lang,$day){
+
+	
+
+	$days = array(
+		'fr'=>array('Today'=>"Aujourd'hui",'Mon'=>'Lundi','Tue'=>'Mardi','Wed'=>'Mercredi','Thu'=>'Jeudi','Fri'=>'Vendredi','Sat'=>'Samedi','Sun'=>'Dimanche')
+		);
+
+	return $days[$lang][$day];
+
+}
+
 function datefr($date) { 
 
 //tableau des mois de l'année en francais
@@ -54,6 +66,17 @@ function ageFromBY($year){
 	}
 	return $age;
 }
+
+function make_path($path) {
+        //Test if path exist
+        if (is_dir($path) || file_exists($path)) return $path;
+        //No, create it
+        if(mkdir($path, 0777, true))
+        	return $path;
+        else
+        	return false;
+}
+
 
 	
 function unescape($obj){

@@ -102,6 +102,10 @@
     }
     public function write($itemArr){
         if($this->cSerialize){
+            
+            foreach ($itemArr as $key => $value) {
+               $itemArr[$key] = str_replace('\\','',$value);
+            }          
             $sItems = serialize($itemArr);
             $name = $this->cName . "_S";
             $_COOKIE[$name] = $sItems;
@@ -111,7 +115,7 @@
             $tStamp = time() + $this->cTime;
             foreach($itemArr as $nam=>$val){
                 $name = $this->cName . "_" . $nam;
-                $_COOKIE[$name] = $val;
+                $_COOKIE[$name] = str_replace('\\','',$val);
                 setcookie($name,$val,$tStamp,$this->cPath);
             }
         }
