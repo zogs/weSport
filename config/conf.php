@@ -16,12 +16,18 @@ class Conf {
 	//Database connexion
 	static $databases = array(
 			
-		'default'  => array(
+		'localhost'  => array(
 			'host'     => 'localhost',
 			'database' => 'wesport',
 			'login'    => 'root',
 			'password' => ''
-			)
+			),
+		'wesport.zogs.org' =>array(
+			'host'     => 'localhost',
+			'database' => 'wesport',
+			'login'    => 'admin',
+			'password' => 'XSgvEPbG'
+			) 
 		);
 
 	//Language code

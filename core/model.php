@@ -2,7 +2,6 @@
  class Model {
 
  	static $connections = array();
- 	public $conf = 'default'; //Base de donnée à utiliser
  	public $table = false; //Table mysql à utiliser par le model
  	public $db = false; //Connexion courante à la base
  	public $primaryKey = 'id'; //Nom de la clef primaire de la table
@@ -18,15 +17,23 @@
 		if($this->table===false){
  			$this->table = strtolower(str_replace('Model','',get_class($this))); 
  		}
-
- 		//Initalisation de la base sql a utilsier
- 		$conf = Conf::$databases[$this->conf];
-
- 		//Creation de la connexion a la base de donnée
+ 		
+ 		//Recupération de l'évironnement
+	 	$host = $_SERVER['HTTP_HOST'];
+ 		
  		//Si la connexion existe déja, return true
- 		if(isset(Model::$connections[$this->conf])){
- 			$this->db = Model::$connections[$this->conf];
+ 		if(isset(Model::$connections[$host])){
+ 			$this->db = Model::$connections[$host];
  			return true;	
+ 		}
+ 		else {
+
+	 		//Sinon récupération des infos de connexion
+	 		if(isset(Conf::$databases[$host]))
+	 			$conf = Conf::$databases[$host];
+	 		else
+	 			throw new zException("Missing databases connexion for '".$host." '", 1);
+
  		} 
  		
  		//On essaye de se connecter a la base
@@ -38,11 +45,8 @@
  				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',PDO::MYSQL_ATTR_INIT_COMMAND => $this->setTimeZone() ) //Important pour l'encode des carateres
  				);
  			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING); //Important pour afficher les erreurs
- 			Model::$connections[$this->conf] = $pdo; //Attribution de la connexion a une varaible static
+ 			Model::$connections[$host] = $pdo; //Attribution de la connexion a une varaible static
  			$this->db = $pdo;	 //Attribution de la connexion a une varaible 
-
- 			$this->db;
-
  			
  		}
  		//Si connexion echoue
