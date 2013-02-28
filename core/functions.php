@@ -170,7 +170,7 @@ function file_get_contents_curl($url)
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_URL, $url);
-	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_USERAGENT, 'YouProtest.Net (BetaTest) contact:admin@manifeste.info');
 
@@ -178,10 +178,11 @@ function file_get_contents_curl($url)
 	$info = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
 	//checking mime types
-	if(strstr($info,'text/html')) {
+	if(strstr($info,'text/html') || strstr($info,'application/json')) {
 		curl_close($ch);
 		return $data;
 	} else {
+
 		return false;
 	}
 }
