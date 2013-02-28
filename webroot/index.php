@@ -31,7 +31,7 @@ function uncatchException($exception){
 set_error_handler('uncatchError');
 set_exception_handler('uncatchException');
 
-
+debug('pull ok');
 //init autoloader
 //page github https://github.com/jonathankowalski/autoload
 include '../core/autoloader.php';
