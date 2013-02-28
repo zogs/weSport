@@ -1,15 +1,18 @@
 <?php 
 
-if($type!='404'):
-
+if($type!='404'){
+	
 	$html ='<div class="previewMedia previewMedia-'.$type.'">';
+
+
 		$html .='<div class="previewMedia-thumbnails">';
-		if(count($thumbnails)>1):
+
+		if(count($thumbnails)>1){
 			$html .='<div class="previewMedia-totalthumbnails">
 						Choose a thumbnail<br />
 						<a href="" id="prev_thumb">Previous</a> Total '.count($thumbnails).' images <a href="" id="next_thumb">Next</a>
 					</div>';
-		endif;
+		}
 
 		foreach ($thumbnails as $key) {
 			if($key == $thumbnails_first)
@@ -25,13 +28,15 @@ if($type!='404'):
 			$html .='<div class="previewMedia-desc">'.$description.'</div>';
 		$html .='</div>';
 	$html .='</div>';
-else :
-	$html = '';
-endif;
+}
 
 
-$html = utf8_decode($html); // json_encode ne fonctionne qu'avec des donnees utf8
-$html = htmlentities($html); // json_encode ne fonctionne pas avec les balises html
+
+//$html = utf8_encode($html); // json_encode ne fonctionne qu'avec des donnees utf8
+$html = htmlspecialchars($html);
+//$html = htmlentities($html, ENT_QUOTES, "UTF-8"); // json_encode ne fonctionne pas avec les balises html
+
+//echo $html;
 
 $array = array(
 	"type" => $type,
