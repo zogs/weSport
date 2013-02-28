@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 <head>
-	<link rel="stylesheet" style="text/css" href="http://www.manifeste.info/css/bootstrap/css/bootstrap.css" />
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-
-	<title><?php echo isset($title_for_layout)?$title_for_layout : 'Admin.';?></title>
+        <?php $this->loadCSS();?>
+        <?php $this->loadJS();?>         
+        <script type="text/javascript" src="<?php echo Router::webroot('js/jquery/tiny_mce/tiny_mce.js'); ?>"></script>       
+	<title><?php echo isset($title_for_layout)?$title_for_layout : 'Admin.'.Conf::$website;?></title>
 	
 </head>
 <body>
 
-	<div class="navbar" style="position:static">
+	<div class="navbar navbar-fixed-top">
 	  <div class="navbar-inner">
 	    <div   class="container">
 	      <a class="brand" href="<?php echo Router::url('admin/posts/index'); ?>">
@@ -30,14 +31,13 @@
 	  </div>
 	</div>
 
-	<div class="container">
+	<div class="container mainContainer">
 
 		<?php echo $this->session->flash();?>
 		<?php echo $content_for_layout;?>
 	</div>
 </body>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo Router::webroot('js/tinymce/tiny_mce.js'); ?>"></script>
+
 <script type="text/javascript">
 tinyMCE.init({
         // General options

@@ -56,7 +56,7 @@ class Form{
 		if(isset($params['helper']))
 			$html .= '<p class="help-inline">'.$params['helper'].'</p>';				
 		else
-			$html .= '<p class="help-inline"></p>';	
+			$html .= '<p class="help-inline hide"></p>';	
 
 		$html .= '</div>';
 		$html .= '</div>';
@@ -116,7 +116,9 @@ class Form{
 		
 		//Attribut html à rajouter en fin de champs	
 		$attr='';	
-		if(!empty($options)){			
+		if(!empty($options)){
+
+			unset($options['helper']);			
 			foreach ($options as $k => $v) {
 				if($k!='type' && $k!='icon'){
 					$attr .= " $k=\"$v\"";
@@ -215,11 +217,12 @@ class Form{
 		(isset($params['default']))? $selected = $params['default'] : $selected = '';
 		(isset($params['placeholder']))? $placeholder = $params['placeholder'] : $placeholder = '';
 		(isset($params['javascript']))? $javascript = $params['javascript'] : $javascript = '';
+		(isset($params['style']))? $style = $params['style'] : $style = '';
 
 		if(!empty($options))
 		{
 
-			$html ='<select id="'.$id.'" name="'.$id.'" class="'.$class.'" '.$javascript.' >';
+			$html ='<select id="'.$id.'" name="'.$id.'" class="'.$class.'" style="'.$style.'" '.$javascript.' >';
 			$html .= '<option value=" ">'.$placeholder.'</options>';
 			
 			if(is_object($options)) $options = (array) $options;
@@ -305,6 +308,7 @@ class Form{
 		(isset($params['class']))? $class = "class='".$params['class']."'" : $class = '' ;
 		(isset($params['default']))? $default = $params['default'] : $default = '';
 		(isset($arams['javascript']))? $javascript = $params['javascript'] : $javascript = '';
+		(isset($params['style']))? $style = $params['style'] : $style = '';
 
 		$html='';
 
@@ -320,7 +324,7 @@ class Form{
 			else $checked = '';
 
 			(isset($params['openwrap']))? $html .= $params['openwrap'] : $html .= '';
-			$html .= '<input type="radio" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" '.$checked.' '.$javascript.'>';
+			$html .= '<input type="radio" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" style="'.$style.'" '.$checked.' '.$javascript.'>';
 			$html .= '<label class="radio" for="'.$value.'">'.$text.'</label>';
 			(isset($params['closewrap']))? $html .= $params['closewrap'] : $html .= '';
 		}

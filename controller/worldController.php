@@ -120,7 +120,8 @@ class WorldController extends Controller
 		
 		if($this->request->get('cityID') && $this->request->get('arround')){
 
-			$city = $this->Worlds->findFirst(array('table'=>'world_cities','fields'=>array('LATITUDE','LONGITUDE'),'conditions'=>array('UNI'=>$this->request->get('cityID'))));
+			$city = $this->Worlds->findFirst(array('table'=>'world_cities','fields'=>array('LATITUDE','LONGITUDE'),'conditions'=>array('UNI'=>$this->request->get('cityID'))));		
+
 			$params = array();
 			$params['arround'] = $this->request->get('arround');
 			$params['Lat'] = $city->LATITUDE;
@@ -138,7 +139,7 @@ class WorldController extends Controller
 
  		$this->loadModel('Worlds');
  		$this->layout = 'none';
- 		 
+
  		$ADM = $this->request->get('ADM'); 
  		if($ADM=='city') return false;		
  		$ADM1 = '';

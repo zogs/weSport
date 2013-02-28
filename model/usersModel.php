@@ -9,8 +9,8 @@ class UsersModel extends Model{
 				'rule'    => 'notEmpty',
 				'message' => 'Vous devez choisir un pseudo'		
 				),
-			'mail' => array(
-				'rule' => '[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})',
+			'email' => array(
+				'rule' => 'email',
 				'message' => "L'adresse email n'est pas valide"
 				),
 			'password' => array(
@@ -20,39 +20,52 @@ class UsersModel extends Model{
 			'confirm' => array(
 				'rule' => 'confirmPassword',
 				'message' => "Vos mots de passe ne sont pas identiques"
+				),
+			'prenom' => array(
+				'rule'=> 'optional',
+				),
+			'nom' => array(
+				'rule' => 'optional',
+				),
+			'age' => array(
+				'rules'=> array(
+							array(
+
+								'rule'=>"regex",
+								'regex'=>'19[0-9]{1}[0-9]{1}',
+								'message'=> "Between 1900 and 1999..."
+							),
+							array(
+								'rule'=>'optional',								
+							)
+						)
 				)
 		),
 		'account_info' => array(
 			'login' => array(
 				'rules'=> array(
-					array(
-						'rule' => 'notEmpty',
-						'message' => 'Your login is empty'
-							),
-					array('rule' => '.{2,32}',
-						'message' => 'Login between 2 and 32 caracters'
-						)
-					)
+							array(
+								'rule' => 'notEmpty',
+								'message' => 'Your login is empty'
+									),
+							array('rule' => 'regex',
+								'regex'=> '.{5,30}',
+								'message' => 'Login between 5 and 20 caracters'
+								)
+							)
 				),
 			'email' => array(
-				'rules' => array(
-					array(
-						'rule' => '[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})',
-						'message' => "L'adresse email n'est pas valide"
-					),
-					array(
-						'rule' => 'notEmpty',
-						'message' => "L'adresse email est obligatoire"
-					)
+				'rule' => 'email',
+				'message' => "L'adresse email n'est pas valide"
 				)
-			)
 		),
 		'account_profil' => array(
-			
+				
 		),
 		'recovery_mdp' => array(
 			'password' => array(
-				'rule' => '.{5,20}',
+				'rule' => 'regex',
+				'regex' => '.{5,30}',
 				'message' => "Votre mot de passe doit etre entre 5 et 20 caracteres"
 				),
 			'confirm' => array(
@@ -66,7 +79,8 @@ class UsersModel extends Model{
 				'message' => "Votre mot de passe doit contenir entre 5 et 20 caracteres"
 				),
 			'password' => array(
-				'rule' => '.{5,20}',
+				'rule' => 'regex',
+				'regex' => '.{5,30}',
 				'message' => "Votre mot de passe doit etre entre 5 et 20 caracteres"
 				),
 			'confirm' => array(
@@ -80,19 +94,20 @@ class UsersModel extends Model{
 				'message' => "Enter your password"
 				)
 		),
-		'account_avatar'=>array(),
+		'account_avatar'=>array(
+			'avatar'=>array(
+						'rule'=>'file',
+						'params'=>array(
+							'destination'=>'media/user/avatar',
+							'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
+							'extentions_error'=>'Your avatar is not an image file',
+							'max_size'=>50000,
+							'max_size_error'=>'Your image is too big',
+							'ban_php_code'=>true
+							),
+						)	
+			),
 	);
-
-	public $validates_files = array(
-		'avatar'=>array(
-			'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
-			'extentions_error'=>'Your avatar is not an image file',
-			'max_size'=>50000,
-			'max_size_error'=>'Your image is too big',
-			'ban_php_code'=>true
-			)
-	);
-
 
 	public function saveUser($user,$user_id = null){
 
@@ -136,33 +151,6 @@ class UsersModel extends Model{
 
 	}
 
-	public function saveUserAvatar($user_id){
-
- 		//Les vérifications sont faites dans model/validates
-
- 		$tmp = $_FILES['avatar'];
- 		$ext = $extention = substr(strrchr($tmp['name'], '.'),1);
- 
- 		$newname = 'u'.$user_id.'.'.$ext;
- 		$directory = 'media/user/avatar';
- 		$destination = $directory.'/'.$newname;
-
- 		
- 		if(move_uploaded_file($tmp['tmp_name'], $destination)){
-		
- 			$user = new StdClass();
- 			$user->user_id = $user_id;
- 			$user->avatar = $destination;
-
- 			$this->table = 'users';
- 			if($this->save($user)){
- 				return true;
- 			}
- 		}
- 		else return false;
-
-	}
-
 	public function findUsers($req){
 
 		$sql = 'SELECT ';
@@ -173,27 +161,14 @@ class UsersModel extends Model{
  			else
  				$sql .= $req['fields'];
  		}
- 		else $sql .= 'U.*, P.* ';
+ 		else $sql .= '* ';
 
 
  		$sql .= " FROM users									
  					WHERE ";
 
 
- 		 if(isset($req['conditions'])){ 			
- 			if(!is_array($req['conditions']))
- 				$sql .= $req['conditions']; 				
- 			else {
-	 			$cond = array();
-		 			foreach ($req['conditions'] as $k => $v) {
-		 				if(!is_numeric($v))
-		 					$v = '"'.mysql_escape_string($v).'"';	 							 				
-		 				$cond[] = "$k=$v";	 			
-		 			}
-		 			$sql .= implode(' AND ',$cond);
- 			}
- 			
- 		}
+ 		$sql .= $this->sqlConditions($req['conditions']);
 
  		if(isset($req['order'])){
  			if($req['order'] == 'random') $sql .= ' ORDER BY rand()';
@@ -205,79 +180,56 @@ class UsersModel extends Model{
  		}
 
  		  // debug($sql);
-
  		$pre = $this->db->prepare($sql);
  		$pre->execute();
+ 		if($pre->errorCode()==0)
+			return $pre->fetchAll(PDO::FETCH_OBJ); 		
+ 		else
+ 			$this->reportPDOError($pre,__FUNCTION__,$sql);	 		
+ 		
+ 		$users = array();
+ 		foreach ($results as $user) {
 
- 		return $pre->fetchAll(PDO::FETCH_OBJ);
+ 			//$user = $this->JOIN('groups',array('group_id','logo as avatar','slug'),array('user_id'=>$user->user_id),$user); 			
+ 			$users[] = new User($user); 
+ 		}
+
+ 		return $users;
 	}
 
-	public function findParticipations( $fields, $user_ids ){
 
-		$results = array();
+	public function findFirstUser($req){
 
-		$sql = "SELECT $fields FROM manif_participation as P 
-				LEFT JOIN manif_info as M ON M.manif_id = P.manif_id
-				LEFT JOIN manif_descr as D ON D.manif_id = P.manif_id AND D.lang='".$this->session->user('lang')."'
-				WHERE user_id = :user_id";
-
-		foreach ($user_ids as $user_id) {
-
-			$pre = $this->db->prepare($sql);
-			$pre->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-			$pre->execute();
-
-			return $pre->fetchAll(PDO::FETCH_OBJ);
-			# code...
-		}
-
-
+		return current($this->findUsers($req));
 	}
 
-	public function findUserThread($user_id){
-
-
-		$sql=" SELECT P.id,
-	                 'PROTEST' AS TYPE,
-	                 P.date,	                 
-	                 D.name as relatedName,
-	                 D.manif_id as relatedID,
-	                 D.slug     as relatedSlug,
-	                 I.logo     as relatedLogo
-
-        		FROM manif_participation as P
-        		LEFT JOIN manif_descr as D ON D.manif_id=P.manif_id AND D.lang='".$this->session->user('lang')."'	
-        		LEFT JOIN manif_info as I ON I.manif_id=P.manif_id
-           		WHERE P.user_id = $user_id
-      		UNION
-        --   	SELECT `id`,
-	       --           'COMMENT' AS TYPE,
-	       --           `date`
-        --     	FROM `manif_comment`
-	       --     	WHERE user_id = $user_id AND reply_to=0
-      		-- UNION
-       		SELECT C.id,
-                	'NEWS' AS TYPE,
-                  	C.date,
-                  	D.name as relatedName,
-                  	D.manif_id as relatedID,
-                  	D.slug     as relatedSlug,
-                  	I.logo     as relatedLogo
-              	FROM manif_comment AS C
-              	LEFT JOIN manif_participation AS P ON P.user_id = $user_id
-              	LEFT JOIN manif_descr as D ON D.manif_id=P.manif_id AND D.lang='".$this->session->user('lang')."'
-              	LEFT JOIN manif_info as I ON I.manif_id=P.manif_id	
-             	WHERE C.context_id = P.manif_id AND C.context='manif' AND C.type='news'
-			ORDER BY date DESC
-			";
-
-
-		$pre = $this->db->prepare($sql);
- 		$pre->execute();
- 		return $pre->fetchAll(PDO::FETCH_OBJ);
-
-	}
 
 	
+}
+
+
+class User {
+
+	public function __construct( $fields ){
+
+		foreach ($fields as $field => $value) {
+			
+			$this->$field = $value;
+		}
+	}
+
+	public function getLogin(){
+
+		if($this->account=='anonym') return 'anonym_'.$this->user_id;
+		else return $this->login;
+	}
+
+	public function getAvatar(){
+
+		if(isset($this->avatar)&&!empty($this->avatar)) return $this->avatar;
+		else return 'img/logo.png';
+	}
+
+
 }
  ?>

@@ -3,11 +3,7 @@
 class PagesController extends Controller {
 
 
-
-
-
-
-		public function home(){
+		public function home(){					
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');

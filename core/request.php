@@ -19,17 +19,17 @@ class Request{
 
 			$this->get = new stdClass();
 			foreach ($_GET as $k => $v) {
-				if(!is_numeric($v)){
-					if(is_array($v)){
-						$arr = array();
-						foreach ($v as $key => $value) {
-							$arr[$key] = mysql_escape_string($value);
-						}
-						$v = $arr;
-					}
-					else
-						$v = mysql_escape_string($v);
-				}
+				// if(!is_numeric($v)){
+				// 	if(is_array($v)){
+				// 		$arr = array();
+				// 		foreach ($v as $key => $value) {
+				// 			$arr[$key] = mysql_real_escape_string($value);
+				// 		}
+				// 		$v = $arr;
+				// 	}
+				// 	else
+				// 		$v = mysql_real_escape_string($v);
+				// }
 				$this->get->$k = $v;
 			}						
 
@@ -47,17 +47,17 @@ class Request{
 		if(!empty($_POST)){
 			$this->data = new stdClass();
 			foreach ($_POST as $k => $v) {
-				if(!is_numeric($v)){
-					if(is_array($v)){
-						$arr = array();
-						foreach ($v as $key => $value) {
-							$arr[$key] = mysql_escape_string($value);
-						}
-						$v = $arr;
-					}
-					else
-						$v = mysql_escape_string($v);
-				}
+				// if(!is_numeric($v)){
+				// 	if(is_array($v)){
+				// 		$arr = array();
+				// 		foreach ($v as $key => $value) {
+				// 			$arr[$key] = mysql_real_escape_string($value);
+				// 		}
+				// 		$v = $arr;
+				// 	}
+				// 	else
+				// 		$v = mysql_real_escape_string($v);
+				// }
 				$this->data->$k = $v;
 			}
 
@@ -100,5 +100,34 @@ class Request{
 				return false;
 			}
 		}
+	}
+
+	public function parse_url($_url = null){
+    
+	    try{
+			if($_url===null) $_url = $this->url;
+
+			$parsed = parse_url($_url);
+
+			$arr = array();
+			$arr['protocol'] = $parsed['scheme'].'://';
+			$arr['www'] = '';
+			if(strpos($parsed['host'],'www.')===0){
+				$arr['www'] = 'www.';
+				$parsed['host'] = str_replace('www.','',$parsed['host']);
+			}
+			$host = explode('.',$parsed['host']);
+			$ln = count($host);
+			$arr['extension'] = $host[$ln-1];
+			$arr['domain'] = $host[$ln-2];
+			$arr['subdomain'] = ($ln>2)? $host[$ln-3].'.' : '';
+			$arr['path'] = $parsed['path'];
+			$arr['all'] = $arr['protocol'].$arr['www'].$arr['subdomain'].$arr['domain'].'.'.$arr['extension'].$arr['path'];
+
+			return $arr;
+			}
+	    catch(Exception $e){
+	    	return false;
+	    }
 	}
 }

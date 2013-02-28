@@ -76,13 +76,16 @@ class EventsModel extends Model{
 	public function findEvents($params){		
 
 		extract($params);
-		
+
 
 		//If extend arround a city
 		// set params to modified the query
 		if(!empty($extend)){
 
-			if(!empty($params['cityLat']) && !empty($params['cityLon'])){
+
+
+			if(!empty($params['cityLat']) && !empty($params['cityLon']) && !empty($params['extend']) 
+				&& is_numeric($params['cityLon']) && is_numeric($params['cityLat']) && is_numeric($params['extend'])){
 
 				$cityLat = $params['cityLat'];
 				$cityLon = $params['cityLon'];
@@ -112,6 +115,9 @@ class EventsModel extends Model{
 		}
 
 
+		//values send to pdo prepare()
+		$values = array();
+
 		//Beginning og the query
 		$sql = 'SELECT ';
 
@@ -135,13 +141,21 @@ class EventsModel extends Model{
 		$sql .= ' WHERE 1=1 ';
 
 
+		//generic conditions
+		if(isset($conditions))
+			$sql .= ' AND '.$this->sqlConditions($conditions);
+
+
 		//date
 		if(!empty($date)){
 			if(is_string($date))
 				$sql .= 'AND '.$date;
 			elseif(is_array($date)){
-				if(isset($date['day']))
-					$sql .= ' AND E.date = "'.$date['day'].'"';
+				if(isset($date['day'])){
+
+					$sql .= ' AND E.date = :date';
+					$values[':date'] = $date['day'];
+				}
 			}
 			$sql .=' ';
 		}
@@ -160,17 +174,24 @@ class EventsModel extends Model{
 
 					if(!empty($extend) && $key=='city') continue; // useful for extend cities to a radius
 					
-					$ADM[] = $key.'="'.$location[$key].'" ';
+					$ADM[] = $key.'=:'.$key;
+					$values[':'.$key] = $location[$key];
+					//$ADM[] = $key.'="'.$location[$key].'" ';
 				}								
 			}
 			if(count($ADM)>0)
-				$sql .= ' AND '.implode(' AND ',$ADM);
+				$sql .= ' AND '.implode(' AND ',$ADM).' ';
 		}
 
 		//extend beetween the box
 		if(!empty($extend)){
 
-			$sql .= 'AND C.LONGITUDE BETWEEN '.$lon1.' AND '.$lon2.' AND C.LATITUDE BETWEEN '.$lat1.' AND '.$lat2.' ';
+			$sql .= 'AND C.LONGITUDE BETWEEN :lon1 AND :lon2 AND C.LATITUDE BETWEEN :lat1 AND :lat2 ';
+
+			$values[':lon1'] = $lon1;
+			$values[':lon2'] = $lon2;
+			$values[':lat1'] = $lat1;
+			$values[':lat2'] = $lat2;
 
 		}
 
@@ -185,48 +206,61 @@ class EventsModel extends Model{
 					$arr = array();
 					foreach ($sports as $sport) {
 					
-						if($sport!=0)
+						if(is_numeric($sport) && $sport!=0)
 							$arr[] = ' E.sport='.$sport;
+						else
+							throw new zException("Sport parameter must be an integer", 1);
+							
 					}
 					$sql .= '( '.implode(' OR ',$arr).' )';
 				}
 				else {
-					if($sports[0]!=0)
-						$sql .= ' sport='.$sports[0];
+					if(is_numeric($sports[0])){
+
+						if($sports[0]!=0)
+							$sql .= ' sport='.$sports[0];
+						else
+							$sql .= ' sport!=0';
+					}
 					else
-						$sql .= ' sport!=0';
+						throw new zException("Sport parameter must be an integer", 1);
+					
 				}
 			}
-			elseif(is_numeric($sports)){
+			else{
 
-				if($sports!=0){
-					$sql .= 'E.sport='.$sport;		
+				if(is_numeric($sports)){
+
+					if($sports!=0){
+						$sql .= 'E.sport='.$sport;		
+					}
+					else {
+						$sql .= ' E.sport!=0 ';
+					}
 				}
-				else {
-					$sql .= ' E.sport!=0 ';
-				}
+				else
+					throw new zException("Sport parameter must be an integer", 1);
 			}
-
-
 					
 		}		
 
 		//get only cities where distance to chosen city < $distance
-		if(!empty($extend)){
+		if(!empty($distance) && is_numeric($distance)){
 			$sql .= " having distance < ".$distance;
 		}
 
 		//Order by default or perso
 		if(!empty($order)){
 
-			$sql .= ' ORDER BY '.$order;
+			$sql .= ' ORDER BY :order';
+			$values[':order'] = $order;
 		}
 		else {
 			$sql .= ' ORDER BY E.date ASC, E.time ASC';
 		}
 
 		//set limit
-		if(!empty($limit)){
+		if(!empty($limit) && is_numeric($limit)){
 
 			$sql .= ' LIMIT '.$limit;
 		}
@@ -237,13 +271,30 @@ class EventsModel extends Model{
 			$sql .= ' '.$end;
 		}
 
-		// debug($sql);
-		$pre = $this->db->prepare($sql);
-		$pre->execute();
-		$events = $pre->fetchAll(PDO::FETCH_OBJ);
+		//debug($sql);
+		$results = $this->query($sql,$values);
+
+		$events = array();
+		foreach ($results as $event) {
+			
+			$events[] = new Event($event);
+		}
 
 		
 		return $events;
+	}
+
+	public function findEventByID($event_id, $fields = '*'){
+
+		$sql = 'SELECT ';
+		$sql .= $this->sqlfields($fields);
+		$sql .= ' FROM events WHERE id='.$event_id;
+
+		$res = $this->query($sql);
+
+		if(!empty($res))
+			return new Event($res[0]);
+		
 	}
 
 	public function joinEventsParticipants($events){
@@ -280,15 +331,15 @@ class EventsModel extends Model{
 
 
 	public function saveParticipants($users,$event){
-
+		
 		if(is_object($users)){
 			$users = array($users);
-			$is_object = true;
+			$is_unique = true;
 		}
 
 		foreach ($users as $user) {
 			
-			debug($event);
+			//debug($event);
 			$check = $this->find(array('table'=>'sporters','conditions'=>array('event_id'=>$event->id,'user_id'=>$user->user_id)));
 
 			if(empty($check)){
@@ -299,15 +350,26 @@ class EventsModel extends Model{
 				$s->date = date('Y-m-d');
 				$s->date_event = $event->date;
 				$s->table = 'sporters';
-
-				$this->save($s);
-
-				
+				$this->save($s);			
 			}			
 		}
 
 		return true;
 	}
+
+	public function findParticipants($event_id){
+
+		if(!is_numeric($event_id)) return false;
+
+		$participants = $this->find(array('table'=>'sporters',
+			'fields'=>'user_id',
+			'conditions'=>array('event_id'=>$event_id)));
+
+		if(empty($participants)) return false;
+
+		return $participants;
+	}
+
 
 	public function joinUserParticipation($events,$user_id){
 
@@ -315,7 +377,7 @@ class EventsModel extends Model{
 
 		if(is_object($events)) {
 			$events = array($events);
-			$is_object = true;
+			$is_unique = true;
 		}
 
 		foreach ($events as $event) {
@@ -326,11 +388,90 @@ class EventsModel extends Model{
 			}
 		}
 		
-		if(isset($is_object))
+		if(isset($is_unique))
 			return $events[0];
 		else
 			return $events;
 	}
 
 
-} ?>
+} 
+
+class Event {
+
+	public $id = 0;
+	public $sport = 0;
+	public $city = '';
+
+	public function __construct( $fields = array() ){
+
+		foreach ($fields as $field => $value) {
+			
+			$this->$field = $value;
+		}
+	}
+
+	public function getLogin(){
+
+		return $this->login;
+	}
+
+	public function isAdmin($user_id){
+
+		if($this->user_id===$user_id) return true;
+		return false;
+	}
+
+	public function getTime(){
+
+		return $this->time;
+	}
+
+	public function getTitle(){
+
+		return $this->title;
+	}
+
+
+	public function getCityName(){
+		
+		return substr($this->cityName, 0, strpos($this->cityName,'('));			
+	}
+
+	public function getAvatar(){
+
+		return $this->avatar;
+	}
+
+	public function getID(){
+
+		return $this->id;
+	}
+
+	public function getSlug(){
+
+		return $this->slug;
+	}
+
+	public function getAge(){
+
+		return $this->age;
+	}
+
+	public function getNbParticipants(){
+		
+		return count($this->participants);
+	}
+
+	public function getUserParticipation(){
+
+		if(!empty($this->UserParticipation))
+			return true;
+		return false;		
+	}
+
+
+}
+
+
+?>

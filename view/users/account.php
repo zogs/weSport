@@ -107,7 +107,7 @@
 					
 				<?php echo $this->Form->input('avatar','Avatar',array('icon'=>'icon-bullhorn','type'=>'file')); ?>
 					
-				<input type="submit" class="btn btn-large btn-inverse" value="Change avatar" />		
+				<input type="submit" class="btn btn-large btn-inverse" value="Save avatar" />		
 		
 			<?php endif ;?>
 
@@ -124,7 +124,7 @@
 				<?php echo $this->Form->input('oldpassword','Old password',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Old password')); ?>
 				<?php echo $this->Form->input('password','New password',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'New password')); ?>
 				<?php echo $this->Form->input('confirm','Confirm password',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Confirm password')); ?>
-				<input class="btn btn-large btn-inverse" type="submit" value="Change Password" />	
+				<input class="btn btn-large btn-inverse" type="submit" value="Save Password" />	
 				
 			<?php endif ;?>
 

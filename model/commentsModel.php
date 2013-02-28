@@ -3,9 +3,93 @@
 */
 class CommentsModel extends Model
 {
-	public $table = 'comments';
-	public $votetable = 'comments_voted';	
+	public $table = 'comments';	
+	public $table_vote = 'comments_voted';
 
+
+	public function findComments($req){
+
+
+		foreach ($req as $k => $v) {
+			
+			$$k = $v;
+		}
+
+		if(isset($order)){
+
+        	if ($order == "datedesc" || $order == '' || $order == '0')
+            	$order=" date DESC ";
+	        elseif ($order == "dateasc")
+	            $order=" date ASC ";
+	        elseif ($order == "noteasc")
+	            $order=" note ASC ";
+	        elseif ($order == "notedesc")
+            	$order=" note DESC ";
+        }
+        else {
+        	$order= " date DESC ";
+        }
+
+		if(isset($limit) && !empty($limit)){
+			
+			 $limit = (($page-1)*$limit).','.$limit;
+
+		}
+		else $limit = 165131654;
+        
+        if (isset($rch) && $rch != "0") {
+        	if( trim( $rch != "" ) ) {
+        		$rch =" ( U.login LIKE '%" . $rch . "%' OR X.content LIKE '%" . $rch . "%' )";
+        	}           
+        }
+
+        $user_id = $this->session->user('user_id');
+        
+
+		$q = " SELECT C.*, U.user_id, U.login, U.avatar, V.id as voted 
+				FROM $this->table as C
+				LEFT JOIN users as U ON U.user_id = C.user_id
+				LEFT JOIN $this->table_vote as V ON (V.comment_id = C.id AND V.user_id = ".$user_id." )
+				WHERE ";
+				if(isset($comment_id)) {
+							$q .= "
+								C.id=".$comment_id." ";	
+				} else {
+							$q .= "
+								C.context='".$context."'
+								AND
+								C.context_id=".$context_id." 
+								AND 
+								C.reply_to=0 ";
+				}			
+				if (isset($type) && $type != "all" && $type != "0" )
+								$q .='
+								AND C.type="'.$type.'"';
+				if (isset($start) && $start!="0")
+								$q .='
+								AND C.id <= "'.$start.'"';
+				if( isset($newer) && $newer!="0")
+								$q .='
+								AND C.id > "'.$newer.'"';
+				$q.=" 
+				ORDER BY ".$order."
+				LIMIT ".$limit."
+			";
+
+		//debug($q);
+		$res = $this->db->prepare($q);
+		$res->execute();
+
+		if($res->rowCount()>1)
+			$coms = $res->fetch(PDO::FETCH_OBJ);
+		else
+			$coms = $res->fetchAll(PDO::FETCH_OBJ);
+
+		$coms = $this->findReplies($coms);
+
+		// debug($array);
+		return $coms;
+	}
 	
 	public function findCommentsWithoutJOIN($req){
 
@@ -48,13 +132,20 @@ class CommentsModel extends Model
         $user_id = $this->session->user('user_id');
 
 		$sql = " SELECT C.*
-				FROM ".$this->table." as C
+				FROM $this->table as C
 				
 				WHERE ";
 				if(isset($comment_id)) {
 							$sql .= "
 								C.id=".$comment_id." ";	
-				} else {
+				} 
+				elseif(isset($reply_to)){
+
+							$sql .= "
+								C.reply_to=".$reply_to." ";
+
+				}
+				else {
 							$sql .= "
 								C.context='".$context."'
 								AND
@@ -76,133 +167,71 @@ class CommentsModel extends Model
 				LIMIT ".$limit."
 			";
 
-		// debug($sql);
+		//debug($sql);
 		$res = $this->db->prepare($sql);
 		$res->execute();
-		$coms = $res->fetchAll(PDO::FETCH_OBJ);		
+		$res = $res->fetchAll(PDO::FETCH_OBJ);		
+		
+		//foreach comment make an object	
+		$comments = array();
+		foreach ($res as $com) {
+			
+			$comments[] = new Comment($com);
 
+		}
+		//foreach comment join replies if exist
+		$comments = $this->joinReplies($comments);
+		$comments = $this->joinUserData($comments);
  		//$timeend=microtime(true);
 		//$time=$timeend-$timestart;
 		//debug('temps d\'execution sans les JOIN:'.$time);
 
-		return $coms;
+		return $comments;
 	}
+
+
 
 	/*
 	Associe les réponses aux commentaires
 	@param array/objet of comments
 	@return array of comments
 	**/
-	public function findReplies($comments){
+	public function joinReplies($comments){
 
-		$array = array();
-
-
-
-		if(is_object($comments)){
-
-			if($comments->replies > 0){
-
-				$q = "SELECT * FROM ".$this->table." WHERE reply_to = ".$comments->id." ORDER BY date ASC";
-				$res = $this->db->prepare($q);
-				$res->execute();
-				if($res->rowCount() != 0) {
-
-					$replies = $res->fetchAll(PDO::FETCH_OBJ);
-
-					foreach ($replies as $reply) {
-
-						$array[] = $reply;
-							
-						if($reply->replies > 0 ){
-							
-							$array[] = $this->findReplies($reply);	
-						}									
-						
-					}
+		//put in a array if its not an array
+		if(is_object($comments)) $comments = array($comments);
 		
-				}
-
-				return $array;
-			}
-			else
-				return $comments;
-
+		//loop the array of comments
+		foreach ($comments as $comment) {
+			
+			if($comment->haveReplies()){
+				//this will find all replies in Comment object
+				$replies = $this->findCommentsWithoutJOIN(array('reply_to'=>$comment->id,'order'=>'dateasc'));								
+				$comment->replies = $replies;
+							
+			}			
 		}
-		elseif(is_array($comments)) {
 
-			foreach ($comments as $com) {
-	
-				$array[] = $com;
-
-				if($com->replies > 0){				 
-					
-					$q = "SELECT C.* FROM ".$this->table." as C WHERE C.reply_to =".$com->id." ORDER BY C.date ASC";
-					$res = $this->db->prepare($q);
-					$res->execute();
-
-					if($res->rowCount() != 0) {
-
-						$replies = $res->fetchAll(PDO::FETCH_OBJ);
-
-						$tab = array();
-
-						foreach ($replies as $reply) {
-
-							$tab[] = $reply;
-								
-							if($reply->replies > 0 ){
-								
-								$tab[] = $this->findReplies($reply);	
-							}									
-							
-						}
-
-						$array[] = $tab;
-		
-					}
-				}
-				
-			}
-		} 		
-
-		
-
-		return $array;
-
+		return $comments;
 	}
 
+
 	public function getComments($comments_id){
-
-		$sql = 'SELECT * FROM '.$this->table.' WHERE id = :comment_id';
-		$pre = $this->db->prepare($sql);
-		
+	
 		$array = array();
-
 		if(is_array($comments_id)){
-
-			
 
 			foreach($comments_id as $comment_id){
 
-				$pre->bindValue(':comment_id',$comments_id);
-				$pre->execute();
-				$res = $pre->fetch(PDO::FETCH_OBJ);
+
+				$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
 				$array[] = $res;
-
-			}			
-
-			
+			}					
 		}
-
 		elseif(is_numeric($comments_id)){
 
-			$pre->bindValue(':comment_id',$comments_id);
-			$pre->execute();
-			$res = $pre->fetch(PDO::FETCH_OBJ);
-			$array[] = $res;			
-
-			
+			$res = $res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
+			$array[] = $res;					
 		}
 
 		return $array;
@@ -211,17 +240,17 @@ class CommentsModel extends Model
 
 
 	public function joinUserData($data){
-
-		$data = $this->JOIN('users',array('user_id','login','avatar'),array('user_id'=>':user_id'),$data);
-		//$data = $this->JOIN('manif_comment_voted','id as voted',array('comment_id'=>':id','user_id'=>$this->session->user('user_id')),$data);
-		//$data = $this->JOIN('manif_info','logo as logoManif',array('manif_id'=>':context_id'),$data);
+		
+		$data = $this->joinUser($data);
+		$data = $this->JOIN($this->table_vote,'id as voted',array('comment_id'=>':id','user_id'=>$this->session->user('user_id')),$data);
+		
 
 		return $data;
 	}
 
 	public function totalComments($context,$context_id){
 
-		$sql = "SELECT COUNT(id) as count FROM ".$this->table." WHERE context='$context' AND context_id=$context_id AND reply_to=0";
+		$sql = "SELECT COUNT(id) as count FROM $this->table WHERE context='$context' AND context_id=$context_id AND reply_to=0";
 		$pre = $this->db->prepare($sql);
 		$pre->execute();
 		return $pre->fetchColumn();
@@ -229,7 +258,7 @@ class CommentsModel extends Model
 
 	public function userTotalComments($user_id){
 
-		$sql = 'SELECT COUNT(id) as count FROM '.$this->table.' WHERE user_id='.$user_id;
+		$sql = 'SELECT COUNT(id) as count FROM $this->table WHERE user_id='.$user_id;
 		$res = $this->db->prepare($sql);
 		$res->execute();
 		return $res->fetchColumn();
@@ -237,7 +266,7 @@ class CommentsModel extends Model
 
 	public function userTotalManifsComments($user_id,$manif_id){
 
-		$sql = 'SELECT COUNT(id) as count FROM '.$this->table.' WHERE user_id='.$user_id.' AND context="manif" AND context_id='.$manif_id;
+		$sql = 'SELECT COUNT(id) as count FROM $this->table WHERE user_id='.$user_id.' AND context="manif" AND context_id='.$manif_id;
 		$res = $this->db->prepare($sql);
 		$res->execute();
 		return $res->fetchColumn();
@@ -245,7 +274,7 @@ class CommentsModel extends Model
 
 	public function alreadyVoted($id,$user_id){
 
-		$sql = "SELECT COUNT(id) FROM ".$this->votetable." WHERE comment_id=$id AND user_id=$user_id";
+		$sql = "SELECT COUNT(id) FROM $this->table_vote WHERE comment_id=$id AND user_id=$user_id";
 		$pre = $this->db->prepare($sql);
 		$pre->execute();
 		return (bool)$pre->fetchColumn();
@@ -256,7 +285,7 @@ class CommentsModel extends Model
  		foreach ($data as $k => $v) {
 	 			$tab[":$k"] = $v; //tableau des valeurs pour la fonction execute de PDO	 		
  		}
-		$sql = "INSERT INTO ".$this->votetable." SET user_id = :user_id , comment_id = :comment_id";
+		$sql = "INSERT INTO $this->table_vote SET user_id = :user_id , comment_id = :comment_id";
 		$pre = $this->db->prepare($sql);
 		$pre->execute($tab);			
 		return true;
@@ -273,7 +302,7 @@ class CommentsModel extends Model
  		else
  			$sql .= 'C.*, U.*'; 		
 
-		$sql .= " FROM ".$this->table." as C
+		$sql .= " FROM $this->table as C
 					JOIN users as U ON U.user_id=C.user_id
 				  	WHERE ";
 
@@ -339,7 +368,7 @@ class CommentsModel extends Model
 					C.id as id,
 					C.date as date
 				FROM
-					manif_comment as C
+					comments as C
 					LEFT JOIN manif_participation AS P ON P.user_id = ".$params['context_id']."
 				WHERE
 					C.context = 'manif' AND C.type='news' AND C.context_id = P.manif_id 
@@ -405,4 +434,61 @@ class CommentsModel extends Model
 
 
 
-} ?>
+} 
+
+
+class Comment {
+
+	public function __construct($params){
+
+		foreach ($params as $key => $param) {
+			
+			$this->$key = $param;
+		}
+	}
+
+	public function haveReplies(){
+
+		return (count($this->replies)>0)? true : false;
+	}
+
+	public function userHaveVoted(){
+
+		return (isset($this->voted)&&is_numeric($this->voted))? true : false;
+	}
+
+	public function isModerate( $msg = false){
+
+		$bool = false;
+		if($this->note<-10) {
+			$bool = true;
+			$msg = 'Ce commentaire a reçu trop de vote négatif...';
+		}
+		if($this->valid==0) {
+			$bool = true;			
+			$msg = 'Ce commentaire a été modéré.';
+		}
+		if($this->online==0) {
+			$bool = true;
+			$msg = 'Ce commentaire a été modéré et va être supprimé.';
+		}
+
+		if($msg == false)
+			return $bool;
+		else 
+			return $msg;
+	}
+
+	public function replyAllowed(){
+
+		return CommentsController::$allowReply;
+	}
+
+	public function voteAllowed(){
+
+		return CommentsController::$allowVoting;
+	}
+
+
+
+}?>

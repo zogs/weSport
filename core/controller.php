@@ -11,10 +11,13 @@ class Controller {
 	function __construct($request=null){
 
 		$this->session = new Session($this);	
+
 		$this->Form = new Form($this);
 		$this->Date = new Date($this->session);
 		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
 		$this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
+
+
 
 		if($request){
 			$this->request = $request; //ON stocke la request dans l'instance
@@ -50,14 +53,29 @@ class Controller {
 			$view = ROOT.DS.'view'.DS.$this->view.'.php';
 		}
 
-		
-		//Recuperation des données du viewer
+		//check if the view exist
+		if(!file_exists($view)){
+			
+			if(Conf::$debug>=1)
+				$this->e404('The controller :'.$this->request->controller.' has no view :'.$this->request->action);						
+			else
+				$this->e404('This page don\'t work... We\'re sorry :(');							
+		}
 
+		//if view exist start buffer
 		ob_start();
-		require $view;
-		
-		$content_for_layout = ob_get_clean();
-		require ROOT.DS.'view'.DS.'layout'.DS.$this->layout.'.php';
+		require $view; //execute the view
+		$content_for_layout = ob_get_clean(); //get the buffer 
+
+		//load layout and send buffer
+		$layout = ROOT.DS.'view'.DS.'layout'.DS.$this->layout.'.php';
+		if(!file_exists($layout)){
+			if(Conf::$debug>=1)
+				$this->e404('The layout :'.$layout.' is not found');				
+			else
+				$this->e404('This page don\'t work... We\'re sorry :(');
+		}
+		require $layout;
 
 
 		//La page a été rendu
@@ -99,12 +117,65 @@ class Controller {
 		}
 		else {
 			//echo 'Model '.$name.' deja chargé';
-		}
-		
-		
+		}			
 	}
 
+	//Charge les fichiers CSS à insérer dans le <head></head>	
+	public function loadCSS(){
 
+		/**		
+		* array Conf::$css , css files to load each time, define in Conf
+		* array Controller $css_load, css files asked to load by the controller
+		*/
+		$css = array();
+		if(isset(Conf::$css)){
+			$css = array_merge(Conf::$css,$css);
+		}
+		if(isset($this->css_load)){
+			$c = $this->css_load;
+			if(is_string($c)) $c = array($c);
+			if(is_array($c)) $css = array_merge($css,$c);
+		}
+		foreach ($css as $name => $url) {
+
+			if(strpos($url,'http')!==0) $url = Router::webroot($url);
+			echo '<link rel="stylesheet" style="text/css" href="'.$url.'" />';		
+		}
+
+	}
+
+	//Charge les fichiers JS à insérer dans le <head></head>
+	public function loadJS(){
+
+		/**
+		 * array Conf::$js , main JS file of the app
+		 * array Conf::$js_dependency , dependency JS files
+		 * array Controller $js_load, JS file asked to load by the controller
+		 */
+		$js = array();
+		if(isset(Conf::$js_dependency)){
+			$js = array_merge(Conf::$js_dependency,$js);
+		}
+		if(isset($this->loadJS)){
+
+			if(is_string($this->loadJS)) $this->loadJS = array($this->loadJS);
+			if(is_array($this->loadJS)) $js = array_merge($js,$this->loadJS);
+		}
+		if(isset(Conf::$js_main)){
+			if(is_string(Conf::$js_main)) $js[] = Conf::$js_main;
+			if(is_array(Conf::$js_main)) $js = array_merge($js,$js_main);
+		}
+		foreach ($js as $name => $url) {
+			
+			if(strpos($url,'http')===0) $url = $url;
+			else $url = Router::webroot($url);		
+			echo '<script type="text/javascript" src="'.$url.'"></script>';
+		}
+	}
+
+	//Rend la vue Erreur 404
+	//@param string $message 
+	//@param string $oups 
 	public function e404($message, $oups = 'Oups'){
 
 		header("HTTP/1.0 404 Not Found"); 
@@ -116,6 +187,13 @@ class Controller {
 		
 	}
 
+	//Rend la vue exception
+	// $params obj $error ->msg|code|line|file|context
+	public function exception($error){
+
+		$this->set('error',$error);
+		$this->render('/errors/exception');
+	}
 
 	//Permet d'appeler un controller depuis une vue
 	// @params 
@@ -135,16 +213,30 @@ class Controller {
 
 	public function redirect($url,$code = null){
 
-		if($code == 301) {
-			header("HTTP/1.1 301 Moved Permanently");
+		if (headers_sent()) {
+		    die("Redirect failed");
 		}
-		header("Location: ".Router::url($url));
-		exit();
+		else{
+			if($code == 301) {
+				header("HTTP/1.1 301 Moved Permanently");
+			}
+			header("Location: ".Router::url($url));
+		}
+		exit();		
 	}
 
 	public function reload(){
 
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		if (headers_sent()) {
+		    die("Redirect failed");
+		}
+		else{
+		    if(isset($_SERVER['HTTP_REFERER']))
+				exit(header("Location: ".$_SERVER['HTTP_REFERER']));
+			else
+				$this->redirect('/');
+		}
+		
 		exit();
 
 	}

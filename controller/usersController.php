@@ -19,12 +19,12 @@ class UsersController extends Controller{
 			else
 				$field = 'login';
 			
+			//get the user information
 			$user = $this->Users->findFirst(array(
-				'fields'=> 'user_id,login,avatar,hash,salt,role,lang',
+				'fields'=> 'user_id,login,avatar,hash,salt,lang,role',
 				'conditions' => array($field=>$login))
 			);
-
-			//$user = $this->Users->JOIN('groups',array('group_id','logo as avatar','slug'),array('user_id'=>$user->user_id),$user);
+			
 			
 			if(!empty($user)){
 
@@ -34,14 +34,30 @@ class UsersController extends Controller{
 					unset( $user->salt);
 					unset($_SESSION['user']);
 					unset($_SESSION['token']);
+									
+					//update last login
+					$last = new stdClass();
+					$last->date_lastlogin = Date::MysqlNow(time());
+					$last->user_id = $user->user_id;
+					$this->Users->save($last);
 
+					//write user in session
 					$this->user = $user;
-
 					$this->session->write('user', $user);
 					$this->session->setToken();				
-					$this->session->setFlash('Vous êtes maintenant connecté');				
-									
-	
+					$this->session->setFlash('Vous êtes maintenant connecté');
+					
+					//redirection
+					$loc = $_SERVER['HTTP_REFERER'];
+					if(strpos($loc,'users/login')||strpos($loc,'users/validate')){
+
+						$this->redirect('users/account');
+					}				
+					else {
+
+						$this->reload(); 
+					}				
+					
 
 				}
 				else {
@@ -61,7 +77,8 @@ class UsersController extends Controller{
 		
 		unset($_SESSION['user']);
 		unset($_SESSION['token']);
-		$this->session->setFlash('Vous êtes maintenant déconnecté','info');	
+		session_destroy();
+		$this->session->setFlash('Vous êtes maintenant déconnecté','info',2);	
 		$this->reload();
 
 
@@ -73,67 +90,87 @@ class UsersController extends Controller{
 	============================================================*/
 	public function register( $data = null){
 
-		$this->loadModel('Users');
-
+		$this->loadModel('Users');				
 
 		$d = array();		
-
 		
-		if(isset($data) && is_object($data)){
-			$data = $data;
-		}
-		elseif($this->request->data){
-			$data = $this->request->data;
-		}
+		if(isset($data) && is_object($data))
+			$data = $data;		
+		elseif($this->request->data)
+			$data = $this->request->data;					
 
+		if(empty($data)) return;
+				
+		//validates
+		if($user = $this->Users->validates($data,'register')){
 
-		if($data){
-			if($this->Users->validates($data,'register')){
+			//check if accept TOS
+			if(isset($user->accept)&&$user->accept!=1){
+				$this->session->setFlash("Please accept the terms of use","error");
+				$this->set(array('data'=>$user));
+				return;		
+			}
 
-				//user object
-				$user = new stdClass();
-				$user = $data;
-				$user->salt = randomString(10);
-				$user->hash = md5($user->salt.$data->password);
-				$user->codeactiv = randomString(25);
-				unset($user->password) ;
-				unset($user->confirm) ;
-				$user->lang = Conf::$lang;
-				$user->date_signin = unixToMySQL(time());
+			//User
+			$user->salt = String::random(10);
+			$user->hash = md5($user->salt.$data->password);
+			$user->codeactiv = String::random(25);					
+			$user->lang = $this->session->user('lang');
+			$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
+			unset($user->accept);						
+			unset($user->password);
 
-	
-				if($this->Users->saveUser($user)) {
-					//get his id
-					$user_id = $this->Users->id;
+			
+
+			//check if login exist
+			$check = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
+			if(!empty($check)) {
+				$this->session->setFlash("This login is already used","error");
+				$this->set(array('data'=>$user));
+				return;
+			}
+			
+
+			//check if email exist
+			$check = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('email'=>$user->email)));
+			if(!empty($check)) {
+				$this->session->setFlash("The email ".$user->email." is already used","error");
+				$this->set(array('data'=>$user));
+				return;
+
+			}
+
+			//Save
+			if($this->Users->save($user)) {
+
+				$user_id = $this->Users->id;
 
 					if(isset($user->status) && $user->status!='group')
 						$this->session->setFlash("<strong>Welcome</strong>","success");
 
-					//send validation email
 					if($this->sendValidateMail(array('dest'=>$user->email,'user'=>$user->login,'codeactiv' =>$user->codeactiv,'user_id'=>$user_id)))
-					{
-						$d['Success'] = true;						
+					{						
 						$this->session->setFlash("Un email <strong>a été envoyé</strong> à votre boite email. Pour confirmer votre incription, <strong>veuillez cliquer sur le lien</strong> présent dans cette email", "success");
 						$this->session->setFlash("Il est possible que ce email soit placé parmis les <strong>indésirables ou spam</strong> , pensez à vérifier !", "info");
 					}
 					else {
-						$d['Success'] = false;
 						$this->session->setFlash("Il y a eu une erreur lors de l'envoi de l'email de validation", "error");
 					}
-				}
-				else {
-
-					$d['Success'] = false;
-					$this->session->setFlash("Sorry, there is an error while saving your data...", "error");
-				}
-					
 			}
-			else {				
-				$this->session->setFlash("Sorry, check your data and try again",'error');
-			}
-			//debug($this->request->data);
+			else {
+				debug($user);
+				throw new zException("Error can't save user", 1);					
+			}					
+			
+			
 		}
-		$this->set($d);
+		else {				
+			$this->session->setFlash("Veuillez vérifier vos informations",'error');
+			$this->set(array('data'=>$data));
+			debug($this->Users->errors);
+			return;
+		}																		
+
 	}
 
 
@@ -153,45 +190,257 @@ class UsersController extends Controller{
 			$user_id   = base64_decode(urldecode($get->u));			
 			$code_url = base64_decode(urldecode($get->c));
 
-			if(!is_numeric($user_id)) exit('user_id not numeric');
-
-
 			$user = $this->Users->findFirst(array(
-				'fields'=>array('login','codeactiv','valid'),
+				'fields'=>array('login','codeactiv'),
 				'conditions'=>array('user_id'=>$user_id)
 				));
 
-		
+
 			if(!empty($user)){
 
-				if($user->valid==0){
+				if($user->codeactiv == $code_url) {
+					$data =  new stdClass();
+					$data->user_id = $user_id;
+					$data->valid = 1;
+					$this->Users->save($data);
 
-					if($user->codeactiv == $code_url) {
-						$data =  new stdClass();
-						$data->user_id = $user_id;
-						$data->valid = 1;
-						$this->Users->save($data);
+					$this->session->setFlash('<strong>Bravo</strong> '.$user->login.' ! Tu as validé ton inscription','success');
+					$this->session->setFlash('Tu peux te <strong>connecter</strong> dés maintenant!','info');
+									
 
-						$this->session->setFlash('<strong>Bravo</strong> '.$user->login.' ! Tu as validé ton inscription','success');
-						$this->session->setFlash('Tu peux te <strong>connecter</strong> dés maintenant!','info');
-										
-
-					}
-					else {
-						$this->session->setFlash("Sorry but the link you use is incorrect",'error');
-					}
 				}
 				else {
-					$this->session->setFlash("You have already validates your account","info");
+					$this->session->setFlash("Une erreur inconnue est intervenue pendant l'activation",'error');
 				}
 			}
-			else {				
-				$this->session->setFlash("Sorry but the link is incorrect",'error');
+			else {	
+			debug('lol');			
+				$this->session->setFlash("Pas trouvé dans la bdd",'error');
 			}
-	
+
 		}
 
 	}
+
+
+    public function account($action = null){    	
+
+    	$this->loadModel('Users');
+    	//$this->layout = 'none';
+
+    	/*======================
+			If user is logged
+		========================*/
+    	if($this->session->user('user_id'))
+    	{
+
+    		//if user is a group ,redirect to group page
+    		if($this->session->user('status')=='group'){
+
+    			$this->redirect('groups/account/'.$this->session->user('group_id').'/'.$this->session->user('slug'));
+    		}
+
+
+	    	$user_id = $this->session->user('user_id');
+	    	
+	    	/*======================
+				If POST DATA are sended
+			========================*/
+	    	if($this->request->data) {							    		
+
+	    		
+	    		$data = $this->request->data;
+
+	    		/*====================
+	    			MODIFY ACCOUNT
+	    		====================*/
+	    		if($this->request->post('action')=='account'){
+
+	    			if($this->Users->validates($data,'account_info')){
+
+						$user = $this->Users->findFirst(array('fields'=>'login, email','conditions'=>array('user_id'=>$this->request->post('user_id'))));
+																
+						//If it's the not same user name
+						if($user->login != $this->request->post('login'))
+							$checklogin = $this->Users->findFirst(array('fields'=>'login','conditions'=>array('login'=>$this->request->post('login'))));
+						else
+							unset($data->login);							
+						
+
+						//if its not the same email
+						if($user->email != $this->request->post('email'))							
+							$checkemail = $this->Users->findFirst(array('fields'=>'email','conditions'=>array('email'=>$this->request->post('email'))));
+						else
+							unset($data->email);
+							
+	    				if(empty($checklogin)){
+
+	    					if(empty($checkemail)){
+
+		    					if($this->Users->saveUser($data,$user_id)){
+
+									$this->session->setFlash("Your account have been saved !","success");
+
+									//update session login									
+									$user = $this->session->user('obj');
+			    					if(isset($data->login)) $user->login = $data->login;
+			    					if(isset($data->lang)) $user->lang = $data->lang;			    					
+			    					$this->session->write('user', $user);
+			    					
+								}
+								else{
+									$this->session->setFlash("Your account have not been saved, please retry","error");
+								}
+							}
+							else {
+								$this->session->setFlash("This email is already in use","error");
+							}
+	    				}
+	    				else {
+	    					$this->session->setFlash("This login is already in use","error");
+	    				}
+	    			}
+	    			else {
+	    				$this->session->setFlash("Please review the form","error");
+	    			}
+	    		}
+	    		else {
+	    			if($this->request->post('login')) unset($_POST['login']);
+	    		}
+
+
+	    		/*====================
+					MODIFY INFO
+	    		=====================*/
+	    		if($this->request->post('action') == 'profil'){
+
+	    			if($this->Users->validates($data,'account_profil')){
+
+
+
+	    				if($this->Users->saveUser($data,$user_id)){
+
+	    					$this->session->setFlash('Your profil have been saved ! ','success');
+	    				}
+	    				else {
+	    					$this->session->setFlash("Sorry but something goes wrong please retry",'error');
+	    				}
+			    		
+		    		}
+		    		else 
+		    			$this->session->setFlash('Please review your informations','error');
+		    	
+	    		}
+
+
+	    		/*===================
+	    		 *   MODIFY AVATAR
+	    		===================== */
+	    		if($this->request->post('action') == 'avatar'){
+
+	    			if($this->Users->validates($data,'account_avatar')){
+
+	    				if($destination = $this->Users->saveFile('avatar','u'.$data->user_id)){
+
+	    					$this->session->setFlash('Your avatar have been changed ! ', 'success');
+
+	    					$u = new stdClass();
+	    					$u->user_id = $data->user_id;
+	    					$u->avatar = $destination;
+	    					$u->table = 'users';
+				 			$this->Users->save($u);
+				 				
+				 			$u = $this->session->user('obj');
+				 			$u->avatar = $destination;
+				 			$this->session->write('user', $u);
+	    				}
+	    			}	    			
+	    			else
+	    				$this->session->setFlash('Please review your file','error');
+	    		}
+	    		/*====================
+					MODIFY PASSWORD
+	    		=====================*/
+	    		if($this->request->post('action') == 'password')
+	    		{
+	    			
+	    			if($data = $this->Users->validates($data,'account_password')){
+
+		    				$db = $this->Users->findFirst(array(
+		    					'fields' => 'user_id,salt,hash',
+		    					'conditions'=> array('user_id'=>$user_id)
+		    					));
+
+		    				if($db->hash == md5($db->salt.$this->request->post('oldpassword'))){
+
+		    					$data = new stdClass();
+		    					$data->hash = md5($db->salt.$this->request->post('oldpassword'));
+		    					$data->user_id = $user_id;
+		    					
+		    					$this->Users->save($data);
+		    					$this->session->setFlash('Your password have been changed !');
+
+		    				}
+		    				else $this->session->setFlash('Your old password is not correct','error');
+		    		}
+		    		else 
+		    			$this->session->setFlash('Please review your informations','error');
+	    		}
+
+	    		/*====================
+					MODIFY DELETE
+	    		=====================*/
+	    		if($this->request->post('action') == 'delete'){
+
+	    			if($this->Users->validates($data,'account_delete')){
+
+	    				$db = $this->Users->findFirst(array(
+	    					'fields'=>'hash,salt',
+	    					'conditions'=>array('user_id'=>$user_id)
+	    					));
+	    				
+	    				if($db->hash == md5($db->salt.$this->request->post('password'))){
+
+	    					
+	    					$this->Users->delete($user_id);
+	    					unset($_SESSION['user']);
+	    					$user_id = 0;
+	    					$this->session->setFlash('Your account has been delete... <strong>Wait ? Why did you do that ??</strong>');
+
+	    				}
+	    				else
+	    					$this->session->setFlash('Your password is not good','error');
+
+	    			}
+	    			else
+	    				$this->session->setFlash('Please review your password','error');
+
+	    		}	    			    			  
+		    	
+		    }
+
+		    //get account info
+	    	$user = $this->Users->findFirst(array(
+					'conditions' => array('user_id'=>$user_id))
+				);	    	    	
+	    	// /!\ request->data used by Form class
+	    	$this->request->data = $user;
+
+	    	$d['user'] = $user;
+
+	    	//action
+	    	if(!isset($action)) $action = 'profil';
+	    	$d['action'] = $action;
+
+	    	$this->set($d);
+	    }
+	    else {
+
+	    	$this->redirect('');	    	
+	    }
+
+    }
+
 
 	public function recovery(){
 
@@ -199,7 +448,7 @@ class UsersController extends Controller{
 
 		$action='';
 		
-		//if user past the link we emailed him
+		//if user past the link we mailed him
 		if($this->request->get('c') && $this->request->get('u') ){
 
 			
@@ -227,7 +476,7 @@ class UsersController extends Controller{
 			}
 			else {
 				//else the link isnot good anymmore
-				$this->session->setFlash('Your link is not valid anymore. Please ask for a new mail password reset.','error');
+				$this->session->setFlash('Your link is not valid anymore. Please ask for a new password reset.','error');
 				$action = 'show_form_email';
 				
 			}
@@ -415,7 +664,7 @@ class UsersController extends Controller{
 				}
 
 				//check reserved words
-				if(in_array($value,Conf::$reserved[$type]['array'])){
+				if(in_array(strtolower($value),Conf::$reserved[$type]['array'])){
 
 					$d['error'] = Conf::$reserved[$type]['errorMsg'];
 				}
@@ -430,7 +679,7 @@ class UsersController extends Controller{
 						$d['error'] = '<strong>'.$value."</strong> is already in use!";
 					}
 					else {
-						$d['available'] = "Available !";
+						$d['available'] = "";
 					}
 
 			}
@@ -440,12 +689,11 @@ class UsersController extends Controller{
 	}
 
 
-
 	public function sendRecoveryMail($data)
     {
     	extract($data);
 
-		$lien = "http://localhost/base/users/recovery?c=".urlencode(base64_encode($code))."&u=".urlencode(base64_encode($user_id));
+		$lien = Conf::$websiteURL."/users/recovery?c=".urlencode(base64_encode($code))."&u=".urlencode(base64_encode($user_id));
 
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
@@ -459,7 +707,7 @@ class UsersController extends Controller{
         //Création du mail
         $message = Swift_Message::newInstance()
           ->setSubject("Change ton mot de passe")
-          ->setFrom('noreply@'.Conf::$website, Conf::$website)
+          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
           ->setTo($dest, $user)
           ->setBody($body, 'text/html', 'utf-8')
           ->addPart("Hey {$user}, copy this link ".$lien." in your browser to change your password. Don't stop the Protest.", 'text/plain');
@@ -477,7 +725,7 @@ class UsersController extends Controller{
     {
     	extract($data);
 
-		$lien = "http://localhost/base/users/validate?c=".urlencode(base64_encode($codeactiv))."&u=".urlencode(base64_encode($user_id));
+		$lien = Conf::$websiteURL."/users/validate?c=".urlencode(base64_encode($codeactiv))."&u=".urlencode(base64_encode($user_id));
 
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
@@ -491,7 +739,7 @@ class UsersController extends Controller{
         //Création du mail
         $message = Swift_Message::newInstance()
           ->setSubject("Validation de l'inscription à ".Conf::$website)
-          ->setFrom('noreply@'.Conf::$website, Conf::$website)
+          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
           ->setTo($dest, $user)
           ->setBody($body, 'text/html', 'utf-8')
           ->addPart("Hey {$user}, copy this link ".$lien." in your browser. Welcome on the Protest.", 'text/plain');
@@ -506,236 +754,28 @@ class UsersController extends Controller{
     }
 
 
-    public function account($action = null){    	
-
-    	$this->loadModel('Users');
-    	//$this->layout = 'none';
-
-    	/*======================
-			If user is logged
-		========================*/
-    	if($this->session->user('user_id'))
-    	{
-
-    		//if user is a group ,redirect to group page
-    		if($this->session->user('status')=='group'){
-
-    			$this->redirect('groups/account/'.$this->session->user('group_id').'/'.$this->session->user('slug'));
-    		}
+    
 
 
-	    	$user_id = $this->session->user('user_id');
-	    	
-	    	/*======================
-				If POST DATA are sended
-			========================*/
-	    	if($this->request->data) {							    		
+    public function index(){
 
-	    		
-	    		$data = $this->request->data;
-
-	    		/*====================
-	    			MODIFY ACCOUNT
-	    		====================*/
-	    		if($this->request->post('action')=='account'){
-
-	    			if($this->Users->validates($data,'account_info')){
-
-						$user = $this->Users->findFirst(array('fields'=>'login, email','conditions'=>array('user_id'=>$this->request->post('user_id'))));
-																
-						//If it's the not same user name
-						if($user->login != $this->request->post('login'))
-							$checklogin = $this->Users->findFirst(array('fields'=>'login','conditions'=>array('login'=>$this->request->post('login'))));
-						else
-							unset($data->login);							
-						
-
-						//if its not the same email
-						if($user->email != $this->request->post('email'))							
-							$checkemail = $this->Users->findFirst(array('fields'=>'email','conditions'=>array('email'=>$this->request->post('email'))));
-						else
-							unset($data->email);
-							
-	    				if(empty($checklogin)){
-
-	    					if(empty($checkemail)){
-
-		    					if($this->Users->saveUser($data,$user_id)){
-
-									$this->session->setFlash("Your account have been saved !","success");
-
-									//update session login									
-									$user = $this->session->user('obj');
-			    					if(isset($data->login)) $user->login = $data->login;
-			    					if(isset($data->lang)) $user->lang = $data->lang;			    					
-			    					$this->session->write('user', $user);
-				    				
-								}
-								else{
-									$this->session->setFlash("Your account have not been saved, please retry","error");
-								}
-							}
-							else {
-								$this->session->setFlash("This email is already in use","error");
-							}
-	    				}
-	    				else {
-	    					$this->session->setFlash("This login is already in use","error");
-	    				}
-	    			}
-	    			else {
-	    				$this->session->setFlash("Please review the form","error");
-	    			}
-	    		}
-	    		else {
-	    			if($this->request->post('login')) unset($_POST['login']);
-	    		}
-
-
-	    		/*====================
-					MODIFY INFO
-	    		=====================*/
-	    		if($this->request->post('action') == 'profil'){
-
-	    			if($this->Users->validates($data,'account_profil')){
-
-
-
-	    				if($this->Users->saveUser($data,$user_id)){
-
-	    					$this->session->setFlash('Your profil have been saved ! ','success');
-	    				}
-	    				else {
-	    					$this->session->setFlash("Sorry but something goes wrong please retry",'error');
-	    				}
-			    		
-		    		}
-		    		else 
-		    			$this->session->setFlash('Please review your informations','error');
-		    	
-	    		}
-
-
-	    		/*===================
-	    		 *   MODIFY AVATAR
-	    		===================== */
-	    		if($this->request->post('action') == 'avatar'){
-
-	    			if($this->Users->validates($data,'account_avatar')){
-
-	    				if($this->Users->saveUserAvatar($user_id)){
-
-	    					$this->session->setFlash('Your avatar have been changed ! ', 'success');
-
-	    					//get the new avatar and set it in the session
-	    					$new = $this->Users->findFirst(array('fields'=>'avatar','conditions'=>array('user_id'=>$user_id)));
-	    					$user = $this->session->user('obj');
-	    					$user->avatar = $new->avatar;
-	    					$this->session->write('user', $user);
-	    				}
-	    				else
-	    					$this->session->setFlash('Sorry something goes wrond.. Please retry', 'error');
-	    			}	    			
-	    			else
-	    				$this->session->setFlash('Please review your file','error');
-	    		}
-	    		/*====================
-					MODIFY PASSWORD
-	    		=====================*/
-	    		if($this->request->post('action') == 'password')
-	    		{
-	    			
-	    			if($this->Users->validates($data,'account_password')){
-
-		    			if($this->request->post('password') == $this->request->post('confirm')){
-
-		    				$db = $this->Users->findFirst(array(
-		    					'fields' => 'user_id,salt,hash',
-		    					'conditions'=> array('user_id'=>$user_id)
-		    					));
-
-		    				if($db->hash == md5($db->salt.$this->request->post('oldpassword'))){
-
-		    					$data = new stdClass();
-		    					$data->hash = md5($db->salt.$this->request->post('oldpassword'));
-		    					$data->user_id = $user_id;
-		    					
-		    					$this->Users->save($data);
-		    					$this->session->setFlash('Your password has been changed !');
-
-		    				}
-		    				else $this->session->setFlash('Your old password is not good','error');
-		    			}
-		    			else $this->session->setFlash('Your new passwords are not the same','error');
-		    		}
-		    		else 
-		    			$this->session->setFlash('Please review your informations','error');
-	    		}
-
-	    		/*====================
-					MODIFY DELETE
-	    		=====================*/
-	    		if($this->request->post('action') == 'delete'){
-
-	    			if($this->Users->validates($data,'account_delete')){
-
-	    				$db = $this->Users->findFirst(array(
-	    					'fields'=>'hash,salt',
-	    					'conditions'=>array('user_id'=>$user_id)
-	    					));
-	    				
-	    				if($db->hash == md5($db->salt.$this->request->post('password'))){
-
-	    					
-	    					$this->Users->delete($user_id);
-	    					unset($_SESSION['user']);
-	    					$user_id = 0;
-	    					$this->session->setFlash('Your account has been delete... <strong>Wait ? Why did you do that ??</strong>');
-
-	    				}
-	    				else
-	    					$this->session->setFlash('Your password is not good','error');
-
-	    			}
-	    			else
-	    				$this->session->setFlash('Please review your password','error');
-
-	    		}	    			    			  
-		    	
-		    }
-
-		    //get account info
-	    	$user = $this->Users->findFirst(array(
-					'conditions' => array('user_id'=>$user_id))
-				);	
-
-	    	// /!\ request->data used by Form class
-	    	$this->request->data = $user;
-
-	    	$d['user'] = $user;
-
-	    	//action
-	    	if(!isset($action)) $action = 'profil';
-	    	$d['action'] = $action;
-
-	    	$this->set($d);
-	    }
-	    else {
-
-	    	$this->redirect('/');	    	
-	    }
-
+    	if($this->session->user()){
+    		$this->thread();
+    	}
+    	else {
+    		$this->redirect('users/login');
+    	}
+    	
     }
 
-
-
     /**
-        
-			User Thread
-
-        */ 
+    *    
+	*	User Thread
+	*
+    */ 
     public function thread(){
 
+    	$this->view = 'users/thread';
     	$this->loadModel('Users');
     	$this->loadModel('Manifs');
     	$this->loadModel('Comments');

@@ -1,7 +1,9 @@
 <div class="homepage">
 
 	<?php echo $this->session->flash() ;?>
-	<?php //debug($this->cookieEventSearch->arr()); ?>
+	<?php //debug($this->cookieEventSearch->arr());
+
+	 ?>
 	<div class="formular">
 
 			
@@ -39,18 +41,14 @@
 </div>
 <script type="text/javascript">
 
-jQuery(function(){
+$(document).ready(function(){
 
-	
-
-
-
-  	$(".events-nav").click(function(){
-
+	$("a.events-nav").bind('click',function(e){
+		
   		var url = $(this).attr('href');
   		var form = $("#formSearch");
   		var datas = form.serialize();
-
+  		
   		$.ajax({
   				type:'GET',
   				url: url,
@@ -67,7 +65,8 @@ jQuery(function(){
 
   		return false;
   	});
-}); 
+
+});
 
 
 </script>

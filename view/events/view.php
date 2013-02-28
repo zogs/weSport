@@ -37,21 +37,26 @@
 			</div>
 
 			<div class="actions">			
-
-				<?php if(isset($event->UserParticipation)): ?>
-				<a class="btn btn-large btn-success" > Vous participez </a>
-				<a class="btn btn-large btn-inverse" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user_id());?>"><i class="icon-remove icon-white"></i> Je ne veux plus.</a>
-				<?php else: ?>
-				<form action="<?php echo Router::url('events/addParticipant');?>" method="GET">
-					<?php echo $this->Form->input("user_id","hidden",array("value"=>$this->session->user_id())) ;?>
-					<?php echo $this->Form->input("event_id","hidden",array("value"=>$event->id)) ;?>
-					<?php echo $this->Form->input("Je viens !","submit",array("class"=>"btn btn-large btn-primary")) ;?>				
-				</form>
+				
+				<?php if($this->session->isLogged()): ?>
+					<?php if(!$event->isAdmin($this->session->user_id())): ?>
+						<?php if(isset($event->UserParticipation)): ?>
+							<a class="btn btn-large btn-success" > Vous participez </a>
+							<a class="btn btn-large btn-inverse" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user_id());?>"><i class="icon-remove icon-white"></i> Je ne veux plus.</a>
+						<?php else: ?>
+							<form action="<?php echo Router::url('events/addParticipant');?>" method="GET">
+								<?php echo $this->Form->input("user_id","hidden",array("value"=>$this->session->user_id())) ;?>
+								<?php echo $this->Form->input("event_id","hidden",array("value"=>$event->id)) ;?>
+								<?php echo $this->Form->input("Je viens !","submit",array("class"=>"btn btn-large btn-primary")) ;?>				
+							</form>
+						<?php endif; ?>
+					
+					<?php else: ?>	
+					<a class="btn btn-large" href="<?php echo Router::url('events/create/'.$event->id);?>">Modifier mon annonce</a>					
+					<?php endif;?>
+				<?php else: ?>		
+					Vous devez <a href="<?php echo Router::url('users/login');?>">vous connecter</a> pour participer à cet événement
 				<?php endif; ?>
-
-				<?php if($event->user_id == $this->session->user('user_id')):?>
-				<a class="btn btn-large" href="<?php echo Router::url('events/create/'.$event->id);?>">Modifier mon annonce</a>
-				<?php endif; ?>			
 			</div>
 
 			<div class="comments">			

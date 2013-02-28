@@ -1,6 +1,7 @@
 <?php
 class PostsModel extends Model{
 
+	public $table = 'posts';
 
 	public $validates = array(
 		'name' => array(

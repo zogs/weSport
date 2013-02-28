@@ -7,9 +7,9 @@ class PostsController extends Controller {
 		function index(){
 			$perPage = 2;
 			$this->loadModel('Posts');
-			$conditions = array('online'=>1,'type'=>'post');			
+			$conditions = array('type'=>'post','online'=>1);			
 			$d['posts'] = $this->Posts->find(array(
-				'conditions'=>array('online'=>1,'type'=>'post'),
+				'conditions'=>$conditions,
 				'limit'=>(($this->request->page-1)*$perPage).','.$perPage
 			));
 			$d['total'] = $this->Posts->findCount($conditions);
@@ -48,16 +48,27 @@ class PostsController extends Controller {
 				
 		}
 		function admin_edit($id = null){
+
 			$this->loadModel('Posts');
 
 			$d['id'] ='';
 			if($this->request->data){
 				if($this->Posts->validates($this->request->data)){
-					$this->request->data->type = 'post';
-					$this->request->data->created = date('Y-m-d h:i:s');
-					$this->Posts->save($this->request->data);
-					$id = $this->Posts->id; //retourne l'id de l'update
-					$this->session->setFlash('Le contenu a bien été modifié');
+
+
+					$post = $this->request->data;					
+					$post->type = 'post';
+					$post->created = date('Y-m-d h:i:s');
+
+					if($this->Posts->save($post)){
+
+						$id = $this->Posts->id; //retourne l'id de l'update
+						$this->session->setFlash('Le contenu a bien été modifié');
+					}
+					else {
+						$this->session->setFlash('Erreur lors de la sauvegarde');
+					}
+					
 					$this->redirect('admin/posts/index');
 				}
 				else{
@@ -99,9 +110,13 @@ class PostsController extends Controller {
 		function admin_delete($id){
 
 			$this->loadModel('Posts');
-			$this->Posts->delete($id);
-
-			$this->session->setFlash('Le contenu a bien été supprimé');
+			if($this->Posts->delete($id)){
+				$this->session->setFlash('Le contenu a bien été supprimé');	
+			}
+			else {
+				$this->session->setFlash('Erreur dans la suppression','error');
+			}
+			
 			$this->redirect('admin/posts/index');
 
 

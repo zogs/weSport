@@ -2,10 +2,10 @@
 
 if($type!='404'):
 
-	$html ='<div class="previewMedia">';
-		$html .='<div class="previewMedia-img">';
+	$html ='<div class="previewMedia previewMedia-'.$type.'">';
+		$html .='<div class="previewMedia-thumbnails">';
 		if(count($thumbnails)>1):
-			$html .='<div class="previewMedia-totalImage">
+			$html .='<div class="previewMedia-totalthumbnails">
 						Choose a thumbnail<br />
 						<a href="" id="prev_thumb">Previous</a> Total '.count($thumbnails).' images <a href="" id="next_thumb">Next</a>
 					</div>';
@@ -13,9 +13,9 @@ if($type!='404'):
 
 		foreach ($thumbnails as $key) {
 			if($key == $thumbnails_first)
-			$html .='<img src="'.$key.'" alt="" class="previewMedia-thumbnail" data-type="'.$type.'" data-comid="01" data-url="'.$contentURL.'">';
+			$html .="<div class='previewMedia-thumbnail' data-type='".$type."' data-comid='01' data-media-url='".$media."'><span></span><img src='".$key."' alt=''></div>";
 			else
-			$html .='<img src="'.$key.'" alt="" class="previewMedia-thumbnail hide" data-type="'.$type.'" data-comid="01" data-url="'.$contentURL.'">';
+			$html .="<div class='previewMedia-thumbnail hide' data-type='".$type."' data-comid='01' data-media-url='".$media."'><span></span><img src='".$key."' alt='' ></div>";
 		}
 		$html .='</div>';
 

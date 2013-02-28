@@ -2,57 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-
-	<?php
-
-	/**
-	* INCLUDE CSS
-	* array Conf::$css
-	* array Controller $css_load
-	*/
-	$css = array();
-	if(isset(Conf::$css)){
-		$css = array_merge(Conf::$css,$css);
-	}
-	if(isset($css_load)){
-		if(is_string($css_load)) $css_load = array($css_load);
-		if(is_array($css_load)) $css = array_merge($css,$css_load);
-	}
-	foreach ($css as $name => $url) {
-
-		if(strpos($url,'http')!==0) $url = Router::webroot($url);
-		echo '<link rel="stylesheet" style="text/css" href="'.$url.'" />';		
-	}
-
-
-	/**
-	 * INCLUDE JAVASCRIPT
-	 * array Conf::$js 
-	 * array Conf::$js_dependency
-	 * array Controller $js_load
-	 */
-	$js = array();
-	if(isset(Conf::$js_dependency)){
-		$js = array_merge(Conf::$js_dependency,$js);
-	}
-	if(isset($this->loadJS)){
-
-		if(is_string($this->loadJS)) $this->loadJS = array($this->loadJS);
-		if(is_array($this->loadJS)) $js = array_merge($js,$this->loadJS);
-	}
-	if(isset(Conf::$js_main)){
-		if(is_string(Conf::$js_main)) $js[] = Conf::$js_main;
-		if(is_array(Conf::$js_main)) $js = array_merge($js,$js_main);
-	}
-	foreach ($js as $name => $url) {
-		
-		if(strpos($url,'http')===0) $url = $url;
-		else $url = Router::webroot($url);		
-		echo '<script type="text/javascript" src="'.$url.'"></script>';
-	}
-
-	?>
-	
+	<?php $this->loadCSS();?>
+	<?php $this->loadJS();?>	
 	<title><?php echo isset($title_for_layout)?$title_for_layout : Conf::$website;?></title>
 	
 </head>
@@ -67,9 +18,9 @@
 			</a>
 
 			<ul class="nav">
-				<li><a href="<?php echo Router::url('pages/home');?>">Homepage</a></li>				
-				<li><a href="<?php echo Router::url('events/create');?>">Proposer</a></li>	
-				<li><a href="<?php echo Router::url('posts/index');?>">Blog.</a></li>
+				<li><a href="<?php echo Router::url('pages/home');?>">Trouver des sportifs</a></li>				
+				<li><a href="<?php echo Router::url('events/create');?>">Poster un événement</a></li>	
+				<li><a href="<?php echo Router::url('posts/index');?>">Le Blog du sportif</a></li>
 				
 				<?php
 				//Admin section button
@@ -88,7 +39,7 @@
 
 			<ul class="nav pull-right">
 				<?php if ($this->session->user()): ?>
-					<li><a href="<?php echo Router::url('users/thread');?>">
+					<li><a href="<?php echo Router::url('users/account');?>">
 							<img class="nav-avatar" src="<?php echo Router::webroot($this->session->user('avatar')); ?>" />	
 							<span class="nav-login"><?php echo $this->session->user('login'); ?></span>
 					</a></li>
@@ -134,19 +85,6 @@
 </body>
 
 
-
-
-
-
-
-
-<?php 
-if($this->request->get('murl') && !$this->session->user()){
-
-	$url = $this->request->get('murl');
-	echo "<script type='text/javascript'>callModalBox('".$url."'); </script>";
-} 
-?>
 
  <script type="text/javascript">
 

@@ -10,6 +10,14 @@
  	public $layout = 'none';
  	public $table = 'manif_comment';
 
+ 	//Params
+ 	public static $nbDisplayedPerPage = 3;
+ 	public static $nbDisplayedOnTop = 0;
+ 	public static $allowReply = false;
+ 	public static $displayReply = false;
+ 	public static $allowVoting = false;
+ 	public static $enablePreview = true;
+
 
  	/*=======================================
  	Show the whole comment system
@@ -22,13 +30,17 @@
  		$d['context'] = $context;
  		$d['context_id'] = $context_id;
 
- 		//Authorisation settings
  		if($d['context'] == 'events'){
 
  			$d['isadmin'] = false;
  			$d['commentsAllow'] = true;
 
- 		} 		
+ 		}		
+
+
+ 		// $d['flash'] = array('message'=>'You could spread a News to all your Protest(s) by filling the Title form',
+ 		// 					'type'=>'warning');
+
 
  		$this->set($d);
  		$this->view = 'comments/show';
@@ -56,7 +68,8 @@
  		$this->view = 'comments/index';
 			
 			
- 		$perPage = 3;
+ 		$perPage = self::$nbDisplayedPerPage;
+
 		$params = array(	
 									
 			"context"    =>$context,
@@ -66,36 +79,41 @@
 			"pays"       =>$this->session->getPays(),
 			"lang"       =>$this->session->getLang()
 			);
-
+		
 		if(isset($this->request->get)){
 
-			$params = array_merge( get_object_vars($this->request->get) ,$params);
-			$page = $this->request->get->page;				
+			$params = array_merge( get_object_vars($this->request->get) ,$params);					
 		}
-		else 
-			$page = 1;
 		
-			
+		
 		if($context=='events' ||$context=='group'){
 
 			//$d['coms']     = $this->Comments->findComments($params);
 			$coms       = $this->Comments->findCommentsWithoutJOIN($params);
-			$coms       = $this->Comments->findReplies($coms);
-			$coms       = $this->Comments->joinUserData($coms);
+
 			$d['coms']  = $coms;
 			$d['commentsTotal'] = $this->Comments->totalComments($context,$context_id);
-			$d['commentsDisplayed'] = $perPage*$page;
+			$d['commentsDisplayed'] = $perPage*$this->request->page;
 			$d['commentsLeft'] = $d['commentsTotal'] - $d['commentsDisplayed'];
 				
-		}		
-		elseif($context=='user'){
+		}
+		elseif($context=='comment'){
 
-			$params['limit'] = 10;
-			$d['coms'] = $this->Comments->threadUser($params);
+
+			$com_id          = $context_id;
+			$com             = $this->Comments->getComments($com_id);			
+			$d['context']    = $com[0]->context;
+			$d['context_id'] = $com[0]->context_id;
+			$d['coms']       = $com;
 
 		}
+		// elseif($context=='user'){
 
-		//debug($d);
+		// 	$params['limit'] = 10;
+		// 	$d['coms'] = $this->Comments->threadUser($params);
+
+		// }
+
 
 		$this->set($d);
 
@@ -108,9 +126,7 @@
 	Show a unique comment
 	@param $comment_id int
  	=====================================*/
- 	public function view($comment_id = null ){
-
- 		if(!isset($comment_id)) $this->e404('No comment to see');
+ 	public function view($comment_id ){
 
 		$this->layout = 'default';
 		$this->loadModel('Comments');
@@ -119,19 +135,17 @@
 		$com = $this->Comments->getComments($comment_id);
 		$com = $com[0];
 
-		if($com->context == 'manif'){
+		if(empty($com)) $this->e404('This comment does not exist anymore');
 
-			$this->loadModel('Manifs');
-			$manif = $this->Manifs->findFirstManif(array(
-													'fields'=>array('MD.nommanif','D.manif_id','MD.slug'),
-													'conditions'=>array('D.manif_id'=>$com->context_id)));			
-			$link = Router::url('manifs/view/'.$manif->manif_id.'/'.$manif->slug);
-			$name = $manif->nommanif;
+		if(isset($com->context) && $com->context != ''){
 
+			$context = $this->findFirst(array('table'=>$com->context,'',array('id'=>$com->context_id)));
+			$context_name = $context->title;
+			$context_link = Router::url('events/view/'.$context->id.'/'.$context->slug);
 		}
 			
-		$d['context_name'] = $name;	
-		$d['context_link'] = $link;
+		$d['context_name'] = $context_name;	
+		$d['context_link'] = $context_link;
 		$d['comment_id'] = $comment_id;
 
  		$this->set($d);
@@ -144,24 +158,21 @@
  	Check for new comments
  	@param $context_id
  	$param $context
- 	@second time in second since
+ 	@param $min_id ID to check uppon
  	========================================*/
- 	public function tcheck($context,$context_id,$second){
+ 	public function tcheck($context,$context_id,$min_id){
 
  		$this->loadModel('Comments');
  		$this->layout = 'none';
+ 		$this->view = 'json';
 
- 		$params = array(
-				"conditions" => array("context"=>$context,"context_id"=>$context_id,"reply_to"=>0),
-				"date_field" => 'date',
-				"second"     => $second
- 			);
+ 		if(!is_numeric($context_id) || !is_numeric($min_id)) throw new Exeption("tcheck() attribute are not numeric");
 
- 		$d['count'] = $this->Comments->countNew($params);
+ 		$conditions = array('context'=>$context,'context_id'=>$context_id,'reply_to'=>0);
+
+ 		$d['count'] = $this->Comments->countNewEntryById($conditions,$min_id);
 
  		$this->set($d);
-
-
 
  	}
 
@@ -174,52 +185,56 @@
 
 		$this->loadModel('Comments');
  		$this->layout = 'none';
+ 		$this->view = 'json';
+ 		$d = array();
 
-
- 		if(!$this->request->post()) $this->e404('data missing when send to add comments');
+ 		//if no POST data
+ 		if(!$this->request->data) throw new zException("No post data sended",1);
+ 		else $data = $this->request->data;
 
  		//if there is a user logged in
  		if($this->session->isLogged()){
 
  			//create new comment object
  			$newComment = new stdClass();
- 			$newComment->context = $this->request->data->context;
+ 			$newComment->context = $data->context;
  			$newComment->user_id = $this->session->user('user_id');
  			$newComment->lang = $this->session->getLang();
- 			$newComment->context_id = $this->request->data->context_id;
- 			$newComment->type = $this->request->data->type;
+ 			$newComment->context_id = $data->context_id;
+ 			$newComment->type = $data->type;
 
- 			//If there is a media content
- 			if(isset($this->request->data->media) && $this->request->data->media !=''){
+ 			//content of the comment
+ 			$newComment->content = str_replace(array("\\n","\\r"),array("<br />",""),$data->content); //Replace line jump by <br>
 
- 				$content = str_replace($this->request->data->media_url, '', $content); //suppress url
- 				$content = $this->request->data->content.html_entity_decode($this->request->data->media); //add media to content
- 				
+ 			//if media content
+ 			if( !empty($data->media) ){
+
+ 				$newComment->content = str_replace($data->media_url, '', $data->content); //suppress url if exist in content
+ 				$newComment->media = html_entity_decode($data->media); //add media to content
+ 				$newComment->media_url = $data->media_url;
  			}
  			else
- 				$content = $this->request->data->content;
- 			$newComment->content = $content;
- 			$newComment->media = '';
-
-
- 			//Replace line jump by <br>
- 			$content = str_replace(array("\\n","\\r"),array("<br />",""),$content);
+ 				$newComment->content = $data->content; 			
 
  			//if there is a title then this is a NEWS
- 			if(isset($this->request->data->title) && $this->request->data->title!=''){
- 				$newComment->title = $this->request->data->title;
+ 			if(isset($data->title) && $data->title!=''){
+ 				$newComment->title = $data->title;
  				$newComment->type = 'news';
  			} 	
 	
  			//Save
- 			$this->Comments->save($newComment);
- 			$id = $this->Comments->id;
- 			$d['id'] = $id;
- 			//return id of the new comment
+ 			if($this->Comments->save($newComment)){
+
+ 				$d['success'] = true;
+ 				//return id of the new comment
+ 				$d['insert_id'] = $this->Comments->id;
+ 			}
+ 			else {
+ 				$d['error'] = 'Unknown error while saving the comment in database. Please retry'; 				
+ 			}			
  		}
  		else {
-
- 			$d['fail'] = "Please Login";
+ 			$d['error'] = "You need to log in first !";
  		} 		 		
 
  		$this->set($d);
@@ -233,30 +248,32 @@
 
  		if($this->request->post('content')!=''){
 
-	 		if( $this->request->post('reply_to') ){
+ 			$data = $this->request->post();
+
+	 		if( isset($data->reply_to) && $data->reply_to!= 0 && is_numeric($data->reply_to) ){
 
 	 			if($this->session->isLogged()){
 
 	 			//On incremente le nombre de réponse du commentaire
-	 			$this->Comments->increment(array('field'=>'replies','id'=>$this->request->data->reply_to));
+	 			$this->Comments->increment(array('field'=>'replies','id'=>$data->reply_to));
 
 	 			//On rajoute les params nécessaires
-	 			$this->request->data->user_id = $this->session->user('user_id');
-	 			$this->request->data->lang = $this->session->getLang();
+	 			$data->user_id = $this->session->user('user_id');
+	 			$data->lang = $this->session->getLang();
+	 			unset($data->_);
 
 	 			//On sauvegarde la reponse dans la base
-	 			$this->Comments->save($this->request->data);
+	 			$this->Comments->save($data);
 
 	 			//Récupération de l'id du commentaire
-	 			$comment_id = $this->request->data->reply_to;
+	 			$comment_id = $data->reply_to;
 
 	 			//Enfin , on renvoi la vue du commentaire
 				$coms       = $this->Comments->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
-				$coms       = $this->Comments->findReplies($coms);
-				$coms       = $this->Comments->joinUserData($coms);
+
 				$d['coms']  = $coms;
-				$d['context']    = $this->request->data->context;
-				$d['context_id'] = $this->request->data->context_id;
+				$d['context']    = $data->context;
+				$d['context_id'] = $data->context_id;
 	 			$this->set($d);
 
 
@@ -274,7 +291,7 @@
 	 		}
 	 	}
 	 	else {
-	 		$d['fail'] = 'This is empty... You have nothing to say ?';
+	 		$d['fail'] = 'Comment is empty...';
 	 		$this->set($d);
 	 	}
  	
@@ -327,36 +344,47 @@
  		$vars = array();
 
 
-		if($this->request->post() ){
+		if($this->request->get() && self::$enablePreview){
 
-			if($this->request->post('url')) {
+			if($this->request->get('url')) {
 
+				//get url
+				$url = trim($this->request->get('url'));				
+				$url = urldecode($url);								
+				
+				//if url is not valid
+				//Same regex as in the javascript
+				$pattern = "/\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:(?:[^\s()<>.]+[.]?)+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\))+(?:\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))/";				//$pattern = '/^http\:\/\/[a-zA-Z0-9\-\.\_]+\.[a-zA-Z]{2,4}(\/\S*)?$/'; //old pattern
+				//if dont match regex OR have no '.' OR start with '.'
+				if(!preg_match($pattern,$url) || strpos($url,'.')===0 || strpos($url,'.')=='') exit('not url');
 
-				$url = trim($this->request->post('url'));								
-				$pattern = '/^http\:\/\/[a-zA-Z0-9\-\.\_]+\.[a-zA-Z]{2,4}(\/\S*)?$/';				
-				if(!preg_match($pattern,$url)) exit('not url');
+				//parse url and get domain & extension
+				$purl = $this->request->parse_url($url);
+				$domain = $purl['domain'];
+				$extension = $purl['extension'];
 
-				$url_domain = getUrlDomain($url);
+				//default params
 				$image_extension = array('jpg','jpeg','gif','png');
-				$extension = pathinfo($url, PATHINFO_EXTENSION);
 				$default_thumbnail = 'http://localhost/ypp/img/sign.png';
 
-				if(in_array($extension,$image_extension)){
+				//If the url ends with an image extension
+				if(!empty($purl['path']) && in_array(substr($purl['path'],strripos($purl['path'],'.')+1),$image_extension)){
 
 					$type             = 'img';
 					$title            = $url;
-					$description      = 'Image from '.getUrlDomain($url,true);
+					$description      = 'Image from '.$domain;
 					$thumbnails       = array();
 					$thumbnails[]     = $url;
 					$thumbnails_first = $url;
-					$contentURL       = $url;			
+					$media = $url;
 
 				
 				}
-				elseif($url_domain =='youtube') {
+				elseif($domain =='youtube') {
 
 							$video_id                      = getYTid($url);
-							
+							$type                          = 'video';
+
 							require_once 'Zend/loader.php';
 							
 							Zend_Loader::loadClass('Zend_Gdata_Youtube');
@@ -367,137 +395,143 @@
 							$title                         = $videoEntry->getVideoTitle();
 							$description                   = $videoEntry->getVideoDescription();					
 							$ytthumbnails                  = $videoEntry->getVideoThumbnails();
-							$contentURL                    = $videoEntry->getFlashPlayerUrl();
-							$t                             = array();
-							foreach ($ytthumbnails as $key => $value) {
-							
-							
-							$thumbnails[]                  = $value['url'];
+							$player_url                    = $videoEntry->getFlashPlayerUrl();
+							$media = '<object width="400" height="225">
+											  <param name="movie" value="'.$player_url.'&autoplay=1"></param>
+											  <param name="allowFullScreen" value="true"></param>
+											  <param name="allowScriptAccess" value="always"></param>
+											  <embed src="'.$player_url.'&autoplay=1" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="225"></embed>
+											</object>';
+							$media = urlencode($media);
+
+							$thumbnails = array();
+							foreach ($ytthumbnails as $key => $value) {														
+								$thumbnails[]                  = $value['url'];
 							}			
-							$thumbnails_first              = $thumbnails[0];
-							$embed_code                    = make_valid_youtube_embed_code($video_id);
-							$type                          = 'video';
-				}
-				elseif( $url_domain == 'dailymotion') {
-
-							$video_id = getDMid($url);
+							$thumbnails_first              = $thumbnails[0];							
 							
-							$html = file_get_contents_curl($url);
-
-							if($html){
-
-								$doc                           = new DOMDocument();
-								@$doc->loadHTML($html);
-								
-								$metas                         = $doc->getElementsByTagName('meta');
-								for( $i                        = 0; $i < $metas->length; $i++){
-								$meta                          = $metas->item($i);
-								if($meta->getAttribute('name') =='title')
-								$title                         = $meta->getAttribute('content');
-								if($meta->getAttribute('name') =='description')
-								$description                   = $meta->getAttribute('content');
-								}
-								
-								$thumbails                     = array();
-								$thumbnails[]                  = 'http://www.dailymotion.com/thumbnail/video/'.$video_id;
-								$thumbnails_first              = $thumbnails[0];
-								$embed_code                    = make_valid_dailymotion_embed_code($video_id);
-								$contentURL                    = "http://www.dailymotion.com/swf/".$video_id;
-								$type = 'video';
-
-							}
-							else $type = '404';											
-
 				}
-				elseif( $url_domain == 'vimeo') {
+				elseif( $domain == 'dailymotion') {
+
+							$request_Dailymotion_API = "http://www.dailymotion.com/services/oembed?format=json&url=".$url;
+
+							if($json = file_get_contents_curl($request_Dailymotion_API)){
 					
-							$video_id         = getVIMEOid($url);
-							$video_info       = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$video_id.".php"));
+								$json = json_decode($json);
+
+								$type             = 'video';
+								$title            = $json->title;
+								$description      = $json->title.' - <a href="'.$json->author_url.'">'.$json->author_name.'</a>';
+								$thumbnails       = array();
+								$thumbnails[]     = $json->thumbnail_url;
+								$thumbnails_first = $thumbnails[0];
+								$media     = urlencode($json->html);
+								
+							}
+							else $type = '404';										
+
+				}
+				elseif( $domain == 'vimeo') {
 							
-							$type             = 'video';
-							$title            = $video_info[0]['title'];
-							$description      = $video_info[0]['description'];
-							$thumbnails       = array();
-							$thumbnails[]     = $video_info[0]['thumbnail_small'];
-							$thumbnails[]     = $video_info[0]['thumbnail_medium'];
-							$thumbnails[]     = $video_info[0]['thumbnail_large'];
-							$thumbnails_first = $thumbnails[0];
-							$embed_code       = make_valid_vimeo_embed_code($video_id);
-							$contentURL       = "http://vimeo.com/moogaloop.swf?clip_id=".$video_id."&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=ffffff&amp;fullscreen=1&amp;autoplay=0&amp;loop=0";
+							$video_id         = getVIMEOid($url);
+							$request_VIMEO_API = 'http://vimeo.com/api/v2/video/'.$video_id.'.json';
+
+							if($json = file_get_contents_curl($request_VIMEO_API)){
+							
+								$json = json_decode($json);
+								$json = $json[0];
+
+								$type             = 'video';
+								$title            = $json->title;
+								$description      = $json->description;
+								$thumbnails       = array();
+								$thumbnails[]     = $json->thumbnail_small;
+								$thumbnails[]     = $json->thumbnail_medium;
+								$thumbnails[]     = $json->thumbnail_large;
+								$thumbnails_first = $thumbnails[0];
+								$media = urlencode("<iframe src='http://player.vimeo.com/video/".$video_id."?title=0&byline=0&autoplay=1' width='400' height='270' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>");
+								//$contentURL       = "http://vimeo.com/moogaloop.swf?clip_id=".$video_id."&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=ffffff&amp;fullscreen=1&amp;autoplay=0&amp;loop=0";
+							}
+							else $type = '404';
 
 				}
 				else {
 
-							$html = file_get_contents_curl($url);
+							if($html = file_get_contents_curl($url)){
 
+							
+								if($html){
 
+									$type = 'link';
+									$media = $url;
+									libxml_use_internal_errors(true); //useful to silent html error
+									$doc = new DOMDocument();
+									@$doc->loadHTML($html);
+									$nodes      = $doc->getElementsByTagName('title');
+									$title      = $nodes->item(0)->nodeValue;
+									$metas      = $doc->getElementsByTagName('meta');
+	
 
-							if($html){
-								$doc = new DOMDocument();
-								@$doc->loadHTML($html);
-								$nodes      = $doc->getElementsByTagName('title');
-								$title      = $nodes->item(0)->nodeValue;
-								$metas      = $doc->getElementsByTagName('meta');
-								$contentURL = $url;	
+									for ($i = 0; $i < $metas->length; $i++)
+									{
+									    $meta = $metas->item($i);			    
+									    if($meta->getAttribute('name') == 'description')
+									        $description = $meta->getAttribute('content');
+									}
 
-								for ($i = 0; $i < $metas->length; $i++)
-								{
-								    $meta = $metas->item($i);			    
-								    if($meta->getAttribute('name') == 'description')
-								        $description = $meta->getAttribute('content');
-								}
+									$image_regex = '/<img[^>]*'.'src=[\"|\'](.*)[\"|\']/Ui';
+									preg_match_all($image_regex, $html, $images, PREG_PATTERN_ORDER);
+									$images = $images[1];
+									if(!empty($images)){
 
-								$image_regex = '/<img[^>]*'.'src=[\"|\'](.*)[\"|\']/Ui';
-								preg_match_all($image_regex, $html, $images, PREG_PATTERN_ORDER);
-								$images = $images[1];
-								if(!empty($images)){
-
-									foreach ($images as $key => $value) {
-										
-										//we get only images with absolute url
-										if(strpos($value,'http://')===0 || strpos($value,'https://')===0 || strpos($value,'www')===0 ){
-											$thumbnails[] = $value;											
-										}
-										
-										else {	
+										foreach ($images as $key => $value) {
 											
+											//we get only images with absolute url
+											if(strpos($value,'http://')===0 || strpos($value,'https://')===0 || strpos($value,'www')===0 ){
+												$thumbnails[] = $value;											
+											}
+											
+											else {	
+												
 
-											$thumbnails[] = getUrlDomain($url,true,true).$value;											
+												$thumbnails[] = $purl['all'].$value;											
+											}
+											
 										}
 										
+										if(!empty($thumbnails)){
+											$thumbnails_first = $thumbnails[0];
+										}
+									}
+									else {
+
+										$thumbnails = array($default_thumbnail);
+										$thumbnails_first = $default_thumbnail;
 									}
 									
-									if(!empty($thumbnails)){
-										$thumbnails_first = $thumbnails[0];
-									}
 								}
-								else {
-
-									$thumbnails = array($default_thumbnail);
-									$thumbnails_first = $default_thumbnail;
-								}
-								$type = 'url';
+								else $type = '404';	
 							}
-							else $type = '404';							
+							else $type = '404';						
 					}
 
 			}
 			
 
-			$vars['type']             = (isset($type))? $type : '';
+			$vars['type']             = (isset($type))? $type : '404';
 			$vars['url']              = (isset($url))? $url : '';
 			$vars['title']            = (isset($title))? $title : '';
 			$vars['description']      = (isset($description))? $description : '';
 			$vars['thumbnails']       = (isset($thumbnails))? $thumbnails : '';
-			$vars['thumbnails_first'] = (isset($thumbnails_first))? $thumbnails_first : '';
-			$vars['video_id']         = (isset($video_id))? $video_id : '';
-			$vars['embed_code']       = (isset($embed_code))? $embed_code : '';
-			$vars['contentURL']       = (isset($contentURL))? $contentURL : '';
+			$vars['thumbnails_first'] = (isset($thumbnails_first))? $thumbnails_first : '';			
+			$vars['media']       = (isset($media))? $media : '';
 
 			//debug($vars);
 
 			$this->set($vars);
 		}
+
+		$this->set(array('type'=>'404'));
 
  	}
 
