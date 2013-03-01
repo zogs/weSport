@@ -125,7 +125,6 @@
 
  		}
  		
- 		// debug($sql);
  		$pre = $this->db->prepare($sql);
  		$pre->execute();
 
@@ -135,6 +134,24 @@
  			$this->reportPDOError($pre,__FUNCTION__,$sql);	
  		
  	}
+
+ 	public function sqlPrepare($conditions){
+
+ 		$c = '';
+ 		$cond = array();
+ 		foreach ($conditions as $k => $v) {
+	 				
+	 				$cond[] = "$k=:$k";
+		}
+		$c .= implode(' AND ',$cond);
+ 		return $c;
+ 	}
+
+ 	public function sqlValues($cond){
+
+ 		return $cond;
+ 	}
+
 
  	public function reportPDOError($pdo,$function,$sql){
 

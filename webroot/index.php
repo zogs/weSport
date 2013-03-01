@@ -18,6 +18,9 @@ include '../core/functions.php';
 //Date time zone
 date_default_timezone_set('Europe/Paris');
 
+//
+header('Content-Type: text/html; charset=UTF-8');
+
 //Errors gestion
 include '../core/errors.php';
 function uncatchError($errno, $errstr, $errfile, $errline ) {

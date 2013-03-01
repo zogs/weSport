@@ -757,112 +757,112 @@ class UsersController extends Controller{
     
 
 
-    public function index(){
+    // public function index(){
 
-    	if($this->session->user()){
-    		$this->thread();
-    	}
-    	else {
-    		$this->redirect('users/login');
-    	}
+    // 	if($this->session->user()){
+    // 		$this->thread();
+    // 	}
+    // 	else {
+    // 		$this->redirect('users/login');
+    // 	}
     	
-    }
+    // }
 
     /**
     *    
 	*	User Thread
 	*
     */ 
-    public function thread(){
+    // public function thread(){
 
-    	$this->view = 'users/thread';
-    	$this->loadModel('Users');
-    	$this->loadModel('Manifs');
-    	$this->loadModel('Comments');
+    // 	$this->view = 'users/thread';
+    // 	$this->loadModel('Users');
+    // 	$this->loadModel('Manifs');
+    // 	$this->loadModel('Comments');
 
-    	//if user is logged
-    	if($this->session->user()){
+    // 	//if user is logged
+    // 	if($this->session->user()){
 
-    		//if user is numeric
-    		if(is_numeric($this->session->user('user_id'))){
+    // 		//if user is numeric
+    // 		if(is_numeric($this->session->user('user_id'))){
 
-    			//if user is a group, redirect to group page
-    			if($this->session->user('status')=='group'){
+    // 			//if user is a group, redirect to group page
+    // 			if($this->session->user('status')=='group'){
 
-    				$group = $this->Users->findFirst(array(
-    					'table'=>'groups',
-    					'fields'=>'group_id as id, slug',
-    					'conditions'=>array('user_id'=>$this->session->user('user_id'))
-    				));
+    // 				$group = $this->Users->findFirst(array(
+    // 					'table'=>'groups',
+    // 					'fields'=>'group_id as id, slug',
+    // 					'conditions'=>array('user_id'=>$this->session->user('user_id'))
+    // 				));
 
-    				$this->redirect('groups/view/'.$group->id.'/'.$group->slug);
-    			} 
+    // 				$this->redirect('groups/view/'.$group->id.'/'.$group->slug);
+    // 			} 
     				
-    			//set $user_id
-    			$user_id = $this->session->user('user_id');
+    // 			//set $user_id
+    // 			$user_id = $this->session->user('user_id');
 
-    			//User
-    			$d['user'] = $this->Users->findUsers(array('fields'=>'user_id,login,avatar,bonhom', 'conditions'=>array('user_id'=>$user_id)));
-    			$d['user'] = $d['user'][0];
-    			//$d['user']->context = 'userThread';
-    			//$d['user']->context_id = $user_id;
-    			//Participations
-    			$d['protests'] = $this->Users->findParticipations('P.id,P.manif_id,M.logo,D.nommanif',array($user_id));
+    // 			//User
+    // 			$d['user'] = $this->Users->findUsers(array('fields'=>'user_id,login,avatar,bonhom', 'conditions'=>array('user_id'=>$user_id)));
+    // 			$d['user'] = $d['user'][0];
+    // 			//$d['user']->context = 'userThread';
+    // 			//$d['user']->context_id = $user_id;
+    // 			//Participations
+    // 			$d['protests'] = $this->Users->findParticipations('P.id,P.manif_id,M.logo,D.nommanif',array($user_id));
 
-	    		/*	
-    			//Timeline
-    			$timing = $this->Users->findUserThread($user_id);
-    			$thread = array();
-    			//Fill the timeline
-    			foreach($timing as $t){
+	   //  		/*	
+    // 			//Timeline
+    // 			$timing = $this->Users->findUserThread($user_id);
+    // 			$thread = array();
+    // 			//Fill the timeline
+    // 			foreach($timing as $t){
 
-					$a          = array();
-					$a['TYPE']  = $t->TYPE;
-					$a['DATE']  = $t->date;
-					$a['RNAME'] = $t->relatedName;
-					$a['RID']   = $t->relatedID;
-					$a['RSLUG'] = $t->relatedSlug;
-					$a['RLOGO'] = $t->relatedLogo;
+				// 	$a          = array();
+				// 	$a['TYPE']  = $t->TYPE;
+				// 	$a['DATE']  = $t->date;
+				// 	$a['RNAME'] = $t->relatedName;
+				// 	$a['RID']   = $t->relatedID;
+				// 	$a['RSLUG'] = $t->relatedSlug;
+				// 	$a['RLOGO'] = $t->relatedLogo;
 
-    				if( $t->TYPE == 'PROTEST'){
+    // 				if( $t->TYPE == 'PROTEST'){
 
-    					$a['OBJ'] = $this->Manifs->findProtesters(array(
-    						'fields'=>array('P.id as pid','U.user_id','U.login','P.date','M.logo','M.manif_id','D.name','D.slug'),
-    						'conditions'=>array('P.id'=>$t->id)
-    						));
-    				}
-    				elseif( $t->TYPE == 'COMMENT'){
+    // 					$a['OBJ'] = $this->Manifs->findProtesters(array(
+    // 						'fields'=>array('P.id as pid','U.user_id','U.login','P.date','M.logo','M.manif_id','D.name','D.slug'),
+    // 						'conditions'=>array('P.id'=>$t->id)
+    // 						));
+    // 				}
+    // 				elseif( $t->TYPE == 'COMMENT'){
 
-    					$a['OBJ'] = $this->Comments->findComments(array(
-    						'fields'=>array('*'),
-    						'comment_id'=> $t->id
-    						));
+    // 					$a['OBJ'] = $this->Comments->findComments(array(
+    // 						'fields'=>array('*'),
+    // 						'comment_id'=> $t->id
+    // 						));
 
-    				}
-    				elseif( $t->TYPE == 'NEWS'){
+    // 				}
+    // 				elseif( $t->TYPE == 'NEWS'){
 
-    					$a['OBJ'] = $this->Comments->findComments(array(
-    						'fields'=>array('*'),
-    						'comment_id'=> $t->id
-    						));
-    				}
+    // 					$a['OBJ'] = $this->Comments->findComments(array(
+    // 						'fields'=>array('*'),
+    // 						'comment_id'=> $t->id
+    // 						));
+    // 				}
 
-    				$thread[] = $a;
-    			}
-				*/
+    // 				$thread[] = $a;
+    // 			}
+				// */
 
     			
 
-    		}
-    	}
-    	else {
-    		$this->redirect('/');
-    	}
+    // 		}
+    // 	}
+    // 	else {
+    // 		$this->redirect('/');
+    // 	}
 
 
-    	$this->set($d);
+    // 	$this->set($d);
 
-    }  
+    // }  
 
 }
 
