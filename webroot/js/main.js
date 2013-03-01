@@ -566,7 +566,7 @@ $(document).ready(function(){
             }
 
             //ii there is no more comments to show
-            else if(data.commentsLeft==0){
+            else if(data.commentsLeft<=0){
             	
             	 $("#showMoreComments").hide();
        	     	 $("#noMoreComments").show();		       	     
