@@ -294,6 +294,8 @@ class EventsModel extends Model{
 
 		if(!empty($res))
 			return new Event($res[0]);
+		else
+			return new Event();
 		
 	}
 
@@ -350,8 +352,13 @@ class EventsModel extends Model{
 				$s->date = date('Y-m-d');
 				$s->date_event = $event->date;
 				$s->table = 'sporters';
+				debug('save partication');
 				$this->save($s);			
-			}			
+			}	
+			else {
+				throw new zException("User already participate event ".$event->id, 1);
+				
+			}		
 		}
 
 		return true;
@@ -365,8 +372,9 @@ class EventsModel extends Model{
 			'fields'=>'user_id',
 			'conditions'=>array('event_id'=>$event_id)));
 
-		if(empty($participants)) return false;
-
+		if(empty($participants)) {			
+			return false;
+		}
 		return $participants;
 	}
 
@@ -424,7 +432,7 @@ class Event {
 	}
 
 	public function isAdmin($user_id){
-	
+
 		if($this->user_id===$user_id) return true;
 		return false;
 	}

@@ -276,13 +276,18 @@ class EventsController extends Controller{
 						//get id of the event
 						if(isset($this->Events->id))
 						$event_id = $this->Events->id;
+						
+						//get event
+						$evt = $this->Events->findEventById($event_id);
 					
 						//save organizator participation
 						$check = $this->Events->findParticipants($event_id);
-						if(empty($check) || !in_array($this->session->user()->getID(),$check)){
+
+						if($check == false || !in_array($this->session->user()->getID(),$check)){
 
 							$u = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
-							$this->Events->saveParticipants($u,$newEvent);
+
+							$this->Events->saveParticipants($u,$evt);
 						}
 
 						//email the changes 
@@ -309,10 +314,10 @@ class EventsController extends Controller{
 					//$this->redirect('events/view/'.$event_id);
 				}
 				else{
-
+					$evt = $newEvent;
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
 				}
-			$evt = $this->Events->findEventById($event_id);
+			
 		
 		}
 		else {							

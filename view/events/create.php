@@ -1,5 +1,6 @@
 <div class="createEvent">
 	<?php echo $this->session->flash(); ?>
+
 	<div class="mini-profile module">
 		<img class="avatar size32" src="<?php echo Router::webroot($this->session->user()->getAvatar());?>" alt="">
 		<a class="user" href="<?php echo Router::url('users/thread');?>">

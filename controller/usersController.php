@@ -20,12 +20,11 @@ class UsersController extends Controller{
 				$field = 'login';
 			
 			$user = $this->Users->findFirst(array(
-				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang',
+				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account',
 				'conditions' => array($field=>$login))
 			);
 			
-			
-			if(!empty($user)){
+			if($user->exist()){
 
 				if($user->hash == md5($user->salt.$data->password)){
 
@@ -35,7 +34,7 @@ class UsersController extends Controller{
 					unset($_SESSION['token']);
 
 					$this->user = $user;
-					
+
 					$this->session->write('user', $user);
 					$this->session->setToken();				
 					$this->session->setFlash('Vous êtes maintenant connecté');

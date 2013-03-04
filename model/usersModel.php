@@ -287,7 +287,7 @@ class User {
 
 
 	public $user_id = 0;
-	public $statut  = 'visitor';
+	public $role  = 'visitor';
 	public $avatar  = 'img/logo_yp.png';
 	public $account = 'visitor';
 
@@ -302,6 +302,12 @@ class User {
 	public function getID(){
 
 		return $this->user_id;
+	}
+
+	public function exist(){
+
+		if($this->user_id==0) return false;
+		return true;
 	}
 
 	public function getLogin(){
@@ -322,7 +328,7 @@ class User {
 	}
 
 	public function getRole(){
-		return $this->statut;
+		return $this->role;
 	}
 
 	public function isLog(){
