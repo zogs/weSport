@@ -17,6 +17,14 @@ class Session {
 				$user = new User();
 				$user->setlang($this->get_client_language(array_keys(Conf::$languageAvailable,Conf::$languageDefault)));
 				$this->write('user',$user);
+			}
+			//destroy session if user in not from User class
+			elseif($_SESSION['user'] instanceof User){
+
+				if ( isset( $_COOKIE[session_name()] ) )
+					setcookie( session_name(), “”, time()-3600, “/” );
+				$_SESSION = array();
+				session_destroy();
 			}			
 			
 		}
