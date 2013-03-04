@@ -8,6 +8,7 @@ class Session {
 		if(!isset($_SESSION)){
 			session_start();
 
+
 			if(!isset($_SESSION['token'])){
 				$this->setToken();
 			}
@@ -21,8 +22,9 @@ class Session {
 			//destroy session if user in not from User class
 			elseif($_SESSION['user'] instanceof User){
 
-				if ( isset( $_COOKIE[session_name()] ) )
-					setcookie( session_name(), “”, time()-3600, “/” );
+				if ( isset( $_COOKIE[session_name()] ) ){
+					setcookie( session_name(), '', time()-3600, '/' );
+				}
 				$_SESSION = array();
 				session_destroy();
 			}			

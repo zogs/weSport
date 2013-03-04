@@ -1,9 +1,7 @@
 <div class="homepage">
 
 	<?php echo $this->session->flash() ;?>
-	<?php //debug($this->cookieEventSearch->arr());
-
-	 ?>
+	<?php //debug($this->cookieEventSearch->arr());?>
 	<div class="formular">
 
 			
