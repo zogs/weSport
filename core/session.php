@@ -20,7 +20,7 @@ class Session {
 				$this->write('user',$user);
 			}
 			//destroy session if user in not from User class
-			elseif($_SESSION['user'] instanceof User){
+			elseif(!$_SESSION['user'] instanceof User){
 
 				if ( isset( $_COOKIE[session_name()] ) ){
 					setcookie( session_name(), '', time()-3600, '/' );
