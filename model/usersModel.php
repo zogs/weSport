@@ -10,7 +10,7 @@ class UsersModel extends Model{
 				'message' => 'Vous devez choisir un pseudo'		
 				),
 			'email' => array(
-				'rule' => 'email',
+				'rule' => '[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})',
 				'message' => "L'adresse email n'est pas valide"
 				),
 			'password' => array(
@@ -22,21 +22,20 @@ class UsersModel extends Model{
 				'message' => "Vos mots de passe ne sont pas identiques"
 				),
 			'prenom' => array(
-				'rule'=> 'optional',
+				'rule'=> 'optionnal',
 				),
 			'nom' => array(
-				'rule' => 'optional',
+				'rule' => 'optionnal',
 				),
 			'age' => array(
 				'rules'=> array(
 							array(
-
-								'rule'=>"regex",
-								'regex'=>'19[0-9]{1}[0-9]{1}',
+								'rule'=> '19[0-9]{1}[0-9]{1}',
 								'message'=> "Between 1900 and 1999..."
 							),
 							array(
-								'rule'=>'optional',								
+								'rule'=>'optionnal',
+								'message'=>''
 							)
 						)
 				)
@@ -48,24 +47,22 @@ class UsersModel extends Model{
 								'rule' => 'notEmpty',
 								'message' => 'Your login is empty'
 									),
-							array('rule' => 'regex',
-								'regex'=> '.{5,30}',
+							array('rule' => '.{5,20}',
 								'message' => 'Login between 5 and 20 caracters'
 								)
 							)
 				),
 			'email' => array(
-				'rule' => 'email',
+				'rule' => '[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})',
 				'message' => "L'adresse email n'est pas valide"
 				)
 		),
 		'account_profil' => array(
-				
+			
 		),
 		'recovery_mdp' => array(
 			'password' => array(
-				'rule' => 'regex',
-				'regex' => '.{5,30}',
+				'rule' => '.{5,20}',
 				'message' => "Votre mot de passe doit etre entre 5 et 20 caracteres"
 				),
 			'confirm' => array(
@@ -79,8 +76,7 @@ class UsersModel extends Model{
 				'message' => "Votre mot de passe doit contenir entre 5 et 20 caracteres"
 				),
 			'password' => array(
-				'rule' => 'regex',
-				'regex' => '.{5,30}',
+				'rule' => '.{5,20}',
 				'message' => "Votre mot de passe doit etre entre 5 et 20 caracteres"
 				),
 			'confirm' => array(
@@ -94,20 +90,19 @@ class UsersModel extends Model{
 				'message' => "Enter your password"
 				)
 		),
-		'account_avatar'=>array(
-			'avatar'=>array(
-						'rule'=>'file',
-						'params'=>array(
-							'destination'=>'media/user/avatar',
-							'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
-							'extentions_error'=>'Your avatar is not an image file',
-							'max_size'=>50000,
-							'max_size_error'=>'Your image is too big',
-							'ban_php_code'=>true
-							),
-						)	
-			),
+		'account_avatar'=>array(),
 	);
+
+	public $validates_files = array(
+		'avatar'=>array(
+			'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
+			'extentions_error'=>'Your avatar is not an image file',
+			'max_size'=>50000,
+			'max_size_error'=>'Your image is too big',
+			'ban_php_code'=>true
+			)
+	);
+
 
 	public function saveUser($user,$user_id = null){
 
@@ -151,6 +146,33 @@ class UsersModel extends Model{
 
 	}
 
+	public function saveUserAvatar($user_id){
+
+ 		//Les vérifications sont faites dans model/validates
+
+ 		$tmp = $_FILES['avatar'];
+ 		$ext = $extention = substr(strrchr($tmp['name'], '.'),1);
+ 
+ 		$newname = 'u'.$user_id.'.'.$ext;
+ 		$directory = 'media/user/avatar';
+ 		$destination = $directory.'/'.$newname;
+
+ 		
+ 		if(move_uploaded_file($tmp['tmp_name'], $destination)){
+		
+ 			$user = new StdClass();
+ 			$user->user_id = $user_id;
+ 			$user->avatar = $destination;
+
+ 			$this->table = 'users';
+ 			if($this->save($user)){
+ 				return true;
+ 			}
+ 		}
+ 		else return false;
+
+	}
+
 	public function findUsers($req){
 
 		$sql = 'SELECT ';
@@ -161,14 +183,27 @@ class UsersModel extends Model{
  			else
  				$sql .= $req['fields'];
  		}
- 		else $sql .= '* ';
+ 		else $sql .= '*';
 
 
  		$sql .= " FROM users									
  					WHERE ";
 
 
- 		$sql .= $this->sqlConditions($req['conditions']);
+ 		 if(isset($req['conditions'])){ 			
+ 			if(!is_array($req['conditions']))
+ 				$sql .= $req['conditions']; 				
+ 			else {
+	 			$cond = array();
+		 			foreach ($req['conditions'] as $k => $v) {
+		 				if(!is_numeric($v))
+		 					$v = '"'.mysql_escape_string($v).'"';	 							 				
+		 				$cond[] = "$k=$v";	 			
+		 			}
+		 			$sql .= implode(' AND ',$cond);
+ 			}
+ 			
+ 		}
 
  		if(isset($req['order'])){
  			if($req['order'] == 'random') $sql .= ' ORDER BY rand()';
@@ -179,30 +214,70 @@ class UsersModel extends Model{
 			$sql .= ' LIMIT '.$req['limit'];
  		}
 
- 		  // debug($sql);
+ 		//debug($sql);
  		$pre = $this->db->prepare($sql);
  		$pre->execute();
- 		if($pre->errorCode()==0)
-			return $pre->fetchAll(PDO::FETCH_OBJ); 		
- 		else
- 			$this->reportPDOError($pre,__FUNCTION__,$sql);	 		
+ 		$results = $pre->fetchAll(PDO::FETCH_OBJ);
  		
  		$users = array();
  		foreach ($results as $user) {
-
- 			//$user = $this->JOIN('groups',array('group_id','logo as avatar','slug'),array('user_id'=>$user->user_id),$user); 			
+ 					
  			$users[] = new User($user); 
  		}
 
  		return $users;
 	}
 
-
-	public function findFirstUser($req){
+	public function findFirst($req){
 
 		return current($this->findUsers($req));
 	}
 
+
+
+	// public function findUserThread($user_id){
+
+
+	// 	$sql=" SELECT P.id,
+	//                  'PROTEST' AS TYPE,
+	//                  P.date,	                 
+	//                  D.name as relatedName,
+	//                  D.manif_id as relatedID,
+	//                  D.slug     as relatedSlug,
+	//                  I.logo     as relatedLogo
+
+ //        		FROM manif_participation as P
+ //        		LEFT JOIN manif_descr as D ON D.manif_id=P.manif_id AND D.lang='".$this->session->user()->getLang()."'	
+ //        		LEFT JOIN manif_info as I ON I.manif_id=P.manif_id
+ //           		WHERE P.user_id = $user_id
+ //      		UNION
+ //        --   	SELECT `id`,
+	//        --           'COMMENT' AS TYPE,
+	//        --           `date`
+ //        --     	FROM `manif_comment`
+	//        --     	WHERE user_id = $user_id AND reply_to=0
+ //      		-- UNION
+ //       		SELECT C.id,
+ //                	'NEWS' AS TYPE,
+ //                  	C.date,
+ //                  	D.name as relatedName,
+ //                  	D.manif_id as relatedID,
+ //                  	D.slug     as relatedSlug,
+ //                  	I.logo     as relatedLogo
+ //              	FROM manif_comment AS C
+ //              	LEFT JOIN manif_participation AS P ON P.user_id = $user_id
+ //              	LEFT JOIN manif_descr as D ON D.manif_id=P.manif_id AND D.lang='".$this->session->user()->getLang()."'
+ //              	LEFT JOIN manif_info as I ON I.manif_id=P.manif_id	
+ //             	WHERE C.context_id = P.manif_id AND C.context='manif' AND C.type='news'
+	// 		ORDER BY date DESC
+	// 		";
+
+
+	// 	$pre = $this->db->prepare($sql);
+ // 		$pre->execute();
+ // 		return $pre->fetchAll(PDO::FETCH_OBJ);
+
+	// }
 
 	
 }
@@ -210,12 +285,23 @@ class UsersModel extends Model{
 
 class User {
 
-	public function __construct( $fields ){
+
+	public $user_id = 0;
+	public $statut  = 'visitor';
+	public $avatar  = 'img/logo_yp.png';
+	public $account = 'visitor';
+
+	public function __construct( $fields = array() ){
 
 		foreach ($fields as $field => $value) {
 			
 			$this->$field = $value;
 		}
+	}
+
+	public function getID(){
+
+		return $this->user_id;
 	}
 
 	public function getLogin(){
@@ -227,8 +313,36 @@ class User {
 	public function getAvatar(){
 
 		if(isset($this->avatar)&&!empty($this->avatar)) return $this->avatar;
-		else return 'img/logo.png';
+		else return 'img/bonhom/'.$this->bonhom.'.gif';
 	}
+
+	public function getBonhom(){
+
+		return $this->bonhom;
+	}
+
+	public function getRole(){
+		return $this->statut;
+	}
+
+	public function isLog(){
+		if($this->user_id!==0) return true;
+	}
+
+	public function setLang($lang){
+		$this->lang = $lang;
+	}
+
+	public function getLang(){
+		return $this->lang;
+	}
+
+	public function isMrZ(){
+
+		if($this->statut=='admin') return true;
+		else return false;
+	}
+
 
 
 }

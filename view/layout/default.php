@@ -7,7 +7,7 @@
 	<title><?php echo isset($title_for_layout)?$title_for_layout : Conf::$website;?></title>
 	
 </head>
-<body data-user_id="<?php echo $this->session->user('user_id'); ?>">
+<body data-user_id="<?php echo $this->session->user()->getID(); ?>">
 
 
 	<div class="navbar navbar-fixed-top">
@@ -24,7 +24,7 @@
 				
 				<?php
 				//Admin section button
-				if($this->session->user('role')=='admin'):?>
+				if($this->session->user()->getRole()=='admin'):?>
 				<li><a href="<?php echo Router::url('admin/posts/index');?>">Admin.</a></li>
 				<?php endif;
 
@@ -38,10 +38,10 @@
 			
 
 			<ul class="nav pull-right">
-				<?php if ($this->session->user()): ?>
+				<?php if ($this->session->user()->isLog()): ?>
 					<li><a href="<?php echo Router::url('users/account');?>">
-							<img class="nav-avatar" src="<?php echo Router::webroot($this->session->user('avatar')); ?>" />	
-							<span class="nav-login"><?php echo $this->session->user('login'); ?></span>
+							<img class="nav-avatar" src="<?php echo Router::webroot($this->session->user()->getAvatar()); ?>" />	
+							<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
 					</a></li>
 					<li class="dropdown">	
 			

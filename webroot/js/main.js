@@ -26,23 +26,46 @@ $(document).ready(function(){
 	  				hiddencity.val(data)},
 	  		});
   	}
+
+
 	/*===========================================================
 		Security token send with AJAX /!\
 	============================================================*/
 
-	$("body").bind("ajaxSend", function(elm, xhr, settings){
-		if (settings.type == "POST") {
-			if(settings.data) {
-				settings.data += "&token="+CSRF_TOKEN;				
-			}		
-		}
-		console.log(settings.data);
-	});
-	$.ajaxSetup({      
-	   cache: false,    
-	   data : null ,
-	   async:true     
-	 });
+	$(document)	
+		//Add token in POST data	
+		.ajaxSend(function(elm,xhr,settings){
+
+			console.log(elm);
+			console.log(xhr);
+			xhr.overrideMimeType('text/html; charset=UTF-8');
+			if (settings.type == "POST") {
+				if(settings.data) {
+					settings.data += "&token="+CSRF_TOKEN;				
+				}		
+			}
+		})
+		//Log the ajax object
+		.ajaxComplete(function(event,xhr,settings){
+			console.log(settings);
+		})
+		//alert error in url
+		.ajaxError(function(event,jqxhr,settings,thrownError){
+				
+			console.log(thrownError);
+			
+		});
+		//Default value for all ajax request
+		$.ajaxSetup({			
+				cache: false,
+				data : null,
+				async: false,
+				crossDomain: true,
+				xhrFields: {
+				    withCredentials: true
+				  }
+			})
+
 
 	/*===========================================================
 		Tooltip bootstrap
@@ -181,14 +204,7 @@ $(document).ready(function(){
         ============================================================*/
         $(".showReplies").livequery('click',function(){
         		$(this).parent().next('.hiddenReplies').show();
-        		$(this).next('.hideReplies').show();
-        		$(this).hide();    		
-        		return false;
-        });
-        $(".hideReplies").livequery('click',function(){
-        		$(this).parent().next('.hiddenReplies').hide();
-        		$(this).prev('.showReplies').show();
-        		$(this).hide();    		
+        		$(this).parent().remove();  		
         		return false;
         });
 
@@ -219,7 +235,7 @@ $(document).ready(function(){
             var parent_id = $(this).find('input[name=reply_to]').val();            
 
             $.ajax({
-                type:'POST',
+                type:'GET',
                 url: url,
                 data: datas,
                 success: function( com ){
@@ -299,20 +315,22 @@ $(document).ready(function(){
 	        //get the data from the form
 	        var data = form.serialize();
 
+
+	        console.log(data);
 	        //if comment not empty
 	        if( trim(text) != "") {
 
 	        	//send POST request
 	            $.ajax({
 	            	url:url, 
-	            	type:"POST", 
+	            	type:"GET", 
 	            	data: data, 
 	            	dataType: 'json',
 	                success: function(data){
 	                    
 	                    if(data.success){
 	                    	//display new comments
-	                        show_comments();
+	                        show_comments('new');
 	                        //reset textarea
 	                        textarea.val('');	                        
 	                        //reset preview container  

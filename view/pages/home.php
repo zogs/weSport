@@ -8,7 +8,7 @@
 
 			
 		<form class="homeForm" id="formSearch" method="POST" action="#" >
-			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user('user_id'))) ;?>
+			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
 			<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token() )) ;?>
 			<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>
@@ -30,7 +30,7 @@
 	<div class="events-table">
 		<div class="events-top">
 			<a class="events-nav events-next fright" href="<?php echo Router::url('events/index');?>/+6/">Semaine suivante</a>
-			<a class="events-nav events-prev fleft" href="<?php echo Router::url('events/index');?>/-6/">Semaine précédante</a>
+			<a class="events-nav events-prev fleft" href="<?php echo Router::url('events/index');?>/-6/">Semaine précédente</a>
 		</div>
 		
 		<div class="events-content">

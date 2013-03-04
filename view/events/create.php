@@ -1,9 +1,9 @@
 <div class="createEvent">
 	<?php echo $this->session->flash(); ?>
 	<div class="mini-profile module">
-		<img class="avatar size32" src="<?php echo Router::webroot($this->session->user('avatar'));?>" alt="">
+		<img class="avatar size32" src="<?php echo Router::webroot($this->session->user()->getAvatar());?>" alt="">
 		<a class="user" href="<?php echo Router::url('users/thread');?>">
-			<?php echo $this->session->user('login');?>
+			<?php echo $this->session->user()->getLogin();?>
 		</a>
 	</div>
 
@@ -11,7 +11,7 @@
 		<form class="form module" action="<?php echo Router::url('events/create/'.$event->id);?>" method="POST">
 
 		<?php echo $this->Form->input("id","hidden",array("value"=>$event->id)) ;?>
-		<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user('user_id'))) ;?>
+		<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
 		<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 
 		<?php echo $this->Form->input('title',"Intitulé de l'annonce",array('helper'=>"Petit match entre amis, ...")) ;?>

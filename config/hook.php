@@ -4,7 +4,7 @@ if($this->request->prefix == 'admin'){
 
 
 	//Si l'user n'est pas admin on redirige sur le log in
-	if(!$this->session->user() || $this->session->user('role') != 'admin'){
+	if(!$this->session->user()->isLog() || $this->session->user()->getRole() != 'admin'){
 		$this->redirect('users/login');
 	}
 } ?>

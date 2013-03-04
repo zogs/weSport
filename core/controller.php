@@ -202,7 +202,7 @@ class Controller {
 	public function request($controller,$action, $params = array() ){
 
 		$controller .= 'Controller';
-		require_once ROOT.DS.'controller'.DS.$controller.'.php';
+		//require_once ROOT.DS.'controller'.DS.$controller.'.php';
 		$c = new $controller;
 		$c->request = $this->request;
 		$c->Form = $this->Form;
@@ -255,18 +255,13 @@ class Controller {
 		}
 	}
 
-	public function getLanguage(){
+	public function getLang(){
 
+		if($this->request->get('lang')) return $this->request->get('lang');
+		if($this->session->user()->getLang()) return $this->session->user()->getLang();
+		if($this->CookieRch->read('lang')) return $this->CookieRch->read('lang');
 
-		if($this->session->getLang()){
-			return $this->session->getLang();
-		}
-		else if($this->CookieRch->read('lang')){
-			return $this->CookieRch->read('lang');
-		}
-		else {
-			return Conf::$lang;
-		}
+		return Conf::$languageDefault;
 	}
 
 	public function has($property){

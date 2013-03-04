@@ -19,9 +19,8 @@ class UsersController extends Controller{
 			else
 				$field = 'login';
 			
-			//get the user information
 			$user = $this->Users->findFirst(array(
-				'fields'=> 'user_id,login,avatar,hash,salt,lang,role',
+				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang',
 				'conditions' => array($field=>$login))
 			);
 			
@@ -34,20 +33,13 @@ class UsersController extends Controller{
 					unset( $user->salt);
 					unset($_SESSION['user']);
 					unset($_SESSION['token']);
-									
-					//update last login
-					$last = new stdClass();
-					$last->date_lastlogin = Date::MysqlNow(time());
-					$last->user_id = $user->user_id;
-					$this->Users->save($last);
 
-					//write user in session
 					$this->user = $user;
+					
 					$this->session->write('user', $user);
 					$this->session->setToken();				
 					$this->session->setFlash('Vous êtes maintenant connecté');
 					
-					//redirection
 					$loc = $_SERVER['HTTP_REFERER'];
 					if(strpos($loc,'users/login')||strpos($loc,'users/validate')){
 
@@ -77,12 +69,11 @@ class UsersController extends Controller{
 		
 		unset($_SESSION['user']);
 		unset($_SESSION['token']);
-		session_destroy();
 		$this->session->setFlash('Vous êtes maintenant déconnecté','info',2);	
 		$this->reload();
 
 
-	}	
+	}		
 
 	/*===========================================================	        
 	Register
@@ -115,7 +106,7 @@ class UsersController extends Controller{
 			$user->salt = String::random(10);
 			$user->hash = md5($user->salt.$data->password);
 			$user->codeactiv = String::random(25);					
-			$user->lang = $this->session->user('lang');
+			$user->lang = $this->session->user()->getLang();
 			$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
 			unset($user->accept);						
 			unset($user->password);
@@ -231,17 +222,11 @@ class UsersController extends Controller{
     	/*======================
 			If user is logged
 		========================*/
-    	if($this->session->user('user_id'))
+    	if($this->session->user()->getID())
     	{
 
-    		//if user is a group ,redirect to group page
-    		if($this->session->user('status')=='group'){
-
-    			$this->redirect('groups/account/'.$this->session->user('group_id').'/'.$this->session->user('slug'));
-    		}
-
-
-	    	$user_id = $this->session->user('user_id');
+    		
+	    	$user_id = $this->session->user()->getID();
 	    	
 	    	/*======================
 				If POST DATA are sended
@@ -282,7 +267,7 @@ class UsersController extends Controller{
 									$this->session->setFlash("Your account have been saved !","success");
 
 									//update session login									
-									$user = $this->session->user('obj');
+									$user = $this->session->user();
 			    					if(isset($data->login)) $user->login = $data->login;
 			    					if(isset($data->lang)) $user->lang = $data->lang;			    					
 			    					$this->session->write('user', $user);
@@ -350,7 +335,7 @@ class UsersController extends Controller{
 	    					$u->table = 'users';
 				 			$this->Users->save($u);
 				 				
-				 			$u = $this->session->user('obj');
+				 			$u = $this->session->user();
 				 			$u->avatar = $destination;
 				 			$this->session->write('user', $u);
 	    				}
@@ -759,7 +744,7 @@ class UsersController extends Controller{
 
     // public function index(){
 
-    // 	if($this->session->user()){
+    // 	if($this->session->user()->isLog()){
     // 		$this->thread();
     // 	}
     // 	else {
@@ -781,25 +766,25 @@ class UsersController extends Controller{
     // 	$this->loadModel('Comments');
 
     // 	//if user is logged
-    // 	if($this->session->user()){
+    // 	if($this->session->user()->isLog()){
 
     // 		//if user is numeric
-    // 		if(is_numeric($this->session->user('user_id'))){
+    // 		if(is_numeric($this->session->user()->getID())){
 
     // 			//if user is a group, redirect to group page
-    // 			if($this->session->user('status')=='group'){
+    // 			if($this->session->user()->getRole()=='group'){
 
     // 				$group = $this->Users->findFirst(array(
     // 					'table'=>'groups',
     // 					'fields'=>'group_id as id, slug',
-    // 					'conditions'=>array('user_id'=>$this->session->user('user_id'))
+    // 					'conditions'=>array('user_id'=>$this->session->user()->getID())
     // 				));
 
     // 				$this->redirect('groups/view/'.$group->id.'/'.$group->slug);
     // 			} 
     				
     // 			//set $user_id
-    // 			$user_id = $this->session->user('user_id');
+    // 			$user_id = $this->session->user()->getID();
 
     // 			//User
     // 			$d['user'] = $this->Users->findUsers(array('fields'=>'user_id,login,avatar,bonhom', 'conditions'=>array('user_id'=>$user_id)));

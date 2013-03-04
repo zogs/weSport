@@ -6,7 +6,7 @@
                     }
                     ?>
 
-                    <?php if ($this->session->isLogged()): ?>
+                    <?php if ($this->session->user()->isLog()): ?>
                     <form id="commentForm" action="<?php echo Router::url('comments/add'); ?>" method="POST">                        
 
                         <?php 
@@ -18,7 +18,7 @@
                             !empty($isadmin)
                         ): ?>
 
-                        <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user('avatar')); ?>" />
+                        <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
                         <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="Express yourself here..."></textarea>
                         <input type="hidden" name="context" value="<?php echo $context; ?>" />
                         <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                        
@@ -48,7 +48,7 @@
                         <?php endif; ?>
                     </form>               
                     <?php else: ?>
-                    <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user('avatar')); ?>" />
+                    <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
                     <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="You must log in to post comment"></textarea>
                     <?php endif; ?>
                     
@@ -112,10 +112,10 @@
 
                     <?php if(CommentsController::$allowReply): ?>
                     <div id="hiddenFormReply">
-                         <?php if($this->session->isLogged()):?>
+                         <?php if($this->session->user()->isLog()):?>
                         <form id="formCommentReply" class="formCommentReply" action="<?php echo Router::url('comments/reply'); ?>" method="POST">                
-                            <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user('avatar')); ?>" />
-                            <?php if($this->session->isLogged()):?>
+                            <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
+                            <?php if($this->session->user()->isLog()):?>
                             <textarea name="content" class="formComment" placeholder="Reply here"></textarea> 
                             <input class="btn btn-small" type="submit" name="" value="Send">
                             <?php else: ?>

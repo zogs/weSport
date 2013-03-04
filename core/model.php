@@ -171,19 +171,28 @@
 
 
  	}
+
  	//=======================================
  	// Execute une requete sql
  	public function query($sql,$values = array()){
  		
  		$pre = $this->db->prepare($sql);
  		$pre->execute($values);
- 		if($pre->errorCode()==0)
- 			return $pre->fetchAll(PDO::FETCH_OBJ);
+ 		
+ 		if($pre->errorCode()==0){
+
+ 			if($pre->columnCount()>0){
+ 				return $pre->fetchAll(PDO::FETCH_OBJ);
+ 			}
+ 			else {
+ 				return true;
+ 			}
+ 		}
+ 			
  		else
  			$this->reportPDOError($pre,__FUNCTION__,$sql);
  	}
-
-
+ 	
  	//=========================================
  	// Recupere le premier element d'un requete 
  	// $param $req requete sql et conditions
@@ -312,13 +321,16 @@
  		if($action=='insert'){
  			$this->id = $this->db->lastInsertId();
  		}
+ 		else {
+ 			$this->id = $data->$primaryKey;
+ 		}
 
  		//Set the action
  		$this->action = $action;
 
  		//Si pas d'error retourne true
  		if($pre->errorCode()==0)
-			return true; 		
+			return $this->id; 		
  		else
  			$this->reportPDOError($pre,__FUNCTION__,$sql);	
  		

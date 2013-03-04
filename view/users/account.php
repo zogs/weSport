@@ -6,7 +6,7 @@
 	<div class="dashboard">		
 		<div class="module mini-profile">		
 			<a class="" href="/">
-				<div class="fleft"><img src="<?php echo Router::webroot($this->session->user('avatar'));?>" class="avatar size32" alt="<?php echo $user->login;?>"></div>
+				<div class="fleft"><img src="<?php echo Router::webroot($this->session->user()->getAvatar());?>" class="avatar size32" alt="<?php echo $user->login;?>"></div>
 				<div class="fleft"><b><?php echo $user->login;?></b></div>
 		</div>
 
@@ -41,7 +41,7 @@
 		<form class="form" id="account-form" autocomplete="off" action="<?php echo Router::url('users/account/'.$action); ?>" method="post" enctype="multipart/form-data">
 			<?php echo $this->Form->_input('action','hidden',array('value'=>$action)); ?>
 			<?php echo $this->Form->_input('token','hidden',array('value'=>$this->session->token())) ;?>
-			<?php echo $this->Form->_input('user_id','hidden',array('value'=>$this->session->user('user_id'))) ;?>
+			<?php echo $this->Form->_input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
 
 			<?php //=========PROFIL================ ?>
 			<?php if($action=='profil'||$action==''): ?>

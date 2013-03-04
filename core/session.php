@@ -6,19 +6,17 @@ class Session {
 		$this->controller = $controller;
 
 		if(!isset($_SESSION)){
-
 			session_start();
-		
+
 			if(!isset($_SESSION['token'])){
 				$this->setToken();
 			}
 
 			if(!isset($_SESSION['user'])){
-				$user = new stdClass();
-				$user->user_id = 0;
-				$user->avatar = 'img/logo_yp.png';
-				$user->lang = $this->get_client_language(array_keys(Conf::$languageAvailable));
-				$_SESSION['user'] = $user;
+
+				$user = new User();
+				$user->setlang($this->get_client_language(array_keys(Conf::$languageAvailable,Conf::$languageDefault)));
+				$this->write('user',$user);
 			}			
 			
 		}
@@ -37,9 +35,9 @@ class Session {
 		return $this->read('token');
 	}
 
-	public function setFlash($message, $type = 'success'){
+	public function setFlash($message, $type = 'success', $duration = 0){
 
-		$flash = array('message'=>$message,'type'=>$type);
+		$flash = array('message'=>$message,'type'=>$type,'duration'=>$duration);
 
 		if(isset($_SESSION['flash'])){
 			array_push($_SESSION['flash'],$flash);			
@@ -57,9 +55,10 @@ class Session {
 			foreach($_SESSION['flash'] as $v){
 
 				if(isset($v['message'])){
-					$html .= '<div class="alert alert-'.$v['type'].'">
+					$html .= '<div class="alert alert-'.$v['type'].' alert-hide-'.$v['duration'].'s">
 								<button class="close" data-dismiss="alert">×</button>
 								<p>'.$v['message'].'</p>
+								<div class="alert-progress alert-progress-'.$v['duration'].'s"></div>
 							</div>';				
 				}
 			}
@@ -76,10 +75,9 @@ class Session {
 
 	public function read($key = null){
 
-
 		if($key){
 
-			if(isset($_SESSION[$key])){
+			if(!empty($_SESSION[$key])){
 				return $_SESSION[$key];		
 			}			
 			else{
@@ -117,39 +115,47 @@ class Session {
 		return $params;
 	}
 
-	public function user($key = null){
-		
-		if($this->read('user')){
+	// public function user($key = null){
 
-			if($key){
+	// 	if($this->read('user')){
 
-				if($key=='obj'){
-					return $this->read('user');
-				}
+	// 		if($key){
 
-				if(isset($this->read('user')->$key)){
-					return $this->read('user')->$key;
-				}
-				else 
-					return false;				
-			}	
+	// 			if($key=='obj'){
+	// 				return $this->read('user');
+	// 			}
 
-			else {
-				return $this->isLogged();
-			}
-		}
-		else 
-		{
+	// 			$val = trim($this->read('user')->$key);
 
-			if( $key == 'user_id' )
-				return 0;
-			else			
-				return false;
-			if( $key == 'statut' )
-				return 'visitor';
-			else
-				return false;
-		}
+	// 			if(!empty($val)){
+
+	// 				return $val;
+	// 			}
+	// 			else 
+	// 				return false;				
+	// 		}	
+
+	// 		else {
+	// 			return $this->isLogged();
+	// 		}
+	// 	}
+	// 	else 
+	// 	{
+
+	// 		if( $key == 'user_id' )
+	// 			return 0;
+	// 		else			
+	// 			return false;
+	// 		if( $key == 'statut' )
+	// 			return 'visitor';
+	// 		else
+	// 			return false;
+	// 	}
+	// }
+
+	public function user(){
+
+		return $this->read('user');
 	}
 
 	public function user_id(){
@@ -160,10 +166,10 @@ class Session {
 		else return 0;
 	}
 	public function getLang(){
-		if(isset($this->read('user')->lang))
+		if(isset($this->read('user')->lang) && $this->read('user')->lang!='')
 			return $this->read('user')->lang;		
 		else 
-			return Conf::$lang;		
+			return Conf::$languageDefault;		
 	}
 
 	public function getPays(){
@@ -173,7 +179,7 @@ class Session {
 			return Conf::$pays;
 	}
 
-	public function get_client_language($availableLanguages, $default='en'){
+	public function get_client_language($availableLanguages, $default='fr'){
      
 	    if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 	     
@@ -192,6 +198,8 @@ class Session {
 	    }
 	    return $default;
     }
+
+    
 }
 
 ?>

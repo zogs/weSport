@@ -38,19 +38,27 @@
         
         $html = '<div class="replies">'; 
 
-        $comment2show = array_slice($com->replies, 0, CommentsController::$nbDisplayedOnTop);
-        $comment2hidden = array_slice($com->replies, CommentsController::$nbDisplayedOnTop);
+        $replyshowed = array_slice($com->replies, 0, CommentsController::$nbDisplayedReplies);
+        $replyhidden = array_slice($com->replies, CommentsController::$nbDisplayedReplies);
 
-        $html .= show_comments($comment2show,$user,$context,$context_id);
+        $html .= show_comments($replyshowed,$user,$context,$context_id);
 
-        if(!empty($comment2hidden)){
+        if(!empty($replyhidden)){
            // debug(count($comment2hidden));
-        $html .= '<div class="showHiddenReplies">'.count($comment2hidden). ' réponses - <a href="#" class="showReplies">Afficher</a><a href="#" class="hideReplies hide">Cacher</a></div>';  
+        $html .= '<div class="showHiddenReplies">';
+        if(CommentsController::$nbDisplayedReplies==0){
+            $html .= '<a href="#" class="showReplies">Afficher les '.count($replyhidden).' réponse(s)</a>';
+        }
+        else {
+            $html .= '<a href="#" class="showReplies">Afficher '.count($replyhidden).' autres réponse(s)</a>';
+        }
+        $html .= '</div>';
         $html .='<div class="hiddenReplies">';
-        $html .= show_comments($comment2hidden,$user,$context,$context_id);
+        $html .= show_comments($replyhidden,$user,$context,$context_id);
         }
 
-        if($user->user_id!=0 && $com->replyAllowed() ){
+
+        if($user->user_id!=0 && $com->replyAllowed() && CommentsController::$showFormReply ){
 
             $html.= "<form class='formCommentReply' action='".Router::url('comments/reply')."' method='POST'>                
                         <img class='userAvatarCommentForm' src='".Router::webroot($user->getAvatar())."' />
@@ -72,9 +80,10 @@
                     </form>" ;
         }
 
-        if(!empty($comment2hidden)){
+        if(!empty($replyhidden)){
         $html .= '</div>';
         }
+
         $html .= '</div>';  
 
         return $html;

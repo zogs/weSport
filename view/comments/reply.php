@@ -14,7 +14,7 @@
     if(!empty($coms)){
 
         //Create the html 
-        $html = utf8_decode(show_comments($coms,$this->session->user('obj'),$context,$context_id) );
+        $html = utf8_decode(show_comments($coms,$this->session->user(),$context,$context_id) );
         $html = htmlentities($html);
         
         echo json_encode(array('content'=>$html));

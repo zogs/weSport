@@ -8,15 +8,16 @@
  class CommentsController extends Controller
  {
  	public $layout = 'none';
- 	public $table = 'manif_comment';
+ 	public $table = 'comments';
 
  	//Params
  	public static $nbDisplayedPerPage = 3;
- 	public static $nbDisplayedOnTop = 0;
- 	public static $allowReply = false;
- 	public static $displayReply = false;
- 	public static $allowVoting = false;
+ 	public static $nbDisplayedReplies = 0;
+ 	public static $allowReply = true;
+ 	public static $displayReply = true;
+ 	public static $allowVoting = true;
  	public static $enablePreview = true;
+ 	public static $showFormReply = false;
 
 
  	/*=======================================
@@ -35,7 +36,23 @@
  			$d['isadmin'] = false;
  			$d['commentsAllow'] = true;
 
- 		}		
+ 		}
+ 		elseif($d['context'] == 'group'){
+
+ 			$d['isadmin'] = true;
+ 			$d['commentsAllow'] = false;
+
+ 		}
+ 		elseif($d['context'] == 'user'){
+
+	 		$d['isadmin'] = false;
+ 			$d['commentsAllow'] = false;
+ 		}
+ 		elseif($d['context'] == 'comment'){
+
+ 			$d['isadmin'] = false;
+ 			$d['commentsAllow'] = false;
+ 		}
 
 
  		// $d['flash'] = array('message'=>'You could spread a News to all your Protest(s) by filling the Title form',
@@ -107,12 +124,13 @@
 			$d['coms']       = $com;
 
 		}
-		// elseif($context=='user'){
+		elseif($context=='user'){
 
-		// 	$params['limit'] = 10;
-		// 	$d['coms'] = $this->Comments->threadUser($params);
+			$params['limit'] = 10;
+			$d['coms'] = $this->Comments->threadUser($params);
 
-		// }
+		}
+
 
 
 		$this->set($d);
@@ -178,6 +196,7 @@
 
 
 
+ 
  	/*================================
  	Add a new comment
  	================================*/
@@ -189,48 +208,23 @@
  		$d = array();
 
  		//if no POST data
- 		if(!$this->request->data) throw new zException("No post data sended",1);
- 		else $data = $this->request->data;
+ 		if(!$this->request->get) throw new zException("No post data sended",1);
+ 		else $com = $this->request->get;
 
  		//if there is a user logged in
- 		if($this->session->isLogged()){
+ 		if($this->session->user()->isLog()){
 
- 			//create new comment object
- 			$newComment = new stdClass();
- 			$newComment->context = $data->context;
- 			$newComment->user_id = $this->session->user('user_id');
- 			$newComment->lang = $this->session->getLang();
- 			$newComment->context_id = $data->context_id;
- 			$newComment->type = $data->type;
 
- 			//content of the comment
- 			$newComment->content = str_replace(array("\\n","\\r"),array("<br />",""),$data->content); //Replace line jump by <br>
+ 			$com->user_id = $this->session->user()->isLog();
+ 			$com->lang = $this->getLang();
 
- 			//if media content
- 			if( !empty($data->media) ){
-
- 				$newComment->content = str_replace($data->media_url, '', $data->content); //suppress url if exist in content
- 				$newComment->media = html_entity_decode($data->media); //add media to content
- 				$newComment->media_url = $data->media_url;
- 			}
- 			else
- 				$newComment->content = $data->content; 			
-
- 			//if there is a title then this is a NEWS
- 			if(isset($data->title) && $data->title!=''){
- 				$newComment->title = $data->title;
- 				$newComment->type = 'news';
- 			} 	
-	
- 			//Save
- 			if($this->Comments->save($newComment)){
+ 			if($id = $this->Comments->saveComment($com)){
 
  				$d['success'] = true;
- 				//return id of the new comment
- 				$d['insert_id'] = $this->Comments->id;
+ 				$d['insert_id'] = $id;
  			}
  			else {
- 				$d['error'] = 'Unknown error while saving the comment in database. Please retry'; 				
+ 				$d['error'] = 'Unknown error while saving comment in database. Please don \'t hurt me !';
  			}			
  		}
  		else {
@@ -246,56 +240,42 @@
  		$this->loadModel('Comments');
  		$this->layout = 'none';
 
- 		if($this->request->post('content')!=''){
+ 		if($this->request->get('content')!=''){
 
- 			$data = $this->request->post();
+ 			$com = $this->request->get();
 
-	 		if( isset($data->reply_to) && $data->reply_to!= 0 && is_numeric($data->reply_to) ){
+	 		if(empty($com->reply_to) || !is_numeric($com->reply_to)) throw new zException("Reply_to is not defined", 1);
+	 		
 
-	 			if($this->session->isLogged()){
-
-	 			//On incremente le nombre de réponse du commentaire
-	 			$this->Comments->increment(array('field'=>'replies','id'=>$data->reply_to));
+ 			if($this->session->user()->isLog()){
 
 	 			//On rajoute les params nécessaires
-	 			$data->user_id = $this->session->user('user_id');
-	 			$data->lang = $this->session->getLang();
-	 			unset($data->_);
+	 			$com->user_id = $this->session->user()->getID();
+	 			$com->lang = $this->getLang();	 			
 
-	 			//On sauvegarde la reponse dans la base
-	 			$this->Comments->save($data);
+	 			if($id = $this->Comments->saveComment($com)){
 
-	 			//Récupération de l'id du commentaire
-	 			$comment_id = $data->reply_to;
+	 				$coms = $this->Comments->findCommentsWithoutJOIN(array('comment_id'=>$com->reply_to));
 
-	 			//Enfin , on renvoi la vue du commentaire
-				$coms       = $this->Comments->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
+	 				$d['coms']  = $coms;
+					$d['context']    = $com->context;
+					$d['context_id'] = $com->context_id;
+	 			
+	 			} else {
 
-				$d['coms']  = $coms;
-				$d['context']    = $data->context;
-				$d['context_id'] = $data->context_id;
-	 			$this->set($d);
+	 				throw new zException("Error in saveComment:commentsModel", 1);	 			
+	 			}			
 
+	 		} else {
 
-		 		}
-		 		else {
-
-		 			$d['fail'] = 'You should log in first..';
-		 			$this->set($d);
-		 		}
+	 			$d['fail'] = 'You should log in first..';
 	 		}
-	 		else {
 
-	 			$d['fail'] = '[Error] Reply_to is missing [Action] Post a reply ';
-	 			$this->set($d);
-	 		}
-	 	}
-	 	else {
-	 		$d['fail'] = 'Comment is empty...';
-	 		$this->set($d);
+	 	} else {
+	 		$d['fail'] = 'Comment is empty...';	 		
 	 	}
  	
-
+	 	$this->set($d);
  	}
 
  	public function vote($id){
@@ -306,9 +286,9 @@
 
  		if(is_numeric($id)){
 
-	 		if($this->session->isLogged()){
+	 		if($this->session->user()->isLog()){
 
-	 			$user_id = $this->session->read('user')->user_id;
+	 			$user_id = $this->session->user()->getID();
 
 	 			if(!$this->Comments->alreadyVoted($id,$user_id)){
 
@@ -385,9 +365,9 @@
 							$video_id                      = getYTid($url);
 							$type                          = 'video';
 
-							require_once 'Zend/Loader.php';
+							require_once 'Zend/loader.php';
 							
-							Zend_Loader::loadClass('Zend_Gdata_YouTube');
+							Zend_Loader::loadClass('Zend_Gdata_Youtube');
 							
 							$yt                            = new Zend_Gdata_Youtube();
 							$yt->setMajorProtocolVersion(2);

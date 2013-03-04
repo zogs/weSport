@@ -19,18 +19,9 @@ class Request{
 
 			$this->get = new stdClass();
 			foreach ($_GET as $k => $v) {
-				// if(!is_numeric($v)){
-				// 	if(is_array($v)){
-				// 		$arr = array();
-				// 		foreach ($v as $key => $value) {
-				// 			$arr[$key] = mysql_real_escape_string($value);
-				// 		}
-				// 		$v = $arr;
-				// 	}
-				// 	else
-				// 		$v = mysql_real_escape_string($v);
-				// }
-				$this->get->$k = $v;
+
+				if($k!='_')
+					$this->get->$k = $v;
 			}						
 
 		}
@@ -47,18 +38,9 @@ class Request{
 		if(!empty($_POST)){
 			$this->data = new stdClass();
 			foreach ($_POST as $k => $v) {
-				// if(!is_numeric($v)){
-				// 	if(is_array($v)){
-				// 		$arr = array();
-				// 		foreach ($v as $key => $value) {
-				// 			$arr[$key] = mysql_real_escape_string($value);
-				// 		}
-				// 		$v = $arr;
-				// 	}
-				// 	else
-				// 		$v = mysql_real_escape_string($v);
-				// }
-				$this->data->$k = $v;
+
+				if($k!='_')
+					$this->data->$k = $v;
 			}
 
 		}
@@ -69,7 +51,7 @@ class Request{
 	public function get($param = null){	
 
 		if($param){	
-			if(isset($this->get->$param)){
+			if(!empty($this->get->$param)){
 				return $this->get->$param;
 			}
 			else return false;
@@ -87,7 +69,7 @@ class Request{
 	public function post($param = null){
 
 		if($param){
-			if(isset($this->data->$param)){
+			if(!empty($this->data->$param)){
 				return $this->data->$param;
 			}
 			else return false;

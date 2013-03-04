@@ -43,7 +43,7 @@ class CommentsModel extends Model
         	}           
         }
 
-        $user_id = $this->session->user('user_id');
+        $user_id = $this->session->user()->getID();
         
 
 		$q = " SELECT C.*, U.user_id, U.login, U.avatar, V.id as voted 
@@ -129,7 +129,7 @@ class CommentsModel extends Model
         	}           
         }
 
-        $user_id = $this->session->user('user_id');
+        $user_id = $this->session->user()->getID();
 
 		$sql = " SELECT C.*
 				FROM $this->table as C
@@ -238,12 +238,45 @@ class CommentsModel extends Model
 
 	}
 
+	public function saveComment($com){
+
+		$c = new stdClass();
+		$c = $com;
+
+		
+		$c->content = str_replace(array("\\n","\\r"),array("<br />",""),$c->content); 
+		$c->content = utf8_encode($c->content);
+
+		if(!empty($c->media) && !empty($c->media_url)){
+			$c->content = str_replace($c->media_url,'',$c->content);
+			$c->media = utf8_encode($c->media);
+			$c->media = html_entity_decode($c->media);
+		}
+
+		if(!empty($title)){
+			$c->title = utf8_encode($c->title);
+			$c->type = 'news';
+		}
+
+		if(!empty($c->reply_to) && is_numeric($c->reply_to)){
+
+			$this->increment(array('field'=>'replies','id'=>$c->reply_to));
+		}
+
+		if($id = $this->save($c)){
+
+			return $id;
+		}
+		else
+			return false;
+
+
+	}
 
 	public function joinUserData($data){
 		
 		$data = $this->joinUser($data);
-		$data = $this->JOIN($this->table_vote,'id as voted',array('comment_id'=>':id','user_id'=>$this->session->user('user_id')),$data);
-		
+		$data = $this->JOIN($this->table_vote,'id as voted',array('comment_id'=>':id','user_id'=>$this->session->user()->getID()),$data);		
 
 		return $data;
 	}
@@ -264,9 +297,9 @@ class CommentsModel extends Model
 		return $res->fetchColumn();
 	}
 
-	public function userTotalManifsComments($user_id,$manif_id){
+	public function userTotalEventsComments($user_id,$event_id){
 
-		$sql = 'SELECT COUNT(id) as count FROM $this->table WHERE user_id='.$user_id.' AND context="manif" AND context_id='.$manif_id;
+		$sql = 'SELECT COUNT(id) as count FROM $this->table WHERE user_id='.$user_id.' AND context="event" AND context_id='.$event_id;
 		$res = $this->db->prepare($sql);
 		$res->execute();
 		return $res->fetchColumn();
@@ -336,99 +369,101 @@ class CommentsModel extends Model
 		return $res->fetchAll(PDO::FETCH_OBJ);
 	}
 
-	public function threadUser($params){
 
-		$thread = $this->getThreadUser($params); //get the order list
-		$thread = $this->fillThreadUser($thread);	//fill the list
 
-		return $thread;
-	}
+	// public function threadUser($params){
 
-	public function getThreadUser($params){
+	// 	$thread = $this->getThreadUser($params); //get the order list
+	// 	$thread = $this->fillThreadUser($thread);	//fill the list
 
-		//limit
-		if(isset( $params['limit']) && !empty($params['limit'])){
-			if(!isset($params['page'])) $params['page'] = 1;
-			$limit = (($params['page']-1)*$params['limit']).','.$params['limit'];
-		}
-		else $limit = 144;
+	// 	return $thread;
+	// }
 
-		//request
-		$sql = "SELECT 
-					'joinProtest' as thread,
-					id as id,
-					date as date
-				FROM 
-					manif_participation
-				WHERE 
-					user_id = ".$params['context_id']."
-				UNION
-				SELECT 
-					'manifNews' as thread,
-					C.id as id,
-					C.date as date
-				FROM
-					comments as C
-					LEFT JOIN manif_participation AS P ON P.user_id = ".$params['context_id']."
-				WHERE
-					C.context = 'manif' AND C.type='news' AND C.context_id = P.manif_id 
-				ORDER BY date DESC
-				LIMIT ".$limit." 
+	// public function getThreadUser($params){
 
-				";
+	// 	//limit
+	// 	if(isset( $params['limit']) && !empty($params['limit'])){
+	// 		if(!isset($params['page'])) $params['page'] = 1;
+	// 		$limit = (($params['page']-1)*$params['limit']).','.$params['limit'];
+	// 	}
+	// 	else $limit = 144;
 
-		$pre = $this->db->prepare($sql);
-		$pre->execute();
-		$res = $pre->fetchAll(PDO::FETCH_OBJ);
+	// 	//request
+	// 	$sql = "SELECT 
+	// 				'joinProtest' as thread,
+	// 				id as id,
+	// 				date as date
+	// 			FROM 
+	// 				manif_participation
+	// 			WHERE 
+	// 				user_id = ".$params['context_id']."
+	// 			UNION
+	// 			SELECT 
+	// 				'manifNews' as thread,
+	// 				C.id as id,
+	// 				C.date as date
+	// 			FROM
+	// 				comments as C
+	// 				LEFT JOIN manif_participation AS P ON P.user_id = ".$params['context_id']."
+	// 			WHERE
+	// 				C.context = 'manif' AND C.type='news' AND C.context_id = P.manif_id 
+	// 			ORDER BY date DESC
+	// 			LIMIT ".$limit." 
 
-		return $res;
+	// 			";
 
-	}
+	// 	$pre = $this->db->prepare($sql);
+	// 	$pre->execute();
+	// 	$res = $pre->fetchAll(PDO::FETCH_OBJ);
 
-	public function fillThreadUser($list){
+	// 	return $res;
 
-		$array = array();
+	// }
 
-		foreach ($list as $thread) {
+	// public function fillThreadUser($list){
+
+	// 	$array = array();
+
+	// 	foreach ($list as $thread) {
 			
-			if($thread->thread == 'joinProtest'){
+	// 		if($thread->thread == 'joinProtest'){
 				
-				$protester = $this->session->controller->Manifs->findProtesters(array(
-																					'fields'=>array('U.user_id','U.login','P.manif_id','P.date','P.id'),
-																					'conditions'=>array('P.id'=>$thread->id)
-																				));
+	// 			$protester = $this->session->controller->Manifs->findProtesters(array(
+	// 																				'fields'=>array('U.user_id','U.login','P.manif_id','P.date','P.id'),
+	// 																				'conditions'=>array('P.id'=>$thread->id)
+	// 																			));
 
-				$sql = "SELECT manif_id, nommanif, slug, logo FROM manif_descr WHERE manif_id=".$protester->manif_id;
-				$pre = $this->db->prepare($sql);
-				$pre->execute();
-				$manif = $pre->fetch(PDO::FETCH_OBJ);
+	// 			$sql = "SELECT manif_id, nommanif, slug, logo FROM manif_descr WHERE manif_id=".$protester->manif_id;
+	// 			$pre = $this->db->prepare($sql);
+	// 			$pre->execute();
+	// 			$manif = $pre->fetch(PDO::FETCH_OBJ);
 				
-				$protester = (object) array_merge((array) $protester, (array) $manif);
-				$protester->thread = $thread->thread;
-				$array[] = $protester;
+	// 			$protester = (object) array_merge((array) $protester, (array) $manif);
+	// 			$protester->thread = $thread->thread;
+	// 			$array[] = $protester;
 
-			}
-			elseif($thread->thread == 'manifNews'){
+	// 		}
+	// 		elseif($thread->thread == 'manifNews'){
 
-				$com = $this->getComments($thread->id);
-				$com = $this->joinUserData($com);
-				$com = $com[0];
-				$com->thread = $thread->thread;
-				$array[] = $com;
+	// 			$com = $this->getComments($thread->id);
+	// 			$com = $this->joinUserData($com);
+	// 			$com = $com[0];
+	// 			$com->thread = $thread->thread;
+	// 			$array[] = $com;
 
-				if($com->replies > 0){
+	// 			if($com->replies > 0){
 
-					$replies = $this->findReplies($com);
-					$replies = $this->joinUserData($replies);
-					$array[] = $replies;
+	// 				$replies = $this->findReplies($com);
+	// 				$replies = $this->joinUserData($replies);
+	// 				$array[] = $replies;
 
-				}
-			}
-		}
+	// 			}
+	// 		}
+	// 	}
 
 
-		return $array;
-	}
+	// 	return $array;
+	// }
 
 
 

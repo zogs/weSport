@@ -76,7 +76,7 @@ class EventsController extends Controller{
 			$dayevents = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$dayevents);		
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
-			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user_id());
+			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
 			$events[$nextday] = $dayevents;
 			//set next day
 			$nextday = date("Y-m-d", strtotime($day. " +".$i." day"));
@@ -109,7 +109,7 @@ class EventsController extends Controller{
 		$event = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$event);
 		$event = $this->Worlds->JOIN_GEO($event);
 		$event = $this->Events->joinEventsParticipants($event);
-		$event = $this->Events->joinUserParticipation($event,$this->session->user_id());
+		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());
 		 // debug($event);
 
 
@@ -129,13 +129,13 @@ class EventsController extends Controller{
 
 			$data = $this->request->get();
 
-			if(!$this->session->isLogged()) throw new zException('User must log in before trying to participate',1);
+			if(!$this->session->user()->isLog()) throw new zException('User must log in before trying to participate',1);
 
 			//Si les donnees sont bien numerique
 			if(!is_numeric($data->user_id) || !is_numeric($data->event_id)) throw new zException('user_id or event_id is not numeric',1);
 
 			//Si l'user correspond bien à la session
-			if($data->user_id!=$this->session->user_id()) throw new zException("user is different from session's user", 1);
+			if($data->user_id!=$this->session->user()->getID()) throw new zException("user is different from session's user", 1);
 				
 			//On vérifie si l'événement existe bien
 			$event = $this->Events->findFirst(array('fields'=>'id,date,slug','conditions'=>array('id'=>$data->event_id)));
@@ -174,13 +174,13 @@ class EventsController extends Controller{
 
 			$data = $this->request->get();
 
-			if(!$this->session->isLogged()) throw new zException('User must log in before trying to cancel participation',1);
+			if(!$this->session->user()->isLog()) throw new zException('User must log in before trying to cancel participation',1);
 
 			//Si les donnees sont bien numerique
 			if(!is_numeric($data->user_id) || !is_numeric($data->event_id)) throw new zException('user_id or event_id is not numeric',1);
 
 			//Si l'user correspond bien à la session
-			if($data->user_id!=$this->session->user_id()) throw new zException("user is different from session's user", 1);
+			if($data->user_id!=$this->session->user()->getID()) throw new zException("user is different from session's user", 1);
 				
 			//On vérifie si l'événement existe bien
 			$event = $this->Events->findFirst(array('fields'=>'id,date,slug','conditions'=>array('id'=>$data->event_id)));
@@ -216,7 +216,7 @@ class EventsController extends Controller{
 
 
 		//if user is logged
-		if(!$this->session->islogged()) {
+		if(!$this->session->user()->isLog()) {
 
 			$this->session->setFlash("Vous devez vous connecter pour proposer un événement !","info");
 			$this->redirect('users/login');
@@ -230,20 +230,23 @@ class EventsController extends Controller{
 			//find event
 			$evt = $this->Events->findEventById($event_id);
 			//exit if event not exist
-			if(empty($evt)) throw new zException("Can not modify - Event not exist", 1);
+			if(!$evt->exist()) throw new zException("Can not modify - Event not exist", 1);
 			
 			//redistect if user not exist
-			if($evt->user_id != $this->session->user('user_id')){
-
+			if(!$evt->isAdmin($this->session->user()->getID())){
 				$this->session->setFlash("Vous n'êtes pas le créateur de cette annonce","error");				
 				$this->redirect('users/login');			
 			}
-			//else continue
+			else {
+				$this->session->setFlash("Vous pouvez modifier votre annonce","info");
+			}
 			
 		}
 		else{
 			//else init a empty event
 			$evt = new Event();
+
+			$this->session->setFlash("Vous pouvez créer une annonce","info");
 		}
 		
 		//if new data are sended
@@ -257,10 +260,12 @@ class EventsController extends Controller{
 
 				if($this->Events->validates($newEvent)){
 					
-					//find changes
-					$changes = array();
-					foreach ($newEvent as $key => $value) {
-						if($newEvent->$key!=$evt->$key) $changes[$key] = $newEvent->$key;
+					//find if change occurs
+					if($evt->exist()){
+						$changes = array();
+						foreach ($newEvent as $key => $value) {
+							if($newEvent->$key!=$evt->$key) $changes[$key] = $newEvent->$key;
+						}
 					}
 
 					//save event
@@ -274,9 +279,9 @@ class EventsController extends Controller{
 					
 						//save organizator participation
 						$check = $this->Events->findParticipants($event_id);
-						if(!in_array($this->session->user_id(),$check)){
-							
-							$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user_id())));
+						if(empty($check) || !in_array($this->session->user()->getID(),$check)){
+
+							$u = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 							$this->Events->saveParticipants($u,$newEvent);
 						}
 
@@ -313,7 +318,7 @@ class EventsController extends Controller{
 		else {							
 				
 				$this->request->data = $evt;//send data to form class
-				$this->session->setFlash("Vous pouvez créer une annonce","info");	
+					
 		}
 
 		$d['event'] = $evt;

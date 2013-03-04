@@ -411,13 +411,20 @@ class Event {
 		}
 	}
 
+	public function exist(){
+
+		if($this->id==0) return false;
+
+		return true;
+	}
+
 	public function getLogin(){
 
 		return $this->login;
 	}
 
 	public function isAdmin($user_id){
-
+	
 		if($this->user_id===$user_id) return true;
 		return false;
 	}
