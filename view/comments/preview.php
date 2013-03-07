@@ -1,4 +1,6 @@
 <?php 
+header ('Content-type: text/html; charset=utf-8');
+
 
 if($type!='404'){
 	
@@ -44,7 +46,7 @@ $array = array(
 
 
 
-echo json_encode($array);
+echo json_encode($array,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT);
 
 
 

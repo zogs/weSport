@@ -3,7 +3,7 @@
     //Fichier qui contient la fonction qui cré le code du commentaire
     require('html.php');
 
-
+    header ('Content-type: text/html; charset=utf-8');
 
     //If fail
     if(isset($fail)) {
@@ -16,7 +16,8 @@
     if(!empty($coms)){
         
         //Create the html 
-        $html = utf8_decode(show_comments($coms,$this->session->user(),$context,$context_id) );
+        $html = show_comments($coms,$this->session->user(),$context,$context_id);
+        $html = utf8_encode($html);
         $html = htmlentities($html);
 
         echo json_encode(array(
@@ -24,7 +25,9 @@
             'commentsNumber'=>count($coms),
             'commentsTotal'=>$commentsTotal,
             'commentsDisplayed'=>$commentsDisplayed,
-            'commentsLeft'=>$commentsLeft));
+            'commentsLeft'=>$commentsLeft)
+        ,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT
+        );
     }
     else {
 
@@ -34,7 +37,9 @@
             'commentsTotal'=>$commentsTotal,
             'commentsDisplayed'=>$commentsDisplayed,
             'commentsLeft'=>0
-            ));
+            )
+        ,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT
+        );
     }
     
 
