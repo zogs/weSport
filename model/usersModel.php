@@ -178,12 +178,10 @@ class UsersModel extends Model{
 		$sql = 'SELECT ';
  		
  		if(isset($req['fields'])){
-			if(is_array($req['fields']))
- 				$sql .= implode(', ',$req['fields']);
- 			else
- 				$sql .= $req['fields'];
+			
+			$sql .= $this->sqlFields($req['fields']);
  		}
- 		else $sql .= '*';
+ 		else $sql .= ' * ';
 
 
  		$sql .= " FROM users									
@@ -191,17 +189,8 @@ class UsersModel extends Model{
 
 
  		 if(isset($req['conditions'])){ 			
- 			if(!is_array($req['conditions']))
- 				$sql .= $req['conditions']; 				
- 			else {
-	 			$cond = array();
-		 			foreach ($req['conditions'] as $k => $v) {
-		 				if(!is_numeric($v))
-		 					$v = '"'.mysql_escape_string($v).'"';	 							 				
-		 				$cond[] = "$k=$v";	 			
-		 			}
-		 			$sql .= implode(' AND ',$cond);
- 			}
+ 			
+ 			$sql .= $this->sqlConditions($req['conditions']);
  			
  		}
 
@@ -219,12 +208,13 @@ class UsersModel extends Model{
  		$pre->execute();
  		$results = $pre->fetchAll(PDO::FETCH_OBJ);
  		
+ 		if(empty($results)) return new User();
+
  		$users = array();
  		foreach ($results as $user) {
  					
  			$users[] = new User($user); 
  		}
-
  		return $users;
 	}
 

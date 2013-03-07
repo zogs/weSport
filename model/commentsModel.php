@@ -328,10 +328,7 @@ class CommentsModel extends Model
 
 		$sql = 'SELECT ';
  		if(isset($req['fields']))
-			if(is_array($req['fields']))
- 				$sql .= implode(', ',$req['fields']); 			
- 			else
- 				$sql .= $req['fields']; 			 		
+			$sql .= $this->sqlFields($req['fields']);
  		else
  			$sql .= 'C.*, U.*'; 		
 
@@ -340,18 +337,8 @@ class CommentsModel extends Model
 				  	WHERE ";
 
 		if(isset($req['conditions'])){ 			
- 			if(!is_array($req['conditions']))
- 				$sql .= $req['conditions']; 				
- 			else {
- 				$cond = array();
-	 			foreach ($req['conditions'] as $k => $v) {
-	 				if(!is_numeric($v)){ 
-	 					$v = '"'.mysql_escape_string($v).'"';	 					
-	 				}
-	 				$cond[] = "$k=$v";	 			
-	 			}
-	 			$sql .= implode(' AND ',$cond);
- 			} 			
+ 			
+ 			$sql .= $this->sqlConditions($req['conditions']);		
  		}
 
 		if(isset($req['order'])){

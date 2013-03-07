@@ -351,8 +351,7 @@ class EventsModel extends Model{
 				$s->user_id = $user->user_id;
 				$s->date = date('Y-m-d');
 				$s->date_event = $event->date;
-				$s->table = 'sporters';
-				debug('save partication');
+				$s->table = 'sporters';				
 				$this->save($s);			
 			}	
 			else {
