@@ -34,7 +34,7 @@ if($type!='404'){
 
 
 
-$html = utf8_decode($html); // json_encode ne fonctionne qu'avec des donnees utf8
+$html = utf8_encode($html); // json_encode ne fonctionne qu'avec des donnees utf8
 $html = htmlentities($html);
 
 //echo $html;
