@@ -528,14 +528,15 @@ $(document).ready(function(){
 		$("#loadingComments").show();
 
         var arg = (arguments[0]) ? arguments[0] : 'clear';
-
+        console.log(arg);
         clean_params('newer','start'); 
-
+        console.log(showComments_params);
         if(arg=='new') 
              construct_params("?newer="+newestCommentId);
         if(arg=='bottom')
             construct_params("?start="+newestCommentId);    
 
+        clean_params(showComments_params);
         
         //console.log(JSON.stringify(showComments_params));
 		$.ajax({
@@ -559,11 +560,11 @@ $(document).ready(function(){
             if(html!=''){
 	            //Get id of the first comment
 				if(arg=='new' || arg=='clear'){
-
+					
 	                var first_id = $(html).first('.post').attr('id');
 	                first_id = first_id.replace('com','');
 	                newestCommentId = first_id;
-	                //console.log('firstID'+newestCommentId);
+	                console.log('firstID'+newestCommentId);
 	                $("#badge").empty().hide();                        
 	                $("#noMoreComments").hide();
 	                if(arg=='new')
@@ -577,24 +578,28 @@ $(document).ready(function(){
 	            }
 	        }           	
 
-            //If there is no comment yet, display NoCommentYet
+            //if there is not comment at all
             if(data.commentsTotal==0){
             	
             	$("#noCommentYet").show();
             }
 
-            //ii there is no more comments to show
-            else if(data.commentsLeft<=0){
+            //if there is comments...
+            else {
+
+            	//but no comment to display
+            	if(data.commentsLeft<=0){
             	
-            	 $("#showMoreComments").hide();
-       	     	 $("#noMoreComments").show();		       	     
-       	    }
-       	    //else display number of comments lefts
-       	    else {
-   	    		 $("#showMoreComments").show();
-	       	     $("#commentsLefts").text(data.commentsLeft);
-	       	     $("#noMoreComments").hide();
-       	    }
+	            	 $("#showMoreComments").hide();
+	       	     	 $("#noMoreComments").show();		       	     
+       	    	}
+	       	    //show that there is more comment to show
+	       	    else {
+	   	    		 $("#showMoreComments").show();
+		       	     $("#commentsLefts").text(data.commentsLeft);
+		       	     $("#noMoreComments").hide();
+	       	    }
+	       	}
                   
              
             $("#ajaxLoader").hide();	                

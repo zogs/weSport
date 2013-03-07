@@ -142,7 +142,7 @@ class EventsController extends Controller{
 			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
-			$user = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
+			$user = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
 			if(empty($user)) throw new zException("L'utilisateur n'existe pas",1);
 
 			//On vérifie qu'il ne participe pas déja
@@ -187,11 +187,12 @@ class EventsController extends Controller{
 			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
-			$user = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
-			if(empty($user)) throw new zException("L'utilisateur n'existe pas",1);
+			$user = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
+			if(!$user->exist()) throw new zException("L'utilisateur n'existe pas",1);
 
 			//On vérifie qu'il participe
 			$check = $this->Users->findFirst(array('table'=>'sporters','fields'=>'id','conditions'=>array('user_id'=>$data->user_id,'event_id'=>$data->event_id)));
+			
 			if(!empty($check)) {
 				
 				$p = new StdClass();
@@ -285,7 +286,7 @@ class EventsController extends Controller{
 
 						if($check == false || !in_array($this->session->user()->getID(),$check)){
 
-							$u = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
+							$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 
 							$this->Events->saveParticipants($u,$evt);
 						}

@@ -32,9 +32,8 @@ if($type!='404'){
 
 
 
-//$html = utf8_encode($html); // json_encode ne fonctionne qu'avec des donnees utf8
-$html = htmlspecialchars($html);
-//$html = htmlentities($html, ENT_QUOTES, "UTF-8"); // json_encode ne fonctionne pas avec les balises html
+$html = utf8_decode($html); // json_encode ne fonctionne qu'avec des donnees utf8
+$html = htmlentities($html);
 
 //echo $html;
 

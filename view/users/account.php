@@ -62,9 +62,7 @@
 						<i class='icon-form icon-home'></i>
 						<?php $options = $this->request('world','locate',array($user)); ?>					
 					</div>
-				</div>	
-				
-				<?php echo $this->Form->Checkbox('anonym','Anonymat',array('1'=>'Rendre mon profil anonyme'),array('default'=>$user->anonym,'helper'=>"Toutes ces informations ne seront pas visible des autres utilisateurs")) ;?>			
+				</div>								
 
 				<input type="submit" class="btn btn-large btn-inverse" value="Save profil" />			
 			<?php endif ;?>
@@ -82,8 +80,7 @@
 
 				<?php echo $this->Form->input('login','Login',array('icon'=>'icon-user','required'=>'required','data-url'=>Router::url('users/check'))); ?>
 				<?php echo $this->Form->input('email','Email',array('icon'=>'icon-envelope','required'=>'required','type'=>'email','data-url'=>Router::url('users/check'))); ?>
-				<?php echo $this->Form->Select('lang','Language',Conf::$languageAvailable,array('default'=>$user->lang,'placeholder'=>'( your language )','icon'=>'icon-book')) ;?>
-				<?php echo $this->Form->Radio('account','Compte',array('private'=>'Privé','public'=>'Public'),array('default'=>$user->account,'helper'=>"Un compte public peut être vu et recevoir des messages d'autres utilisateurs")) ;?>
+				<?php echo $this->Form->Select('lang','Language',Conf::$languageAvailable,array('default'=>$user->lang,'placeholder'=>'( your language )','icon'=>'icon-book')) ;?>				
 				<?php echo $this->Form->input('Save account','submit',array('class'=>'btn btn-large btn-inverse')) ;?>
 
 

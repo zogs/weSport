@@ -19,7 +19,7 @@ class UsersController extends Controller{
 			else
 				$field = 'login';
 			
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account',
 				'conditions' => array($field=>$login))
 			);
@@ -113,7 +113,7 @@ class UsersController extends Controller{
 			
 
 			//check if login exist
-			$check = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
+			$check = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
 			if(!empty($check)) {
 				$this->session->setFlash("This login is already used","error");
 				$this->set(array('data'=>$user));
@@ -122,7 +122,7 @@ class UsersController extends Controller{
 			
 
 			//check if email exist
-			$check = $this->Users->findFirst(array('fields'=>'user_id','conditions'=>array('email'=>$user->email)));
+			$check = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('email'=>$user->email)));
 			if(!empty($check)) {
 				$this->session->setFlash("The email ".$user->email." is already used","error");
 				$this->set(array('data'=>$user));
@@ -180,7 +180,7 @@ class UsersController extends Controller{
 			$user_id   = base64_decode(urldecode($get->u));			
 			$code_url = base64_decode(urldecode($get->c));
 
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'fields'=>array('login','codeactiv'),
 				'conditions'=>array('user_id'=>$user_id)
 				));
@@ -242,18 +242,18 @@ class UsersController extends Controller{
 
 	    			if($this->Users->validates($data,'account_info')){
 
-						$user = $this->Users->findFirst(array('fields'=>'login, email','conditions'=>array('user_id'=>$this->request->post('user_id'))));
+						$user = $this->Users->findFirstUser(array('fields'=>'login, email','conditions'=>array('user_id'=>$this->request->post('user_id'))));
 																
 						//If it's the not same user name
 						if($user->login != $this->request->post('login'))
-							$checklogin = $this->Users->findFirst(array('fields'=>'login','conditions'=>array('login'=>$this->request->post('login'))));
+							$checklogin = $this->Users->findFirstUser(array('fields'=>'login','conditions'=>array('login'=>$this->request->post('login'))));
 						else
 							unset($data->login);							
 						
 
 						//if its not the same email
 						if($user->email != $this->request->post('email'))							
-							$checkemail = $this->Users->findFirst(array('fields'=>'email','conditions'=>array('email'=>$this->request->post('email'))));
+							$checkemail = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('email'=>$this->request->post('email'))));
 						else
 							unset($data->email);
 							
@@ -350,7 +350,7 @@ class UsersController extends Controller{
 	    			
 	    			if($data = $this->Users->validates($data,'account_password')){
 
-		    				$db = $this->Users->findFirst(array(
+		    				$db = $this->Users->findFirstUser(array(
 		    					'fields' => 'user_id,salt,hash',
 		    					'conditions'=> array('user_id'=>$user_id)
 		    					));
@@ -378,7 +378,7 @@ class UsersController extends Controller{
 
 	    			if($this->Users->validates($data,'account_delete')){
 
-	    				$db = $this->Users->findFirst(array(
+	    				$db = $this->Users->findFirstUser(array(
 	    					'fields'=>'hash,salt',
 	    					'conditions'=>array('user_id'=>$user_id)
 	    					));
@@ -389,7 +389,7 @@ class UsersController extends Controller{
 	    					$this->Users->delete($user_id);
 	    					unset($_SESSION['user']);
 	    					$user_id = 0;
-	    					$this->session->setFlash('Your account has been delete... <strong>Wait ? Why did you do that ??</strong>');
+	    					$this->session->setFlash('Your account has been delete... but... <strong>Why did you do that ???:)</strong>');
 
 	    				}
 	    				else
@@ -404,7 +404,7 @@ class UsersController extends Controller{
 		    }
 
 		    //get account info
-	    	$user = $this->Users->findFirst(array(
+	    	$user = $this->Users->findFirstUser(array(
 					'conditions' => array('user_id'=>$user_id))
 				);	    	    	
 	    	// /!\ request->data used by Form class
@@ -438,14 +438,14 @@ class UsersController extends Controller{
 			
 			//find that user 
 			$user_id = base64_decode(urldecode($this->request->get('u')));
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'fields'=>array('user_id','salt'),
 				'conditions'=>array('user_id'=>$user_id)));
 			
 			//check the recovery code
 			$code = base64_decode(urldecode($this->request->get('c')));
 			$hash = md5($code.$user->salt);
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'table'=>T_USER_RECOVERY,
 				'fields'=>'user_id',
 				'conditions'=>'user_id='.$user_id.' AND code="'.$hash.'" AND date_limit >= "'.unixToMySQL(time()).'"'));
@@ -478,13 +478,13 @@ class UsersController extends Controller{
 			
 			//find that user
 			$user_id = $data->user;
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'fields'=>array('user_id','salt'),
 				'conditions'=>array('user_id'=>$user_id)));
 
 			//check the recovery code
 			$code = md5($data->code.$user->salt);
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'table'=>T_USER_RECOVERY,
 				'fields'=>'user_id',
 				'conditions'=>'user_id='.$user_id.' AND code="'.$code.'" AND date_limit >= "'.unixToMySQL(time()).'"'));
@@ -506,7 +506,7 @@ class UsersController extends Controller{
 					if($this->Users->save($new)){
 
 						//find the recovery data 
-						$rec = $this->Users->findFirst(array(
+						$rec = $this->Users->findFirstUser(array(
 							'table'=>T_USER_RECOVERY,
 							'fields'=>array('id'),
 							'conditions'=>array('user_id'=>$user_id,'code'=>$code)));
@@ -552,7 +552,7 @@ class UsersController extends Controller{
 			$action = 'show_form_email';
 
 			//check his email
-			$user = $this->Users->findFirst(array(
+			$user = $this->Users->findFirstUser(array(
 				'fields'=>array('user_id','email','login','salt'),
 				'conditions'=>array('email'=>$this->request->post('email')),				
 			));
@@ -657,7 +657,7 @@ class UsersController extends Controller{
 			//if no error check existing
 			if(empty($d['error'])){
 
-				$user = $this->Users->findFirst(array('fields'=> $type,'conditions' => array($type=>$value)));
+				$user = $this->Users->findFirstUser(array('fields'=> $type,'conditions' => array($type=>$value)));
 
 					if(!empty($user)) {
 						$d['error'] = '<strong>'.$value."</strong> is already in use!";
@@ -773,7 +773,7 @@ class UsersController extends Controller{
     // 			//if user is a group, redirect to group page
     // 			if($this->session->user()->getRole()=='group'){
 
-    // 				$group = $this->Users->findFirst(array(
+    // 				$group = $this->Users->findFirstUser(array(
     // 					'table'=>'groups',
     // 					'fields'=>'group_id as id, slug',
     // 					'conditions'=>array('user_id'=>$this->session->user()->getID())

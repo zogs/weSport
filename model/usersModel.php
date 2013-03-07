@@ -90,17 +90,19 @@ class UsersModel extends Model{
 				'message' => "Enter your password"
 				)
 		),
-		'account_avatar'=>array(),
-	);
-
-	public $validates_files = array(
-		'avatar'=>array(
-			'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
-			'extentions_error'=>'Your avatar is not an image file',
-			'max_size'=>50000,
-			'max_size_error'=>'Your image is too big',
-			'ban_php_code'=>true
+		'account_avatar'=>array(
+			'avatar'=>array(
+				'rule'=> 'file',
+				'params'=>array(
+					'destination' => 'media/users/avatar',
+					'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
+					'extentions_error'=>'Your avatar is not an image file',
+					'max_size'=>100000,
+					'max_size_error'=>'Your image is too big',
+					'ban_php_code'=>true
+					)
 			)
+		),
 	);
 
 
@@ -204,9 +206,7 @@ class UsersModel extends Model{
  		}
 
  		//debug($sql);
- 		$pre = $this->db->prepare($sql);
- 		$pre->execute();
- 		$results = $pre->fetchAll(PDO::FETCH_OBJ);
+ 		$results = $this->query($sql);
  		
  		if(empty($results)) return new User();
 
@@ -218,7 +218,7 @@ class UsersModel extends Model{
  		return $users;
 	}
 
-	public function findFirst($req){
+	public function findFirstUser($req){
 
 		return current($this->findUsers($req));
 	}
@@ -309,7 +309,7 @@ class User {
 	public function getAvatar(){
 
 		if(isset($this->avatar)&&!empty($this->avatar)) return $this->avatar;
-		else return 'img/bonhom/'.$this->bonhom.'.gif';
+		else return 'img/musclor.jpg';
 	}
 
 	public function getBonhom(){

@@ -11,8 +11,8 @@
  	public $table = 'comments';
 
  	//Params
- 	public static $nbDisplayedPerPage = 3;
- 	public static $nbDisplayedReplies = 0;
+ 	public static $nbDisplayedPerPage = 6;
+ 	public static $nbDisplayedReplies = 3;
  	public static $allowReply = true;
  	public static $displayReply = true;
  	public static $allowVoting = true;
@@ -365,7 +365,7 @@
 							$video_id                      = getYTid($url);
 							$type                          = 'video';
 
-							require_once 'Zend/loader.php';
+							require_once 'Zend/Loader.php';
 							
 							Zend_Loader::loadClass('Zend_Gdata_Youtube');
 							

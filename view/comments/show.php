@@ -30,8 +30,7 @@
                             <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">              
                             <span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu">
-                            <li><a href="">Proposer un slogan</a></li>
+                            <ul class="dropdown-menu">                           
                             <li><a href="">Créer une nouvelle discussion</a></li>                
                             </ul>
                         </div>  
