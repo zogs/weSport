@@ -369,7 +369,7 @@
 							
 							Zend_Loader::loadClass('Zend_Gdata_Youtube');
 							
-							$yt                            = new Zend_Gdata_Youtube();
+							$yt                            = new Zend_Gdata_YouTube();
 							$yt->setMajorProtocolVersion(2);
 							$videoEntry                    = $yt->getVideoEntry($video_id);
 							$title                         = $videoEntry->getVideoTitle();

@@ -73,8 +73,8 @@
 				
 			<div class="right-block orga">
 				<h2>Organisé par:</h2>
-				<img class="avatar"src="<?php echo Router::webroot($event->avatar);?>" alt="">					
-				<a href=""><?php echo $event->login;?></a>
+				<img class="avatar"src="<?php echo Router::webroot($event->getAvatar());?>" alt="">					
+				<a href=""><?php echo $event->getLogin();?></a>
 				<small>(<?php echo ageFromBY($event->age);?> ans )</small>
 			</div>
 			
@@ -83,8 +83,8 @@
 				<h3><?php echo count($event->participants);?> participants</h3>
 				<ul>
 					<?php foreach ($event->participants as $participant):?>
-						<li><img src="<?php echo Router::webroot($participant->avatar);?>"/>
-							<a href=""><?php echo $participant->login;?></a>
+						<li><img src="<?php echo Router::webroot($participant->getAvatar());?>"/>
+							<a href=""><?php echo $participant->getLogin();?></a>
 							<small>( <?php echo ageFromBY($participant->age);?> ans )</small>
 					<?php endforeach;?>
 				</ul>
