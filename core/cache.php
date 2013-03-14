@@ -16,7 +16,7 @@ class Cache {
 		
 		$file = $this->path($this->dirname.'/'.$filename);
 
-		return $this->file_force_contents($file, utf8_encode($content)); //Ecrit fichier et dossier 
+		return $this->file_force_contents($file, $content); //Ecrit fichier et dossier 
 	}
 
 	public function read($filename){

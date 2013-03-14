@@ -98,7 +98,7 @@ class WorldController extends Controller
 				foreach ($states as $key) {
 					if(isset($city->$key)) $state = $city->$key;
 				}
-				$suggestions[] = utf8_encode($city->name.' ('.$state.')');
+				$suggestions[] = $city->name.' ('.$state.')';
 				$citiesCode[] = $city->city_id;			
 			}
 

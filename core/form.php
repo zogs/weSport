@@ -245,7 +245,7 @@ class Form{
 					if(isset($selected)&&$selected==$value) $if_selected = 'selected="selected"';
 					else $if_selected = '';
 
-					$html .='<option value="'.$value.'" '.$if_selected.'>'.utf8_encode($name).'</option>';								
+					$html .='<option value="'.$value.'" '.$if_selected.'>'.$name.'</option>';								
 				
 			}
 			$html .='</select>';
@@ -275,7 +275,7 @@ class Form{
 
 			foreach ($options as $line) {
 				if(is_object($line)) {				
-					$html .='<option value="'.$line->$value.'" '.($line->$value === $selected ? $attr:'').'>'.utf8_encode($line->$name).'</option>';								
+					$html .='<option value="'.$line->$value.'" '.($line->$value === $selected ? $attr:'').'>'.$line->$name.'</option>';								
 				}				
 				elseif(is_array($line))	{
 					if($line[$value] == $selected) $attr='selected="selected';		

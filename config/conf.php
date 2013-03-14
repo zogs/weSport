@@ -25,7 +25,7 @@ class Conf {
 		'wesport.zogs.org' =>array(
 			'host'     => 'localhost',
 			'database' => 'wesport',
-			'login'    => 'admin',
+			'login'    => 'root',
 			'password' => 'XSgvEPbG'
 			) 
 		);

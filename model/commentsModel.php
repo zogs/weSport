@@ -245,16 +245,16 @@ class CommentsModel extends Model
 
 		
 		$c->content = str_replace(array("\\n","\\r"),array("<br />",""),$c->content); 
-		$c->content = utf8_encode($c->content);
+		$c->content = $c->content;
 
 		if(!empty($c->media) && !empty($c->media_url)){
 			$c->content = str_replace($c->media_url,'',$c->content);
-			$c->media = utf8_encode($c->media);
+			$c->media = $c->media;
 			$c->media = html_entity_decode($c->media);
 		}
 
 		if(!empty($title)){
-			$c->title = utf8_encode($c->title);
+			$c->title = $c->title;
 			$c->type = 'news';
 		}
 

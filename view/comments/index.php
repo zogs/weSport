@@ -17,8 +17,8 @@
         
         //Create the html 
         $html = show_comments($coms,$this->session->user(),$context,$context_id);
-        $html = utf8_encode($html);
-        $html = htmlentities($html);
+        // $html = utf8_encode($html);
+        // $html = htmlentities($html);
 
         echo json_encode(array(
             'html'=>$html,
