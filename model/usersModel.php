@@ -330,7 +330,8 @@ class User {
 	}
 
 	public function getLang(){
-		return $this->lang;
+		if(!empty($thus->lang)) return $lang;
+		else return Conf::$languageDefault;
 	}
 
 	public function isMrZ(){

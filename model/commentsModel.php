@@ -68,15 +68,18 @@ class CommentsModel extends Model
 				if (isset($start) && $start!="0")
 								$q .='
 								AND C.id <= "'.$start.'"';
-				if( isset($newer) && $newer!="0")
+				if( isset($newest) && $newest!="0")
 								$q .='
-								AND C.id > "'.$newer.'"';
+								AND C.id > "'.$newest.'"';
+				if(isset($lang) && !empty($lang))
+								$q .=' AND lang="'.$lang.'" ';
+
 				$q.=" 
 				ORDER BY ".$order."
 				LIMIT ".$limit."
 			";
 
-		//debug($q);
+	
 		$res = $this->db->prepare($q);
 		$res->execute();
 
@@ -100,32 +103,36 @@ class CommentsModel extends Model
 			$$k = $v;
 		}
 
+		$val = array();
+
 		if(isset($order)){
 
         	if ($order == "datedesc" || $order == '' || $order == '0')
-            	$order=" date DESC ";
+            	$order="date DESC";
 	        elseif ($order == "dateasc")
-	            $order=" date ASC ";
+	            $order="date ASC";
 	        elseif ($order == "noteasc")
-	            $order=" note ASC ";
+	            $order="note ASC";
 	        elseif ($order == "notedesc")
-            	$order=" note DESC ";
+            	$order="note DESC";
         }
         else {
-        	$order= " date DESC ";
+        	$order = "date DESC";
         }
 
-		if(isset($limit) && !empty($limit)){
+		if(!empty($limit) && is_numeric($limit)){
 
-			if(!isset($page)) $page = 1;
-			 $limit = (($page-1)*$limit).','.$limit;
-
+			if(!isset($page) || empty($page)) $page = 1;
+				$limit = (($page-1)*$limit).','.$limit;
 		}
 		else $limit = 165131654;
-        
+       
+
+
         if (isset($rch) && $rch != "0") {
         	if( trim( $rch != "" ) ) {
         		$rch =" ( U.login LIKE '%" . $rch . "%' OR X.content LIKE '%" . $rch . "%' )";
+        		$rch =" ( U.login LIKE '%:rch%' OR X.content LIKE '%:rch%' )";
         	}           
         }
 
@@ -135,43 +142,44 @@ class CommentsModel extends Model
 				FROM $this->table as C
 				
 				WHERE ";
-				if(isset($comment_id)) {
-							$sql .= "
-								C.id=".$comment_id." ";	
+				if(isset($comment_id) && is_numeric($comment_id)) {
+							$sql .= " C.id=$comment_id ";	
+							
 				} 
-				elseif(isset($reply_to)){
-
-							$sql .= "
-								C.reply_to=".$reply_to." ";
-
+				elseif(isset($reply_to) && is_numeric($reply_to)){
+							$sql .= " C.reply_to=$reply_to ";							
 				}
 				else {
-							$sql .= "
-								C.context='".$context."'
-								AND
-								C.context_id=".$context_id." 
-								AND 
-								C.reply_to=0 ";
+							$sql .= " C.context=:context AND C.context_id=:context_id AND C.reply_to=0 ";
+							$val['context'] = $context;
+							$val['context_id'] = $context_id;
 				}			
-				if (isset($type) && $type != "all" && $type != "0" )
-								$sql .='
-								AND C.type="'.$type.'"';
-				if (isset($start) && $start!="0")
-								$sql .='
-								AND C.id <= "'.$start.'"';
-				if( isset($newer) && $newer!="0")
-								$sql .='
-								AND C.id > "'.$newer.'"';
-				$sql.="  
-				ORDER BY ".$order."
-				LIMIT ".$limit."
-			";
+				if (isset($type) && $type != "all" && $type != "0" ){
 
-		//debug($sql);
-		$res = $this->db->prepare($sql);
-		$res->execute();
-		$res = $res->fetchAll(PDO::FETCH_OBJ);		
-		
+							$sql .=' AND C.type=:type ';
+							$val['type'] = $type;
+
+				}
+				if (!empty($start) && is_numeric($start)){
+
+							$sql .=' AND C.id <= '.$start.' ';			
+				}
+				if( !empty($newest) && is_numeric($newest)){
+
+							$sql .=' AND C.id > '.$newest.' ';
+					
+				}
+				if(isset($lang) && trim($lang)!=''){
+
+							$sql .= ' AND lang=:lang ';
+							$val['lang'] = $lang;
+					
+				}
+				$sql.=" ORDER BY ".$order." LIMIT ".$limit." ";
+
+			
+		$res = $this->query($sql,$val);		
+			
 		//foreach comment make an object	
 		$comments = array();
 		foreach ($res as $com) {
@@ -205,6 +213,8 @@ class CommentsModel extends Model
 		foreach ($comments as $comment) {
 			
 			if($comment->haveReplies()){
+
+				debug($comment);
 				//this will find all replies in Comment object
 				$replies = $this->findCommentsWithoutJOIN(array('reply_to'=>$comment->id,'order'=>'dateasc'));								
 				$comment->replies = $replies;
@@ -245,12 +255,11 @@ class CommentsModel extends Model
 
 		
 		$c->content = str_replace(array("\\n","\\r"),array("<br />",""),$c->content); 
-		$c->content = $c->content;
 
 		if(!empty($c->media) && !empty($c->media_url)){
 			$c->content = str_replace($c->media_url,'',$c->content);
 			$c->media = $c->media;
-			$c->media = html_entity_decode($c->media);
+			$c->media = html_entity_decode($c->media,ENT_NOQUOTES|'ENT_XHTML', 'UTF-8' );
 		}
 
 		if(!empty($title)){
@@ -328,7 +337,10 @@ class CommentsModel extends Model
 
 		$sql = 'SELECT ';
  		if(isset($req['fields']))
-			$sql .= $this->sqlFields($req['fields']);
+			if(is_array($req['fields']))
+ 				$sql .= implode(', ',$req['fields']); 			
+ 			else
+ 				$sql .= $req['fields']; 			 		
  		else
  			$sql .= 'C.*, U.*'; 		
 
@@ -337,8 +349,18 @@ class CommentsModel extends Model
 				  	WHERE ";
 
 		if(isset($req['conditions'])){ 			
- 			
- 			$sql .= $this->sqlConditions($req['conditions']);		
+ 			if(!is_array($req['conditions']))
+ 				$sql .= $req['conditions']; 				
+ 			else {
+ 				$cond = array();
+	 			foreach ($req['conditions'] as $k => $v) {
+	 				if(!is_numeric($v)){ 
+	 					$v = '"'.mysql_escape_string($v).'"';	 					
+	 				}
+	 				$cond[] = "$k=$v";	 			
+	 			}
+	 			$sql .= implode(' AND ',$cond);
+ 			} 			
  		}
 
 		if(isset($req['order'])){
@@ -471,7 +493,7 @@ class Comment {
 
 	public function haveReplies(){
 
-		return (count($this->replies)>0)? true : false;
+		return (!empty($this->replies))? true : false;
 	}
 
 	public function userHaveVoted(){

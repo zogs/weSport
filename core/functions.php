@@ -9,7 +9,8 @@ function debug($var){
 
 		echo '<ol style="display:none">';
 		foreach ($debug as $key => $value) {
-			if($key>0){
+			
+			if($key>0 && isset($value['file'])){
 			echo '<li>'.$value['file'].' ligne '.$value['line'].'</li>';
 			}
 		}

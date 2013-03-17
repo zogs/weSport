@@ -22,7 +22,8 @@
                         <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="Express yourself here..."></textarea>
                         <input type="hidden" name="context" value="<?php echo $context; ?>" />
                         <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                        
-                        <input type="hidden" name="type" id="type" value='com' />            
+                        <input type="hidden" name="type" id="type" value='com' /> 
+                        <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />           
                         <input type="hidden" name="media" id="media" value='' /> 
                         <input type="hidden" name="media_url" id="media_url" value='' /> 
                         <div class="btn-group" id="commentTextareaButtons">
@@ -123,7 +124,8 @@
                             <?php endif;?>
                             <input type="hidden" name="context" value="<?php echo $context; ?>"  />
                             <input type="hidden" name="context_id" value="<?php echo $context_id; ?>"/>
-                            <input type="hidden" name="type" value="com" />
+                            <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />
+                            <input type="hidden" name="type" value="com" />                            
                             <input type="hidden" name="reply_to" />                                                       
                         </form>
                         <?php endif ;?>

@@ -93,8 +93,7 @@
 			"context_id" =>$context_id,
 			"comment_id" =>$comment_id,
 			'limit'      =>$perPage,
-			"pays"       =>$this->session->getPays(),
-			"lang"       =>$this->session->getLang()
+			"lang"       =>$this->request->get('lang')
 			);
 		
 		if(isset($this->request->get)){
@@ -365,30 +364,60 @@
 							$video_id                      = getYTid($url);
 							$type                          = 'video';
 
-							require_once 'Zend/Loader.php';
-							
-							Zend_Loader::loadClass('Zend_Gdata_YouTube');
-							
-							$yt                            = new Zend_Gdata_YouTube();
-							$yt->setMajorProtocolVersion(2);
-							$videoEntry                    = $yt->getVideoEntry($video_id);
-							$title                         = $videoEntry->getVideoTitle();
-							$description                   = $videoEntry->getVideoDescription();					
-							$ytthumbnails                  = $videoEntry->getVideoThumbnails();
-							$player_url                    = $videoEntry->getFlashPlayerUrl();
-							$media = '<object width="400" height="225">
+
+							$request_Youtube_API = 'http://gdata.youtube.com/feeds/api/videos/'.$video_id.'?v=2&alt=json';
+
+							if($json = file_get_contents_curl($request_Youtube_API)){
+
+								$json = json_decode($json,TRUE);
+								
+								$video        = $json['entry'];
+								$title        = $video['title']['$t'];								
+								$description  = $video['media$group']['media$description']['$t'];								
+								$player_url   = $video['media$group']['media$player']['url'];
+								$ytthumbnails = $video['media$group']['media$thumbnail'];
+								$thumbnails   = array();
+								foreach ($ytthumbnails as $thumbnail) {
+									$thumbnails[] = $thumbnail['url'];
+								}
+								$thumbnails_first = $thumbnails[0];
+								$media = '<object width="400" height="225">
 											  <param name="movie" value="'.$player_url.'&autoplay=1"></param>
 											  <param name="allowFullScreen" value="true"></param>
 											  <param name="allowScriptAccess" value="always"></param>
 											  <embed src="'.$player_url.'&autoplay=1" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="225"></embed>
 											</object>';
-							$media = urlencode($media);
+								$media = urlencode($media);
+								
+							}
+							else
+								$type = '404';
+							
 
-							$thumbnails = array();
-							foreach ($ytthumbnails as $key => $value) {														
-								$thumbnails[]                  = $value['url'];
-							}			
-							$thumbnails_first              = $thumbnails[0];							
+							// require_once 'Zend/Loader.php';
+							
+							// Zend_Loader::loadClass('Zend_Gdata_YouTube');
+							
+							// $yt                            = new Zend_Gdata_YouTube();
+							// $yt->setMajorProtocolVersion(2);
+							// $videoEntry                    = $yt->getVideoEntry($video_id);
+							// $title                         = $videoEntry->getVideoTitle();
+							// $description                   = $videoEntry->getVideoDescription();					
+							// $ytthumbnails                  = $videoEntry->getVideoThumbnails();
+							// $player_url                    = $videoEntry->getFlashPlayerUrl();
+							// $media = '<object width="400" height="225">
+							// 				  <param name="movie" value="'.$player_url.'&autoplay=1"></param>
+							// 				  <param name="allowFullScreen" value="true"></param>
+							// 				  <param name="allowScriptAccess" value="always"></param>
+							// 				  <embed src="'.$player_url.'&autoplay=1" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="225"></embed>
+							// 				</object>';
+							// $media = urlencode($media);
+
+							// $thumbnails = array();
+							// foreach ($ytthumbnails as $key => $value) {														
+							// 	$thumbnails[]                  = $value['url'];
+							// }			
+							// $thumbnails_first              = $thumbnails[0];							
 							
 				}
 				elseif( $domain == 'dailymotion') {

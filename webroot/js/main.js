@@ -110,31 +110,36 @@ $(document).ready(function(){
     });
     $("select#CC1").select2({ formatResult: addCountryFlagToSelectState, formatSelection: addCountryFlagToSelectState});
 
-		
+
 	/*===========================================================
 		COMMENT SYSTEM
 	============================================================*/
     if($("a#refresh_com").length != 0){
-
-    	//Params
-        showComments_url = $("#refresh_com").attr('href');                  
-		showComments_params = {};
-		enablePreviewComment = true;
-		loadingComments = false;        
+		
+		//Default params		       
         pageComments = 1;
         newestCommentId = 0;
+        loadingComments = false;
+        showComments_url = $("#refresh_com").attr('href');                  
+		showComments_params = {};
 
+        //Allowed preview comment
+        enablePreviewComment = true;
+
+        //automatic refreshing comments
         refreshComments = false;
         refreshComments_s = 600;
         setIntervalRefresh(refreshComments_s);       
         
-        tcheckComments = true;
+        //tchecking new comments
+        tcheckComments = false;
         tcheckComments_s = 60;
         setIntervalTcheck(tcheckComments_s);                
 
+        //Launch display comments
         show_comments();
-
-        infiniteComment();
+        //Init infinite comments
+        //infiniteComment();
         
 		
 
@@ -242,10 +247,9 @@ $(document).ready(function(){
 
                    if(!com.fail){
 							                    
-                    $("#formCommentReply").appendTo("#hiddenFormReply");
-                    var html = $('<div />').html(com.content).text(); //Jquery trick to decode html entities
+                    $("#formCommentReply").appendTo("#hiddenFormReply");                    
                     $("#com"+parent_id).next('.replies').remove();
-                    $("#com"+parent_id).replaceWith(html);
+                    $("#com"+parent_id).replaceWith(com.content);
 
                    }
                    else {
@@ -315,8 +319,6 @@ $(document).ready(function(){
 	        //get the data from the form
 	        var data = form.serialize();
 
-
-	        console.log(data);
 	        //if comment not empty
 	        if( trim(text) != "") {
 
@@ -330,13 +332,13 @@ $(document).ready(function(){
 	                    
 	                    if(data.success){
 	                    	//display new comments
-	                        show_comments('new');
+	                        show_comments('new');	                        
 	                        //reset textarea
-	                        textarea.val('');	                        
+	                        textarea.val('');
 	                        //reset preview container  
 	                        preview.empty();
 	                        //reset hidden media wrapper
-	                        media.empty();
+	                        media.val('');
 	                        //get comment id for futur use
 	                        var insert_id = data.insert_id;                         
 	                    }   
@@ -409,10 +411,10 @@ $(document).ready(function(){
 	                data : {url:url},
 	                success: function( data ){
 
-	                    var decoded = $('<div />').html(data.content).text(); //Jquery trick to decode html entities
-	                    console.log(decoded);
-	                    $("#commentPreview").empty().html(decoded);
-	                    $("input#media").val(data.content);
+	                    var preview = data.content; 
+	                    
+	                    $("#commentPreview").empty().html(preview);
+	                    $("input#media").val(preview);
 	                    $("input#type").val(data.type);
 
 	                },
@@ -519,24 +521,35 @@ $(document).ready(function(){
     /*===========================================================	        
     SHOW COMMENTS
     @param use params in showComments_params[]
-    @param use $arguments[] , string clear,newer,start
+    @param use $arguments[] , string clear,newest,start
     ============================================================*/ 
-    	function show_comments(){
+    	function show_comments( action ){
 		
 		$("#ajaxLoader").show();
 		$("#showMoreComments").hide();
 		$("#loadingComments").show();
 
-        var arg = (arguments[0]) ? arguments[0] : 'clear';
-        console.log(arg);
-        clean_params('newer','start'); 
-        console.log(showComments_params);
-        if(arg=='new') 
-             construct_params("?newer="+newestCommentId);
-        if(arg=='bottom')
-            construct_params("?start="+newestCommentId);    
+        if(action==undefined) action = 'clear';
+      	
+        if(action=='new') {
 
-        clean_params(showComments_params);
+        	 clean_params('start','page');
+             construct_params("?newest="+newestCommentId);
+
+        }
+
+        if(action=='bottom'){
+
+        	clean_params('newest');
+            construct_params("?start="+newestCommentId);
+            construct_params("?")    
+        }
+
+        if( Lang != undefined )
+        	construct_params("?lang="+Lang);
+
+        
+        //clean_params(showComments_params);
         
         //console.log(JSON.stringify(showComments_params));
 		$.ajax({
@@ -544,72 +557,80 @@ $(document).ready(function(){
 		  url: showComments_url,
 		  data: arrayParams2string(showComments_params),
 		  success: function( data ) 
-          {	   
+	          {	   
 
-          	//console.log(data);
-    		//Si pas de commentaires return false
-    		if(data.commentsNumber==0 && data.commentsTotal!=0) {
+	          	//console.log(data);
+	    		//Si pas de commentaires return false
+	    		if(data.commentsNumber==0 && data.commentsTotal!=0) {
 
-    			$("#loadingComments").hide();
-    			$("#ajaxLoader").hide();
-    			return false;
-    		}
-            //Jquery trick to decode html entities
-            var html = $('<div />').html(data.html).text();
+	    			$("#loadingComments").hide();
+	    			$("#ajaxLoader").hide();
+	    			return false;
+	    		}
 
-            if(html!=''){
-	            //Get id of the first comment
-				if(arg=='new' || arg=='clear'){
-					
-	                var first_id = $(html).first('.post').attr('id');
-	                first_id = first_id.replace('com','');
-	                newestCommentId = first_id;
-	                console.log('firstID'+newestCommentId);
-	                $("#badge").empty().hide();                        
-	                $("#noMoreComments").hide();
-	                if(arg=='new')
-	                	$("#comments").prepend(html);
-	                if(arg=='clear')
-	                	$('#comments').empty().append(html);
+	    		
+	            //var html = $('<div />').html(data.html).text(); //Jquery trick to decode html entities
+	            var html = data.html;
+	    		//console.log(data.html);
 
+	            if(html!=''){
+
+		            //Display comments on top/bottom
+					if(action=='clear'){
+
+						//id datedesc Get id of the first comment
+						if(showComments_params['order']=='datedesc' || showComments_params['order']==undefined){
+
+			                var top_comment_id = $(html).first('.post').attr('id');
+			                top_comment_id = top_comment_id.replace('com','');
+			                newestCommentId = top_comment_id;
+			                alert(newestCommentId);
+			               
+			            }
+
+		                $("#badge").empty().hide();                        
+		                $("#noMoreComments").hide();
+		                $('#comments').empty().append(html);
+
+		            }
+		            else if(action == 'new'){
+		            	$("#comments").prepend(html)
+		            }
+		            else if(action=='bottom') {                           
+		                $('#comments').append(html);                       
+		            }
+		        }           	
+
+	            //if there is not comment at all
+	            if(data.commentsTotal==0){
+	            	
+	            	$("#noCommentYet").show();
 	            }
-	            else if(arg=='bottom') {                           
-	                $('#comments').append(html);                       
-	            }
-	        }           	
 
-            //if there is not comment at all
-            if(data.commentsTotal==0){
-            	
-            	$("#noCommentYet").show();
-            }
+	            //if there is comments...
+	            else {
 
-            //if there is comments...
-            else {
+	            	//but no comment to display
+	            	if(data.commentsLeft<=0){
+	            	
+		            	 $("#showMoreComments").hide();
+		       	     	 $("#noMoreComments").show();		       	     
+	       	    	}
+		       	    //show that there is more comment to show
+		       	    else {
+		   	    		 $("#showMoreComments").show();
+			       	     $("#commentsLefts").text(data.commentsLeft);
+			       	     $("#noMoreComments").hide();
+		       	    }
+		       	}
 
-            	//but no comment to display
-            	if(data.commentsLeft<=0){
-            	
-	            	 $("#showMoreComments").hide();
-	       	     	 $("#noMoreComments").show();		       	     
-       	    	}
-	       	    //show that there is more comment to show
-	       	    else {
-	   	    		 $("#showMoreComments").show();
-		       	     $("#commentsLefts").text(data.commentsLeft);
-		       	     $("#noMoreComments").hide();
-	       	    }
-	       	}
-                  
-             
-            $("#ajaxLoader").hide();	                
-            $("#loadingComments").hide();
-            loadingComments = false;    
-			
-		},
+	            $("#ajaxLoader").hide();	                
+	            $("#loadingComments").hide();
+	            loadingComments = false;    
+				
+			},
 		  dataType: 'json'
 		});
-		return;
 
 	}
 
@@ -721,18 +742,20 @@ $(document).ready(function(){
     ============================================================*/
     function tcheckcomments(){
 
-        
+    	//if not datedesc, cancel tcheck comment
+        if(showComments_params['order']=='datedesc' || showComments_params['order']==undefined) ;
+        else return false;
+
         var obj = $('#refresh_com');
         var badge = obj.find('#badge');
         var url = obj.attr('data-url-count-com');
-        var lastid = newestCommentId;
-        url += lastid;
+        url += '&newest='+newestCommentId;        
 
         $.ajax({
             type: 'GET',
             url: url,
             success: function(data){
-                //$('#manifeste').empty().html(data);
+                
                 if(is_numeric(data.count)){
                     if(data.count>0){
                         badge.empty().html(trim(data.count));
@@ -742,12 +765,12 @@ $(document).ready(function(){
                         badge.hide();
                     }
                 }
-                //else alert(data);
 
             },
             dataType: 'json'
         });
     }
+
 
 
 

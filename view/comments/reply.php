@@ -14,10 +14,9 @@
     if(!empty($coms)){
 
         //Create the html 
-        $html = utf8_decode(show_comments($coms,$this->session->user(),$context,$context_id) );
-        $html = htmlentities($html);
+        $html = show_comments($coms,Session::user(),$context,$context_id);
         
-        echo json_encode(array('content'=>$html));
+        echo json_encode(array('content'=>$html),JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT);
     }
     else {
 

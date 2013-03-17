@@ -1,7 +1,7 @@
 <div class="view_event">
 	<?php echo $this->session->flash(); ?>
 	<div class="event">	
-
+		
 		<div class="main-content">
 			
 			<div class="sport"><img src="" alt=""/></div>
@@ -83,8 +83,9 @@
 				<h3><?php echo count($event->participants);?> participants</h3>
 				<ul>
 					<?php foreach ($event->participants as $participant):?>
-						<li><img src="<?php echo Router::webroot($participant->getAvatar());?>"/>
-							<a href=""><?php echo $participant->getLogin();?></a>
+					
+						<li><img src="<?php echo Router::webroot($participant->avatar);?>"/>
+							<a href=""><?php echo $participant->login;?></a>
 							<small>( <?php echo ageFromBY($participant->age);?> ans )</small>
 					<?php endforeach;?>
 				</ul>

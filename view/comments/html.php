@@ -1,4 +1,6 @@
-<?php 
+ <?php 
+    header ('Content-type: text/html; charset=utf-8');
+
 
     function show_comments($coms,$user,$context,$context_id){
 
@@ -41,6 +43,7 @@
         $replyshowed = array_slice($com->replies, 0, CommentsController::$nbDisplayedReplies);
         $replyhidden = array_slice($com->replies, CommentsController::$nbDisplayedReplies);
 
+
         $html .= show_comments($replyshowed,$user,$context,$context_id);
 
         if(!empty($replyhidden)){
@@ -57,8 +60,7 @@
         $html .= show_comments($replyhidden,$user,$context,$context_id);
         }
 
-
-        if($user->user_id!=0 && $com->replyAllowed() && CommentsController::$showFormReply ){
+        if($user->user_id!=0 && $com->replyAllowed() ){
 
             $html.= "<form class='formCommentReply' action='".Router::url('comments/reply')."' method='POST'>                
                         <img class='userAvatarCommentForm' src='".Router::webroot($user->getAvatar())."' />
@@ -83,7 +85,6 @@
         if(!empty($replyhidden)){
         $html .= '</div>';
         }
-
         $html .= '</div>';  
 
         return $html;
