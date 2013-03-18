@@ -308,7 +308,7 @@ class User {
 
 	public function getAvatar(){
 
-		if(isset($this->avatar)&&!empty($this->avatar)) return $this->avatar;
+		if(isset($this->avatar)&&!empty($this->avatar)&&file_exists(WEBROOT.DS.$this->avatar)) return $this->avatar;
 		else return 'img/musclor.jpg';
 	}
 

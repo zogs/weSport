@@ -27,6 +27,9 @@
  	========================================*/
  	public function show( $context, $context_id ){
 
+ 		$this->loadModel('Comments');
+ 		
+
  	
  		$d['context'] = $context;
  		$d['context_id'] = $context_id;
@@ -55,6 +58,7 @@
  		}
 
 
+ 		$d['totalComments'] = $this->Comments->totalComments($context,$context_id);
  		// $d['flash'] = array('message'=>'You could spread a News to all your Protest(s) by filling the Title form',
  		// 					'type'=>'warning');
 
@@ -105,12 +109,8 @@
 		if($context=='events' ||$context=='group'){
 
 			//$d['coms']     = $this->Comments->findComments($params);
-			$coms       = $this->Comments->findCommentsWithoutJOIN($params);
-
-			$d['coms']  = $coms;
-			$d['commentsTotal'] = $this->Comments->totalComments($context,$context_id);
-			$d['commentsDisplayed'] = $perPage*$this->request->page;
-			$d['commentsLeft'] = $d['commentsTotal'] - $d['commentsDisplayed'];
+			$d['coms']  = $this->Comments->findCommentsWithoutJOIN($params);		
+			$d['commentsPerPage'] = $perPage;
 				
 		}
 		elseif($context=='comment'){

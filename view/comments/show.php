@@ -19,7 +19,7 @@
                         ): ?>
 
                         <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
-                        <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="Express yourself here..."></textarea>
+                        <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="Poser votre question..."></textarea>
                         <input type="hidden" name="context" value="<?php echo $context; ?>" />
                         <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                        
                         <input type="hidden" name="type" id="type" value='com' /> 
@@ -55,7 +55,7 @@
                     <div style="float:left;width:100%; height:0px;"></div>  
 
                     <div id="tri" class="btn-toolbar">
-                                    
+
                         <div class="btn-group pull-right">
                             <a class="btn  btn-mini dropdown-toggle bubble-bottom" title="Type of comments" data-toggle="dropdown" href="#">
                             Type
@@ -81,7 +81,6 @@
                             </ul>
                         </div>  
                         <div class="btn-group pull-right">
-
                             <a class="btn btn-mini bubble-bottom" title="Display new comments" href="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" id="refresh_com" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>">
                                 <i class="icon-repeat"></i>  Actualiser <span class="badge badge-inverse hide" id="badge"></span>
                             </a>
@@ -104,7 +103,7 @@
                         ?>                    
                     </div>
                     <div id="bottomComments">
-                        <a  id="showMoreComments" href="" ><span class="icon-arrow-down"></span> Afficher plus de commentaires (<span id="commentsLefts"></span> restants)</a>
+                        <a  id="showMoreComments" href="" ><span class="icon-arrow-down"></span> Afficher plus de commentaires</a>
                         <div id='loadingComments'><span class="ajaxLoader"></span> Chargement des commentaires ...</div>
                         <div id='noMoreComments'>Fin des commentaires</div>
                         <div id="noCommentYet">Pas encore de commentaires</div>                        

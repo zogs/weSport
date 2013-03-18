@@ -1,5 +1,6 @@
 #perso
-webroot/cache/*
+webroot/cache/autoloader/*
+webroot/cache/location/*
 webroot/media/users/avatar/*
 
 

@@ -23,9 +23,7 @@
         echo json_encode(array(
             'html'=>$html,
             'commentsNumber'=>count($coms),
-            'commentsTotal'=>$commentsTotal,
-            'commentsDisplayed'=>$commentsDisplayed,
-            'commentsLeft'=>$commentsLeft)
+            'commentsPerPage'=>$commentsPerPage)
         ,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT
         );
     }
@@ -34,9 +32,7 @@
         echo json_encode(array(
             'html'=>'',
             'commentsNumber'=>0,
-            'commentsTotal'=>$commentsTotal,
-            'commentsDisplayed'=>$commentsDisplayed,
-            'commentsLeft'=>0
+            'commentsPerPage'=>$commentsPerPage
             )
         ,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT
         );

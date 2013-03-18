@@ -525,24 +525,22 @@ $(document).ready(function(){
     ============================================================*/ 
     	function show_comments( action ){
 		
-		$("#ajaxLoader").show();
-		$("#showMoreComments").hide();
+		$("#ajaxLoader").show();		
 		$("#loadingComments").show();
 
         if(action==undefined) action = 'clear';
+
+        clean_params('start','page','newest','lang');
       	
         if(action=='new') {
-
-        	 clean_params('start','page');
-             construct_params("?newest="+newestCommentId);
-
+        	 
+             construct_params("?newest="+newestCommentId);             
         }
 
         if(action=='bottom'){
 
-        	clean_params('newest');
             construct_params("?start="+newestCommentId);
-            construct_params("?")    
+            construct_params("?page="+pageComments);    
         }
 
         if( Lang != undefined )
@@ -561,8 +559,9 @@ $(document).ready(function(){
 
 	          	//console.log(data);
 	    		//Si pas de commentaires return false
-	    		if(data.commentsNumber==0 && data.commentsTotal!=0) {
+	    		if(data.commentsNumber==0 && data.commentsTotal==0) {
 
+	    			$("#noCommentYet").show();
 	    			$("#loadingComments").hide();
 	    			$("#ajaxLoader").hide();
 	    			return false;
@@ -575,16 +574,17 @@ $(document).ready(function(){
 
 	            if(html!=''){
 
-		            //Display comments on top/bottom
+		            
+
 					if(action=='clear'){
 
 						//id datedesc Get id of the first comment
 						if(showComments_params['order']=='datedesc' || showComments_params['order']==undefined){
 
-			                var top_comment_id = $(html).first('.post').attr('id');
+		                	var top_comment_id = $(html).first('.post').attr('id');
 			                top_comment_id = top_comment_id.replace('com','');
 			                newestCommentId = top_comment_id;
-			                alert(newestCommentId);
+			                 //alert(newestCommentId);
 			               
 			            }
 
@@ -601,25 +601,15 @@ $(document).ready(function(){
 		            }
 		        }           	
 
-	            //if there is not comment at all
-	            if(data.commentsTotal==0){
+		       if(action!='new') {
 	            	
-	            	$("#noCommentYet").show();
-	            }
-
-	            //if there is comments...
-	            else {
-
-	            	//but no comment to display
-	            	if(data.commentsLeft<=0){
+	            	if(data.commentsNumber<=0 || data.commentsNumber != data.commentsPerPage){
 	            	
 		            	 $("#showMoreComments").hide();
 		       	     	 $("#noMoreComments").show();		       	     
 	       	    	}
-		       	    //show that there is more comment to show
 		       	    else {
-		   	    		 $("#showMoreComments").show();
-			       	     $("#commentsLefts").text(data.commentsLeft);
+		   	    		 $("#showMoreComments").show();			       	     
 			       	     $("#noMoreComments").hide();
 		       	    }
 		       	}
