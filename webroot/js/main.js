@@ -299,6 +299,7 @@ $(document).ready(function(){
 	        var url = form.attr('action');
 	        var textarea = $("#commentTextarea");
 	        var text = textarea.val();
+	        var title = $("#commentTitle");
 	        var preview = $("#commentPreview");
 	        var media = $("input#media");
 	        var media_url = $('input#media_url');
@@ -336,6 +337,8 @@ $(document).ready(function(){
 	                        $("#comments").prepend(com.content);	                        
 	                        //reset textarea
 	                        textarea.val('');
+	                        //reset title
+	                        title.val('');
 	                        //reset preview container  
 	                        preview.empty();
 	                        //reset hidden media wrapper

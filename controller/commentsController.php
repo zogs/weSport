@@ -209,6 +209,7 @@
  			$com->user_id = $this->session->user()->getID();
  			$com->lang = $this->getLang();
 
+ 			debug($com);
  			if($id = $this->Comments->saveComment($com)){
 
  				$coms = $this->Comments->getComments(array('comment_id'=>$id));

@@ -270,6 +270,7 @@ class CommentsModel extends Model
 			$this->increment(array('field'=>'replies','id'=>$c->reply_to));
 		}
 
+		debug($c);
 		if($id = $this->save($c)){
 
 			return $id;
