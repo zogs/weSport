@@ -25,7 +25,8 @@
 
                             <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->textareaPlaceholder;?>"></textarea>
                             <input type="hidden" name="context" value="<?php echo $context; ?>" />
-                            <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                        
+                            <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" /> 
+                            <input type="hidden" name="config" value='<?php echo json_encode($this->config);?>' />                       
                             <input type="hidden" name="type" id="type" value='com' /> 
                             <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />           
                             <input type="hidden" name="media" id="media" value='' /> 

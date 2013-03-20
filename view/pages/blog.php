@@ -19,7 +19,10 @@
 														'allowTitle'=>true,
 														'allowComment'=>$allowComment,
 														'allowReply'=>true,
-														'displayRenderButtons'=>false
+														'displayRenderButtons'=>false,
+														'showFormReply'=>true,
+														'enablePreview'=>true,
+														'enableInfiniteScrolling'=>true
 														),
 													)
 							);
@@ -30,6 +33,10 @@
 
 	<div class="blog-column">
 		
+		<div class="column-part">Pub</div>
+		<div class="column-part">Annonce</div>
+		<div class="column-part">Images</div>
+		<div class="column-part">Pub</div>
 	</div>
 
 

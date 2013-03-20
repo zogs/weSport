@@ -25,10 +25,10 @@
 
                 $html.= html_comment($com, $user, $config);
 
-                if($com->haveReplies() && $config->displayReply){
+               
 
                     $html.= show_replies($com,$user,$config);
-                }
+                
             }
         }
 
@@ -40,27 +40,32 @@
         
         $html = '<div class="replies">'; 
 
-        $replyshowed = array_slice($com->replies, 0, $config->repliesDisplayPerComment);
-        $replyhidden = array_slice($com->replies, $config->repliesDisplayPerComment);
+        //if display reply if there are replies
+        if($config->displayReply && !empty($com->replies)){
 
+            $replyshowed = array_slice($com->replies, 0, $config->repliesDisplayPerComment);
+            $replyhidden = array_slice($com->replies, $config->repliesDisplayPerComment);
 
-        $html .= show_comments($replyshowed,$user,$config);
+            $html .= show_comments($replyshowed,$user,$config);
 
-        if(!empty($replyhidden)){
-           // debug(count($comment2hidden));
-        $html .= '<div class="showHiddenReplies">';
-        if($config->repliesDisplayPerComment==0){
-            $html .= '<a href="#" class="showReplies">Afficher les '.count($replyhidden).' réponse(s)</a>';
+            if(!empty($replyhidden)){
+               
+            $html .= '<div class="showHiddenReplies">';
+            if($config->repliesDisplayPerComment==0){
+                $html .= '<a href="#" class="showReplies">Afficher les '.count($replyhidden).' réponse(s)</a>';
+            }
+            else {
+                $html .= '<a href="#" class="showReplies">Afficher '.count($replyhidden).' autres réponse(s)</a>';
+            }
+            $html .= '</div>';
+            $html .='<div class="hiddenReplies">';
+            $html .= show_comments($replyhidden,$user,$config);
+            $html .= '</div>';
+            }
         }
-        else {
-            $html .= '<a href="#" class="showReplies">Afficher '.count($replyhidden).' autres réponse(s)</a>';
-        }
-        $html .= '</div>';
-        $html .='<div class="hiddenReplies">';
-        $html .= show_comments($replyhidden,$user,$config);
-        }
-
-        if($user->user_id!=0 && $config->allowReply ){
+       
+        //Reply form
+        if($config->showFormReply ){
 
             $html.= "<form class='formCommentReply' action='".Router::url('comments/reply')."' method='POST'>                
                         <img class='userAvatarCommentForm' src='".Router::webroot($user->getAvatar())."' />
@@ -82,9 +87,6 @@
                     </form>" ;
         }
 
-        if(!empty($replyhidden)){
-        $html .= '</div>';
-        }
         $html .= '</div>';  
 
         return $html;

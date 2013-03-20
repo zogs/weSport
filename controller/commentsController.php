@@ -20,10 +20,11 @@
  	public $allowReply = true;
  	public $displayReply = true;
  	public $allowVoting = true;
- 	public $enablePreview = true;
+ 	public $enablePreview = false;
  	public $showFormReply = false;
  	public $allowTitle = false; 
- 	public $displayRenderButtons = true;
+ 	public $displayRenderButtons = false;
+ 	public $enableInfiniteScrolling = false;
 
  	//Default text value
  	public $titlePlaceholder = "Write here to add a title";
@@ -40,11 +41,8 @@
 
  		$this->loadModel('Comments');
  		
- 		//Override property
- 		foreach ($params as $key => $value) {
-				
- 			if(isset($this->$key)) $this->$key = $value;
- 		}
+ 		//Override property config
+ 		$this->overrideConfig($params);
 
  		if(!isset($this->context)) throw new Exception("Context is require", 1);
  		if(!isset($this->context_id)) throw new Exception("Context_id is require", 1);
@@ -59,6 +57,17 @@
 
  	}
 
+ 	private function overrideConfig( $config ){
+
+ 		foreach ($config as $key => $value) {
+			
+ 			if(isset($this->$key)) {
+ 				$this->$key = $value;
+ 				$this->config[$key] = $value;
+ 			}
+
+ 		}
+ 	}
 
  	/*========================================
  	List all the comment depending of the context
@@ -77,8 +86,9 @@
 
  		$this->loadModel('Comments');
  		$this->view = 'comments/index';
-			
-			
+				
+ 		$config = $this->request->get('config');
+ 		$this->overrideConfig(json_decode($config));
 
 		$params = array(	
 									
@@ -376,12 +386,10 @@
 									$thumbnails[] = $thumbnail['url'];
 								}
 								$thumbnails_first = $thumbnails[0];
-								$media = '<object width="400" height="225">
-											  <param name="movie" value="'.$player_url.'&autoplay=1"></param>
-											  <param name="allowFullScreen" value="true"></param>
-											  <param name="allowScriptAccess" value="always"></param>
-											  <embed src="'.$player_url.'&autoplay=1" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="225"></embed>
-											</object>';
+
+								$media = '<iframe id="ytplayer" type="text/html" width="380" height="285"
+										  src="http://www.youtube.com/embed/'.$video_id.'"
+										  frameborder="0"/>';
 								$media = urlencode($media);
 								
 							}

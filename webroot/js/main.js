@@ -120,7 +120,10 @@ $(document).ready(function(){
         pageComments = 1;
         newestCommentId = 0;
         loadingComments = false;
-        showComments_url = $("#comments").attr('data-comments-url');                  
+        showComments_url = $("#comments").attr('data-comments-url'); 
+        config = $("input[name=config]").val();                 
+        config = JSON.parse(config);
+        enableInfiniteScrolling = config.enableInfiniteScrolling;
 		showComments_params = {};
 		CurrentUrlPreview = '';
 
@@ -140,7 +143,9 @@ $(document).ready(function(){
         //Launch display comments
         show_comments();
         //Init infinite comments
-        //infiniteComment();
+        if( true === enableInfiniteScrolling ){
+        	infiniteComment();        	
+        }
         
 		
 
@@ -551,6 +556,7 @@ $(document).ready(function(){
 
         
         //clean_params(showComments_params);
+        construct_params("?config="+$("input[name=config]").val());
         
         //console.log(JSON.stringify(showComments_params));
 		$.ajax({
