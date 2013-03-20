@@ -5,7 +5,7 @@
 		<img src="<?php echo Router::url('img/blog_banner.jpg');?>" alt="">
 	</div>
 
-	<?php echo Session::flash(); ?>
+	<?php echo $this->session->flash(); ?>
 
 	<div class="blog-content">
 		<?php 

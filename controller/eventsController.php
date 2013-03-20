@@ -281,15 +281,10 @@ class EventsController extends Controller{
 						//get event
 						$evt = $this->Events->findEventById($event_id);
 					
-						//save organizator participation
-						$check = $this->Events->findParticipants($event_id);
-
-						if(empty($check) || !in_array($this->session->user()->getID(),$check)){
-
-							$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
-
-							$this->Events->saveParticipants($u,$evt);
-						}
+						//save organizator participation		
+						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
+						$this->Events->saveParticipants($u,$evt);
+						
 
 						//email the changes 
 						// if(!empty($changes)){

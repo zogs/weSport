@@ -122,6 +122,7 @@ $(document).ready(function(){
         loadingComments = false;
         showComments_url = $("#comments").attr('data-comments-url');                  
 		showComments_params = {};
+		CurrentUrlPreview = '';
 
         //Allowed preview comment
         enablePreviewComment = true;
@@ -328,34 +329,33 @@ $(document).ready(function(){
 	            	type:"GET", 
 	            	data: data, 
 	            	dataType: 'json',
-	                success: function(data){
-	                    
-	                    if(data.success){
+	                success: function( com ){
+
+	                    if(!com.fail){
 	                    	//display new comments
-	                        show_comments('new');	                        
+	                        $("#comments").prepend(com.content);	                        
 	                        //reset textarea
 	                        textarea.val('');
 	                        //reset preview container  
 	                        preview.empty();
 	                        //reset hidden media wrapper
 	                        media.val('');
-	                        //get comment id for futur use
-	                        var insert_id = data.insert_id;                         
+                      
 	                    }   
 	                    else {
-	                        alert(data.msg);
+	                        alert(com.fail);
 	                    }                                                                   		                     
-	                  }                    
-	               
+	                  }	                          	               
 	            });
             } 
+	        
 	        return false;
 
 	    });
 
 	    $("#commentTextarea").on('focus',function(){ $(this).css('height','80px'); });
 
-	    CurrentUrlPreview = '';
+
 
 
 	    /*===========================================================

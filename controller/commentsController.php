@@ -195,7 +195,7 @@
 
 		$this->loadModel('Comments');
  		$this->layout = 'none';
- 		$this->view = 'json';
+
  		$d = array();
 
  		//if no POST data
@@ -206,20 +206,23 @@
  		if($this->session->user()->isLog()){
 
 
- 			$com->user_id = $this->session->user()->isLog();
+ 			$com->user_id = $this->session->user()->getID();
  			$com->lang = $this->getLang();
 
  			if($id = $this->Comments->saveComment($com)){
 
- 				$d['success'] = true;
- 				$d['insert_id'] = $id;
+ 				$coms = $this->Comments->getComments(array('comment_id'=>$id));
+
+ 				$d['coms'] = $coms;
+ 				$d['context'] = $com->context;
+ 				$d['context_id'] = $com->context_id;
  			}
  			else {
- 				$d['error'] = 'Unknown error while saving comment in database. Please don \'t hurt me !';
+ 				throw new zException("Error in saveComment:commentsModel", 1);
  			}			
  		}
  		else {
- 			$d['error'] = "You need to log in first !";
+ 			$d['fail'] = "You should log in first...";
  		} 		 		
 
  		$this->set($d);
@@ -259,7 +262,7 @@
 
 	 		} else {
 
-	 			$d['fail'] = 'You should log in first..';
+	 			$d['fail'] = 'You should log in first...';
 	 		}
 
 	 	} else {

@@ -334,7 +334,7 @@ class EventsModel extends Model{
 	public function eventsParticipants($event_id,$proba){
 
 		$participants = $this->findParticipants($event_id, $proba);
-		
+
 		$users = array();
 		foreach ($participants as $participant) {
 			$user = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$participant->user_id)));
@@ -367,10 +367,7 @@ class EventsModel extends Model{
 				$s->proba = $proba;			
 				$this->save($s);			
 			}	
-			else {
-				throw new zException("User already participate event ".$event->id, 1);
 				
-			}		
 		}
 
 		return true;
@@ -479,7 +476,7 @@ class Event {
 
 	public function getAge(){
 
-		return $this->age;
+		return date('Y')-$this->age;
 	}
 
 	public function getNbParticipants(){

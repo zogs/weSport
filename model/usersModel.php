@@ -340,7 +340,14 @@ class User {
 		else return false;
 	}
 
+	public function getAge(){
 
+		return date('Y')-$this->age;
+	}
+
+	public function getBirthyear(){
+		return $this->age;
+	}
 
 }
  ?>

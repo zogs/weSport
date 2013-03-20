@@ -88,7 +88,7 @@
 				<h2>Organisé par:</h2>
 				<img class="avatar"src="<?php echo Router::webroot($event->getAvatar());?>" alt="">					
 				<a href=""><?php echo $event->getLogin();?></a>
-				<small>(<?php echo ageFromBY($event->age);?> ans )</small>
+				<small>(<?php echo $event->getAge();?> ans )</small>
 			</div>
 			
 
@@ -98,7 +98,7 @@
 					<?php foreach ($event->participants as $participant):?>						
 						<li><img src="<?php echo Router::webroot($participant->avatar);?>"/>
 							<a href=""><?php echo $participant->login;?></a>
-							<small>( <?php echo ageFromBY($participant->age);?> ans )</small>
+							<small>( <?php echo $participant->getAge();?> ans )</small>
 						</li>
 					<?php endforeach;?>
 				</ul>
@@ -108,9 +108,9 @@
 				<h3><?php echo count($event->uncertains);?> peut-être</h3>
 				<ul>
 					<?php foreach ($event->uncertains as $uncertain):?>						
-						<li><img src="<?php echo Router::webroot($uncertain->avatar);?>"/>
-							<a href=""><?php echo $uncertain->login;?></a>
-							<small>( <?php echo ageFromBY($uncertain->age);?> ans )</small>
+						<li><img src="<?php echo Router::webroot($uncertain->getAvatar());?>"/>
+							<a href=""><?php echo $uncertain->getLogin();?></a>
+							<small>( <?php echo $uncertain->getAge();?> ans )</small>
 						</li>
 					<?php endforeach;?>
 				</ul>
