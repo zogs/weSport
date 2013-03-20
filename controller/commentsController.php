@@ -199,8 +199,8 @@
  		$d = array();
 
  		//if no POST data
- 		if(!$this->request->get) throw new zException("No post data sended",1);
- 		else $com = $this->request->get;
+ 		if(!$this->request->post()) throw new zException("No post data sended",1);
+ 		else $com = $this->request->post();
 
  		//if there is a user logged in
  		if($this->session->user()->isLog()){
@@ -209,7 +209,6 @@
  			$com->user_id = $this->session->user()->getID();
  			$com->lang = $this->getLang();
 
- 			debug($com);
  			if($id = $this->Comments->saveComment($com)){
 
  				$coms = $this->Comments->getComments(array('comment_id'=>$id));
@@ -235,9 +234,9 @@
  		$this->loadModel('Comments');
  		$this->layout = 'none';
 
- 		if($this->request->get('content')!=''){
+ 		if($this->request->post('content')!=''){
 
- 			$com = $this->request->get();
+ 			$com = $this->request->post();
 
 	 		if(empty($com->reply_to) || !is_numeric($com->reply_to)) throw new zException("Reply_to is not defined", 1);
 	 		

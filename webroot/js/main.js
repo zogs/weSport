@@ -241,7 +241,7 @@ $(document).ready(function(){
             var parent_id = $(this).find('input[name=reply_to]').val();            
 
             $.ajax({
-                type:'GET',
+                type:'POST',
                 url: url,
                 data: datas,
                 success: function( com ){
@@ -327,7 +327,7 @@ $(document).ready(function(){
 	        	//send POST request
 	            $.ajax({
 	            	url:url, 
-	            	type:"GET", 
+	            	type:"POST", 
 	            	data: data, 
 	            	dataType: 'json',
 	                success: function( com ){
