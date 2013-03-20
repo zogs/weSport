@@ -37,7 +37,7 @@ class UsersController extends Controller{
 
 					$this->session->write('user', $user);
 					$this->session->setToken();				
-					$this->session->setFlash('Vous êtes maintenant connecté');
+					$this->session->setFlash('Vous êtes maintenant connecté','success',2);
 					
 					$loc = $_SERVER['HTTP_REFERER'];
 					if(strpos($loc,'users/login')||strpos($loc,'users/validate')){

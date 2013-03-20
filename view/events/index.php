@@ -30,7 +30,7 @@ foreach ($events as $date => $evts):
 			<div class="event-bb">				
 
 				<div class="event-time">
-					<img src="" alt="">
+					<img class="event-logo" src="<?php echo Router::webroot('img/sport_icons/icon_'.$event->sport.'.png');?>" alt="<?php echo $event->sport;?>">
 					<?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?>
 				</div>
 

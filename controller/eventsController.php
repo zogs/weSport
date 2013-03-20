@@ -73,7 +73,8 @@ class EventsController extends Controller{
 			$params['date'] = array('day'=> $nextday) ;
 			//find events in db
 			$dayevents = $this->Events->findEvents($params);
-			$dayevents = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$dayevents);		
+			$dayevents = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$dayevents);
+			$dayevents = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$dayevents);		
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
 			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
@@ -108,8 +109,10 @@ class EventsController extends Controller{
 
 		$event = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$event);
 		$event = $this->Worlds->JOIN_GEO($event);
-		$event = $this->Events->joinEventsParticipants($event);
-		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());
+		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
+		$event->participants = $this->Events->eventsParticipants($event->id,1);
+		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
+		
 		 // debug($event);
 
 
@@ -151,9 +154,12 @@ class EventsController extends Controller{
 				$this->session->setFlash("Tu participe déjà !","info");				
 			}
 
-			if($this->Events->saveParticipants($user,$event)){
+			if(isset($data->proba)) $proba = $data->proba;
+			else $proba = 1;
+
+			if($this->Events->saveParticipants($user, $event, $proba)){
 				
-				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success");
+				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success",4);
 			}
 			else
 				throw new zException('Unknown error while saving user participation',1);
@@ -162,6 +168,8 @@ class EventsController extends Controller{
 			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
 		}
 	}
+
+
 
 	public function removeParticipant(){
 
@@ -201,7 +209,7 @@ class EventsController extends Controller{
 				$p->id = $check->id;
 				$this->Events->delete($p);
 
-				$this->session->setFlash("Tanpis... à une prochaine fois!","warning");		
+				$this->session->setFlash("Tanpis... à une prochaine fois!","warning",2);		
 			}			
 						
 			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
@@ -237,17 +245,13 @@ class EventsController extends Controller{
 			if(!$evt->isAdmin($this->session->user()->getID())){
 				$this->session->setFlash("Vous n'êtes pas le créateur de cette annonce","error");				
 				$this->redirect('users/login');			
-			}
-			else {
-				$this->session->setFlash("Vous pouvez modifier votre annonce","info");
-			}
+			}			
 			
 		}
 		else{
 			//else init a empty event
 			$evt = new Event();
 
-			$this->session->setFlash("Vous pouvez créer une annonce","info");
 		}
 		
 		//if new data are sended
@@ -270,13 +274,9 @@ class EventsController extends Controller{
 					}
 
 					//save event
-					if($this->Events->save($newEvent)){
+					if($event_id = $this->Events->save($newEvent)){
 
 						$this->session->setFlash("L'annonce a bien été enregistré, elle est visible dès maintenant");
-
-						//get id of the event
-						if(isset($this->Events->id))
-						$event_id = $this->Events->id;
 						
 						//get event
 						$evt = $this->Events->findEventById($event_id);
@@ -284,7 +284,7 @@ class EventsController extends Controller{
 						//save organizator participation
 						$check = $this->Events->findParticipants($event_id);
 
-						if($check == false || !in_array($this->session->user()->getID(),$check)){
+						if(empty($check) || !in_array($this->session->user()->getID(),$check)){
 
 							$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 
@@ -305,6 +305,9 @@ class EventsController extends Controller{
 								$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
 							}
 						}
+
+						//redirect
+						$this->redirect('events/create/'.$event_id);
 					}
 					else{
 						$this->session->setFlash("Il ya une erreur lors de la sauvegarde. Essaye encore","error");
@@ -326,6 +329,8 @@ class EventsController extends Controller{
 				$this->request->data = $evt;//send data to form class
 					
 		}
+
+		$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug')));
 
 		$d['event'] = $evt;
 

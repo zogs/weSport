@@ -6,54 +6,51 @@
                     }
                     ?>
 
-                    <?php if ($this->session->user()->isLog()): ?>
+
+                    <?php 
+
+                    //Si les commentaires sont authorisé OU si c'est l'admin on affiche le formulaire
+                    if(true == $this->allowComment ): ?>
                     <form id="commentForm" action="<?php echo Router::url('comments/add'); ?>" method="POST">                        
 
-                        <?php 
-
-                        //Si les commentaires sont authorisé OU si c'est l'admin
-                        if(
-                            !empty($commentsAllow) 
-                            ||
-                            !empty($isadmin)
-                        ): ?>
+                        <?php if ($this->session->user()->isLog()): ?>    
 
                         <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
-                        <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="Poser votre question..."></textarea>
-                        <input type="hidden" name="context" value="<?php echo $context; ?>" />
-                        <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                        
-                        <input type="hidden" name="type" id="type" value='com' /> 
-                        <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />           
-                        <input type="hidden" name="media" id="media" value='' /> 
-                        <input type="hidden" name="media_url" id="media_url" value='' /> 
-                        <div class="btn-group" id="commentTextareaButtons">
-                            <input type="submit" id="submitComment" class="btn btn-small" value="Envoyer">
-                            <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">              
-                            <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">                           
-                            <li><a href="">Créer une nouvelle discussion</a></li>                
-                            </ul>
-                        </div>  
-                        <?php 
-                        //Si c'est l'admin , il peut mettre un titre a son commentaire
-                        if(!empty($isadmin)):
-                        ?>
-                        <input type="text" name="title" id="title" placeholder="You can put a title to your comment. (will broadcast a NEWS)." />
-                        <?php 
-                        endif; 
-                        ?>
+                        <div class="commentFormFields">
+                            <?php 
+                                //Si c'est l'admin , il peut mettre un titre a son commentaire
+                                if($this->allowTitle):?>
+                                <input type="text" name="title" id="commentTitle" placeholder="<?php echo $this->titlePlaceholder;?>" />
+                                <?php endif; ?>
 
-                        <div id="commentPreview"></div>
+                            <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->textareaPlaceholder;?>"></textarea>
+                            <input type="hidden" name="context" value="<?php echo $context; ?>" />
+                            <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                        
+                            <input type="hidden" name="type" id="type" value='com' /> 
+                            <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />           
+                            <input type="hidden" name="media" id="media" value='' /> 
+                            <input type="hidden" name="media_url" id="media_url" value='' /> 
+                            <div class="btn-group" id="commentTextareaButtons">
+                                <input type="submit" id="submitComment" class="btn btn-small" value="Envoyer">
+                                <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">              
+                                <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">                           
+                                <li><a href="">Créer une nouvelle discussion</a></li>                
+                                </ul>
+                            </div>                              
+                            <div id="commentPreview"></div>
+                        </div>
+                        <?php else: ?>
+                        <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
+                        <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->noLoggedPlaceholder;?>"></textarea>
                         <?php endif; ?>
-                    </form>               
-                    <?php else: ?>
-                    <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
-                    <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="You must log in to post comment"></textarea>
+                    </form>                                   
                     <?php endif; ?>
                     
                     <div style="float:left;width:100%; height:0px;"></div>  
 
+                <?php if($this->displayRenderButtons): ?>
                     <div id="tri" class="btn-toolbar">
 
                         <div class="btn-group pull-right">
@@ -96,8 +93,9 @@
                             </ul>
                         </div>      
                     </div>
+                <?php endif; ?>
 
-                    <div id="comments" data-start="0">
+                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>">
                         <?php 
                         // load in ajax 
                         ?>                    
@@ -109,24 +107,26 @@
                         <div id="noCommentYet">Pas encore de commentaires</div>                        
                     </div>
 
-                    <?php if(CommentsController::$allowReply): ?>
+                    <?php if($this->allowReply): ?>
                     <div id="hiddenFormReply">
                          <?php if($this->session->user()->isLog()):?>
-                        <form id="formCommentReply" class="formCommentReply" action="<?php echo Router::url('comments/reply'); ?>" method="POST">                
-                            <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
-                            <?php if($this->session->user()->isLog()):?>
-                            <textarea name="content" class="formComment" placeholder="Reply here"></textarea> 
-                            <input class="btn btn-small" type="submit" name="" value="Send">
-                            <?php else: ?>
-                             <textarea disabled='disabled' name="content" placeholder="Log in to comment"></textarea> 
-                            <input disabled='disabled' class="btn btn-small" type="submit" name="" value="Send">
-                            <?php endif;?>
-                            <input type="hidden" name="context" value="<?php echo $context; ?>"  />
-                            <input type="hidden" name="context_id" value="<?php echo $context_id; ?>"/>
-                            <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />
-                            <input type="hidden" name="type" value="com" />                            
-                            <input type="hidden" name="reply_to" />                                                       
-                        </form>
+                         <div class="replies" id="formCommentReply" >
+                            <form class="formCommentReply" action="<?php echo Router::url('comments/reply'); ?>" method="POST">                
+                                <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
+                                <?php if($this->session->user()->isLog()):?>
+                                <textarea name="content" class="formComment" placeholder="Reply here"></textarea> 
+                                <input class="btn btn-small" type="submit" name="" value="Send">
+                                <?php else: ?>
+                                 <textarea disabled='disabled' name="content" placeholder="Log in to comment"></textarea> 
+                                <input disabled='disabled' class="btn btn-small" type="submit" name="" value="Send">
+                                <?php endif;?>
+                                <input type="hidden" name="context" value="<?php echo $context; ?>"  />
+                                <input type="hidden" name="context_id" value="<?php echo $context_id; ?>"/>
+                                <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />
+                                <input type="hidden" name="type" value="com" />                            
+                                <input type="hidden" name="reply_to" />                                                       
+                            </form>
+                         </div>                        
                         <?php endif ;?>
                     </div>
                     <?php endif; ?>

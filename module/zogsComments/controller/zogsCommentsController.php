@@ -5,53 +5,99 @@
 	Controller des commentaires
 
  */
- class CommentsController extends Controller
+ class zogsComments extends Controller
  {
- 	//Require parameters
  	public $layout = 'none';
  	public $table = 'comments';
- 	public $context = 'none';
- 	public $context_id = 0;
 
- 	//Options parameters
- 	public $commentsPerPage = 6;
- 	public $repliesDisplayPerComment = 3;
- 	public $allowComment = true;
- 	public $allowReply = true;
- 	public $displayReply = true;
- 	public $allowVoting = true;
- 	public $enablePreview = true;
- 	public $showFormReply = false;
- 	public $allowTitle = false; 
- 	public $displayRenderButtons = true;
-
- 	//Default text value
- 	public $titlePlaceholder = "Write here to add a title";
- 	public $textareaPlaceholder = "Write your comment here";
- 	public $noLoggedPlaceholder = "You need to be log first";
+ 	//Params
+ 	public static $nbDisplayedPerPage = 6;
+ 	public static $nbDisplayedReplies = 3;
+ 	public static $allowReply = true;
+ 	public static $displayReply = true;
+ 	public static $allowVoting = true;
+ 	public static $enablePreview = true;
+ 	public static $showFormReply = false;
+ 	public static $displayRenderingButton = true;
 
 
+
+ 	public function __construct( $context, $context_id, $params = array()){
+
+ 		$this->loadModel('Comments');
+
+ 		if(isset($params['isadmin'])) $d['isadmin'] = true;
+ 		else $d['isadmin'] = false;
+
+ 		if(isset($params['commentsAllow'])) $d['commentsAllow'] = true;
+ 		else $d['commentsAllow'] = false;
+
+
+ 		//Default text  value
+ 		$d['commentTitlePlaceholder'] = "Write here to add a title";
+ 		$d['commentTextareaPlaceholder'] = "Write your comment here";
+ 		$d['commentNeedToLogin'] = "You need to be log first";
+ 		//Useful var
+ 		$d['totalComments'] = $this->Comments->totalComments($context,$context_id);
+ 		$d['context'] = $context;
+ 		$d['context_id'] = $context_id;
+ 		$this->set($d);
+
+ 		$this->view = 'comments/show';
+ 		$this->render();
+ 	}
  	/*=======================================
  	Show the whole comment system
  	@param $context ( manif, group, user ...)
  	@param $context_id int
  	========================================*/
- 	public function show( $params = array()){
+ 	public function show( $context, $context_id ){
 
  		$this->loadModel('Comments');
  		
- 		//Override property
- 		foreach ($params as $key => $value) {
-				
- 			if(isset($this->$key)) $this->$key = $value;
+
+ 		//Default value
+ 		$d['commentTitlePlaceholder'] = "Write here to add a title";
+ 		$d['commentTextareaPlaceholder'] = "Write your comment here";
+ 		$d['commentNeedToLogin'] = "You need to be log first";
+
+
+ 		if($context == 'events'){
+
+ 			$d['isadmin'] = false;
+ 			$d['commentsAllow'] = true;
+
+ 		}
+ 		elseif($context == 'group'){
+
+ 			$d['isadmin'] = true;
+ 			$d['commentsAllow'] = false;
+
+ 		}
+ 		elseif($context == 'user'){
+
+	 		$d['isadmin'] = false;
+ 			$d['commentsAllow'] = false;
+ 		}
+ 		elseif($context == 'comment'){
+
+ 			$d['isadmin'] = false;
+ 			$d['commentsAllow'] = false;
+ 		}
+ 		elseif($context == 'blog'){
+
+ 			$d['isadmin'] = false;
+ 			if($this->session->user()->getRole() == 'admin') $d['isadmin'] = true;
+ 			$d['commentsAllow'] = false;
  		}
 
- 		if(!isset($this->context)) throw new Exception("Context is require", 1);
- 		if(!isset($this->context_id)) throw new Exception("Context_id is require", 1);
- 		
- 		$d['context'] = $this->context;
- 		$d['context_id'] = $this->context_id;
- 		$d['totalComments'] = $this->Comments->totalComments($this->context,$this->context_id);
+
+ 		$d['totalComments'] = $this->Comments->totalComments($context,$context_id);
+ 		// $d['flash'] = array('message'=>'You could spread a News to all your Protest(s) by filling the Title form',
+ 		// 					'type'=>'warning');
+
+ 		$d['context'] = $context;
+ 		$d['context_id'] = $context_id;
 
  		$this->set($d);
  		$this->view = 'comments/show';
@@ -79,13 +125,14 @@
  		$this->view = 'comments/index';
 			
 			
+ 		$perPage = self::$nbDisplayedPerPage;
 
 		$params = array(	
 									
 			"context"    =>$context,
 			"context_id" =>$context_id,
 			"comment_id" =>$comment_id,
-			'limit'      =>$this->commentsPerPage,
+			'limit'      =>$perPage,
 			"lang"       =>$this->request->get('lang')
 			);
 		
@@ -99,11 +146,13 @@
 
 			//$d['coms']     = $this->Comments->findComments($params);
 			$d['coms']  = $this->Comments->findCommentsWithoutJOIN($params);		
+			$d['commentsPerPage'] = $perPage;
 				
 		}
 		elseif($context=='blog'){
 
 			$d['coms'] = $this->Comments->findCommentsWithoutJOIN( $params );
+			$d['commentsPerPage'] = $perPage;
 
 		}
 		elseif($context=='comment'){
@@ -118,6 +167,7 @@
 		}
 		elseif($context=='user'){
 
+			$params['limit'] = 10;
 			$d['coms'] = $this->Comments->threadUser($params);
 
 		}
@@ -246,7 +296,7 @@
 
 	 			if($id = $this->Comments->saveComment($com)){
 
-	 				$coms = $this->Comments->getComments(array('comment_id'=>$com->reply_to));
+	 				$coms = $this->Comments->findCommentsWithoutJOIN(array('comment_id'=>$com->reply_to));
 
 	 				$d['coms']  = $coms;
 					$d['context']    = $com->context;
@@ -315,7 +365,7 @@
  		$vars = array();
 
 
-		if($this->request->get() && $this->enablePreview){
+		if($this->request->get() && self::$enablePreview){
 
 			if($this->request->get('url')) {
 

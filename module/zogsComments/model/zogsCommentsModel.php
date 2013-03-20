@@ -214,6 +214,7 @@ class CommentsModel extends Model
 			
 			if($comment->haveReplies()){
 
+				debug($comment);
 				//this will find all replies in Comment object
 				$replies = $this->findCommentsWithoutJOIN(array('reply_to'=>$comment->id,'order'=>'dateasc'));								
 				$comment->replies = $replies;
@@ -232,14 +233,15 @@ class CommentsModel extends Model
 
 			foreach($comments_id as $comment_id){
 
+
 				$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
-				$array[] = $res[0];
+				$array[] = $res;
 			}					
 		}
 		elseif(is_numeric($comments_id)){
 
 			$res = $res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
-			$array[] = $res[0];					
+			$array[] = $res;					
 		}
 
 		return $array;
@@ -519,6 +521,16 @@ class Comment {
 			return $bool;
 		else 
 			return $msg;
+	}
+
+	public function replyAllowed(){
+
+		return CommentsController::$allowReply;
+	}
+
+	public function voteAllowed(){
+
+		return CommentsController::$allowVoting;
 	}
 
 

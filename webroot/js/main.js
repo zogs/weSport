@@ -114,13 +114,13 @@ $(document).ready(function(){
 	/*===========================================================
 		COMMENT SYSTEM
 	============================================================*/
-    if($("a#refresh_com").length != 0){
+    if($("#comments").length != 0){
 		
 		//Default params		       
         pageComments = 1;
         newestCommentId = 0;
         loadingComments = false;
-        showComments_url = $("#refresh_com").attr('href');                  
+        showComments_url = $("#comments").attr('data-comments-url');                  
 		showComments_params = {};
 
         //Allowed preview comment
@@ -225,7 +225,7 @@ $(document).ready(function(){
             var comment_id = $(this).attr('data-comid');
             form.find('input[name=reply_to]').val(reply_to);
             form.find('textarea').attr('placeholder','Reply to '+reply_login);
-            form.appendTo($("#com"+comment_id));      
+            $("#com"+comment_id).after(form);   
 
             return false;
         });
@@ -736,7 +736,7 @@ $(document).ready(function(){
         if(showComments_params['order']=='datedesc' || showComments_params['order']==undefined) ;
         else return false;
 
-        var obj = $('#refresh_com');
+        var obj = $('#comments');
         var badge = obj.find('#badge');
         var url = obj.attr('data-url-count-com');
         url += '&newest='+newestCommentId;        

@@ -41,14 +41,17 @@
 				<?php if($this->session->user()->isLog()): ?>
 					<?php if(!$event->isAdmin($this->session->user()->getID())): ?>
 						<?php if(isset($event->UserParticipation)): ?>
-							<a class="btn btn-large btn-success" > Vous participez </a>
-							<a class="btn btn-large btn-inverse" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>"><i class="icon-remove icon-white"></i> Je ne veux plus.</a>
+							<a class="btn btn-large btn-success" > 
+								<?php if($event->UserParticipation->proba==1): ?> Vous participez !<?php endif;?>
+								<?php if($event->UserParticipation->proba==0): ?> Vous participez peut être...<?php endif;?>
+							</a>
+							<a class="btn btn-large btn-inverse" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>"><i class="icon-remove icon-white"></i> Annuler</a>
 						<?php else: ?>
-							<a class="btn btn-large btn-primary" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>">
+							<a class="btn btn-large btn-primary" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>">
 								<icon class="icon-white icon-ok"></icon>
 								Comptez sur moi !
 							</a>
-							<a class="btn btn-large btn-info" href="#">
+							<a class="btn btn-large btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>">
 								<icon class="icon-white icon-asterisk"></icon>
 								Peut-être
 							</a>
@@ -63,7 +66,17 @@
 			</div>
 
 			<div class="comments">			
-				<?php $this->request('comments','show',array('events',$event->id));?>
+				<?php 
+
+				//Call to comment system
+				$this->request('comments','show',array(
+															array('context'=>'events',
+																	'context_id'=>$event->id
+																)
+														)
+								);
+
+				?>
 			</div>
 
 		</div>
@@ -82,14 +95,27 @@
 			<div class="right-block participants">
 				<h3><?php echo count($event->participants);?> participants</h3>
 				<ul>
-					<?php foreach ($event->participants as $participant):?>
-					
+					<?php foreach ($event->participants as $participant):?>						
 						<li><img src="<?php echo Router::webroot($participant->avatar);?>"/>
 							<a href=""><?php echo $participant->login;?></a>
 							<small>( <?php echo ageFromBY($participant->age);?> ans )</small>
+						</li>
 					<?php endforeach;?>
 				</ul>
 			</div>
+
+			<div class="right-block participants">
+				<h3><?php echo count($event->uncertains);?> peut-être</h3>
+				<ul>
+					<?php foreach ($event->uncertains as $uncertain):?>						
+						<li><img src="<?php echo Router::webroot($uncertain->avatar);?>"/>
+							<a href=""><?php echo $uncertain->login;?></a>
+							<small>( <?php echo ageFromBY($uncertain->age);?> ans )</small>
+						</li>
+					<?php endforeach;?>
+				</ul>
+			</div>
+
 		</div>
 	
 	</div>

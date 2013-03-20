@@ -299,7 +299,7 @@ class EventsModel extends Model{
 		
 	}
 
-	public function joinEventsParticipants($events){
+	public function joinEventsParticipants($events, $proba = 1){
 
 		if(is_object($events)) {
 			$events = array($events);
@@ -309,18 +309,19 @@ class EventsModel extends Model{
 		//Pour chaque evenement on cherche les participants
 		foreach ($events as $event) {
 					
-					if(is_array($event)) $event = (object) $event;
+			if(is_array($event)) $event = (object) $event;
 
-					$sql = 'SELECT user_id, date FROM sporters WHERE event_id="'.$event->id.'"';
-					$pre = $this->db->prepare($sql);
-					$pre->execute();
-					$participants = $pre->fetchAll(PDO::FETCH_OBJ);
+			$participants = $this->findParticipants($event->id, $proba);
 
-					//Pour chaque participants on va chercher son login , avatar , ect...
-					$participants = $this->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$participants);
-		
-					//ON associe à l'événement le tableau des participants
-					$event->participants = $participants;
+			$users = array();
+			foreach ($participants as $participant) {
+				
+				$user = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$participant->user_id)));
+				$users[] = new User( $user );
+				
+			}
+
+			$event->participants = $users;
 
 		}
 
@@ -330,9 +331,20 @@ class EventsModel extends Model{
 			return $events;
 
 	}
+	public function eventsParticipants($event_id,$proba){
 
+		$participants = $this->findParticipants($event_id, $proba);
+		
+		$users = array();
+		foreach ($participants as $participant) {
+			$user = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$participant->user_id)));
+			$users[] = new User( $user );
+		}
 
-	public function saveParticipants($users,$event){
+		return $users;
+	}
+
+	public function saveParticipants($users,$event,$proba = 1){
 		
 		if(is_object($users)){
 			$users = array($users);
@@ -351,7 +363,8 @@ class EventsModel extends Model{
 				$s->user_id = $user->user_id;
 				$s->date = date('Y-m-d');
 				$s->date_event = $event->date;
-				$s->table = 'sporters';				
+				$s->table = 'sporters';	
+				$s->proba = $proba;			
 				$this->save($s);			
 			}	
 			else {
@@ -363,17 +376,14 @@ class EventsModel extends Model{
 		return true;
 	}
 
-	public function findParticipants($event_id){
+	public function findParticipants($event_id, $proba = 1){
 
 		if(!is_numeric($event_id)) return false;
 
 		$participants = $this->find(array('table'=>'sporters',
 			'fields'=>'user_id',
-			'conditions'=>array('event_id'=>$event_id)));
+			'conditions'=>array('event_id'=>$event_id,'proba'=>$proba)));
 
-		if(empty($participants)) {			
-			return false;
-		}
 		return $participants;
 	}
 
@@ -389,9 +399,9 @@ class EventsModel extends Model{
 
 		foreach ($events as $event) {
 
-			$check = $this->findFirst(array('table'=>'sporters',"fields"=>"id",'conditions'=>array('event_id'=>$event->id,'user_id'=>$user_id)));
+			$check = $this->findFirst(array('table'=>'sporters',"fields"=>"*",'conditions'=>array('event_id'=>$event->id,'user_id'=>$user_id)));
 			if(!empty($check)){
-				$event->UserParticipation = $check->id;
+				$event->UserParticipation = $check;
 			}
 		}
 		

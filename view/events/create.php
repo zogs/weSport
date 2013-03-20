@@ -16,7 +16,7 @@
 		<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 
 		<?php echo $this->Form->input('title',"Intitulé de l'annonce",array('helper'=>"Petit match entre amis, ...")) ;?>
-		<?php echo $this->Form->select('sport','Quel sport ?',conf::$sportsAvailable,array('default'=>$event->sport,'helper'=>"Choississez un sport")); ?>
+		<?php echo $this->Form->select('sport','Quel sport ?',$sports_available,array('default'=>$event->sport,'helper'=>"Choississez un sport")); ?>
 		<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
 		<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->city)) ;?>
 		<?php echo $this->Form->input("cityName","Ville",array("type"=>"text","required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>

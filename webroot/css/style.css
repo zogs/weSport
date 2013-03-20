@@ -19,6 +19,13 @@
 .homeForm #control-extend select { margin-top:5px; border-radius: 8px; background: #DDD; color:white; box-shadow:inset 0 0 10px rgba(0,0,0,0.6);}
 
 
+/* Blog */
+.banner { position:relative;}
+.banner-title {width:100%; color:white; text-align:center; font-size:40px; z-index:10; position:relative; top:150px; }
+
+.blog-content { float:left; width:70%; margin-top:20px;}
+.blog-column { float:right; width:30%; height:1000px; background-color:rgba(255,255,255,0.6);}
+
 
 
 /* Checkbox Button */
@@ -116,7 +123,7 @@
 .events-colomn i { display: block; width:100%; text-align: center;}
 
 .event-bb { float: left; width:100%; padding:5px 0; margin:10px 0; background:rgba(255,255,255,0.8); border-radius: 8px;}
-.event-time img { width:50px; height:50px; background:#333; border-radius:25px;}
+.event-time img {  }
 .event-time { font-size: 22px; padding-bottom: 5px;}
 .event-time:after { display: block; width:80%; margin:5px 10%; content:""; height:1px; box-shadow:0 -1px 0 rgba(255,255,255,1), 0 1px 0 rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.2);}
 .event-title { display:block; width:100%; padding:0 3%; text-align: left; font-size: 12px; font-weight:bold; color:#333}
@@ -196,11 +203,15 @@ Commentaires
 
 /* Type news */
 .type_news { }
-.type_news .logo { position:relative; left:100%; top:0; width:100px ; margin-left:-100px; }
+.type_news .logo { position:relative; left:100%; top:0; width:100px ; margin-left:-100px; margin-right:0;}
 .type_news .logo:before { content:' '; width:110px; height:200px; background-color:#000;}
-.type_news .user { position:relative; left:100%; top:100px; width:100px; margin-left:-105px; text-align:center; display:inline-block;}
+.type_news .user { float:right; margin-top:70px; width:100px; text-align:center; display:inline-block;}
+.type_news .date { display:none;}
 .type_news .content { width:80%; }
 .type_news .title { color:#4F88CC; font-weight:bold ; font-size:105%;}
+.type_news .previewMedia { margin: 0; padding: 0;}
+.type_news .previewMedia-info { display:none;}
+.type_news .previewMedia-thumbnails { width:auto;}
 
 /* Type slogan */
 .type_slogan .slogan {text-align:center;}
@@ -224,13 +235,16 @@ Commentaires
 .commentIsModerate {font-style: italic; color:#AAA;}
 .commentIsModerate a { font-size:80%; }
 
-/* Form */
+/* Comment Form */
 
-#commentTextarea { float:left; width:70%; height:60px;}
+.commentFormFields { overflow:hidden;}
+
+#commentTextarea { float:left; width:70%; height:60px; clear:both;}
+#commentTitle { float:left; width:70%; }
 #commentTextareaButtons { float: left;  margin-left:5px; }
 .userAvatarCommentForm { float:left; height: 30px; margin:0 5px 0 0;}
 .formCommentReply { float:left; padding:10px 8% 5px 3%; margin-bottom:0; width:93%; background-color:rgba(0,0,0,0.05); border:1px solid #CCC;}
-#formCommentReply { margin-left:7%; width:79%; margin-top:5px;}
+#formCommentReply { }
 textarea.formComment  { float:left; width:60%; height:30px; }
 .formCommentReply input[type=submit] { float:left; display:block; margin-left:1%;}
 #hiddenFormReply form { display:none;}
