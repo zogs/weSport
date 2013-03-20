@@ -292,19 +292,19 @@ class EventsController extends Controller{
 						}
 
 						//email the changes 
-						if(!empty($changes)){
+						// if(!empty($changes)){
 
-							$users = $this->Events->findParticipants($event_id);
-							$users = $this->Events->JOIN('users','email','user_id=:user_id',$users);
-							$emails = array();
-							foreach ($users as $user) {
-								$emails[] = $user->email;
-							}
-							if($this->sendEventChanges($emails,$newEvent,$changes)){
+						// 	$users = $this->Events->findParticipants($event_id);
+						// 	$users = $this->Events->JOIN('users','email','user_id=:user_id',$users);
+						// 	$emails = array();
+						// 	foreach ($users as $user) {
+						// 		$emails[] = $user->email;
+						// 	}
+						// 	if($this->sendEventChanges($emails,$newEvent,$changes)){
 
-								$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
-							}
-						}
+						// 		$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
+						// 	}
+						// }
 
 						//redirect
 						$this->redirect('events/create/'.$event_id);

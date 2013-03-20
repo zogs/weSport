@@ -87,14 +87,14 @@ class Conf {
 	    public static function getTransportSwiftMailer(){
 
 	    	//SMTP configuration
-	    	$transport = Swift_SmtpTransport::newInstance()
-	    		->setHost('smtp.manifeste.info')
-	    		->setPort(25)
-	    		->setUsername('admin@manifeste.info')
-	    		->setPassword('XSgvEPbG');
+	    	// $transport = Swift_SmtpTransport::newInstance()
+	    	// 	->setHost('smtp.manifeste.info')
+	    	// 	->setPort(25)
+	    	// 	->setUsername('admin@manifeste.info')
+	    	// 	->setPassword('XSgvEPbG');
 
 			//PHP mail() function
-			// $transport = Swift_SendmailTransport::newInstance(); 
+			 $transport = Swift_SendmailTransport::newInstance(); 
 
 	    	return $transport;
 	    }
