@@ -44,16 +44,10 @@
 
 $(document).ready(function(){
 
-    $('#recherche').typeahead({ 	
- 	
-        source: function (query, process) {
-        	alert('');
-        	
-            return $.get('aj/?&q=' + query, function (data) {
-                return process(JSON.parse(data).modele)
-            });
-        }
-    });
+    $('#recherche').typeahead({
+	  name: 'accounts',
+	  remote: 'http://localhost/weSport/world/suggestCity?query=%QUERY'
+	});
 
 
 	$("a.events-nav").bind('click',function(e){

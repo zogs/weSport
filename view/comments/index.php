@@ -11,18 +11,20 @@
         exit();
     }
 
+        
     //If there are comments
     if(!empty($coms)){
         
         //Create the html 
         $html = show_comments($coms,$this->session->user(),$this);
-        // $html = utf8_encode($html);
-        // $html = htmlentities($html);
+
+        $firstCommentID = $coms[0]->id;
 
         echo json_encode(array(
             'html'=>$html,
             'commentsNumber'=>count($coms),
-            'commentsPerPage'=>$this->commentsPerPage)
+            'commentsPerPage'=>$this->commentsPerPage,
+            'firstCommentID'=>$firstCommentID)
         ,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT
         );
     }
@@ -31,8 +33,9 @@
         echo json_encode(array(
             'html'=>'',
             'commentsNumber'=>0,
-            'commentsPerPage'=>$this->commentsPerPage
-            )
+            'commentsPerPage'=>$this->commentsPerPage,
+            'firstCommentID'=>'')
+            
         ,JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_QUOT
         );
     }

@@ -21,7 +21,7 @@ class UsersController extends Controller{
 			
 			$user = $this->Users->findFirstUser(array(
 				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account',
-				'conditions' => array($field=>$login))
+				'conditions' => array($field=>$login,'valid'=>1))
 			);
 
 			if($user->exist()){
@@ -177,9 +177,9 @@ class UsersController extends Controller{
 		if($this->request->get('c') && $this->request->get('u') ) {
 
 			$get       = $this->request->get;
-			$user_id   = base64_decode(urldecode($get->u));			
-			$code_url = base64_decode(urldecode($get->c));
-
+			$user_id   = urldecode($get->u);			
+			$code_url = urldecode($get->c);
+			debug($user_id);
 			$user = $this->Users->findFirstUser(array(
 				'fields'=>array('login','codeactiv'),
 				'conditions'=>array('user_id'=>$user_id)
@@ -710,7 +710,7 @@ class UsersController extends Controller{
     {
     	extract($data);
 
-		$lien = Conf::$websiteURL."/users/validate?c=".urlencode(base64_encode($codeactiv))."&u=".urlencode(base64_encode($user_id));
+		$lien = Conf::$websiteURL."/users/validate?c=".urlencode($codeactiv)."&u=".urlencode($user_id);
 
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());

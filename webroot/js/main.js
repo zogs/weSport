@@ -36,8 +36,8 @@ $(document).ready(function(){
 		//Add token in POST data	
 		.ajaxSend(function(elm,xhr,settings){
 
-			console.log(elm);
-			console.log(xhr);
+			// console.log(elm);
+			// console.log(xhr);
 			xhr.overrideMimeType('text/html; charset=UTF-8');
 			if (settings.type == "POST") {
 				if(settings.data) {
@@ -59,11 +59,11 @@ $(document).ready(function(){
 		$.ajaxSetup({			
 				cache: false,
 				data : null,
-				async: false,
+				// async: false, //fait planter firefox
 				crossDomain: true,
 				xhrFields: {
-				    withCredentials: true
-				  }
+				    withCredentials: true,
+				 }
 			})
 
 
@@ -581,7 +581,7 @@ $(document).ready(function(){
 	    		
 	            //var html = $('<div />').html(data.html).text(); //Jquery trick to decode html entities
 	            var html = data.html;
-	    		//console.log(data.html);
+	    		
 
 	            if(html!=''){
 
@@ -591,11 +591,8 @@ $(document).ready(function(){
 
 						//id datedesc Get id of the first comment
 						if(showComments_params['order']=='datedesc' || showComments_params['order']==undefined){
-
-		                	var top_comment_id = $(html).first('.post').attr('id');
-			                top_comment_id = top_comment_id.replace('com','');
-			                newestCommentId = top_comment_id;
-			                 //alert(newestCommentId);
+		                	
+			                newestCommentId = data.firstCommentID;
 			               
 			            }
 
@@ -802,7 +799,7 @@ $(document).ready(function(){
 		CHECK DUPLICATE MAIL AND LOGIN
 	============================================================*/
 
-	$("#inputlogin,#inputemail").bind('keyup',function(){
+	$("#inputlogin,#inputemail").bind('change',function(){
 
 		var input = $(this);
 		var control = input.parent().parent();
@@ -820,12 +817,13 @@ $(document).ready(function(){
 			control.removeClass('control-error');
 			help.addClass('hide').empty();
 
+
 			$.ajax({
 				type: 'GET',
 				url: url,
 				data: {type : type, value : value},
 				success: function(data){
-
+					
 					if(data.error){	
 						control.removeClass('control-success');					
 						control.addClass('control-error');
@@ -841,7 +839,7 @@ $(document).ready(function(){
 			});
 		}
 
-
+		return false;
 	});
 
 	function forbiddenchar(string){
