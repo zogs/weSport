@@ -22,10 +22,10 @@ class UsersModel extends Model{
 				'message' => "Vos mots de passe ne sont pas identiques"
 				),
 			'prenom' => array(
-				'rule'=> 'optionnal',
+				'rule'=> 'optional',
 				),
 			'nom' => array(
-				'rule' => 'optionnal',
+				'rule' => 'optional',
 				),
 			'age' => array(
 				'rules'=> array(
@@ -34,7 +34,7 @@ class UsersModel extends Model{
 								'message'=> "Between 1900 and 1999..."
 							),
 							array(
-								'rule'=>'optionnal',
+								'rule'=>'optional',
 								'message'=>''
 							)
 						)

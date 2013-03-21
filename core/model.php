@@ -452,7 +452,7 @@ public function validates($data, $rules = null, $field = null){
 					}
 					//Si il y a qu'une regle (et que ce nest pas un upload de fichier)
 					if(isset($model['rule']) && $model['rule']!='file'){
-						
+						debug($field);
 						//Si le champ est optionnel, sauter au prochain champ
 						if($model['rule']=='optional') continue;					
 						$errors[$field] = $model['message'];
