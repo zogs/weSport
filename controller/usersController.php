@@ -23,7 +23,7 @@ class UsersController extends Controller{
 				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account',
 				'conditions' => array($field=>$login))
 			);
-			
+
 			if($user->exist()){
 
 				if($user->hash == md5($user->salt.$data->password)){
