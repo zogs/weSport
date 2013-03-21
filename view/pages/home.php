@@ -12,7 +12,7 @@
 			<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token() )) ;?>
 			<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>
-			<?php echo $this->Form->input('cityName','Ville',array("value"=>$this->cookieEventSearch->read('cityName'),'placeholder'=>"Dijon","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
+			<?php echo $this->Form->input('cityName','Ville',array("value"=>$this->cookieEventSearch->read('cityName'),'placeholder'=>"Ville","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 			<?php echo $this->Form->select("extend","Etendre de",array(10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'))) ;?>
 			<?php echo $this->Form->input('Lancer la recherche','submit',array('class'=>'btn btn-large btn-primary')) ;?>
 			<?php //$this->request('world','formLocate',array('CC1','Localisation',$this->cookieEventSearch->arr(),array()));?>

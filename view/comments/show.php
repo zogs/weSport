@@ -78,7 +78,7 @@
                             </ul>
                         </div>  
                         <div class="btn-group pull-right">
-                            <a class="btn btn-mini bubble-bottom" title="Display new comments" href="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" id="refresh_com" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>">
+                            <a class="btn btn-mini bubble-bottom" title="Display new comments" >
                                 <i class="icon-repeat"></i>  Actualiser <span class="badge badge-inverse hide" id="badge"></span>
                             </a>
                             <span id="ajaxLoader" style="display:none"><img src="<?php echo Router::webroot('img/ajax-loader.gif');?>" alt="Loading" /></span>
@@ -95,7 +95,7 @@
                     </div>
                 <?php endif; ?>
 
-                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>" data-comments-config="<?php echo json_encode($this->config);?>">
+                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>" data-comments-config='<?php echo addslashes(json_encode($this->config));?>'>
                         <?php 
                         // load in ajax 
                         ?>                    

@@ -121,9 +121,11 @@ $(document).ready(function(){
         newestCommentId = 0;
         loadingComments = false;
         showComments_url = $("#comments").attr('data-comments-url'); 
-        config = $("#comments").attr('data-comments-config');                  
-        config = JSON.parse(config);
+        config = $("#comments").attr('data-comments-config');
+        config = stripslashes(config); 
+        config = JSON.parse(config);                      
         enableInfiniteScrolling = config.enableInfiniteScrolling;
+
 		showComments_params = {};
 		CurrentUrlPreview = '';
 
@@ -556,7 +558,7 @@ $(document).ready(function(){
 
         
         //clean_params(showComments_params);
-        construct_params("?config="+$("input[name=config]").val());
+        construct_params("?config="+JSON.stringify(config));
         
         //console.log(JSON.stringify(showComments_params));
 		$.ajax({

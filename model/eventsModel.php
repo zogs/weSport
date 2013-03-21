@@ -82,8 +82,6 @@ class EventsModel extends Model{
 		// set params to modified the query
 		if(!empty($extend)){
 
-
-
 			if(!empty($params['cityLat']) && !empty($params['cityLon']) && !empty($params['extend']) 
 				&& is_numeric($params['cityLon']) && is_numeric($params['cityLat']) && is_numeric($params['extend'])){
 
@@ -108,10 +106,12 @@ class EventsModel extends Model{
 				$lat1 = $cityLat-($distance/$onedegree);
 				$lat2 = $cityLat+($distance/$onedegree);
 
-				$distance_field = ", $earthradius * 2 * ASIN(SQRT( POWER(SIN(($cityLat - C.LATITUDE) *  pi()/180 / 2), 2) +COS($cityLat * pi()/180) * COS(C.LATITUDE * pi()/180) * POWER(SIN(($cityLon - C.LONGITUDE) * pi()/180 / 2), 2) )) as distance";
+				$extend_zone = ", $earthradius * 2 * ASIN(SQRT( POWER(SIN(($cityLat - C.LATITUDE) *  pi()/180 / 2), 2) +COS($cityLat * pi()/180) * COS(C.LATITUDE * pi()/180) * POWER(SIN(($cityLon - C.LONGITUDE) * pi()/180 / 2), 2) )) as distance";
 				
 			}
-			else debug('city missing');
+			else {
+
+			}
 		}
 
 
@@ -127,14 +127,14 @@ class EventsModel extends Model{
 			$sql .= $this->sqlfields('*');
 
 		//add distance field
-		if(!empty($extend))
-			$sql .= $distance_field;
+		if(!empty($extend_zone))
+			$sql .= $extend_zone;
 
 		//FROM SQL TABLE
 		$sql .= ' FROM events as E';
 
 		//add CITIES TABLE
-		if(!empty($extend))
+		if(!empty($extend_zone))
 			$sql .= " JOIN world_cities as C ON C.UNI = E.city ";
 
 
@@ -184,7 +184,7 @@ class EventsModel extends Model{
 		}
 
 		//extend beetween the box
-		if(!empty($extend)){
+		if(!empty($extend_zone)){
 
 			$sql .= 'AND C.LONGITUDE BETWEEN :lon1 AND :lon2 AND C.LATITUDE BETWEEN :lat1 AND :lat2 ';
 
