@@ -846,7 +846,7 @@ $(document).ready(function(){
 
 	function forbiddenchar(string){
 
-		var carac = new RegExp("[ @,\.;:/!&$£*§~#|)(}{ÀÂÇÈÉÊËÎÔÙÛàâçèéêëîôöùû]","g");
+		var carac = new RegExp("[ \'\"@,\.;:/!&$£*§~#|)(}{ÀÂÇÈÉÊËÎÔÙÛàâçèéêëîôöùû]","g");
 		var c = string.match(carac);
 		if(c) return c;
 	}
