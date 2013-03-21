@@ -25,8 +25,7 @@
 
                             <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->textareaPlaceholder;?>"></textarea>
                             <input type="hidden" name="context" value="<?php echo $context; ?>" />
-                            <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" /> 
-                            <input type="hidden" name="config" value='<?php echo json_encode($this->config);?>' />                       
+                            <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                 
                             <input type="hidden" name="type" id="type" value='com' /> 
                             <input type="hidden" name="lang" value="<?php echo $this->getLang();?>" />           
                             <input type="hidden" name="media" id="media" value='' /> 
@@ -96,7 +95,7 @@
                     </div>
                 <?php endif; ?>
 
-                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>">
+                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>" data-comments-config="<?php echo json_encode($this->config);?>">
                         <?php 
                         // load in ajax 
                         ?>                    

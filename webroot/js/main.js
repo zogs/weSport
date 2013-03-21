@@ -121,7 +121,7 @@ $(document).ready(function(){
         newestCommentId = 0;
         loadingComments = false;
         showComments_url = $("#comments").attr('data-comments-url'); 
-        config = $("input[name=config]").val();                 
+        config = $("#comments").attr('data-comments-config');                  
         config = JSON.parse(config);
         enableInfiniteScrolling = config.enableInfiniteScrolling;
 		showComments_params = {};
