@@ -53,9 +53,10 @@ class Conf {
 	//Js to load
 	static $js_main = 'js/main.js';
 	static $js_dependency = array(	
-									'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+									'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
 									'js/jquery/jquery.livequery.min.js',
 									'bootstrap/js/bootstrap.js',
+									'js/jquery/typeahead.min.js',
 									'js/phpfunctions.js',
 									'js/jquery/select2-2.1/select2.min.js',
 									'js/jquery/jquery.expander.min.js',

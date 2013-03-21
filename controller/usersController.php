@@ -657,9 +657,10 @@ class UsersController extends Controller{
 			//if no error check existing
 			if(empty($d['error'])){
 
-				$user = $this->Users->findFirstUser(array('fields'=> $type,'conditions' => array($type=>$value)));
 
-					if(!empty($user)) {
+				$user = $this->Users->findFirstUser(array('fields'=> $type,'conditions' => array($type=>$value)));
+				
+					if($user->exist()) {
 						$d['error'] = '<strong>'.$value."</strong> is already in use!";
 					}
 					else {
