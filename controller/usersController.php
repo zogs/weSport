@@ -113,7 +113,7 @@ class UsersController extends Controller{
 			
 
 			//check if login exist
-			$check = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
+			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
 			if(!empty($check)) {
 				$this->session->setFlash("This login is already used","error");
 				$this->set(array('data'=>$user));
@@ -122,7 +122,7 @@ class UsersController extends Controller{
 			
 
 			//check if email exist
-			$check = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('email'=>$user->email)));
+			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('email'=>$user->email)));
 			if(!empty($check)) {
 				$this->session->setFlash("The email ".$user->email." is already used","error");
 				$this->set(array('data'=>$user));
@@ -186,7 +186,7 @@ class UsersController extends Controller{
 				));
 
 
-			if(!empty($user)){
+			if($user->exist()){
 
 				if($user->codeactiv == $code_url) {
 					$data =  new stdClass();
@@ -451,7 +451,7 @@ class UsersController extends Controller{
 				'conditions'=>'user_id='.$user_id.' AND code="'.$hash.'" AND date_limit >= "'.unixToMySQL(time()).'"'));
 
 			//if this is good
-			if(!empty($user)){
+			if($user->exist()){
 
 				//show password form
 				$this->session->setFlash('Enter your new password','success');
@@ -490,7 +490,7 @@ class UsersController extends Controller{
 				'conditions'=>'user_id='.$user_id.' AND code="'.$code.'" AND date_limit >= "'.unixToMySQL(time()).'"'));
 
 			//if the code is good
-			if(!empty($user)){
+			if($user->exist()){
 
 				unset($data->code);
 				unset($data->user);
@@ -557,7 +557,7 @@ class UsersController extends Controller{
 				'conditions'=>array('email'=>$this->request->post('email')),				
 			));
 
-			if(!empty($user)){
+			if($user->exist()){
 
 				//check if existant recovery data
 				$recov = $this->Users->find(array(
@@ -658,8 +658,8 @@ class UsersController extends Controller{
 			if(empty($d['error'])){
 
 
-				$user = $this->Users->findFirstUser(array('fields'=> $type,'conditions' => array($type=>$value)));
-				
+				$user = $this->Users->findFirstUser(array('conditions' => array($type=>$value)));
+
 					if($user->exist()) {
 						$d['error'] = '<strong>'.$value."</strong> is already in use!";
 					}

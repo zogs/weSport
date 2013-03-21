@@ -13,6 +13,7 @@
 			<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>
 			<?php echo $this->Form->input('cityName','Ville',array("value"=>$this->cookieEventSearch->read('cityName'),'placeholder'=>"Ville","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
+			<input class="search-query span2" placeholder="Recherche" type="text" name="rech" id="recherche">
 			<?php echo $this->Form->select("extend","Etendre de",array(10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'))) ;?>
 			<?php echo $this->Form->input('Lancer la recherche','submit',array('class'=>'btn btn-large btn-primary')) ;?>
 			<?php //$this->request('world','formLocate',array('CC1','Localisation',$this->cookieEventSearch->arr(),array()));?>
@@ -42,6 +43,18 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+    $('#recherche').typeahead({ 	
+ 	
+        source: function (query, process) {
+        	alert('');
+        	
+            return $.get('aj/?&q=' + query, function (data) {
+                return process(JSON.parse(data).modele)
+            });
+        }
+    });
+
 
 	$("a.events-nav").bind('click',function(e){
 		

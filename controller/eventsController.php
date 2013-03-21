@@ -146,7 +146,7 @@ class EventsController extends Controller{
 
 			//On vérifie si l'user existe bien
 			$user = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
-			if(empty($user)) throw new zException("L'utilisateur n'existe pas",1);
+			if(!$user->exist()) throw new zException("L'utilisateur n'existe pas",1);
 
 			//On vérifie qu'il ne participe pas déja
 			$check = $this->Users->find(array('table'=>'sporters','fields'=>'id','conditions'=>array('user_id'=>$data->user_id,'event_id'=>$data->event_id)));
