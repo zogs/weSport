@@ -28,7 +28,7 @@ background: -ms-linear-gradient(top,  rgba(5,1,1,0.14) 0%,rgba(0,0,0,0.07) 38%);
 background: linear-gradient(top,  rgba(5,1,1,0.14) 0%,rgba(0,0,0,0.07) 38%); /* W3C */ background-attachment:fixed !important;
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24050101', endColorstr='#12000000',GradientType=0 ); /* IE6-9 */
 }
-input { height:auto; }
+
 
 
 
@@ -63,8 +63,8 @@ Bootstrap
 /*
 Top bar login
 */
-form.loginForm { margin:0; padding:5px 0 0 0; display:inline-block; float:right; text-align:right; color:white;}
-form.loginForm input { padding-left: 5px; background:#626262; border:1px solid #151515; }
+form.loginForm { margin:0; padding:8px 0 0 0; display:inline-block; float:right; text-align:right; color:white;}
+form.loginForm input { padding-left: 5px; background:#626262; border:1px solid #151515; border-radius: 2px; font-size:14px; margin:0;}
 form.loginForm input[name=login] { width:100px; }
 form.loginForm input[name=password] { width:70px; }
 form.loginForm input:focus, form.loginForm input:hover {  background-color:#EBEBEB; }
@@ -110,14 +110,17 @@ User registration page
 .register h1 { text-align:center; margin-bottom:10px;}
 .register p { overflow:hidden;width:100%;}
 .register .form { margin:10px auto 50px auto; padding:30px 30px; width:500px; border:1px solid #DDDDDD; border-radius:3px; background: #eee;}
-.register .form:after{ content: "."; display: block; height: 0; font-size:0; clear: both; visibility:hidden; }
+.form:after{ content: "."; display: block; height: 0; font-size:0; clear: both; visibility:hidden; }
 .form .control-group { float:left; margin-bottom:5px; width:100%;}
-.form .control-group .control-label { float:left; width:20%; min-height:20px; display:block; text-align:left; font-weight: normal ;font-size:95%; color:#AAA}
-.form .control-group .controls { float:left; width:60%; }
+.form .control-group .control-label { float:left; width:26%; margin:5px 2% 0 2%; min-height:20px; display:block; text-align:right; font-weight: normal ;font-size:95%; color:#AAA}
+.form .control-group .controls { float:left; width:70%; }
 .form .control-group .controls i.icon-form { position:absolute; display:block; margin-top:7px; margin-left:7px;}
-.form .control-group .controls input,select { height:auto; padding-left:30px; width:100%;}
+.form .control-group .controls input,
+.form .control-group .controls select,
+.form .control-group .controls textarea { height:auto; padding-left:30px; width:100%;}
 .form .control-group .controls input[type=radio] { display:inline; clear:none; margin-right:5px ; width:auto;}
 .form .control-group .controls input[type=checkbox] { display:inline-block; width:auto; clear:left; float:left;}
+.form .control-group .controls textarea { padding:10px 20px; font-size:90%;}
 .form .control-group .controls label.checkbox { float:left;}
 .form .control-group .controls label.radio { padding-left:5px; margin-right:20px; display: inline;}
 .form .control-group .controls p.help-inline { width: 100%; padding-left:0; margin-top:0px ;font-size:80%; color:#AAA; }
@@ -127,8 +130,10 @@ User registration page
 .form .control-error .controls select,
 .form .control-error .controls textarea { border-color: #820200;}
 .form .control-error .controls p.help-inline { color:#820200;}
-.form .control-error .controls p.help-inline strong { font-style: italic; text-transform: capitalize;}
-.form input[type=submit] { margin-top:20px; margin-bottom:50px; float:left;}
+.form .control-error .controls p.help-inline strong { font-style: italic; }
+.form input[type=submit] { margin-top:20px; margin-bottom:50px; margin-right:5px; float:left;}
+.form.no-label .control-group .control-label { display:none;}
+.form.no-label .control-group .controls { width:100%;}
 
 .register #click_me { float:left; display:block;  display:none; margin-top:10px; padding:5px 0; width:100%; color:#444; text-align:center; font-weight:bold; }
 .register #click_me:hover { color:rgb(153,0,0); text-decoration:none; cursor:pointer;}
@@ -162,7 +167,8 @@ Account
 
 .dashboard { width:240px; float:left; margin-right: 30px}
 .dashboard .module{ margin:5px 0 15px 0; float:left; clear:left; width:100%; }
-.module { overflow:hidden; padding:15px; border:1px solid #CCC; border-radius:10px; background:#F2F2F2; box-shadow:0 0 4px 4px rgba(100,100,100,0.1); }
+.module { width:90%; margin:0 5% 20px 5%; padding:15px;  }
+.module-rounded { border:1px solid #CCC; border-radius:10px; background:#F2F2F2; box-shadow:0 0 4px 4px rgba(100,100,100,0.1); }
 .module-header { margin-bottom:25px; border-bottom:1px solid #DDD; }
 .module-header h2 { color:#444 }
 .module-header p.subheader { color:#AAA;}

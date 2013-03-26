@@ -99,21 +99,8 @@ class Form{
 			$value = $this->controller->request->data->$id;
 		}
 
-		//return if submit button
-		if($label=='submit'){
 
-			if(isset($options['class'])) $class = $options['class'];
-			else $class = '';
-			return '<input type="submit" value="'.$id.'" class="'.$class.'" />';
-		}
 
-		//return if hidden button
-		if($label=='hidden'){
-
-			return '<input type="hidden" name="'.$id.'" id="'.$id.'" value="'.$value.'" />';
-		}		
-
-		
 		//Attribut html à rajouter en fin de champs	
 		$attr='';	
 		if(!empty($options)){
@@ -125,6 +112,22 @@ class Form{
 				}
 			}
 		}
+
+
+		//return if submit button
+		if($label=='submit'){
+
+			if(isset($options['class'])) $class = $options['class'];
+			else $class = '';
+			return '<input type="submit" value="'.$id.'" class="'.$class.'" '.$attr.'/>';
+		}
+
+		//return if hidden button
+		if($label=='hidden'){
+
+			return '<input type="hidden" name="'.$id.'" id="'.$id.'" value="'.$value.'" '.$attr.'/>';
+		}		
+
 		
 		//Type de input
 		if(!isset($options['type'])){
@@ -137,7 +140,9 @@ class Form{
 			$html .= '<input type="url" id="input'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		elseif($options['type']=='textarea'){
-			$html .= '<textarea id="input'.$id.'" name="'.$id.'" '.$attr.'>'.$value.'</textarea>';
+			$html .= '<textarea id="input'.$id.'" name="'.$id.'" '.$attr.'>';
+			if(isset($value)) $html .= $value;
+			$html .='</textarea>';
 		}
 		elseif($options['type']=='checkbox'){
 			$html .= '<input type="hidden" name="'.$id.'" value="0"><input type="checkbox" name="'.$id.'" value="1" '.(!empty($value)? 'checked' : '').' '.$attr.' />';
@@ -197,6 +202,7 @@ class Form{
 				$years[$i] = $i;
 			}
 		}
+
 		return $this->_select($id,$years,$params);
 
 	}
@@ -347,9 +353,22 @@ class Form{
 
 		if(is_object($options)) $options = (array) $options;
 		
-		$html = '';
+		$html = '';		
 			foreach($options as $value => $text){
 
+				//if array of object , get the object value
+				if(is_object($text)) $text = (array) $text;
+				if(is_array($text)){
+					$keys = array_keys($text);
+					$value = $text[$keys[0]];
+					$name = $text[$keys[1]];
+				}
+				else {
+					$value = $value;
+					$name = $text;
+				}
+
+				//set checked value if exist
 				$checked = '';
 				if(is_array($default)){
 					if(in_array($value,$default)) $checked = 'checked="checked"';
@@ -357,9 +376,10 @@ class Form{
 				elseif($value==$default) {
 					$checked = 'checked="checked"';;
 				}
+				
 				(isset($params['openwrap']))? $html .= $params['openwrap'] : $html .= '';
 				$html .= '<input type="checkbox" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" '.$checked.' '.$javascript.'>';
-				$html .= '<label class="checkbox" for="'.$value.'">'.$text.'</label>';
+				$html .= '<label class="checkbox" for="'.$value.'">'.$name.'</label>';
 				(isset($params['closewrap']))? $html .= $params['closewrap'] : $html .= '';
 			}
 

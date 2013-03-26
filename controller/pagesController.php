@@ -38,6 +38,8 @@ class PagesController extends Controller {
 			$this->cookieEventSearch->write($params);		
 			
 			$d['params'] = $params;
+			$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug as name')));
+			
 			$this->set($d);
 
 		}

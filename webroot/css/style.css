@@ -12,7 +12,8 @@
 .formular { float:left;width:100%; padding: 20px 2%; }
 .homeForm { }
 .homeForm #control-cityName { float:left;  text-align: center}
-.homeForm #control-cityName input { width:310px; padding:10px 35px; border-radius: 20px; background: transparent; color:#AAA; font-size:30px; font-weight: bold; line-height:100%; border:3px solid #CCC}
+.homeForm #control-cityName input { width:310px; padding:10px 35px; height:auto; border-radius: 20px; background: transparent; font-size:30px; font-weight: bold; line-height:100%; border:3px solid #CCC}
+.homeForm #control-cityName input[name=cityName] { color:#555;}
 .homeForm #control-cityName label { font-size: 20px; font-weight: bold; color:#AAA;}
 .homeForm #control-extend { float: left; margin:10px 30px 0 30px; text-align: center}
 .homeForm #control-extend label { font-size: 12px; font-weight: bold; color:#AAA}
@@ -27,6 +28,24 @@
 .blog-column { float:right; width:30%; height:1000px; background-color:rgba(255,255,255,0.6);}
 .column-part { margin:15px 2%; width:96%; background:#EEE; height:150px;}
 
+.testHub input,
+.testHub select,
+.testHub label { height:60px; padding:0 30px; background:#EEE678; width:auto; margin:0; border-radius: 30px}
+/* Hub test */
+.hub-controls { }
+.hub-controls input[type=submit] { -webkit-appearance: none; }
+.hub-controls input,
+.hub-controls select,
+.hub-controls label { float:left; font-family:sans-serif; border:1px solid #CCC; line-height: 100%;}
+.hub-controls select { padding-right:5px; padding-left:8px}
+.hub-controls select:focus { outline: 0; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; }
+.hub-controls label {border-right:0; border-left:0; color:#999;}
+.hub-controls .hubLeft { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.hub-controls .hubMiddle { border-radius: 0; border-left:0;}
+.hub-controls .hubRight { border-top-left-radius: 0; border-bottom-left-radius: 0; border-left: 0; }
+
+
+
 
 /* Checkbox Button */
 .sportsButtons { float:left; position:relative; width:100%; padding-left: 80px; padding-top:20px;}
@@ -37,7 +56,7 @@
 }
 
 .sportButton label{
-    display: inline;
+    display: inline-block;
     cursor:pointer;
     background-color:#3bb3e0;
     font-family: sans-serif;
@@ -46,6 +65,7 @@
     color:#fff;
     position:relative;
     padding:10px 20px;
+    margin-bottom:2px;
     border-left:solid 1px #2ab7ec;
     background-image: -webkit-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
     background-image: -moz-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
@@ -68,12 +88,11 @@
 
 .sportButton:first-child label:before {
     content:"Sports";
-    width:70px;
-    max-height:50px;
-    height:100%;
+    z-index:10;
+    width:70px;    
     position:absolute;
     display:block;
-    padding-top:8px;
+    padding:52px 0;
     top:0px;
     left:-70px;
     font-size:16px;
@@ -82,10 +101,11 @@
     color:#8fd1ea;
     text-shadow:1px 1px 0px #07526e;
     border-right:solid 1px #07526e;
+    background-color:rgb(14,139,184);
     background-image: -webkit-linear-gradient(bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
     background-image: -moz-linear-gradient(bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
     box-shadow:inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 0px 10px 5px #999 ;
     cursor: default;
     pointer-events:none;
@@ -107,8 +127,8 @@
     Create event
 */
 .createEvent{ padding-top: 20px; float:left; width:100%;}
-.mini-profile { float:left; width:120px;}
-.eventForm form{ float:left; width:650px; margin-left:30px; padding:30px 40px;}
+.eventForm .module { width:90%; margin:0 5% 20px 5%;}
+.eventForm form{ margin-left:30px; padding:30px 40px;}
 
 
 /*
@@ -288,10 +308,13 @@ a#showMoreComments:hover { color:white; text-decoration: none;}
 }
 
 
+
 /*!
  * typeahead.js 0.8.2
  * https://github.com/twitter/typeahead
  * Copyright 2013 Twitter, Inc. and other contributors; Licensed MIT
+
+    CUSTOM STYLE ON BOTTOM !!
  */
 
 .twitter-typeahead {
@@ -359,4 +382,48 @@ a#showMoreComments:hover { color:white; text-decoration: none;}
 .twitter-typeahead.tt-rtl .tt-dropdown-menu {
   left: auto;
   right: 0;
+}
+
+
+/*
+    ======================
+    TYPEAHEAD CUSTOM STYLE
+    ======================
+*/
+
+/* Autocompte city */
+.tt-dropdown-menu {
+  width:100%;
+  margin-top:10px;
+  padding:8px 0;
+  text-align: left;
+  background-color: white;
+  border:1px solid rgba(0,0,0,0.2);
+  border-radius: 8px;
+  box-shadow:0 5px 10px rgba(0,0,0,0.2);
+}
+.tt-hint {
+  color:#BBBBBB;
+}
+.tt-suggestion {
+  padding:8px 20px;
+}
+
+.tt-name {
+  font-size:16px;
+  font-weight:bold;
+}
+.tt-sub {
+  font-size:12px;
+  font-style:italic;
+  color:#999;
+}
+.tt-id{
+  display:none;
+}
+.tt-suggestion.tt-is-under-cursor{
+  background-color:#0097cf;
+}
+.tt-suggestion.tt-is-under-cursor p{
+  color:white;
 }

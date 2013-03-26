@@ -85,7 +85,8 @@ class EventsController extends Controller{
 
 
 		$d['events'] = $events;
-
+		
+		
 		$this->set($d);
 		$this->render();
 	}
@@ -258,23 +259,34 @@ class EventsController extends Controller{
 		if($this->request->post()){				
 
 			//data to save		
-			$newEvent = $this->request->post();
-			$newEvent->city = $newEvent->cityID;
-			$newEvent->slug = slugify($newEvent->title);
-			unset($newEvent->cityID);
+			$Event = $this->request->post();
+			$Event->city = $Event->cityID;
+			$Event->slug = slugify($Event->title);
+			unset($Event->cityID);
 
-				if($this->Events->validates($newEvent)){
+
+				//if suppress is defined
+				if(isset($Event->suppress)){
+					$this->Events->suppress($Event);
+
+					$this->session->setFlash("Evenement supprimé","success");
+					$this->redirect('events/create');
+					
+					
+				}
+				//else validate data
+				elseif($this->Events->validates($Event)){
 					
 					//find if change occurs
 					if($evt->exist()){
 						$changes = array();
-						foreach ($newEvent as $key => $value) {
-							if($newEvent->$key!=$evt->$key) $changes[$key] = $newEvent->$key;
+						foreach ($Event as $key => $value) {
+							if($Event->$key!=$evt->$key) $changes[$key] = $Event->$key;
 						}
 					}
 
 					//save event
-					if($event_id = $this->Events->save($newEvent)){
+					if($event_id = $this->Events->save($Event)){
 
 						$this->session->setFlash("L'annonce a bien été enregistré, elle est visible dès maintenant");
 						
@@ -295,7 +307,7 @@ class EventsController extends Controller{
 						// 	foreach ($users as $user) {
 						// 		$emails[] = $user->email;
 						// 	}
-						// 	if($this->sendEventChanges($emails,$newEvent,$changes)){
+						// 	if($this->sendEventChanges($emails,$Event,$changes)){
 
 						// 		$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
 						// 	}
@@ -313,7 +325,7 @@ class EventsController extends Controller{
 					//$this->redirect('events/view/'.$event_id);
 				}
 				else{
-					$evt = $newEvent;
+					$evt = $Event;
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
 				}
 			
@@ -326,7 +338,9 @@ class EventsController extends Controller{
 		}
 
 		$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug')));
-
+		$d['user_events_in_futur'] = $this->Events->findEvents(array('date'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		
 		$d['event'] = $evt;
 
 		$this->set($d);

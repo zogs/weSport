@@ -3,6 +3,8 @@ class UsersController extends Controller{
 
 
 	public $primaryKey = 'user_id'; //Nom de la clef primaire de la table
+	public $table = 'users';
+	public $table_recovery = 'users_mail_recovery';
 
 	public function login(){
 
@@ -20,7 +22,7 @@ class UsersController extends Controller{
 				$field = 'login';
 			
 			$user = $this->Users->findFirstUser(array(
-				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account',
+				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account,age',
 				'conditions' => array($field=>$login,'valid'=>1))
 			);
 
@@ -179,9 +181,8 @@ class UsersController extends Controller{
 			$get       = $this->request->get;
 			$user_id   = urldecode($get->u);			
 			$code_url = urldecode($get->c);
-			debug($user_id);
-			$user = $this->Users->findFirstUser(array(
-				'fields'=>array('login','codeactiv'),
+			
+			$user = $this->Users->findFirstUser(array(				
 				'conditions'=>array('user_id'=>$user_id)
 				));
 
@@ -413,7 +414,7 @@ class UsersController extends Controller{
 	    	$d['user'] = $user;
 
 	    	//action
-	    	if(!isset($action)) $action = 'profil';
+	    	if(!isset($action)) $action = '';
 	    	$d['action'] = $action;
 
 	    	$this->set($d);
@@ -446,7 +447,7 @@ class UsersController extends Controller{
 			$code = base64_decode(urldecode($this->request->get('c')));
 			$hash = md5($code.$user->salt);
 			$user = $this->Users->findFirstUser(array(
-				'table'=>T_USER_RECOVERY,
+				'table'=>$this->table_recovery,
 				'fields'=>'user_id',
 				'conditions'=>'user_id='.$user_id.' AND code="'.$hash.'" AND date_limit >= "'.unixToMySQL(time()).'"'));
 
@@ -485,7 +486,7 @@ class UsersController extends Controller{
 			//check the recovery code
 			$code = md5($data->code.$user->salt);
 			$user = $this->Users->findFirstUser(array(
-				'table'=>T_USER_RECOVERY,
+				'table'=>$this->table_recovery,
 				'fields'=>'user_id',
 				'conditions'=>'user_id='.$user_id.' AND code="'.$code.'" AND date_limit >= "'.unixToMySQL(time()).'"'));
 
@@ -507,14 +508,14 @@ class UsersController extends Controller{
 
 						//find the recovery data 
 						$rec = $this->Users->findFirstUser(array(
-							'table'=>T_USER_RECOVERY,
+							'table'=>$this->table_recovery,
 							'fields'=>array('id'),
 							'conditions'=>array('user_id'=>$user_id,'code'=>$code)));
 
 						//supress recovery data
 						$del = new stdClass();
-						$del->table = T_USER_RECOVERY;
-						$del->key = K_USER_RECOVERY;
+						$del->table = $this->table_recovery;
+						$del->key = 'id';
 						$del->id = $rec->id;
 						$this->Users->delete($del);
 
@@ -561,7 +562,7 @@ class UsersController extends Controller{
 
 				//check if existant recovery data
 				$recov = $this->Users->find(array(
-					'table'=>T_USER_RECOVERY,
+					'table'=>$this->table_recovery,
 					'fields'=>array('id'),
 					'conditions'=>array('user_id'=>$user->user_id)
 					));
@@ -570,8 +571,8 @@ class UsersController extends Controller{
 				if(!empty($recov)){
 
 					$del = new stdClass();
-					$del->table = T_USER_RECOVERY;
-					$del->key = K_USER_RECOVERY;
+					$del->table = $this->table_recovery;
+					$del->key = 'id';
 					$del->id = $recov[0]->id;
 					$this->Users->delete($del);
 				}
@@ -583,8 +584,8 @@ class UsersController extends Controller{
 				$rec->user_id = $user->user_id;
 				$rec->code = md5($code.$user->salt);
 				$rec->date_limit = unixToMySQL(time() + (2 * 24 * 60 * 60));
-				$rec->table = T_USER_RECOVERY;
-				$rec->key = K_USER_RECOVERY;
+				$rec->table = $this->table_recovery;
+				$rec->key = 'id';
 
 				//save it
 				if($this->Users->save($rec)){

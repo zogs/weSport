@@ -13,19 +13,19 @@ $(document).ready(function(){
 		Autocomplete cityName input
 	============================================================*/
 
-	var inputcity = $("#inputcityName");
-	if(inputcity.size()){
-		var hiddencity = $("#cityID");
-		var url = inputcity.attr('data-autocomplete-url');
+	// var inputcity = $("#inputcityName");
+	// if(inputcity.size()){
+	// 	var hiddencity = $("#cityID");
+	// 	var url = inputcity.attr('data-autocomplete-url');
 
-	  	inputcity.autocomplete({
-	  			serviceUrl:url,
-	  			minChars:3,
-	  			onSelect:function(value,data){ 
+	//   	inputcity.autocomplete({
+	//   			serviceUrl:url,
+	//   			minChars:3,
+	//   			onSelect:function(value,data){ 
 	  				
-	  				hiddencity.val(data)},
-	  		});
-  	}
+	//   				hiddencity.val(data)},
+	//   		});
+ //  	}
 
 
 	/*===========================================================
@@ -822,8 +822,7 @@ $(document).ready(function(){
 				type: 'GET',
 				url: url,
 				data: {type : type, value : value},
-				success: function(data){
-					
+				success: function(data){					
 					if(data.error){	
 						control.removeClass('control-success');					
 						control.addClass('control-error');
@@ -915,9 +914,16 @@ function showRegion(value,region)
 			dataType: 'json',
 			success: function(data){
 				
-				if(trim(data)!='empty'){ 				
+				if(trim(data)!='empty'){ 
+					//append the select box after the preivous one				
 					$('#'+region).next('.select2-container').after(data.SelectELEMENT);
-					//$("#"+data.SelectID).select2();
+					//pass style and class from parent elect boxe to new select box
+					var classes = $('#'+region).attr('class');
+					$('#'+data.SelectID).addClass(classes);
+					var css = $('#'+region).attr('style');
+					$("#"+data.SelectID).attr('style',css);
+					//Init the select2 plugin
+					$("#"+data.SelectID).select2();
 				}
 			}
 		});

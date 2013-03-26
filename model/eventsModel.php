@@ -148,8 +148,17 @@ class EventsModel extends Model{
 
 		//date
 		if(!empty($date)){
-			if(is_string($date))
-				$sql .= 'AND '.$date;
+			if(is_string($date)){
+
+				if($date=='past')
+					$sql .= ' AND E.date < CURDATE()';
+				elseif($date=='futur')
+					$sql .= ' AND E.date >= CURDATE()';
+				elseif($date=='today')
+					$sql .= ' AND E.date = CURDATE()';
+				else
+					$sql .= ' AND '.$date;
+			}				
 			elseif(is_array($date)){
 				if(isset($date['day'])){
 
@@ -159,9 +168,7 @@ class EventsModel extends Model{
 			}
 			$sql .=' ';
 		}
-		else {
-			$sql .= ' AND E.date >= CURDATE() ';
-		}
+		
 
 		//location
 		if(!empty($location)){
@@ -271,7 +278,7 @@ class EventsModel extends Model{
 			$sql .= ' '.$end;
 		}
 
-		//debug($sql);
+		// debug($sql);
 		$results = $this->query($sql,$values);
 
 		$events = array();
@@ -406,6 +413,23 @@ class EventsModel extends Model{
 			return $events[0];
 		else
 			return $events;
+	}
+
+
+	public function suppress( $event ){
+
+			
+			if(!isset($event->id)) throw new zException("id must be defined to delete event", 1);
+
+			$event->table ="events";
+
+			if($this->delete($event))
+				debug('succ');
+			else
+				return false;
+			
+
+
 	}
 
 

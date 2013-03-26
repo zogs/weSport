@@ -10,7 +10,7 @@
 <body data-user_id="<?php echo $this->session->user()->getID(); ?>">
 
 
-	<div class="navbar navbar-fixed-top">
+	<div class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="navbar-inner">
 	    <div class="container">
       		<a class="brand" href="#">

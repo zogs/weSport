@@ -2,6 +2,7 @@
 class UsersModel extends Model{
 
 	public $primaryKey = 'user_id';
+	public $table = 'users';
 
 	public $validates = array(
 		'register' => array(
@@ -186,8 +187,12 @@ class UsersModel extends Model{
  		else $sql .= ' * ';
 
 
- 		$sql .= " FROM users									
- 					WHERE ";
+ 		$sql .= " FROM ";
+
+ 		if(isset($req['table'])) $sql .= $req['table'];
+ 		else $sql .= $this->table;
+
+ 		$sql .= " WHERE ";
 
 
  		 if(isset($req['conditions'])){ 			
