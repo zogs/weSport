@@ -77,7 +77,6 @@ class EventsModel extends Model{
 
 		extract($params);
 
-
 		//If extend arround a city
 		// set params to modified the query
 		if(!empty($extend)){
@@ -278,7 +277,8 @@ class EventsModel extends Model{
 			$sql .= ' '.$end;
 		}
 
-		// debug($sql);
+		  // debug($sql);
+		  // debug($values);
 		$results = $this->query($sql,$values);
 
 		$events = array();

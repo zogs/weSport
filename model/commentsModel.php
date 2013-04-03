@@ -169,7 +169,7 @@ class CommentsModel extends Model
 							$sql .=' AND C.id > '.$newest.' ';
 					
 				}
-				if(isset($lang) && trim($lang)!=''){
+				if(isset($lang) && !empty($lang)!=''){
 
 							$sql .= ' AND lang=:lang ';
 							$val['lang'] = $lang;

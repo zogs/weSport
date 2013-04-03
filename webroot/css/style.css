@@ -335,6 +335,7 @@ a#showMoreComments:hover { color:white; text-decoration: none;}
 
   background-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) !important;
 }
+/
 .tt-hint {
   position: absolute !important;
   top: 0 !important;
@@ -419,7 +420,8 @@ a#showMoreComments:hover { color:white; text-decoration: none;}
   color:#999;
 }
 .tt-id{
-  display:none;
+  font-size:8px;
+  color:#AAA;
 }
 .tt-suggestion.tt-is-under-cursor{
   background-color:#0097cf;

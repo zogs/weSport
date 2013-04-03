@@ -8,7 +8,7 @@ class Conf {
 
 	//Website information
 	static $website = 'weSport';
-	static $websiteURL = 'http://localhost/wesport';
+	static $websiteURL = 'http://wesport.zogs.org';
 	static $websiteDOT = 'wesport.com';
 	static $lang = 'fr';
 	static $pays = 'FR';

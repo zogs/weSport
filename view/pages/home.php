@@ -66,14 +66,16 @@
 $(document).ready(function(){
 
     $('#inputcityName').typeahead({
-		limit: 5,
+    	name:'city',
+    	valueKey:'id',
+		limit: 8,
 		minLength: 3,	
 		//local: array of datums,
 		//prefetch: link to a json file with array of datums,
 		remote: 'http://localhost/weSport/world/suggestCity?query=%QUERY',			
 		template: [ '<p class="tt-name">{{name}}</p>',
 					'<p class="tt-sub">{{state}}</p>',
-					'<p class="tt_id">{{city_id}}</p>'
+					'<p class="tt-id">{{id}} (à cacher)</p>',
 					].join(''),
 		engine: Hogan ,
 
@@ -82,12 +84,13 @@ $(document).ready(function(){
 
 	}).on('typeahead:selected',function( evt, datum ){
 
-		$(this).val( datum.name );
-		$('#inputcityID').val( datum.id );
-		return false;
+		$(this).val(datum.name);
+		$("#inputcityName").val( datum.name );
+		$('#cityID').val( datum.id );
+		
 
 	}).on('typeahead:closed',function(e){
-		return false;
+		
 	});
 
 
