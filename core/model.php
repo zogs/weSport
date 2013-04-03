@@ -1,4 +1,4 @@
-<?php
+<?php echo ; ?><?php
  class Model {
 
  	static $connections = array();
@@ -125,13 +125,8 @@
 
  		}
  		
- 		$pre = $this->db->prepare($sql);
- 		$pre->execute();
-
- 		if($pre->errorCode()==0)
-			return $pre->fetchAll(PDO::FETCH_OBJ); 		
- 		else
- 			$this->reportPDOError($pre,__FUNCTION__,$sql);	
+ 		return $this->query($sql); 		
+ 		
  		
  	}
 
