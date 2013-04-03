@@ -679,7 +679,7 @@ class UsersController extends Controller{
     {
     	extract($data);
 
-		$lien = Conf::$websiteURL."/users/recovery?c=".urlencode(base64_encode($code))."&u=".urlencode(base64_encode($user_id));
+		$lien = Conf::getSiteUrl()."/users/recovery?c=".urlencode(base64_encode($code))."&u=".urlencode(base64_encode($user_id));
 
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
@@ -711,7 +711,7 @@ class UsersController extends Controller{
     {
     	extract($data);
 
-		$lien = Conf::$websiteURL."/users/validate?c=".urlencode($codeactiv)."&u=".urlencode($user_id);
+		$lien = Conf::getSiteUrl()."/users/validate?c=".urlencode($codeactiv)."&u=".urlencode($user_id);
 
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());

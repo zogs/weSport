@@ -357,7 +357,7 @@ class EventsController extends Controller{
         	$content .= $key." : <strong>".$value."</strong><br />";
         }
         			
-        $lien = Conf::$websiteURL."/events/view/".$event->id;
+        $lien = Conf::getSiteUrl()."/events/view/".$event->id;
 
         //Récupère le template et remplace les variables
         $body = file_get_contents('../view/email/eventChanges.html');

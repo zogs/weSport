@@ -68,11 +68,11 @@ $(document).ready(function(){
     $('#inputcityName').typeahead({
     	name:'city',
     	valueKey:'id',
-		limit: 8,
+		limit: 5,
 		minLength: 3,	
 		//local: array of datums,
 		//prefetch: link to a json file with array of datums,
-		remote: 'http://localhost/weSport/world/suggestCity?query=%QUERY',			
+		remote: '<?php echo Conf::getSiteUrl();?>/world/suggestCity?query=%QUERY',			
 		template: [ '<p class="tt-name">{{name}}</p>',
 					'<p class="tt-sub">{{state}}</p>',
 					'<p class="tt-id">{{id}} (à cacher)</p>',

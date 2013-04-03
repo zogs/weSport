@@ -9,6 +9,10 @@ class Conf {
 	//Website information
 	static $website = 'weSport';
 	static $websiteURL = 'http://wesport.zogs.org';
+	static $websiteURLs = array(
+		'localhost'=>'http://localhost/wesport',
+		'wesport.zogs.org'=>'http://wesport.zogs.org'
+		);
 	static $websiteDOT = 'wesport.com';
 	static $lang = 'fr';
 	static $pays = 'FR';
@@ -103,6 +107,13 @@ class Conf {
 			//$transport = Swift_SendmailTransport::newInstance(); 
 
 	    	return $transport;
+	    }
+
+
+	    public static function getSiteUrl(){
+	    	$host = $_SERVER['HTTP_HOST'];
+	    	
+	    	return self::$websiteURLs[$host];
 	    }
 
 }
