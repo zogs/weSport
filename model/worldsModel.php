@@ -249,7 +249,7 @@ class WorldsModel extends Model
  			if(isset($params['prefix'])) $queryString = $params['prefix'];
  			else return false;
 
- 			$sql = "SELECT DISTINCT City.UNI as city_id, City.FULLNAME as name, City.CC1, City.ADM1, City.ADM2, City.ADM3, City.ADM4, City.LATITUDE, City.LONGITUDE 
+ 			$sql = "SELECT DISTINCT City.UNI as city_id, City.FULLNAMEND as name, City.CC1, City.ADM1, City.ADM2, City.ADM3, City.ADM4, City.LATITUDE, City.LONGITUDE 
  								FROM world_cities as City
 								LEFT JOIN world_country as Pays ON Pays.CC1=City.CC1
 								WHERE City.CC1=:CC1 AND (City.LC=Pays.LO OR City.LC='') AND City.FULLNAME LIKE :queryString LIMIT ".$nbResult;

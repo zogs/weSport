@@ -28,8 +28,8 @@
 
  	//Default text value
  	public $titlePlaceholder = "Write here to add a title";
- 	public $textareaPlaceholder = "Write your comment here";
- 	public $noLoggedPlaceholder = "You need to be log first";
+ 	public $textareaPlaceholder = "Poser votre question";
+ 	public $noLoggedPlaceholder = "Veuillez vous connecter";
 
 
  	/*=======================================

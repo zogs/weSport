@@ -27,35 +27,28 @@ foreach ($events as $date => $evts):
 				
 			?>
 			
-			<div class="event-bb">				
+			<div class="events-bb <?php if($event->getUserParticipation()) echo 'events-userin' ?>">				
+				<a class="events-link" href="<?php echo Router::url('events/view/'.$event->getID().'/'.$event->getSlug());?>">
+					<div class="events-title">	
+						<img class="events-logo" src="<?php echo Router::webroot('img/sport_icons/icon_'.$event->sport.'.png');?>" alt="<?php echo $event->sport;?>">				
+						<?php echo $event->title; ?>
+					</div>	
 
-				<div class="event-time">
-					<img class="event-logo" src="<?php echo Router::webroot('img/sport_icons/icon_'.$event->sport.'.png');?>" alt="<?php echo $event->sport;?>">
-					<?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?>
-				</div>
-
-				<div class="event-title">
-					<?php echo $event->title; ?>
-				</div>	
-
-				<div class="event-meta">
-					<span class="event-city">à <?php echo $event->getCityName(); ?></span>
-					<a class="event-link" href="<?php echo Router::url('events/view/'.$event->getID().'/'.$event->getSlug());?>">En savoir +</a>
-				</div>		
-
-				<div class="event-user">
-					<img class="event-avatar" src="<?php echo Router::webroot($event->getAvatar())?>" alt="">
-					<div class="event-users">avec <b><?php echo $event->getLogin();?></b> <?php echo '('.Date::yearsSince($event->getAge()).' ans)';?> 						
-					<?php if($event->getNbParticipants()>1) echo 'et '.$event->getNbParticipants().' autres'; ?>
+					<div class="events-info">
+						<span class="events-time"><?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?></span>
+						<span class="events-city">à <?php echo $event->getCityName(); ?></span>	
+						<span class="events-users">avec <b><?php echo $event->getLogin();?></b> <?php echo '('.$event->getAge().' ans)';?> 						
+						<?php if($event->getNbParticipants()>1) echo 'et '.$event->getNbParticipants().' autres'; ?>
+						</span>												
 					</div>
-				</div>
 
-				<?php if($event->getUserParticipation()): ?>
-				<div class="event-userin">
-					J'en suis 
-				</div>
-				<?php endif;?>
-				
+					<div class="events-user">
+						<?php 
+						foreach ($event->participants as $p):?>
+						<img class="events-avatar" data-toggle="tooltip" title="<?php echo $p->getLogin();?>" src="<?php echo Router::webroot($p->getAvatar())?>" alt="">
+						<?php endforeach; ?>
+					</div>
+				</a>
 			</div>
 
 

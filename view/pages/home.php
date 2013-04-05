@@ -1,61 +1,65 @@
 <div class="homepage">
 
-	<?php echo $this->session->flash() ;?>
-	<?php //debug($this->cookieEventSearch->arr());
-	
-	?>
-	<div class="formular">
-
-			
-		<form class="homeForm" id="formSearch" method="POST" action="#" >
-			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
-			<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token() )) ;?>
-			<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
-			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>
-			<?php echo $this->Form->input('cityName','Ville',array("value"=>$this->cookieEventSearch->read('cityName'),'placeholder'=>"",'autocomplete'=>'off',"data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>			
-			<?php echo $this->Form->select("extend","Etendre de",array(10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'))) ;?>
-			<?php echo $this->Form->input('Lancer la recherche','submit',array('class'=>'btn btn-large btn-primary')) ;?>
-			<?php //$this->request('world','formLocate',array('CC1','Localisation',$this->cookieEventSearch->arr(),array()));?>
-			<div class="sportsButtons">
-			<?php echo $this->Form->_checkbox('sports[]','Sport',$sports_available,array('default'=>$this->cookieEventSearch->read('sports'),'openwrap'=>'<div class="sportButton">','closewrap'=>'</div>'));?>
-			</div>
-			
-		</form>
-
-	</div>
-
-	<div class="formular" style="display:none">
+	<div class="row-fluid">
 		
-		<div class="control-group">
-			<div class="controls hub-controls testHub">
-				
-				<input type="text" name="de" class="hubLeft" placeholder="Votre ville..." >				
-				<select name="lo" class="hubMiddle">
-					<option>0 km</option>
-					<option>10 km</option>					
-					<option>50 km</option>
-					<option>100 km</option>
-				</select>
-				<input type="submit" class="hubRight" value="Lancer la recherche">
+		<div class="span8 offset2">
+	
+			<?php echo $this->session->flash() ;?>
+			<?php //debug($this->cookieEventSearch->arr());
+			
+			?>
+			<div class="formular">
 
+					
+				<form class="homeForm" id="formSearch" method="POST" action="#" >
+					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
+					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token() )) ;?>
+					<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
+					<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>
 
-			</div>
+					<div class="testHub">
+							
+						<div class="inputHub">
+							<div class="containerCityName">
+								<input id="cityName" type="text" name="cityName" class="inputCityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityID') : 'Votre Ville?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
+							</div>
+							<div class="containerExtend">
+								<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
+							</div>
+								
+						</div>
+											
+						<button class="hubSubmit"><img src="<?php echo Router::webroot('img/search-icon.png');?>"></button>
+					</div>
+
+					<div class="sportButtonsHub">
+						<?php 
+
+							$sportsCols = array_chunk($sports_available, 5);
+
+							foreach ($sportsCols as $sportsCol):?>
+								<div class="sportsColumn">								
+									<?php echo $this->Form->_checkbox('sports[]','Sport',$sportsCol,array('default'=>$this->cookieEventSearch->read('sports'),'openwrap'=>'<div class="testCheckbox">','closewrap'=>'</div>'));?>
+								</div>							
+						 	<?php endforeach; ?>					
+						<?php ?>
+					</div>	
+				</form>
+			</div>			
 		</div>
-
 	</div>
 
 
-
+			
 
 	<div class="events-table">
-		<div class="events-top">
-			<a class="events-nav events-next fright" href="<?php echo Router::url('events/index');?>/+6/">Semaine suivante</a>
-			<a class="events-nav events-prev fleft" href="<?php echo Router::url('events/index');?>/-6/">Semaine précédente</a>
-		</div>
-		
 		<div class="events-content">
-			<?php $this->request('events','index',array($params)); ?>
+				<?php $this->request('events','index',array($params)); ?>							
 		</div>
+
+			<a class="events-nav events-next fright" href="<?php echo Router::url('events/index');?>/+7/"><span>Next</span></a>
+			<a class="events-nav events-prev fleft" href="<?php echo Router::url('events/index');?>/-7/"><span>Previous</span></a>
+		
 
 	</div>
 </div>
@@ -65,7 +69,14 @@
 
 $(document).ready(function(){
 
-    $('#inputcityName').typeahead({
+	$('.events-avatar').tooltip({placement:'bottom'});
+
+
+	$('#cityName').click(function(){
+			$(this).val('');
+	});
+
+    $('#cityName').typeahead({
     	name:'city',
     	valueKey:'id',
 		limit: 5,
@@ -99,6 +110,11 @@ $(document).ready(function(){
   		var url = $(this).attr('href');
   		var form = $("#formSearch");
   		var datas = form.serialize();
+  		var direction;
+  		if($(this).hasClass("events-next")) direction = 'next';
+  		if($(this).hasClass("events-prev")) direction = 'prev';
+
+  		var screenWidth = $(window).width();
   		
   		$.ajax({
   				type:'GET',
@@ -106,8 +122,26 @@ $(document).ready(function(){
   				data : datas,
   				success: function( data ){
 
-  					
-  					$(".events-content").empty().append( data );
+  					$(".events-content").append( data );
+
+  					if(direction == 'next') {
+  						contentPosition = screenWidth;
+  						contentSliding = '-='+screenWidth;
+  					}
+  					if(direction == 'prev') {
+  						contentPosition = -screenWidth;
+  						contentSliding = '+='+screenWidth;
+  					}
+
+  					$(".events-week").last().css({'left':contentPosition+'px'});
+  					$(".events-week").last().addClass('new-week');
+
+  					$('.events-week').animate({
+  						left:contentSliding,
+  						},500,function(){ ;
+  							if(!$(this).hasClass('new-week')) $(this).remove();
+  							$(this).removeClass('new-week');
+  					});
   					
   				},
   				dataType:'html'

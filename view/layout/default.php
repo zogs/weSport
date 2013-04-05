@@ -11,12 +11,11 @@
 
 
 	<div class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="navbar-inner">
-	    <div class="container">
+	  <div class="navbar-innerOO">
+	    <div class="container" id="navbar-bkg">
       		<a class="brand" href="#">
 	      	  	<?php echo Conf::$website; ?>
 			</a>
-
 			<ul class="nav">
 				<li><a href="<?php echo Router::url('pages/home');?>">Trouver des sportifs</a></li>				
 				<li><a href="<?php echo Router::url('events/create');?>">Poster un événement</a></li>	
@@ -27,15 +26,9 @@
 				if($this->session->user()->getRole()=='admin'):?>
 				<li><a href="<?php echo Router::url('admin/posts/index');?>">Admin.</a></li>
 				<?php endif;
-
 				
-				
-				?>
-
-				
+				?>			
 			</ul>
-		
-			
 
 			<ul class="nav pull-right">
 				<?php if ($this->session->user()->isLog()): ?>
@@ -43,8 +36,7 @@
 							<img class="nav-avatar" src="<?php echo Router::webroot($this->session->user()->getAvatar()); ?>" />	
 							<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
 					</a></li>
-					<li class="dropdown">	
-			
+					<li class="dropdown">				
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<b class="caret"></b>
 						</a>
@@ -55,7 +47,6 @@
 						</ul>
 					</li>
 				<?php else: ?>
-
 					<form class="loginForm" action="<?php echo Router::url('users/login'); ?>" method='post'>
 						<input type="login" name="login" required="required" placeholder="Login or email" autofocus="autofocus" value="admin"/>
 						<input type="password" name="password" required="required" placeholder="Password" value="fatboy" />
@@ -64,17 +55,13 @@
 					</form>
 					<li><a href="<?php echo Router::url('users/login');?>">Login</a></li>	
 					<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
-
-
 				<?php endif ?>
-
 			</ul>
 		</div>
 	  </div>
 	</div>
 
-	<div class="container mainContainer">	
-			
+	<div class="container-fuild mainContainer">			
 		<?php echo $content_for_layout;?>
 	</div>
 

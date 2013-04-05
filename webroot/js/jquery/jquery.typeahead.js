@@ -844,14 +844,16 @@
         }, css = {
             wrapper: {
                 position: "relative",
-                display: "inline-block"
+                display: "block",
+                height: "100%"
             },
             hint: {
                 position: "absolute",
                 top: "0",
                 left: "0",
                 borderColor: "transparent",
-                boxShadow: "none"
+                boxShadow: "none",
+                height: "100%"
             },
             query: {
                 position: "relative",

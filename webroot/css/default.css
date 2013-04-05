@@ -5,7 +5,7 @@
 
 /*Rebase css tips =======================================*/
 /* calcul size of a box */
-*, *:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+*, *:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; }
 /* clearfix floated el */
 .clearfix:before,.clearfix:after {content: " ";display: table;}
 .clearfix:after {clear: both;}
@@ -15,6 +15,13 @@
 .break {-ms-word-break: break-all;word-break: break-all;word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;}
 /* Create ... for long text */
 .ellipsis {width: 250px;white-space: nowrap;overflow: hidden;-ms-text-overflow: ellipsis; /* Required for IE8 */-o-text-overflow: ellipsis; /* Required for Opera */text-overflow: ellipsis;}
+
+
+a,
+a:link,
+a:hover,
+a:visited,
+a:active { text-decoration: none;  outline: 0; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; }
 /*=======================================================*/
 
 body { 

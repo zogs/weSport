@@ -67,7 +67,7 @@ class EventsController extends Controller{
 		$events = array();
 		$dayevents = array();
 		//for each days , get the events
-		for($i=0; $i< $num_days; $i++){
+		for($i=0; $i<= $num_days; $i++){
  
 			//set date param
 			$params['date'] = array('day'=> $nextday) ;
@@ -110,6 +110,7 @@ class EventsController extends Controller{
 
 		$event = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$event);
 		$event = $this->Worlds->JOIN_GEO($event);
+		$event = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$event);		
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
@@ -210,7 +211,7 @@ class EventsController extends Controller{
 				$p->id = $check->id;
 				$this->Events->delete($p);
 
-				$this->session->setFlash("Tanpis... à une prochaine fois!","warning",2);		
+				$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);		
 			}			
 						
 			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
