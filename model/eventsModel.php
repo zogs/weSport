@@ -345,7 +345,8 @@ class EventsModel extends Model{
 		$users = array();
 		foreach ($participants as $participant) {
 			$user = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$participant->user_id)));
-			$users[] = new User( $user );
+			if(!empty($user))
+				$users[] = new User( $user );
 		}
 
 		return $users;
