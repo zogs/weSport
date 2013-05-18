@@ -305,6 +305,42 @@ class EventsModel extends Model{
 			return new Event();
 		
 	}
+	/**
+	 * return events in the futur
+	 *
+	 * @param string $CC1 country code
+	 * @param int $number number of events to return
+	 * @param int $sport type of sport to return
+	 */
+	public function getEventsToCome($CC1,$count,$sport=''){
+
+		$sql = 'SELECT * ';
+		$sql .= 'FROM events WHERE CC1=:CC1 ';
+		$val = array();
+		$val['CC1'] = $CC1;
+
+		if(!empty($sport)) {
+			$sql .= ' AND sport=:sport';
+			$val['sport'] = $sport;
+		}
+
+		//day is superior or equal as current day
+		$sql.= ' AND date >= CURDATE()';
+		//time is superior as current time
+		$sql.= ' AND time > CAST("'.date("H:i:s").'" AS time)';
+		//number of event to return
+		$sql.= ' LIMIT '.$count;
+		
+
+		$res = $this->query($sql,$val);
+		$events = array();
+		foreach ($res as $event) {
+			
+			$events[] = new Event($event);
+		}
+
+		return $events;
+	}
 
 	public function joinEventsParticipants($events, $proba = 1){
 
@@ -478,7 +514,10 @@ class Event {
 		return $this->title;
 	}
 
+	public function getSportLogo(){
 
+		return Router::webroot('img/sport_icons/icon_'.$this->sport.'.png');
+	}
 	public function getCityName(){
 		
 		return substr($this->cityName, 0, strpos($this->cityName,'('));			

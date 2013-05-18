@@ -238,12 +238,18 @@ class CommentsModel extends Model
 		}
 		elseif(is_numeric($comments_id)){
 
-			$res = $res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
+			$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
 			$array[] = $res[0];					
 		}
 
 		return $array;
 
+	}
+
+	public function getComment($comment_id){
+
+		$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
+		return $res[0];
 	}
 
 	public function saveComment($com){
@@ -497,6 +503,11 @@ class Comment {
 	public function userHaveVoted(){
 
 		return (isset($this->voted)&&is_numeric($this->voted))? true : false;
+	}
+
+	public function isEmpty(){
+		if(empty($this->content)) return true;
+		return false;
 	}
 
 	public function isModerate( $msg = false){

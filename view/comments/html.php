@@ -104,7 +104,7 @@
             <div class="thread post <?php echo ($com->reply_to!=0)? 'reply':'';?> <?php echo 'type_'.$com->type;?> <?php echo (!empty($com->title))? 'type_news':'';?>" id="<?php echo 'com'.$com->id; ?>">  
                 <img class="logo" src="<?php echo Router::webroot($com->user->getAvatar()) ?>" alt="image avatar" />
             
-                <div>   
+                <div class="content">   
                     <?php if(!empty($com->title)): ?>                 
                     <div class="title"><?php echo $com->title; ?></div>                                
                     <?php endif; ?>
@@ -150,27 +150,27 @@
 
                         <?php if ($cuser): ?>
                         <div class="actions">                                 
-                            <div class="btn-group pull-left">
-                                <?php if($cuser->user_id!=0): ?>
+                            
+                            <?php if($cuser->user_id!=0): ?>
 
-                                    <?php if($config->allowVoting): ?>
-                                    <a class="btn-vote bubbtop" title="Like this comment" data-url="<?php echo Router::url('comments/vote/'.$com->id); ?>" >                      
-                                            <span class="badge badge-info" <?php if ($com->note == 0): ?>style="display:none"<?php endif ?>><?php echo $com->note; ?></span>
-                                        Like                         
-                                    </a> 
-                                    <?php endif; ?>
+                                <?php if($config->allowVoting): ?>
+                                <a class="btn-vote bubbtop" title="Like this comment" data-url="<?php echo Router::url('comments/vote/'.$com->id); ?>" >                      
+                                        <span class="badge badge-info" <?php if ($com->note == 0): ?>style="display:none"<?php endif ?>><?php echo $com->note; ?></span>
+                                    Like                         
+                                </a> 
+                                <?php endif; ?>
 
-                                    <?php if($config->allowReply): ?>             
-                                    <a class="btn-comment-reply" data-comid="<?php echo $com->id; ?>" data-comlogin="<?php echo $com->user->getLogin();?>" href="<?php echo $com->id;?>">Reply</a>                                
-                                    <?php endif; ?>
+                                <?php if($config->allowReply): ?>             
+                                <a class="btn-comment-reply" data-comid="<?php echo $com->id; ?>" data-comlogin="<?php echo $com->user->getLogin();?>" href="<?php echo $com->id;?>">Reply</a>                                
+                                <?php endif; ?>
 
-                                    <a href="<?php echo Router::url('comments/view/'.$com->id); ?>" target="_blank">Share</a>
+                                
 
-                                    <a href="">Alert</a>
-                                <?php else: ?>
-                                    <span>Log in to reply</span>
-                                <?php endif;?>
-                            </div>                    
+                                
+                            <?php else: ?>
+                                <span>Log in to reply</span>
+                            <?php endif;?>
+                                                
                         </div>
                         <?php endif; ?>
                     </div> 

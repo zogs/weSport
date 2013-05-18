@@ -11,7 +11,7 @@
 
                     //Si les commentaires sont authorisé OU si c'est l'admin on affiche le formulaire
                     if(true == $this->allowComment ): ?>
-                    <form id="commentForm" action="<?php echo Router::url('comments/add'); ?>" method="POST">                        
+                    <form id="commentForm" action="<?php echo Router::url('comments/add'); ?>" method="GET">                        
 
                         <?php if ($this->session->user()->isLog()): ?>    
 

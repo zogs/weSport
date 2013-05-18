@@ -33,10 +33,22 @@
 
 	<div class="blog-column">
 		
-		<div class="column-part">Pub</div>
-		<div class="column-part">Annonce</div>
-		<div class="column-part">Images</div>
-		<div class="column-part">Pub</div>
+		<div class="column-part">
+			<div class="column-title">Annonce</div>
+			<div class="column-content">blabla</div>
+		</div>
+		<div class="column-part">
+			<div class="column-title">10 événement à venir</div>
+			<div class="column-content"><?php echo $gmap->getGoogleMap();?></div>
+		</div>
+		<div class="column-part">
+			<div class="column-title">Images</div>
+			<div class="column-content">blabla</div>
+		</div>
+		<div class="column-part">
+			<div class="column-title">Pub</div>
+			<div class="column-content">blabla</div>
+		</div>
 	</div>
 
 

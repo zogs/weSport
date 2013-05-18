@@ -92,23 +92,18 @@
 																										fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom
 																										boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
 					<?php echo $this->Form->input("phone","Téléphone de contact",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
-					
-					<?php if($event->exist()): ?>
-						<?php echo $this->Form->input("Mettre à jour cette annoce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
-						<?php echo $this->Form->input("Supprimer cette annonce","submit",array("class"=>"btn btn-warning btn-large","name"=>"suppress","onClick"=>"confirm('Are you sure ?')")) ;?>
-					<?php else: ?>
-						<?php echo $this->Form->input("Soumettre cette annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
-					<?php endif; ?>
+									
 
-
-				</form>
+				
 			</div>
 
-			<div class="module module-rounded">
-				<form class="form" method="POST" action="">
-					
-					
-
+			<div class="module module-rounded">				
+				<?php if($event->exist()): ?>
+					<?php echo $this->Form->input("Mettre à jour cette annoce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
+					<?php echo $this->Form->input("Supprimer cette annonce","submit",array("class"=>"btn btn-warning btn-large","name"=>"suppress","onClick"=>"confirm('Are you sure ?')")) ;?>
+				<?php else: ?>
+					<?php echo $this->Form->input("Soumettre cette annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
+				<?php endif; ?>				
 
 				</form>
 			</div>

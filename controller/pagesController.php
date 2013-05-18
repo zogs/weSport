@@ -10,9 +10,9 @@ class PagesController extends Controller {
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
 		
 
-			if($this->request->post()){
+			if($this->request->get()){
 				
-				foreach ($this->request->data as $key => $value) {
+				foreach ($this->request->get() as $key => $value) {
 					
 					$params[$key] = $value;
 				}				
@@ -36,7 +36,6 @@ class PagesController extends Controller {
 			}
 
 			$this->cookieEventSearch->write($params);		
-						
 
 			$d['params'] = $params;
 			$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug as name')));
@@ -79,7 +78,36 @@ class PagesController extends Controller {
 
 		public function blog(){
 
+			$this->loadModel('Events');
+
+
+			//EVENTS TO COME
+			$eventsToCome = $this->Events->getEventsToCome('FR',10);
+
+			//CREATE GOOGLE MAP
+			//include google map API class
+			require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
+
+			$gmap = new GoogleMapAPI();
+			$gmap->setDivId('eventsToCome');
+			$gmap->setSize('100%','250px');
+			$gmap->setLang('FR');
+			$gmap->setZoom(5);
+			$gmap->setCenter('FR');
+			$gmap->setEnableWindowZoom(true);
+			$gmap->setDisplayDirectionFields(true);
+			$gmap->setDefaultHideMarker(false);			
+
+			//CREATE MARKERS
+			foreach ($eventsToCome as $event) {
+				$event = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$event);
+				$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->city."</em></p><p><small>".$event->description."</small></p>",$event->sport,$event->getSportLogo());
+			}			
+			$gmap->generate();
+			$d['gmap'] = $gmap;
 			
+
+			$this->set($d);
 		}
 }
 

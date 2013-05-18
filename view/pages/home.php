@@ -11,17 +11,16 @@
 			<div class="formular">
 
 					
-				<form class="homeForm" id="formSearch" method="POST" action="#" >
-					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
-					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token() )) ;?>
+				<form class="homeForm" id="formSearch" method="GET" action="#" >
+					<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
 					<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
-					<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>
+					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
 
 					<div class="testHub">
 							
 						<div class="inputHub">
 							<div class="containerCityName">
-								<input id="cityName" type="text" name="cityName" class="inputCityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityID') : 'Votre Ville?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
+								<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityName') : 'Votre Ville?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
 							</div>
 							<div class="containerExtend">
 								<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
@@ -69,16 +68,53 @@
 
 $(document).ready(function(){
 
+	$('.colomn-date a').click(function(e){
+		
+		e.preventDefault();
+
+		var colomn = $(this).parent().parent();			
+		var others = $('.events-colomn');
+		var ms = 200;
+
+		if(colomn.hasClass('colomn-open')==true) { 
+
+
+			colomn.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});
+			others.find('.events-bb').animate({width:'100%',margin:'0%'},{duration:ms,queue:false,ease:'ease-out'});
+			others.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});	
+			colomn.removeClass('colomn-open');		
+			
+		}
+		else {
+
+			others.removeClass('colomn-open');			
+			$('.events-colomn').animate({width:'10%'},{duration:ms,queue:false,ease:'ease-out'});
+			colomn.animate({width:'40%'},{duration:ms,queue:false,ease:'ease-out'});
+			others.find('.events-bb').animate({width:'100%'},{duration:ms,queue:false,ease:'ease-out'});
+			colomn.find('.events-bb').animate({width:'30%',margin:'1%'},{duration:ms,queue:false,ease:'ease-out'});
+			colomn.addClass('colomn-open');
+			
+		}
+		
+	});
+
+
 	$('.events-avatar').tooltip({placement:'bottom'});
 
 
 	$('#cityName').click(function(){
 			$(this).val('');
+			$('input#cityID').val('');
 	});
+
+	// $('#inputCityName').focusout(function(){
+			
+	// 		$(this).typeahead('setQuery',$('#cityName').val());
+	// });
 
     $('#cityName').typeahead({
     	name:'city',
-    	valueKey:'id',
+    	valueKey:'name',
 		limit: 5,
 		minLength: 3,	
 		//local: array of datums,
@@ -96,11 +132,13 @@ $(document).ready(function(){
 	}).on('typeahead:selected',function( evt, datum ){
 
 		$(this).val(datum.name);
-		$("#inputcityName").val( datum.name );
+		$("#inputCityName").val( datum.name );
 		$('#cityID').val( datum.id );
+		//$('#cityName').val( datum.name);
 		
 
 	}).on('typeahead:closed',function(e){
+		
 		
 	});
 

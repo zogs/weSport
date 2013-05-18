@@ -19,8 +19,8 @@
  	public $allowComment = true;
  	public $allowReply = true;
  	public $displayReply = true;
- 	public $allowVoting = true;
- 	public $enablePreview = false;
+ 	public $allowVoting = false;
+ 	public $enablePreview = true;
  	public $showFormReply = false;
  	public $allowTitle = false; 
  	public $displayRenderButtons = false;
@@ -221,14 +221,14 @@
 
  			if($id = $this->Comments->saveComment($com)){
 
- 				$coms = $this->Comments->getComments(array('comment_id'=>$id));
+ 				$com = $this->Comments->getComment($id);
 
- 				$d['coms'] = $coms;
- 				$d['context'] = $com->context;
- 				$d['context_id'] = $com->context_id;
+ 				if($com->isEmpty()) $d['fail'] = 'The comment is empty';
+
+ 				$d['com'] = $com;
  			}
  			else {
- 				throw new zException("Error in saveComment:commentsModel", 1);
+ 				$d['fail'] = 'Error while saving comment ( add:commentsModel)'; 				
  			}			
  		}
  		else {
@@ -259,25 +259,21 @@
 
 	 			if($id = $this->Comments->saveComment($com)){
 
-	 				$coms = $this->Comments->getComments(array('comment_id'=>$com->reply_to));
+	 				$com = $this->Comments->getComment($com->reply_to);
 
-	 				$d['coms']  = $coms;
-					$d['context']    = $com->context;
-					$d['context_id'] = $com->context_id;
+	 				if($com->isEmpty()) $d['fail'] = 'the comment is empty';
+
+	 				$d['com']  = $com;
 	 			
-	 			} else {
+	 			} else 
+	 				$d['fail'] = 'Error while saving comment (reply:commentsModel)';	 			
+	 						
+	 		} else 
+	 			$d['fail'] = 'You should log in first...';	 		
 
-	 				throw new zException("Error in saveComment:commentsModel", 1);	 			
-	 			}			
-
-	 		} else {
-
-	 			$d['fail'] = 'You should log in first...';
-	 		}
-
-	 	} else {
+	 	} else 
 	 		$d['fail'] = 'Comment is empty...';	 		
-	 	}
+	 	
  	
 	 	$this->set($d);
  	}

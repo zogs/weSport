@@ -348,7 +348,10 @@ class User {
 
 	public function getAge(){
 
-		return date('Y')-$this->age;
+		if(isset($this->age))
+			return date('Y')-$this->age;
+		else 
+			return 'N.A';
 	}
 
 	public function getBirthyear(){

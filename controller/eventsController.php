@@ -15,19 +15,21 @@ class EventsController extends Controller{
 		
 		if(!empty($params)){
 
+			//if its the first week
 			//get params from pagesController home 
 			if(is_array($params)){ 
 
 				$day = $params['date'];				
 			}
+			//if its the prev/next week
 			//get params from get ajax request
 			if(is_string($params)) {
 
 				//nombre de jour en plus ou moins
 				$delta_days = $params;
-				//get date from cookie
+				//get reference date from cookie
 				$date = $this->cookieEventSearch->read('date');				
-				//set new date
+				//calcul new day of reference with delta days
 				$day = date('Y-m-d', strtotime($date." ".$delta_days." day"));				
 				//get params from cookie
 				$params = $this->cookieEventSearch->arr();
@@ -62,15 +64,18 @@ class EventsController extends Controller{
 
 
 		//initialize variable for days loop
-		$num_days = 7;
-		$nextday = $day;
+		$num_days = 7; //number of days showed
+		//find the first day of the week
+		$firstday = (date('N')==1)? $day : date('Y-m-d',strtotime($day.' last monday'));
+		//init
+		$weekday = $firstday;		
 		$events = array();
 		$dayevents = array();
 		//for each days , get the events
-		for($i=0; $i<= $num_days; $i++){
+		for($i=1; $i<= $num_days; $i++){
  
 			//set date param
-			$params['date'] = array('day'=> $nextday) ;
+			$params['date'] = array('day'=> $weekday) ;
 			//find events in db
 			$dayevents = $this->Events->findEvents($params);
 			$dayevents = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$dayevents);
@@ -78,9 +83,10 @@ class EventsController extends Controller{
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
 			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
-			$events[$nextday] = $dayevents;
-			//set next day
-			$nextday = date("Y-m-d", strtotime($day. " +".$i." day"));
+			$events[$weekday] = $dayevents;
+			//set next day			
+			$weekday = date("Y-m-d", strtotime($weekday. " +1 day"));
+
 		}
 
 
@@ -114,7 +120,23 @@ class EventsController extends Controller{
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
-		
+
+		//google map API
+		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
+
+		$gmap = new GoogleMapAPI();
+		$gmap->setDivId('eventmap');
+		$gmap->setSize('300px','250px');
+		$gmap->setLang('fr');
+		$gmap->setEnableWindowZoom(true);
+
+		$gmap->addMarkerByAddress($event->address.' , '.$event->city, $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->city."</em></p><p><small>".$event->description."</small></p>",$event->sport);
+		$gmap->setCenter($event->address.' , '.$event->city);
+		$gmap->setZoom(12);
+
+		$gmap->generate();
+		$d['gmap'] = $gmap;
+
 		 // debug($event);
 
 
