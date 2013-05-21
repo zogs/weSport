@@ -130,8 +130,10 @@ class EventsController extends Controller{
 		$gmap->setLang('fr');
 		$gmap->setEnableWindowZoom(true);
 
-		$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->sport);
-		$gmap->setCenter($event->address.' , '.$event->getCityName());
+		$fullAddress = $event->address.' , '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
+		
+		$gmap->addMarkerByAddress( $fullAddress, $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->sport);
+		$gmap->setCenter($fullAddress);
 		$gmap->setZoom(12);
 
 		$gmap->generate();
@@ -262,6 +264,34 @@ class EventsController extends Controller{
 		$this->redirect('events/view/'.$eid);
 	}
 
+	public function delete($eid,$token){
+
+		//tcheck token
+		if($token!=$this->session->token()) $this->e404('Merci de vous reconnecter avant d\'effectuer cet opération');
+
+		//find Event
+		$this->loadModel('Events');
+		$this->view = 'none';
+		$evt = $this->Events->findEventById($eid);		
+
+		//check if event exit
+		if(!$evt->exist()) $this->e404('Cet événement n\'existe pas');
+
+		//check if user is admin
+		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cet événement');
+		
+		//delete the event
+		if($this->Events->deleteEvent($evt)){
+			$this->session->setFlash("Evenement supprimé !","success");
+			$this->redirect('events/create');
+		} else {
+			$this->session->setFlash("Erreur... l'événement n'a pu être supprimé","danger");
+			$this->redirect('events/create/'.$eid);
+		}
+
+		
+	}
+	
 	public function create($event_id = 0){
 
 		$this->loadModel('Events');
@@ -309,7 +339,7 @@ class EventsController extends Controller{
 				//find cityID with cityName
 				if(!empty($Event->cityName)){
 					$c = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$Event->cityName));
-					debug($c);
+					
 					if(!empty($c)){
 						$Event->cityID = $c[0]->city_id;
 						$Event->cityName = $c[0]->name;
@@ -324,17 +354,7 @@ class EventsController extends Controller{
 			$Event->slug = slugify($Event->title);
 
 
-				//if suppress is defined
-				if(isset($Event->suppress)){
-					$this->Events->suppress($Event);
-
-					$this->session->setFlash("Evenement supprimé","success");
-					$this->redirect('events/create');
-					
-					
-				}
-				//else validate data
-				elseif($this->Events->validates($Event)){
+				if($this->Events->validates($Event)){
 					
 					//find if change occurs
 					if($evt->exist()){

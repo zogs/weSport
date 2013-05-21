@@ -321,14 +321,13 @@ class EventsModel extends Model{
 			$val['sport'] = $sport;
 		}
 
-		//day is superior or equal as current day
-		$sql.= ' AND date >= CURDATE()';
-		//time is superior as current time
-		$sql.= ' AND time > CAST("'.date("H:i:s").'" AS time)';
+		//day is superior or equal as current day and time is superior as current time
+		$sql.= ' AND ( ( date = CURDATE() AND time > CAST("'.date("H:i:s").'" AS time) )';
+		//OR following days
+		$sql.= ' OR date >= CURDATE() )';
 		//number of event to return
 		$sql.= ' LIMIT '.$count;
 		
-
 		$res = $this->query($sql,$val);
 		$events = array();
 		foreach ($res as $event) {
@@ -511,15 +510,14 @@ class EventsModel extends Model{
 		return $res;
 	}	
 
-	public function suppress( $event ){
-
+	public function deleteEvent( $event ){
 			
-			if(!isset($event->id)) throw new zException("id must be defined to delete event", 1);
+			if(!isset($event->id)) throw new zException("id must be defined to $event object", 1);
 
 			$event->table ="events";
 
 			if($this->delete($event))
-				debug('succ');
+				return true;
 			else
 				return false;
 			
@@ -562,6 +560,11 @@ class Event{
 	public $id = 0;
 	public $sport = 0;
 	public $cityID = '';
+	public $ADM1 = '';
+	public $ADM2 = '';
+	public $ADM3 = '';
+	public $ADM4 = '';
+	public $CC1 = '';
 
 	public function __construct( $fields = array() ){
 
@@ -636,6 +639,30 @@ class Event{
 	public function getCityID(){
 
 		return $this->cityID;
+	}
+
+	public function getRegions($ADM = null){
+
+		if(!isset($ADM)) return $this->ADM4.' '.$this->ADM3.' '.$this->ADM2.' '.$this->ADM1;
+		elseif(isset($this->$ADM)) return $this->$ADM;
+		else return 'NA';
+	}
+
+	public function lastRegion(){
+		if(!empty($this->ADM4)) return $this->ADM4;
+		if(!empty($this->ADM3)) return $this->ADM3;
+		if(!empty($this->ADM2)) return $this->ADM2;
+		if(!empty($this->ADM1)) return $this->ADM1;
+	}
+
+	public function firstRegion(){
+
+		return $this->ADM1;
+	}
+
+	public function getCountry(){
+
+		return $this->CC1;
 	}
 
 	public function getNbParticipants(){

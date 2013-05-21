@@ -9,16 +9,32 @@ class PagesController extends Controller {
 			$this->loadModel('Worlds');
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
 		
-
+			//si une requete est passée
 			if($this->request->get()){
 				
+				//on recupere les parametres
 				foreach ($this->request->get() as $key => $value) {
 					
 					$params[$key] = $value;
-				}				
+				}	
+
+				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
+				if(!isset($params['cityID'])) {					
+					if(isset($params['cityName'])){
+						$cities = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$params['cityName'])); //on recupere les villes qui correspondent
+						debug($cities);
+						if(!empty($cities)){
+							$params['cityID'] = $cities[0]->city_id; //et on choisi la premiere ville
+							$params['cityName'] = $cities[0]->name;
+						}
+					}
+				}
 
 			}
+
+			//Sinon on utilise les parametres du cookie
 			else {
+
 				if($day === null )
 					$params['date'] = date('Y-m-d');
 				else
@@ -39,8 +55,9 @@ class PagesController extends Controller {
 
 			}
 
+			//on réécrit le cookie avec les nouveaux parametres
 			$this->cookieEventSearch->write($params);		
-
+			
 			$d['params'] = $params;
 			$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug as name')));
 			
@@ -83,10 +100,11 @@ class PagesController extends Controller {
 		public function blog(){
 
 			$this->loadModel('Events');
-
+			$this->loadModel('Worlds');
 
 			//EVENTS TO COME
 			$eventsToCome = $this->Events->getEventsToCome('FR',10);
+
 
 			//CREATE GOOGLE MAP
 			//include google map API class
@@ -104,8 +122,14 @@ class PagesController extends Controller {
 
 			//CREATE MARKERS
 			foreach ($eventsToCome as $event) {
+
+
 				$event = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$event);
-				$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->city."</em></p><p><small>".$event->description."</small></p>",$event->sport,$event->getSportLogo());
+				$event = $this->Worlds->JOIN_GEO($event);
+				
+				$full_address = $event->address.', '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
+
+				$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->sport,$event->getSportLogo());
 			}			
 			$gmap->generate();
 			$d['gmap'] = $gmap;
