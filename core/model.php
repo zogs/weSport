@@ -432,7 +432,8 @@ public function validates($data, $rules = null, $field = null){
 			foreach ($validates  as $field => $model) { 
 					
 				//Si la donnée correspondant est manquante -> erreur				
-				if(empty($data->$field)){
+				if(!isset($data->$field)){
+
 
 					//Si il y a plusiers regles
 					if(isset($model['rules'])){
@@ -449,8 +450,10 @@ public function validates($data, $rules = null, $field = null){
 					if(isset($model['rule']) && $model['rule']!='file'){
 						
 						//Si le champ est optionnel, sauter au prochain champ
-						if($model['rule']=='optional') continue;					
-						$errors[$field] = $model['message'];
+						if($model['rule']=='optional' || isset($model['optional'])) continue;
+						//Sinon on ajoute une erreur, si le message est défini
+						if(isset($model['message']))					
+							$errors[$field] = $model['message'];
 					}
 					
 				}
@@ -473,7 +476,9 @@ public function validates($data, $rules = null, $field = null){
 							if(empty($data->$field)) $errors[$field] = $rule['message'];				
 						}
 						elseif($rule['rule']=='notNull'){
-	 						if($data->$field==0) $errors[$field] = $rule['message'];				
+
+	 						if($data->$field===0) $errors[$field] = $rule['message'];
+
 	 					}
 	 					elseif($rule['rule']=='email'){
 
@@ -488,15 +493,19 @@ public function validates($data, $rules = null, $field = null){
 	 						if($data->$fieldtoconfirm!=$data->$field) $errors[$field] = $rule['message'];
 	 						else unset($data->$field);
 	 					}
-	 					elseif($rule['rule']=='checkbox' || $rule['rule']=='radio'){
+	 					elseif($rule['rule']=='checkbox'){
 	 						
+
 	 						if(!is_array($data->$field)) $checkboxs = array( $data->$field);
 	 						else $checkboxs = $data->$field;
 	 							
- 							foreach ($rule['mustbetrue'] as $betrue) {
- 								
- 								if(!in_array($betrue,$checkboxs)) $errors[$field] = $rule['messages'][$betrue];
- 							} 								 							
+	 						if(isset($rule['mustbetrue'])){
+	 							foreach ($rule['mustbetrue'] as $betrue) {
+	 								
+	 								if(!in_array($betrue,$checkboxs)) $errors[$field] = $rule['messages'][$betrue];
+	 							} 	
+	 						}
+	 											 							
 	 						foreach ($checkboxs as $checkbox) {
 	 								
 	 								$data->$checkbox = 1;	 
@@ -504,9 +513,14 @@ public function validates($data, $rules = null, $field = null){
 	 						unset($data->$field);	 						
 	 					
 	 					}	
+	 					elseif($rule['rule']=='radio'){
+
+	 						if(isset($rule['mustbetrue']) && $data->$field!=1) $erros[$field] = $rule['message'];
+
+	 					}
 						elseif($rule['rule']=='regex'){
 
-							if(!preg_match('/^'.$rule['regex'].'$/',$data->$field)) $errors[$field] = $rule['message'];
+							if(!preg_match('/'.$rule['regex'].'/',$data->$field)) $errors[$field] = $rule['message'];
 						}
 						elseif($rule['rule']=='file'){
 							continue;
@@ -591,6 +605,7 @@ public function validates($data, $rules = null, $field = null){
 
  			//Si pas d'erreur , renvoi les données
  			if(empty($errors)){
+
  				return $data;
  			}
  			

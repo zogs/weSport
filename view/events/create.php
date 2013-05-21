@@ -22,7 +22,7 @@
 					<?php echo $this->Form->input('title',"Intitulé de l'annonce",array('placeholder'=>"Petit match entre amis, ...")) ;?>
 					<?php echo $this->Form->select('sport','Quel sport ?',$sports_available,array('default'=>$event->sport,'placeholder'=>"Choississez un sport")); ?>
 					<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
-					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->city)) ;?>
+					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 					<?php echo $this->Form->input('address','Adresse exacte',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
 					<?php echo $this->Form->input('date',"Date de l'événement",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>

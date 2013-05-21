@@ -164,6 +164,17 @@ class WorldsModel extends Model
 
  	}
  	
+
+ 	/**
+ 	* find city by id
+ 	*
+ 	* @param id int
+ 	*/
+ 	public function findCityById($id){
+
+ 		return $this->findFirst(array('table'=>'world_cities','conditions'=>array('UNI'=>$id)));
+ 	}
+
  	//Renvoi les villes suivant la/les regions
  	//$params string $CC1
  	//$params array $ADM (
@@ -238,7 +249,9 @@ class WorldsModel extends Model
  	/**
  	* SuggestCities
  	* Find city from the autocompletion
- 	* params array(CC1,limit,prefix)
+ 	* @param CC1 string : country code 1
+ 	* @param limit int 
+ 	* @param prefix string : first letter of the city
  	*/
  	public function suggestCities($params){
 
@@ -246,15 +259,15 @@ class WorldsModel extends Model
 
  			(isset($params['CC1']))? $CC1 = $params['CC1'] : $CC1 = Conf::$pays;
  			(isset($params['limit'])&&is_numeric($params['limit']))? $nbResult = $params['limit'] : $nbResult = 10;
- 			if(isset($params['prefix'])) $queryString = $params['prefix'];
+ 			if(isset($params['prefix'])) $QUERY = $params['prefix'];
  			else return false;
 
  			$sql = "SELECT DISTINCT City.UNI as city_id, City.FULLNAMEND as name, City.CC1, City.ADM1, City.ADM2, City.ADM3, City.ADM4, City.LATITUDE, City.LONGITUDE 
  								FROM world_cities as City
 								LEFT JOIN world_country as Pays ON Pays.CC1=City.CC1
-								WHERE City.CC1=:CC1 AND (City.LC=Pays.LO OR City.LC='') AND City.FULLNAME LIKE :queryString LIMIT ".$nbResult;
+								WHERE City.CC1=:CC1 AND (City.LC=Pays.LO OR City.LC='') AND City.FULLNAME LIKE :QUERY LIMIT ".$nbResult;
 
-			$values = array(':CC1'=>$CC1,':queryString'=>$queryString.'%');
+			$values = array(':CC1'=>$CC1,':QUERY'=>$QUERY.'%');
 
 			$cities = $this->query($sql,$values);
 
@@ -274,6 +287,7 @@ class WorldsModel extends Model
 
  		
  	}
+
 
  	/*
 		Find Cities arround a radius
@@ -450,11 +464,13 @@ class WorldsModel extends Model
 																					),$obj
 									);
 		 		}
+		 		//join
+		 		if(!empty($obj->city) && is_numeric($obj->city)) {
+		 					 			
+		 			$obj = $this->JOIN('world_cities','FULLNAMEND as city',array('UNI'=>$obj->city),$obj);		 			 
+		 			
+		 		}		 	
 
-		 		if(isset($obj->city) && $obj->city!=0 && !empty($obj->city)){
-
-		 			$obj = $this->JOIN('world_cities','FULLNAMEND as city',array('UNI'=>$obj->city),$obj);
-		 		}
 		 		if(isset($obj->CC1)){
 
 		 			$obj = $this->JOIN('world_country','FULLNAME as CC1',array('CC1'=>$obj->CC1),$obj);

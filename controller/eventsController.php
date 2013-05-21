@@ -43,7 +43,7 @@ class EventsController extends Controller{
 		//if city is entered
 		if(!empty($params['cityID'])){
 			//set location for the model
-			$params['location'] = array('city'=>$params['cityID']);
+			$params['location'] = array('cityID'=>$params['cityID']);
 		}
 
 		//if extend to city arroud
@@ -60,7 +60,7 @@ class EventsController extends Controller{
 		else unset($params['extend']); //unset extend for the model
 
 		//
-		$params['fields'] = 'E.id, E.user_id, E.city, E.cityName, E.sport, E.date, E.time, E.title, E.slug';
+		$params['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug';
 
 
 		//initialize variable for days loop
@@ -130,8 +130,8 @@ class EventsController extends Controller{
 		$gmap->setLang('fr');
 		$gmap->setEnableWindowZoom(true);
 
-		$gmap->addMarkerByAddress($event->address.' , '.$event->city, $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->city."</em></p><p><small>".$event->description."</small></p>",$event->sport);
-		$gmap->setCenter($event->address.' , '.$event->city);
+		$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->sport);
+		$gmap->setCenter($event->address.' , '.$event->getCityName());
 		$gmap->setZoom(12);
 
 		$gmap->generate();
@@ -266,8 +266,7 @@ class EventsController extends Controller{
 
 		$this->loadModel('Events');
 		$this->loadModel('Users');
-		$this->loadJS = 'js/jquery/jquery.autocomplete.js';
-
+		$this->loadModel('Worlds');
 
 		//if user is logged
 		if(!$this->session->user()->isLog()) {
@@ -304,9 +303,25 @@ class EventsController extends Controller{
 
 			//data to save		
 			$Event = $this->request->post();
-			$Event->city = $Event->cityID;
+			
+			// if cityID is not defined			
+			 if(empty($Event->cityID)){
+				//find cityID with cityName
+				if(!empty($Event->cityName)){
+					$c = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$Event->cityName));
+					debug($c);
+					if(!empty($c)){
+						$Event->cityID = $c[0]->city_id;
+						$Event->cityName = $c[0]->name;
+					}
+					else {
+						$Event->cityName = '';
+					}
+				}
+			}
+
+			//init var
 			$Event->slug = slugify($Event->title);
-			unset($Event->cityID);
 
 
 				//if suppress is defined
@@ -358,7 +373,7 @@ class EventsController extends Controller{
 						// }
 
 						//redirect
-						$this->redirect('events/create/'.$event_id);
+						//$this->redirect('events/create/'.$event_id);
 					}
 					else{
 						$this->session->setFlash("Il ya une erreur lors de la sauvegarde. Essaye encore","error");
@@ -369,7 +384,8 @@ class EventsController extends Controller{
 					//$this->redirect('events/view/'.$event_id);
 				}
 				else{
-					$evt = $Event;
+					//if not validate , return a incomplete event fill with the data
+					$evt = new Event($Event);					
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
 				}
 			

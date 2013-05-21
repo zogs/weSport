@@ -26,16 +26,13 @@ class EventsModel extends Model{
 				)
 			)
 		),
-		'city' => array(
+		'cityName' => array(
 			"rules"=>array(
 				array(
 					'rule'=>'notEmpty',
 					'message'=>"Une ville doit être renseigné"
 				),
-				array(
-					'rule'=>'notNull',
-					'message'=>"Une ville doit être reseigné"
-				)
+				array('rule'=>'notNull','message'=>"Une ville doit être renseigné1")
 			)
 		),
 		'date' => array(
@@ -134,7 +131,7 @@ class EventsModel extends Model{
 
 		//add CITIES TABLE
 		if(!empty($extend_zone))
-			$sql .= " JOIN world_cities as C ON C.UNI = E.city ";
+			$sql .= " JOIN world_cities as C ON C.UNI = E.cityID ";
 
 
 		$sql .= ' WHERE 1=1 ';
@@ -172,13 +169,13 @@ class EventsModel extends Model{
 		//location
 		if(!empty($location)){
 
-			$arr = array('city','CC1','ADM1','ADM2','ADM3','ADM4');
+			$arr = array('cityID','CC1','ADM1','ADM2','ADM3','ADM4');
 			$ADM = array();
 			foreach ($arr as $key) {
 
 				if(!empty($location[$key]) && trim($location[$key])!=''){
 
-					if(!empty($extend) && $key=='city') continue; // useful for extend cities to a radius
+					if(!empty($extend) && $key=='cityID') continue; // useful for extend cities to a radius
 					
 					$ADM[] = $key.'=:'.$key;
 					$values[':'.$key] = $location[$key];
@@ -564,7 +561,7 @@ class Event{
 
 	public $id = 0;
 	public $sport = 0;
-	public $city = '';
+	public $cityID = '';
 
 	public function __construct( $fields = array() ){
 
@@ -610,10 +607,6 @@ class Event{
 
 		return Router::webroot('img/sport_icons/icon_'.$this->sport.'.png');
 	}
-	public function getCityName(){
-		
-		return substr($this->cityName, 0, strpos($this->cityName,'('));			
-	}
 
 	public function getAvatar(){
 
@@ -633,6 +626,16 @@ class Event{
 	public function getAge(){
 
 		return date('Y')-$this->age;
+	}
+
+	public function getCityName(){
+
+		return $this->cityName;
+	}
+
+	public function getCityID(){
+
+		return $this->cityID;
 	}
 
 	public function getNbParticipants(){

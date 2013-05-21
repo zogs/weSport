@@ -82,7 +82,7 @@
 
 			<div class="event-location">
 				<i class="icon icon-map-marker"></i>
-				<h2 class="event-info"><?php echo $event->city;?></h2>
+				<h2 class="event-info"><?php echo $event->getCityName();?></h2>
 				<h3 class="event-info"><?php echo stripcslashes($event->address);?></h3>
 			</div>
 
