@@ -453,6 +453,67 @@ class EventsModel extends Model{
 	}
 
 
+	public function findUserFuturParticipations($uid){
+		
+		$sql = "SELECT * FROM sporters as S
+				JOIN events as E ON E.id=S.event_id
+				WHERE S.user_id=$uid AND S.date >= NOW() ";
+		$res = $this->query($sql);
+
+		$events = array();
+		foreach ($res as $event) {
+			$events[] = new Event($event);
+		}
+		return $events;
+	}
+
+	public function findUserPastParticipations($uid){
+		
+		$sql = "SELECT * FROM sporters as S 
+				JOIN events as E ON E.id=S.event_id
+				WHERE S.user_id=$uid AND S.date < NOW() ";
+		$res = $this->query($sql);
+
+		$events = array();		
+		foreach ($res as $event) {
+			$events[] = new Event($event);
+		}
+		return $events;
+	}
+
+	public function findEventsUserOrganized($uid){
+
+		$sql = "SELECT * FROM events WHERE user_id=$uid ";
+		$res = $this->query($sql);
+
+		$events = array();
+		foreach ($res as $event) {
+			
+			$event->reviews = $this->findReviewByEventId($event->id);
+
+			$events[] = new Event($event);
+		}		
+		return $events;
+	}
+	
+	public function findReviewByEvents($events){
+
+		$reviews = array();
+		foreach ($events as $k=>$event) {
+			
+			if($review = $this->findReviewByEventId($event->id)) $reviews[] = $review;
+
+		}
+		return $reviews;
+	}
+
+	public function findReviewByEventId($event_id){
+		
+		$res = $this->find(array('table'=>'events_review','conditions'=>array('event_id'=>$event_id)));
+		
+		return $res;
+	}	
+
 	public function suppress( $event ){
 
 			
@@ -469,10 +530,37 @@ class EventsModel extends Model{
 
 	}
 
+	public function findReviewByEvent($event_id){
+
+	}
+
+	public function findReviewByUser($user_id){
+
+	}	
+
+	public function saveReview($event_id,$user_id,$review_tx,$lang){
+
+		//if exist
+		$exist = $this->findFirst(array('table'=>'events_review','conditions'=>array('event_id'=>$event_id,'user_id'=>$user_id)));
+		if(!empty($exist)) return 'already';
+		debug($exist);
+		$review = new stdClass();
+		$review->table = 'events_review';
+		$review->event_id = $event_id;
+		$review->user_id = $user_id;
+		$review->review = $review_tx;
+		$review->lang = $lang;
+
+		if($this->save($review))
+			return true;
+		else
+			return false;
+
+	}
 
 } 
 
-class Event {
+class Event{
 
 	public $id = 0;
 	public $sport = 0;
@@ -496,6 +584,10 @@ class Event {
 	public function getLogin(){
 
 		return $this->login;
+	}
+
+	public function getLinkAuthor(){
+		return Router::url('users/view/'.$this->user_id.'/'.$this->getLogin());
 	}
 
 	public function isAdmin($user_id){
@@ -555,6 +647,26 @@ class Event {
 		return false;		
 	}
 
+	public function timingSituation(){
+
+		if($this->date < date('Y-m-d') ) return 'past';
+		if($this->date > date('Y-m-d') ) return 'tocome';
+		if($this->date == date('Y-m-d') && $this->time < date('H:i:s')) return 'tocome';
+		if($this->date == date('Y-m-d') && $this->time >= date('H:i:s')) return 'past';
+		if($this->date == date('Y-m-d') && $this->time == date('H:i:s')) return 'current';
+	}
+
+	public function isUserParticipate($user_id){
+
+		if($user_id===0) return false;
+
+		foreach ($this->participants as $participant) {
+			
+			if($participant->getID() === $user_id) return true;
+		}
+
+		return false;
+	}
 
 }
 

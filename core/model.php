@@ -309,7 +309,7 @@
  		}
  		
  		$pre = $this->db->prepare($sql); //prepare la requete
-
+ 		
  		$pre->execute($tab); //execute la requete grace au tableaux des valeurs ( :name, :contenu, :date, ...)
  		
  		//Si c'est un insert on recupere l'id de l'insertion

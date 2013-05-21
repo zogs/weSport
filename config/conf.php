@@ -61,6 +61,7 @@ class Conf {
 									'js/jquery/jquery.livequery.min.js',
 									'bootstrap/js/bootstrap.js',
 									'js/jquery/jquery.typeahead.js',
+									'js/jquery/hogan.mustache.js',
 									'js/phpfunctions.js',
 									'js/jquery/select2-2.1/select2.min.js',
 									'js/jquery/jquery.expander.min.js',

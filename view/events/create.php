@@ -1,78 +1,19 @@
-<div class="container">
-	<div class="row createEvent">
+<div class="container createEvent">
+	<div class="row">
 		<?php echo $this->session->flash(); ?>
 
-		<div class="span3">
-			<div class="module module-rounded">
-				<img class="avatar size32" src="<?php echo Router::webroot($this->session->user()->getAvatar());?>" alt="">
-				<a class="user" href="<?php echo Router::url('users/thread');?>">
-					<?php echo $this->session->user()->getLogin();?>
-				</a>
-				<p>
-					<span><?php echo $this->session->user()->getAge();?> ans</span>
-					<br />
-					<small><a href="<?php echo Router::url('users/logout');?>">Déconnexion</a></small>
-				</p>
-			</div>	
-
-			<div class="module module-rounded">
-				<div class="module-header">
-						<h5>Mes événements</h5>
-				</div>
-
-				<div>
-					<strong>à venir :</strong>
-					<?php 
-					if(!empty($user_events_in_futur)){
-						foreach ($user_events_in_futur as $e) {
-							
-							echo '<p>';
-							echo '<a href="'.Router::url('events/create/'.$e->getID()).'">';
-							echo $e->getTitle();
-							echo '</a>';
-							echo '</p>';
-						} 
-					}
-					else
-						echo "<small><i>Pas d'événement</i></small>";
-					?>				
-				</div>
-
-				<?php if(!empty($user_events_in_past)): ?>
-				<div>
-					<strong>événements passés :</strong>
-					<?php 
-
-					foreach ($user_events_in_past as $e) {
-						
-						echo '<p>';
-						echo '<a href="'.Router::url('events/create/'.$e->getID()).'">';
-						echo $e->getTitle();
-						echo '</a>';
-						echo '</p>';
-					}
-
-					?>
-				</div>
-				<?php endif; ?>
-			</div>
-		</div>
-		
-
-		<div class="span8">
+		<div class="span7">
 
 			<div class="module module-rounded">
 				<h5>
 				<?php if($event->exist()): ?>
-					<?php echo $event->getTitle(); ?>
-					<?php echo '<a href="'.Router::url('events/view/'.$event->getID()).'">( voir l\'annonce )</a>';?>
+					<img src="<?php echo $event->getSportLogo();?>"/>
+					<?php echo '<a href="'.Router::url('events/view/'.$event->getID()).'">'.$event->getTitle().'</a>';?>
 				<?php else: ?>
 					Proposer un nouvel événement !
 				<?php endif; ?>
 				</h5>
-			</div>
 
-			<div class="module module-rounded">
 				<form class="form" action="<?php echo Router::url('events/create/'.$event->id);?>" method="POST">
 
 					<?php echo $this->Form->input("id","hidden",array("value"=>$event->id)) ;?>
@@ -97,15 +38,64 @@
 				
 			</div>
 
-			<div class="module module-rounded">				
+			
+		</div>
+
+
+
+		<div class="span4">
+			<div class="module module-rounded">					
 				<?php if($event->exist()): ?>
-					<?php echo $this->Form->input("Mettre à jour cette annoce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
-					<?php echo $this->Form->input("Supprimer cette annonce","submit",array("class"=>"btn btn-warning btn-large","name"=>"suppress","onClick"=>"confirm('Are you sure ?')")) ;?>
+					<?php echo $this->Form->input("Mettre à jour l'annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
+					<?php echo $this->Form->input("Supprimer l'annonce","submit",array("class"=>"btn btn-link","name"=>"suppress","onClick"=>"return confirm('L'événement va être supprimé, êtes-vous sûr ?)")) ;?>					
+					<a href="events/report/<?php echo $event->getID();?>" class="btn btn-link">Reporter à la semaine suivant</a>
+
 				<?php else: ?>
-					<?php echo $this->Form->input("Soumettre cette annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
+					<?php echo $this->Form->input("Soumettre l'annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>
 				<?php endif; ?>				
 
 				</form>
+			</div>
+
+			<div class="module module-rounded">
+				<div class="module-header">
+						<h5>Mes événements</h5>
+				</div>
+
+				<?php if(!empty($user_events_in_futur)):?>
+				<div>
+					<strong>à venir</strong>
+					<ul>
+						<?php foreach ($user_events_in_futur as $e):?>							
+							<li>
+								<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
+								<img src="<?php echo $e->getSportLogo();?>" />
+								<?php echo $e->getTitle();?>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+
+				</div>
+				<?php endif; ?>				
+
+				<?php if(!empty($user_events_in_past)): ?>
+				<div>
+					<strong>passés</strong>
+					<ul>
+					<?php foreach ($user_events_in_past as $e): ?>
+						<li>
+							<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
+							<img src="<?php echo $e->getSportLogo();?>" />
+							<?php echo $e->getTitle();?>
+						</li>
+					<?php endforeach;?>
+					</ul>					
+				</div>
+				<?php endif; ?>
+
+				<p>
+					<a href="events/create" class="btn btn-link">Créer un nouvel événement</a>
+				</p>
 			</div>
 		</div>
 	</div>

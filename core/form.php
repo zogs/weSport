@@ -131,16 +131,16 @@ class Form{
 		
 		//Type de input
 		if(!isset($options['type'])){
-			$html .= '<input type="text" id="input'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
+			$html .= '<input type="text" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		elseif($options['type']=='email'){
-			$html .= '<input type="email" id="input'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
+			$html .= '<input type="email" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		elseif($options['type']=='url'){
-			$html .= '<input type="url" id="input'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
+			$html .= '<input type="url" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		elseif($options['type']=='textarea'){
-			$html .= '<textarea id="input'.$id.'" name="'.$id.'" '.$attr.'>';
+			$html .= '<textarea id="'.$id.'" name="'.$id.'" '.$attr.'>';
 			if(isset($value)) $html .= $value;
 			$html .='</textarea>';
 		}
@@ -148,7 +148,7 @@ class Form{
 			$html .= '<input type="hidden" name="'.$id.'" value="0"><input type="checkbox" name="'.$id.'" value="1" '.(!empty($value)? 'checked' : '').' '.$attr.' />';
 		}
 		elseif($options['type']=='file'){
-			$html .= '<input type="file" class="input-file" id="input'.$id.'" name="'.$id.'" '.$attr.'>';
+			$html .= '<input type="file" class="input-file" id="'.$id.'" name="'.$id.'" '.$attr.'>';
 
 			if( !empty($options['src']) && $options['src']!=''){
 
@@ -156,10 +156,10 @@ class Form{
 			}
 		}
 		elseif($options['type']=='password'){
-			$html .= '<input type="password" id="input'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
+			$html .= '<input type="password" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		else{
-			$html .= '<input type="'.$options['type'].'" id="input'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
+			$html .= '<input type="'.$options['type'].'" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		
 		return $html;

@@ -3,7 +3,7 @@
 class PagesController extends Controller {
 
 
-		public function home(){					
+		public function home( $day = null ){					
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
@@ -19,8 +19,12 @@ class PagesController extends Controller {
 
 			}
 			else {
+				if($day === null )
+					$params['date'] = date('Y-m-d');
+				else
+					$params['date'] = $day;
+				
 				$params['sports'] = $this->cookieEventSearch->read('sports');
-				$params['date'] = date("Y-m-d");
 				$params['cityID'] = $this->cookieEventSearch->read('cityID');
 				$params['cityName'] = $this->cookieEventSearch->read('cityName');
 				$params['extend'] = $this->cookieEventSearch->read('extend');

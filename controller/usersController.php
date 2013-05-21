@@ -740,7 +740,32 @@ class UsersController extends Controller{
     }
 
 
-    
+    public function view( $uid, $login = null ) {
+
+    	$this->loadModel('Users');
+    	$this->loadModel('Events');
+
+    	//find user
+    	$user = $this->Users->findUsers(array('conditions'=>array('user_id'=>$uid)));
+    	$user = $user[0];
+    	//404 is not exist
+    	if(!$user->exist()) $this->e404('User does not exist');
+
+    	//find events
+    	$futurParticipation = $this->Events->findUserFuturParticipations($uid);
+    	$pastParticipation = $this->Events->findUserPastParticipations($uid);
+    	$hasOrganized = $this->Events->findEventsUserOrganized($uid);
+    	$hasBeenReviewed = $this->Events->findReviewByEvents($hasOrganized);
+
+
+    	$d['user'] = $user;
+    	$d['futurParticipation'] = $futurParticipation;
+    	$d['pastParticipation'] = $pastParticipation;
+    	$d['hasOrganized'] = $hasOrganized;
+    	$d['hasBeenReviewed'] = $hasBeenReviewed;
+
+    	$this->set($d);
+    }
 
 
     // public function index(){

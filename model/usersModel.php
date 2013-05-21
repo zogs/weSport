@@ -229,7 +229,7 @@ class UsersModel extends Model{
 		return current($this->findUsers($req));
 	}
 
-
+	
 
 	// public function findUserThread($user_id){
 
@@ -316,6 +316,11 @@ class User {
 
 		if(isset($this->avatar)&&!empty($this->avatar)&&file_exists(WEBROOT.DS.$this->avatar)) return $this->avatar;
 		else return 'img/musclor.jpg';
+	}
+
+	public function getLink(){
+
+		return Router::url('users/view/'.$this->getID().'/'.$this->getLogin());
 	}
 
 	public function getBonhom(){

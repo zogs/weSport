@@ -8,62 +8,63 @@
 			<?php //debug($this->cookieEventSearch->arr());
 			
 			?>
-			<div class="formular">
-
 					
-				<form class="homeForm" id="formSearch" method="GET" action="#" >
-					<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
-					<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
-					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
+			<form id="formSearch" method="GET" action="#" >
+				<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
+				<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
+				<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
 
-					<div class="testHub">
-							
-						<div class="inputHub">
-							<div class="containerCityName">
-								<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityName') : 'Votre Ville?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
-							</div>
-							<div class="containerExtend">
-								<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
-							</div>
-								
+				<div class="cityRounded">
+						
+					<div class="cityInputs">
+						<div class="containerCityName">
+							<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityName') : 'Votre Ville?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
 						</div>
-											
-						<button class="hubSubmit"><img src="<?php echo Router::webroot('img/search-icon.png');?>"></button>
+						<div class="containerExtend">
+							<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
+						</div>								
 					</div>
+										
+					<button class="citySubmit"><img src="<?php echo Router::webroot('img/search-icon.png');?>"></button>
+				</div>
 
-					<div class="sportButtonsHub">
-						<?php 
+				<div class="sportCheckboxs">
+					<?php 
+						$sportsCols = array_chunk($sports_available, 5);
 
-							$sportsCols = array_chunk($sports_available, 5);
-
-							foreach ($sportsCols as $sportsCol):?>
-								<div class="sportsColumn">								
-									<?php echo $this->Form->_checkbox('sports[]','Sport',$sportsCol,array('default'=>$this->cookieEventSearch->read('sports'),'openwrap'=>'<div class="testCheckbox">','closewrap'=>'</div>'));?>
-								</div>							
-						 	<?php endforeach; ?>					
-						<?php ?>
-					</div>	
-				</form>
-			</div>			
+						foreach ($sportsCols as $sportsCol):?>
+							<div class="sportsColumn">								
+								<?php echo $this->Form->_checkbox('sports[]','Sport',$sportsCol,array('default'=>$this->cookieEventSearch->read('sports'),'openwrap'=>'<div class="colomnCheckbox">','closewrap'=>'</div>'));?>
+							</div>							
+					 	<?php endforeach; ?>					
+					<?php ?>
+				</div>	
+			</form>
+						
 		</div>
 	</div>
 
-
-			
-
-	<div class="events-table">
-		<div class="events-content">
-				<?php $this->request('events','index',array($params)); ?>							
+	<div class="calendar">
+		<div class="calendar-nav">
+			<?php 
+			$previousWeek = date('Y-m-d', strtotime($params['date'].' -7 days'));
+			$nextWeek = date('Y-m-d', strtotime($params['date'].' +7 days'));
+			?>
+			<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar');?>/-7/"><span><-</span></a>
+			<a class="calendar-nav calendar-prev fleft" href="<?php echo Router::url('pages/home/'.$previousWeek);?>">Previous week</a>
+			<a class="with-ajax calendar-nav calendar-next fright" href="<?php echo Router::url('events/calendar');?>/+7/"><span>-></span></a>
+			<a class="calendar-nav calendar-next fright" href="<?php echo Router::url('pages/home/'.$nextWeek);?>">Next Week</a>
+		</div>
+		<div class="calendar-content">
+				<?php $this->request('events','calendar',array($params)); ?>							
 		</div>
 
-			<a class="events-nav events-next fright" href="<?php echo Router::url('events/index');?>/+7/"><span>Next</span></a>
-			<a class="events-nav events-prev fleft" href="<?php echo Router::url('events/index');?>/-7/"><span>Previous</span></a>
 		
 
 	</div>
 </div>
 
-<script src="<?php echo Router::webroot('js/jquery/hogan.mustache.js');?>"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -102,55 +103,17 @@ $(document).ready(function(){
 	$('.events-avatar').tooltip({placement:'bottom'});
 
 
-	$('#cityName').click(function(){
-			$(this).val('');
-			$('input#cityID').val('');
-	});
-
-	// $('#inputCityName').focusout(function(){
-			
-	// 		$(this).typeahead('setQuery',$('#cityName').val());
-	// });
-
-    $('#cityName').typeahead({
-    	name:'city',
-    	valueKey:'name',
-		limit: 5,
-		minLength: 3,	
-		//local: array of datums,
-		//prefetch: link to a json file with array of datums,
-		remote: '<?php echo Conf::getSiteUrl();?>/world/suggestCity?query=%QUERY',			
-		template: [ '<p class="tt-name">{{name}}</p>',
-					'<p class="tt-sub">{{state}}</p>',
-					'<p class="tt-id">{{id}} (à cacher)</p>',
-					].join(''),
-		engine: Hogan ,
-
-		//header: 'header',
-		//footer: 'footer',
-
-	}).on('typeahead:selected',function( evt, datum ){
-
-		$(this).val(datum.name);
-		$("#inputCityName").val( datum.name );
-		$('#cityID').val( datum.id );
-		//$('#cityName').val( datum.name);
-		
-
-	}).on('typeahead:closed',function(e){
-		
-		
-	});
+	
 
 
-	$("a.events-nav").bind('click',function(e){
+	$("a.calendar-nav.with-ajax").bind('click',function(e){
 		
   		var url = $(this).attr('href');
   		var form = $("#formSearch");
   		var datas = form.serialize();
   		var direction;
-  		if($(this).hasClass("events-next")) direction = 'next';
-  		if($(this).hasClass("events-prev")) direction = 'prev';
+  		if($(this).hasClass("calendar-next")) direction = 'next';
+  		if($(this).hasClass("calendar-prev")) direction = 'prev';
 
   		var screenWidth = $(window).width();
   		
@@ -160,7 +123,7 @@ $(document).ready(function(){
   				data : datas,
   				success: function( data ){
 
-  					$(".events-content").append( data );
+  					$(".calendar-content").append( data );
 
   					if(direction == 'next') {
   						contentPosition = screenWidth;

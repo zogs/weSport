@@ -56,7 +56,7 @@ class Controller {
 		//check if the view exist
 		if(!file_exists($view)){
 			
-			if(Conf::$debug>=1)
+			if(DEBUG>=1)
 				$this->e404('The controller :'.$this->request->controller.' has no view :'.$this->request->action);						
 			else
 				$this->e404('This page don\'t work... We\'re sorry :(');							

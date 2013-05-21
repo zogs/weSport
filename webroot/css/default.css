@@ -176,7 +176,7 @@ Account
 .dashboard .module{ margin:5px 0 15px 0; float:left; clear:left; width:100%; }
 .module { width:90%; margin:0 5% 20px 5%; padding:15px;  }
 .module-rounded { border:1px solid #CCC; border-radius:10px; background:#F2F2F2; box-shadow:0 0 4px 4px rgba(100,100,100,0.1); }
-.module-header { margin-bottom:25px; border-bottom:1px solid #DDD; }
+.module-header { margin-bottom:15px; border-bottom:1px solid #DDD; }
 .module-header h2 { color:#444 }
 .module-header p.subheader { color:#AAA;}
 .mini-profile b { margin-left:10px; text-transform: capitalize; }

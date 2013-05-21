@@ -16,7 +16,19 @@
   z-index:-10;
 }
 
-.testHub {
+
+
+/*
+ Homepage
+*/
+.homepage { }
+.homepage .comments { display:none;}
+
+/* Home form */
+.homepage #formSearch { float:left;width:100%; padding: 20px 2%; }
+
+
+.cityRounded {
    
     width:80%;
     margin:0 10%;
@@ -33,116 +45,54 @@
 
 }
 
-.inputHub { float:left; width:70%; height:60px; margin:0; padding:0 30px; background-color:rgba(255,255,255,0.2); border-radius: 30px; border:1px solid rgba(255,255,255,0.1); color:#FFF; box-shadow: inset 0 0 20px rgba(0,0,0,0.2),-10px -3px 40px rgba(255,255,255,0.1);}
-.inputHub input, 
-.inputHub select { border:0; background: transparent;}
-.inputHub select:focus, .inputHub input:focus { outline: 0; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; }
-
+.cityInputs { float:left; width:70%; height:60px; margin:0; padding:0 30px; background-color:rgba(255,255,255,0.2); border-radius: 30px; border:1px solid rgba(255,255,255,0.1); color:#FFF; box-shadow: inset 0 0 20px rgba(0,0,0,0.2),-10px -3px 40px rgba(255,255,255,0.1);}
+.cityInputs input, 
+.cityInputs select { border:0; background: transparent;}
+.cityInputs select:focus, .cityInputs input:focus { outline: 0; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; }
 
 .containerCityName { float:left; width: 80%;height:100%; }
 .containerExtend   { float:left; width: 20%;height: 100%; overflow:hidden;}
 
-#cityName { color:white;}
-.twitter-typeahead > input { height: 100%; width:80%; font-size: 36px; background:transparent; font-family:'Lobster',Helvetica,Arial,sans-serif; outline:0; }
+.twitter-typeahead {width:100%;}
+.twitter-typeahead > input { height: 100%; width:100%;}
+.homepage .twitter-typeahead > input { font-size: 36px; background:transparent; font-family:'Lobster',Helvetica,Arial,sans-serif; outline:0; }
+.homepage .twitter-typeahead > #cityName {color:white;}
+.homepage .twitter-typeahead .tt-hint {  color:#DDD; color:rgba(255,255,255,0.5);  margin-top:-4px;}
+
+.createEvent .twitter-typeahead .tt-hint {color:#BBB; }
 
 #extend { height: 100%; width: 150%; font-size: 22px; font-family:'Lobster'; color:#FFF; line-height: 100%; vertical-align:middle;  background:transparent; -webkit-appearance: none; -moz-appearance: window; }
 #extend option { background-color:#3C8EAC; font-size: 12px; padding:10px; font-weight: bold;}
 
-/*
-    ======================
-    TYPEAHEAD CUSTOM STYLE
-    ======================
-*/
+.citySubmit { float:right ; width:20%; height:60px; background-color:rgba(255,255,255,0.2); border-radius: 30px}
+.citySubmit img { width:30px; height:30px;}
 
-/* Autocompte city */
+/*
+======================
+TYPEAHEAD CUSTOM STYLE
+=====================*/
 .tt-dropdown-menu { width:100%; margin-top:10px; padding:8px 0; text-align: left; background-color: white; border:1px solid rgba(0,0,0,0.2); border-radius: 8px; box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
-.twitter-typeahead .tt-hint {  color:#DDD; color:rgba(255,255,255,0.5);  margin-top:-4px;}
+
 .tt-suggestion {  padding:8px 20px;}
 .tt-name {  font-size:16px;  font-weight:bold;  color:#888;}
 .tt-sub {  font-size:12px;  font-style:italic;  color:#999;}
 .tt-id{  font-size:8px;  color:#AAA;  display: none;}
 .tt-suggestion.tt-is-under-cursor{  background-color:#0097cf;}
 .tt-suggestion.tt-is-under-cursor p{  color:white;}
-
-.hubSubmit { float:right ; width:20%; height:60px; background-color:rgba(255,255,255,0.2); border-radius: 30px}
-.hubSubmit img { width:30px; height:30px;}
-
-.testCheckbox {  }
-.testCheckbox input { display: inline; margin:0; }
-.testCheckbox label { display: inline; margin:0 10px 0 5px; padding:0; }
-/* Checkbox Button */
-.sportButtonsHub { margin:30px 0;}
-.sportButtonHub {
-  display:inline;
-  position:relative;
-  margin:5px 5px;
-}
-
-.sportButtonHub label{
-    display: inline-block;
-    cursor:pointer;
-    background-color:#3bb3e0;
-    font-family: sans-serif;
-    font-size:12px;
-    text-decoration:none;
-    color:#fff;
-    position:relative;
-    padding:10px 20px;
-    margin-bottom:2px;
-    border-left:solid 1px #2ab7ec;
-    background-image: -webkit-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-    border-radius:20px;
-    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #156785, 0px 10px 5px #999;
-}
- 
-.sportButtonHub input:checked ~ label {
-    top:3px;
-    background-image: -webkit-linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
-    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #156785, 0px 5px 3px #999;
-}
-
-.sportButtonHub:last-child label{
-   border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-}
- 
-.sportButtonHub:first-child input:checked ~ label:before {
-    top:-3px;
-    box-shadow:inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 1px 1px 0px 0px #044a64, 2px 2px 0px 0px #044a64, 2px 5px 0px 0px #044a64, 6px 4px 2px #0b698b, 0px 10px 5px #999 ;
-}
-
-.sportButtonHub input[type=checkbox] { position:absolute; z-index:100; right:50%; cursor:pointer; opacity: 0;}
+/* ==============
+=====*/
 
 
-/*
- Homepage
-*/
-.homepage { }
-.homepage .comments { display:none;}
-
-/* Home Formular */
-.formular { float:left;width:100%; padding: 20px 2%; }
-
-
-/* Blog */
-.banner { position:relative;}
-.banner-title {width:100%; color:white; text-align:center; font-size:40px; z-index:10; position:absolute; top:40%; }
-
-.blog-content { float:left; width:70%; padding:20px 0 0 2%; background-color:white;}
-.blog-column { float:right; width:30%; height:1000px; }
-.column-part { margin:15px 2%; width:96%; background:#EEE; }
-.column-title { padding:5px 0; text-align: center; font:bold 18px 'Arial'; background-color:#FFF;}
-.column-content { min-height:200px; background:#DDD;}
-
-
-
-
+/* sports checkboxs */
+.sportCheckboxs {margin-top: 30px;  }
+.colomnCheckbox {  }
+.colomnCheckbox input { display: inline; margin:0; }
+.colomnCheckbox label { display: inline; margin:0 10px 0 5px; padding:0; }
 /* Checkbox Button */
 .sportsColumn { float:left; width:20%; color:#AAA; text-transform: capitalize;}
+
+/* sport checkbox push button style 
 
 
 .sportsButtons { float:left; position:relative; width:100%; padding-left: 80px; padding-top:20px;}
@@ -215,45 +165,17 @@
 
 .sportButton input[type=checkbox] { position:absolute; z-index:100; right:50%; cursor:pointer; opacity: 0;}
 
-
-
-
-/*
-
-/*
-    Create event
 */
-.createEvent{ padding-top: 20px; float:left; width:100%;}
-.eventForm .module { width:90%; margin:0 5% 20px 5%;}
-.eventForm form{ margin-left:30px; padding:30px 40px;}
 
+.calendar { width:100%; position:relative; padding:10px 0;}
+.calendar-nav {height: 40px;}
+.calendar-content { width:100%;  margin:0 1% 0 1% ; position:relative; }
 
-/*
-    Events
-*/
-.events-table { width:100%; padding:10px 0; margin:0 0 150px 0; }
+.events-nav {  }
+.events-nav.with-ajax { }
+.events-prev { }
+.events-next { }
 
-.events-nav { position:relative; top:100px; background-color:rgba(0,0,0,0.1); width:200px; height:200px; display:block; border-radius: 200px; z-index:100; }
-.events-nav span { display:block; position:relative; top:45%; font-family: Arial,sans-serif; font-size:130%; font-weight: bold; color:#FFF;}
-.events-prev { left:0; margin-left:-100px;}
-.events-prev span { left:50%;}
-.events-next { right:0; margin-right:-100px;}
-.events-next span {left:30%;}
-.events-nav:hover { text-decoration: none; background-color:rgba(0,0,0,0.5);}
-.events-nav:hover {
-    -webkit-animation: hoverNav 0.1s ease-out forwards 0s;
-    -moz-animation: hoverNav 0.1s ease-out forwards 0s;
-    -o-animation: hoverNav 0.1s ease-out forwards 0s;
-    -ms-animation: hoverNav 0.1s ease-out forwards 0s;
-    animation: hoverNav 0.1s ease-out forwards 0s;
-}
-
-@-webkit-keyframes hoverNav {
-  0% { width: 200px; height:200px; margin-top:0;}
-  100% {  width:220px; height:220px; margin-top: -10px;}
-}
-
-.events-content { width:100%;  margin:40px 1% 0 1% ; position:relative; }
 .events-slider { }
 .events-week { position: absolute; top:0; left:0; width:100%;}
 .events-colomn { width:14%; float:left; position:relative; min-height:600px; border:1px solid rgba(60,142,172,0.4); border-top:0; background-color: rgba(60,142,172,0.2); border-radius: 10px; }
@@ -268,16 +190,15 @@
 .colomn-date { background-color:rgba(0,0,0,0.3); color:#FFF; padding:10px 0; border-radius: 10px; border-bottom-left-radius:0; border-bottom-right-radius:0;}
 
 
-.events-bb { float: left; display:block ;width:96%; margin:10px 2%; border-radius: 8px;}
-.events-bb:hover .events-title { background-color:rgba(0,0,0,0.05);}
+.events-bb { float: left; display:block ;width:96%; margin:10px 2%; border-radius: 20px;}
+.events-bb:hover .events-content, .events-bb:hover .events-sport-logo { background-color:rgba(255,255,255,0.5);}
 .events-userin { }
 .events-link:hover .events-title { color:#0B6C8C;;}
 .events-sport-logo { float:left; margin-right:0px; background-color:rgba(40,155,309,0.1); padding:10px 10px 0 10px; border-radius:100px; border-bottom-left-radius:0; border-bottom-right-radius:0;}
 .events-sport-logo img { width:50px;}
 .events-time { float:left; font-size: 20px; padding:15px 5px 0 5px; color:#FFF;}
-.events-bkg { float:left; width:100%; padding:0 0 15px 0; background-color:rgba(40,155,309,0.1); border-radius:10px; border-top-left-radius:0; }
-.events-title { width:100%; position:relative; float:left; padding:10px 3% ; text-align: left; font-size: 15px; font-weight:bold; color:#0B698C;}
-.events-title:after { content:""; position:absolute; bottom:0; left:0; display: block; width:100%; height:1px; box-shadow:0 -1px 0 rgba(255,255,255,1), 0 1px 0 rgba(0,0,0,0.1);}
+.events-content { float:left; width:100%; padding:10px 0 15px 5px; background-color:rgba(40,155,309,0.1); border-radius:20px; border-top-left-radius:0; }
+.events-title {  font-size: 15px; font-weight:bold; color:#0B698C;}
 .events-info { float:left; width: 100%; padding:0 2%; text-align: center;}
 .events-info span { width:100%; display: inline-block;}
 .events-city { width:100%; text-align: right; font-size: 14px; padding:10px 20px 0 0; font-weight: bold; color:#0088cc;}
@@ -288,8 +209,38 @@
 .events-users b { font-weight: bold; text-transform: capitalize;}
 
 .events-iamin { float:left; width:100%; text-align: center; font-weight: bold; font-size: 18px ;color:#FFF;}
+
+
+
+
+/* Blog page */
+.banner { position:relative;}
+.banner-title {width:100%; color:white; text-align:center; font-size:40px; z-index:10; position:absolute; top:40%; }
+
+.blog-content { float:left; width:70%; padding:20px 0 0 2%; background-color:white;}
+.blog-column { float:right; width:30%; height:1000px; }
+.column-part { margin:15px 2%; width:96%; background:#EEE; }
+.column-title { padding:5px 0; text-align: center; font:bold 18px 'Arial'; background-color:#FFF;}
+.column-content { min-height:200px; background:#DDD;}
+
+
+
+
+
+
+
 /*
-    Event
+
+/*
+    Create event page
+*/
+.createEvent{ padding-top: 20px; }
+.module { width:100%; margin-bottom:10px;}
+.eventForm form{ margin-left:30px; padding:30px 40px;}
+
+
+/*
+    Event page
 */
 .view_event { }
 .event { float:left; width:100%; background:#FFF; padding:30px 2% 0 2%; min-height:800px;  border-radius: 30px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-top-right-radius: 0;}

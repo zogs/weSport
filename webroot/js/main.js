@@ -13,19 +13,40 @@ $(document).ready(function(){
 		Autocomplete cityName input
 	============================================================*/
 
-	// var inputcity = $("#inputcityName");
-	// if(inputcity.size()){
-	// 	var hiddencity = $("#cityID");
-	// 	var url = inputcity.attr('data-autocomplete-url');
+ 	$('#cityName').click(function(){
+			$(this).val('');
+			$('input#cityID').val('');
+	});
 
-	//   	inputcity.autocomplete({
-	//   			serviceUrl:url,
-	//   			minChars:3,
-	//   			onSelect:function(value,data){ 
-	  				
-	//   				hiddencity.val(data)},
-	//   		});
- //  	}
+    $('#cityName').typeahead({
+    	name:'city',
+    	valueKey:'name',
+		limit: 5,
+		minLength: 3,	
+		//local: array of datums,
+		//prefetch: link to a json file with array of datums,
+		remote: $("#cityName").attr('data-autocomplete-url')+'?query=%QUERY',			
+		template: [ '<p class="tt-name">{{name}}</p>',
+					'<p class="tt-sub">{{state}}</p>',
+					'<p class="tt-id">{{id}} (à cacher)</p>',
+					].join(''),
+		engine: Hogan ,
+
+		//header: 'header',
+		//footer: 'footer',
+
+	}).on('typeahead:selected',function( evt, datum ){
+
+		$(this).val(datum.name);
+		$("#CityName").val( datum.name );
+		$('#cityID').val( datum.id );
+		//$('#cityName').val( datum.name);
+		
+
+	}).on('typeahead:closed',function(e){
+		
+		
+	});
 
 
 	/*===========================================================

@@ -4,7 +4,7 @@ class EventsController extends Controller{
 	public $primaryKey = 'id';
 
 
-	public function index($params = null){
+	public function calendar($params = null){
 
 		$this->view = 'events/index';
 		$this->layout = 'none';
@@ -120,7 +120,7 @@ class EventsController extends Controller{
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
-
+	
 		//google map API
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
 
@@ -239,7 +239,28 @@ class EventsController extends Controller{
 			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
 		}
 	}
-	
+
+
+	public function review($eid){
+
+		$this->loadModel('Events');
+
+		if($this->request->post()){
+
+			$data = $this->request->post();
+				
+			if($res = $this->Events->saveReview($eid,$this->session->user()->getID(),$data->review, $this->getLang() )){
+				
+				if($res==='already') {
+					$this->session->setFlash("Vous avez déjà donné votre avis","warning");
+				}
+				else
+					$this->session->setFlash("Merci d'avoir donné votre avis !","success");	
+				
+			}
+		}
+		$this->redirect('events/view/'.$eid);
+	}
 
 	public function create($event_id = 0){
 
@@ -368,6 +389,8 @@ class EventsController extends Controller{
 
 		$this->set($d);
 	}
+
+	
 
 	public function sendEventChanges($emails,$event,$changes)
     {

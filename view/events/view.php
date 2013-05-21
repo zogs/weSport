@@ -2,6 +2,25 @@
 	<div class="pub">PUB</div>
 	<?php echo $this->session->flash(); ?>
 	<div class="event">	
+
+		<?php if($event->timingSituation() == 'past'):?>
+			<div class="alert alert-danger"><button class="close" data-dismiss="alert">×</button><p>Cet événement est terminé !</p></div>		
+
+			<?php if($event->isUserParticipate($this->session->user()->getID())):?>
+				<div class="alert alert-info">
+					<form action="<?php echo Router::url('events/review/'.$event->getID());?>" method="POST">
+						<button class="close" data-dismiss="alert">×</button>
+						<strong>Vous y êtiez ;)</strong> 
+						<input type="text" name="review" placeholder="Comment ça s'est passé ?">
+						<input type="hidden" name="token" value="<?php echo $this->session->token();?>">
+						<input type="submit" value="Envoyer">
+					</form>
+					
+				</div>
+			<?php endif;?>	
+
+		<?php endif; ?>
+
 		
 		<div class="span7">
 			
@@ -25,7 +44,7 @@
 									<icon class="icon-white icon-ok"></icon>
 									Comptez sur moi !
 								</a>
-								<a class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>">
+								<a style="display:none" class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>">
 									<icon class="icon-white icon-asterisk"></icon>
 									Peut-être
 								</a>
@@ -70,7 +89,7 @@
 			<div class="event-organizer">
 				<i class="icon icon-user"></i>					
 				<h4 class="event-info">Organisateur :</h4>
-				<a class="event-user" href=""><?php echo $event->getLogin();?></a>
+				<a class="event-user" href="<?php echo $event->getLinkAuthor();?>"><?php echo $event->getLogin();?></a>
 				<span class="event-info">(<?php echo $event->getAge();?> ans )<span>
 			</div>
 
@@ -86,10 +105,10 @@
 				<h4 class="event-info">Participants :</h4>
 				<div class="event-participants-avatars">
 				<?php foreach ($event->participants as $participant):?>										
-					<img class="event-avatar event-participant-avatar" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/>
+					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-participant-avatar" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/></a>
 				<?php endforeach;?>
 				<?php foreach ($event->uncertains as $participant):?>										
-					<img class="event-avatar event-uncertains-avatar" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/>
+					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-uncertains-avatar" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
 				<?php endforeach;?>
 					
 				</div>
