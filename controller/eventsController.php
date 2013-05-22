@@ -351,14 +351,8 @@ class EventsController extends Controller{
 
 						//email the changes 
 						if(!empty($changes)){
-
-							$users = $this->Events->findParticipants($event_id);
-							$users = $this->Users->JOIN('users','*','user_id=:user_id',$users);
-							$emails = array();
-							foreach ($users as $user) {
-								$emails[] = $user->email;
-							}
-							if($this->sendEventChanges($emails,$Event,$changes)){
+							
+							if($this->sendEventChanges($Event,$changes)){
 
 								$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
 							}
@@ -420,8 +414,8 @@ class EventsController extends Controller{
 			$this->session->setFlash("Evenement supprimé !","success");
 
 			//send Mailing to sporters				
-			if($this->sendEventDeleting($eid)){
-				$this->session->setFlash("Les participants ont été informés de l'annulation","success");
+			if($this->sendEventDeleting($evt)){
+				$this->session->setFlash("Les participants ont été informés de l'annulation !","info");
 			}
 			
 			$this->redirect('events/create');
@@ -434,23 +428,23 @@ class EventsController extends Controller{
 	}
 	
 
-	public function sendEventDeleting($event_id)
+	public function sendEventDeleting($event)
     {
 
     	$this->loadModel('Users');
     	$this->loadModel('Events');
-
-    	//get the vent
-    	$event = $this->Events->findEventById($event_id);
-
+    	
     	//get emails of participants  	
-		$sporters = $this->Events->findParticipants($event_id);	
+		$sporters = $this->Events->findParticipants($event->id);	
 		$sporters = $this->Users->JOIN('users','email','user_id=:user_id',$sporters);			
 		$emails = array();
 		foreach ($sporters as $sporter) {
-			$emails[] = $sporter->email;
+			if($sporter->user_id!=$event->user_id) $emails[] = $sporter->email;
 		}
+		//si il ny a pas de particpants return true
+		if(empty($emails)) return true;
 
+		
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
        
@@ -483,8 +477,22 @@ class EventsController extends Controller{
         else return true;
     }
 
-	public function sendEventChanges($emails,$event,$changes)
+	public function sendEventChanges($event,$changes)
     {
+
+    	$this->loadModel('Events');
+    	$this->loadModel('Users');
+
+    	$sporters = $this->Events->findParticipants($event->id);
+		$sporters = $this->Users->JOIN('users','*','user_id=:user_id',$sporters);
+		$emails = array();
+		foreach ($sporters as $user) {
+			//si l'user nest pas organisateur il aura un mail
+			if($user->user_id!=$event->user_id) $emails[] = $user->email;
+		}
+		//si il ny a pas de particpants return true
+		if(empty($emails)) return true;
+
         //Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
        
