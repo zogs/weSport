@@ -353,7 +353,7 @@ class EventsController extends Controller{
 						if(!empty($changes)){
 
 							$users = $this->Events->findParticipants($event_id);
-							$users = $this->Users->JOIN('users','','user_id=:user_id',$users);
+							$users = $this->Users->JOIN('users','*','user_id=:user_id',$users);
 							$emails = array();
 							foreach ($users as $user) {
 								$emails[] = $user->email;
