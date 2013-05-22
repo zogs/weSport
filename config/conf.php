@@ -14,6 +14,7 @@ class Conf {
 		'wesport.zogs.org'=>'http://wesport.zogs.org'
 		);
 	static $websiteDOT = 'wesport.com';
+	static $contactEmail = 'pierresimon.gossot@free.fr';
 	static $lang = 'fr';
 	static $pays = 'FR';
 

@@ -137,6 +137,63 @@ class PagesController extends Controller {
 
 			$this->set($d);
 		}
+
+		public function contact(){
+
+
+			if($this->request->post()){
+
+				$data = $this->request->post();
+				
+				//Security against robot
+				//Login filed must be empty
+				if(!empty($data->login)) throw new zException("Robot used contact form - Login field must be empty", 1);
+				if(empty($data->time)) throw new zException("Robot used contact form - Login time must not be empty", 1);
+				if(abs(time()-$data->time) < 3) throw new zException("Robot used contact form - form filled too fast for human being", 1);				
+				
+				if($this->sendMailContact($data->name,$data->email,$data->title,$data->message)){
+
+					$this->session->setFlash("Votre message a bien été envoyé","success");
+				}
+				
+			}
+
+			$this->loadModel('Users');
+			$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$this->session->user()->getID())));
+			$d['user'] = $user;
+
+			$this->set($d);
+		}
+
+		public function sendMailContact($sender_name,$sender_mail,$title,$message){
+
+			//Création d'une instance de swift mailer
+	        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+
+	        //Récupère le template et remplace les variables
+	        $body = file_get_contents('../view/email/contact.html');
+	        $body = preg_replace("~{site}~i", Conf::$website, $body);
+	        $body = preg_replace("~{title}~i", $title, $body);
+	        $body = preg_replace("~{name}~i", $sender_name, $body);
+	        $body = preg_replace("~{date}~i", Date::datefr(date('Y-m-d')), $body);
+	        $body = preg_replace("~{message}~i", $message, $body);
+
+	        //Création du mail
+	        $message = Swift_Message::newInstance()
+	          ->setSubject("Contact de - ".$sender_name)
+	          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+	          ->setTo(Conf::$contactEmail)
+	          ->setBody($body, 'text/html', 'utf-8');          
+	       
+	        //Envoi du message et affichage des erreurs éventuelles
+	        if (!$mailer->send($message, $failures))
+	        {
+	            echo "Erreur lors de l'envoi du email à :";
+	            print_r($failures);
+	            return false;
+	        }
+	        else return true;
+			}
 }
 
 ?>

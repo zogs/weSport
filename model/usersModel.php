@@ -210,7 +210,7 @@ class UsersModel extends Model{
 			$sql .= ' LIMIT '.$req['limit'];
  		}
 
- 		// debug($sql);
+ 		 // debug($sql);
  		$results = $this->query($sql);
  		
 
@@ -286,6 +286,7 @@ class User {
 	public $role  = 'visitor';
 	public $avatar  = 'img/logo_yp.png';
 	public $account = 'visitor';
+	public $email = '';
 
 	public function __construct( $fields = array() ){
 

@@ -167,9 +167,9 @@ TYPEAHEAD CUSTOM STYLE
 
 */
 
-.calendar { width:100%; position:relative; padding:10px 0;}
+.calendar { width:100%; float:left; }
 .calendar-nav {height: 40px;}
-.calendar-content { width:100%;  margin:0 1% 0 1% ; position:relative; }
+.calendar-content { width:100%; margin:0 1% 0 1% ; position:relative; }
 
 .events-nav {  }
 .events-nav.with-ajax { }
@@ -410,3 +410,7 @@ textarea.formComment  { float:left; width:60%; height:30px; }
 
 
 
+.footer { position:fixed; bottom:0; width:100%; text-align: center; padding:10px; background-color:#F5F5F5; background-color:rgba(255,255,255,0.3);}
+.footer ul { display:inline; margin:0; ;}
+.footer ul li { display:inline-block; list-style:none; margin-right:10px;}
+.footer ul li a { font-family: 'Helvetica Neue',Helvetica,sans-serif; }

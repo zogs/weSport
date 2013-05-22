@@ -538,7 +538,7 @@ class EventsModel extends Model{
 		//if exist
 		$exist = $this->findFirst(array('table'=>'events_review','conditions'=>array('event_id'=>$event_id,'user_id'=>$user_id)));
 		if(!empty($exist)) return 'already';
-		debug($exist);
+		
 		$review = new stdClass();
 		$review->table = 'events_review';
 		$review->event_id = $event_id;

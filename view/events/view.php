@@ -128,7 +128,9 @@
 					//Call to comment system
 					$this->request('comments','show',array(
 																array('context'=>'events',
-																		'context_id'=>$event->id
+																		'context_id'=>$event->id,
+																		'displayRenderButtons'=>true,
+																		'enableInfiniteScrolling'=>false
 																	)
 															)
 									);

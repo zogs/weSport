@@ -61,10 +61,21 @@
 	  </div>
 	</div>
 
-	<div class="container-fuild mainContainer">			
+	<div class="container-fluid mainContainer">			
 		<?php echo $content_for_layout;?>
 	</div>
 
+
+	<div class="footer container-fluid">
+		<div class="container">
+			<ul>
+				<li><a href="<?php echo Router::url('pages/view/conditions');?>">Conditions d'utilisations</li>
+				<li><a href="<?php echo Router::url('pages/view/metions');?>">Mentions Légales</li>
+				<li><a href="<?php echo Router::url('pages/view/apropos');?>">A Propos de nous</li>
+				<li><a href="<?php echo Router::url('pages/contact');?>">Contact</li>
+			</ul>
+		</div>
+	</div>
 
 	<div class="modal fade" id="myModal"></div>
 

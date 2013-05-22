@@ -42,25 +42,25 @@
 			</form>
 						
 		</div>
-	</div>
 
-	<div class="calendar">
-		<div class="calendar-nav">
-			<?php 
-			$previousWeek = date('Y-m-d', strtotime($params['date'].' -7 days'));
-			$nextWeek = date('Y-m-d', strtotime($params['date'].' +7 days'));
-			?>
-			<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar');?>/-7/"><span><-</span></a>
-			<a class="calendar-nav calendar-prev fleft" href="<?php echo Router::url('pages/home/'.$previousWeek);?>">Previous week</a>
-			<a class="with-ajax calendar-nav calendar-next fright" href="<?php echo Router::url('events/calendar');?>/+7/"><span>-></span></a>
-			<a class="calendar-nav calendar-next fright" href="<?php echo Router::url('pages/home/'.$nextWeek);?>">Next Week</a>
+		<div class="calendar">
+			<div class="calendar-nav">
+				<?php 
+				$previousWeek = date('Y-m-d', strtotime($params['date'].' -7 days'));
+				$nextWeek = date('Y-m-d', strtotime($params['date'].' +7 days'));
+				?>
+				<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar');?>/-7/"><span><-</span></a>
+				<a class="calendar-nav calendar-prev fleft" href="<?php echo Router::url('pages/home/'.$previousWeek);?>">Previous week</a>
+				<a class="with-ajax calendar-nav calendar-next fright" href="<?php echo Router::url('events/calendar');?>/+7/"><span>-></span></a>
+				<a class="calendar-nav calendar-next fright" href="<?php echo Router::url('pages/home/'.$nextWeek);?>">Next Week</a>
+			</div>
+			<div class="calendar-content">
+					<?php $this->request('events','calendar',array($params)); ?>							
+			</div>
+
+			
+
 		</div>
-		<div class="calendar-content">
-				<?php $this->request('events','calendar',array($params)); ?>							
-		</div>
-
-		
-
 	</div>
 </div>
 

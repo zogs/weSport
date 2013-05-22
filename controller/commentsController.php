@@ -12,7 +12,7 @@
  	public $table = 'comments';
  	public $context = 'none';
  	public $context_id = 0;
-
+ 	
  	//Options parameters
  	public $commentsPerPage = 6;
  	public $repliesDisplayPerComment = 3;

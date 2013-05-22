@@ -5,14 +5,14 @@
 		<div class="span7">
 
 			<div class="module module-rounded">
-				<h5>
+				<h3>
 				<?php if($event->exist()): ?>
 					<img src="<?php echo $event->getSportLogo();?>"/>
 					<?php echo '<a href="'.Router::url('events/view/'.$event->getID()).'">'.$event->getTitle().'</a>';?>
 				<?php else: ?>
 					Proposer un nouvel événement !
 				<?php endif; ?>
-				</h5>
+				</h3>
 
 				<form class="form" action="<?php echo Router::url('events/create/'.$event->id);?>" method="POST">
 
@@ -28,10 +28,7 @@
 					<?php echo $this->Form->input('date',"Date de l'événement",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
 					<?php echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','placeholder'=>'ex: 10h30, 6pm, ...')) ;?>
 					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number","value"=>"2",'placeholder'=>"Nombre de participants minimum pour que l'événement ait lieu")) ;?>
-					<?php echo $this->Form->input('description','Commentaires',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à
-																										amener, le coût (si location de la salle ou autre), préciser la durée, le
-																										fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom
-																										boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
+					<?php echo $this->Form->input('description','Commentaires',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à amener, le coût (si location de la salle ou autre), préciser la durée, le fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
 					<?php echo $this->Form->input("phone","Téléphone de contact",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
 									
 
