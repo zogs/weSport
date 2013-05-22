@@ -264,34 +264,6 @@ class EventsController extends Controller{
 		$this->redirect('events/view/'.$eid);
 	}
 
-	public function delete($eid,$token){
-
-		//tcheck token
-		if($token!=$this->session->token()) $this->e404('Merci de vous reconnecter avant d\'effectuer cet opération');
-
-		//find Event
-		$this->loadModel('Events');
-		$this->view = 'none';
-		$evt = $this->Events->findEventById($eid);		
-
-		//check if event exit
-		if(!$evt->exist()) $this->e404('Cet événement n\'existe pas');
-
-		//check if user is admin
-		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cet événement');
-		
-		//delete the event
-		if($this->Events->deleteEvent($evt)){
-			$this->session->setFlash("Evenement supprimé !","success");
-			$this->redirect('events/create');
-		} else {
-			$this->session->setFlash("Erreur... l'événement n'a pu être supprimé","danger");
-			$this->redirect('events/create/'.$eid);
-		}
-
-		
-	}
-	
 	public function create($event_id = 0){
 
 		$this->loadModel('Events');
@@ -378,19 +350,19 @@ class EventsController extends Controller{
 						
 
 						//email the changes 
-						// if(!empty($changes)){
+						if(!empty($changes)){
 
-						// 	$users = $this->Events->findParticipants($event_id);
-						// 	$users = $this->Events->JOIN('users','email','user_id=:user_id',$users);
-						// 	$emails = array();
-						// 	foreach ($users as $user) {
-						// 		$emails[] = $user->email;
-						// 	}
-						// 	if($this->sendEventChanges($emails,$Event,$changes)){
+							$users = $this->Events->findParticipants($event_id);
+							$users = $this->Users->JOIN('users','','user_id=:user_id',$users);
+							$emails = array();
+							foreach ($users as $user) {
+								$emails[] = $user->email;
+							}
+							if($this->sendEventChanges($emails,$Event,$changes)){
 
-						// 		$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
-						// 	}
-						// }
+								$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
+							}
+						}
 
 						//redirect
 						//$this->redirect('events/create/'.$event_id);
@@ -426,7 +398,90 @@ class EventsController extends Controller{
 		$this->set($d);
 	}
 
+
+	public function delete($eid,$token){
+
+		//tcheck token
+		if($token!=$this->session->token()) $this->e404('Merci de vous reconnecter avant d\'effectuer cet opération');
+
+		//find Event
+		$this->loadModel('Events');
+		$this->view = 'none';
+		$evt = $this->Events->findEventById($eid);		
+
+		//check if event exit
+		if(!$evt->exist()) $this->e404('Cet événement n\'existe pas');
+
+		//check if user is admin
+		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cet événement');
+
+		//delete the event
+		if($this->Events->deleteEvent($evt)){
+			$this->session->setFlash("Evenement supprimé !","success");
+
+			//send Mailing to sporters				
+			if($this->sendEventDeleting($eid)){
+				$this->session->setFlash("Les participants ont été informés de l'annulation","success");
+			}
+			
+			$this->redirect('events/create');
+		} else {
+			$this->session->setFlash("Erreur... l'événement n'a pu être supprimé","danger");
+			$this->redirect('events/create/'.$eid);
+		}
+
+		
+	}
 	
+
+	public function sendEventDeleting($event_id)
+    {
+
+    	$this->loadModel('Users');
+    	$this->loadModel('Events');
+
+    	//get the vent
+    	$event = $this->Events->findEventById($event_id);
+
+    	//get emails of participants  	
+		$sporters = $this->Events->findParticipants($event_id);	
+		$sporters = $this->Users->JOIN('users','email','user_id=:user_id',$sporters);			
+		$emails = array();
+		foreach ($sporters as $sporter) {
+			$emails[] = $sporter->email;
+		}
+
+        //Création d'une instance de swift mailer
+        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+       
+        			
+        $lien = Conf::getSiteUrl()."/events/create";
+
+        //Récupère le template et remplace les variables
+        $body = file_get_contents('../view/email/eventDeleted.html');
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{title}~i", $event->title, $body);
+        $body = preg_replace("~{date}~i", Date::datefr($event->date), $body);
+        $body = preg_replace("~{lien}~i", $lien, $body);
+        $body = preg_replace("~{time}~i", $event->time, $body);
+        $body = preg_replace("~{ville}~i", $event->cityName, $body);
+
+        //Création du mail
+        $message = Swift_Message::newInstance()
+          ->setSubject("Un événement auquel vous participez a été supprimé - ".Conf::$website)
+          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+          ->setTo($emails)
+          ->setBody($body, 'text/html', 'utf-8');          
+       
+        //Envoi du message et affichage des erreurs éventuelles
+        if (!$mailer->send($message, $failures))
+        {
+            echo "Erreur lors de l'envoi du email à :";
+            print_r($failures);
+            return false;
+        }
+        else return true;
+    }
 
 	public function sendEventChanges($emails,$event,$changes)
     {

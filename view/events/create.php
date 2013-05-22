@@ -44,7 +44,7 @@
 			<div class="module module-rounded">					
 				<?php if($event->exist()): ?>
 					<?php echo $this->Form->input("Mettre à jour l'annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>					
-					<a href="<?php echo Router::url('');?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'événement </a>
+					<a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'événement </a>
 					<a href="<?php echo Router::url('events/report/'.$event->getID());?>" class="btn btn-link">Reporter à la semaine suivant</a>
 
 				<?php else: ?>
