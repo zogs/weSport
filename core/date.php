@@ -53,7 +53,7 @@
 		$type_mois['11']='Novembre';  $type_mois['12']='Décembre';
 
 		//si le format est 2013/05/25 corrige en 2013-05-25
-		$date = str_replace('/', '-', $date)
+		$date = str_replace('/', '-', $date);
 		//on separe la date en jour mois annee
 		$split = explode("-",$date); 
 		$annee = $split[0]; 
