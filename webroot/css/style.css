@@ -85,7 +85,7 @@ TYPEAHEAD CUSTOM STYLE
 
 
 /* sports checkboxs */
-.sportCheckboxs {margin-top: 30px;  }
+.sportCheckboxs {margin-top: 30px; display:none; }
 .colomnCheckbox {  }
 .colomnCheckbox input { display: inline; margin:0; }
 .colomnCheckbox label { display: inline; margin:0 10px 0 5px; padding:0; }
@@ -190,8 +190,8 @@ TYPEAHEAD CUSTOM STYLE
 .colomn-date { background-color:rgba(0,0,0,0.3); color:#FFF; padding:10px 0; border-radius: 10px; border-bottom-left-radius:0; border-bottom-right-radius:0;}
 
 
-.events-bb { float: left; display:block ;width:96%; margin:10px 2%; border-radius: 20px;}
-.events-bb:hover .events-content, .events-bb:hover .events-sport-logo { background-color:rgba(255,255,255,0.5);}
+.events-bb { display:block; float: left; position:relative; width:96%; margin:10px 2%; border-radius: 20px; }
+.events-bb:hover .events-content, .events-bb:hover .events-sport-logo { background-color:rgba(255,255,255,0.5); cursor:pointer;}
 .events-userin { }
 .events-link:hover .events-title { color:#0B6C8C;;}
 .events-sport-logo { float:left; margin-right:0px; background-color:rgba(40,155,309,0.1); padding:10px 10px 0 10px; border-radius:100px; border-bottom-left-radius:0; border-bottom-right-radius:0;}

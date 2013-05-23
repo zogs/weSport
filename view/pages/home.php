@@ -28,6 +28,7 @@
 					<button class="citySubmit"><img src="<?php echo Router::webroot('img/search-icon.png');?>"></button>
 				</div>
 
+				<a id="showSportBox" href="" >+ de sport ?</a>
 				<div class="sportCheckboxs">
 					<?php 
 						$sportsCols = array_chunk($sports_available, 5);
@@ -103,7 +104,16 @@ $(document).ready(function(){
 	$('.events-avatar').tooltip({placement:'bottom'});
 
 
-	
+	$('#showSportBox').click(function(){
+
+		$(".sportCheckboxs").toggle('fast');
+		return false;
+	})
+
+	$('.events-bb').livequery(function(){
+
+		$(this).click(function(){ location.href=$(this).find('a.events-link').attr('href'); });
+	});
 
 
 	$("a.calendar-nav.with-ajax").bind('click',function(e){

@@ -545,7 +545,7 @@ class EventsController extends Controller{
 
     	$subject = "L'événement ".$event->title." est confirmé !";
 
-    	$emails = $this->findEmailsParticipants($event);
+    	$emails = $this->findEmailsParticipants($event,true);
 
     	$body = file_get_contents('../view/email/eventConfirmation.html');
 

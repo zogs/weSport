@@ -47,7 +47,7 @@ foreach ($events as $date => $evts):
 					<div class="events-content">
 						<span class="events-title"><?php echo $event->title; ?></span>	
 						<span class="events-city">à <?php echo $event->getCityName(); ?></span>	
-				</a>
+				
 						<div class="events-info">							
 							
 							<span class="events-users">avec <b><?php echo $event->getLogin();?></b> <?php echo '('.$event->getAge().' ans)';?> 						
@@ -62,7 +62,7 @@ foreach ($events as $date => $evts):
 							<?php endforeach; ?>
 						</div>						
 					</div>
-				
+				</a>
 			</div>
 
 
