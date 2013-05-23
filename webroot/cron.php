@@ -14,7 +14,7 @@ define('LIB',ROOT.DS.'lib');
 define('BASE_URL',dirname(dirname($_SERVER['SCRIPT_NAME'])));
 
 //usefull functions
-include '../core/functions.php';
+include CORE.'/functions.php';
 
 //Date time zone
 date_default_timezone_set('Europe/Paris');
@@ -23,7 +23,7 @@ date_default_timezone_set('Europe/Paris');
 header('Content-Type: text/html; charset=UTF-8');
 
 //Errors gestion
-include '../core/errors.php';
+include CORE.'/errors.php';
 function uncatchError($errno, $errstr, $errfile, $errline ) {
 	echo 'uncatchError';
     new zErrorException($errno, $errstr, $errfile, $errline);
@@ -38,7 +38,7 @@ set_exception_handler('uncatchException');
 
 //init autoloader
 //page github https://github.com/jonathankowalski/autoload
-include '../core/autoloader.php';
+include CORE.'/autoloader.php';
 $loader = Autoloader::getInstance()
 ->addDirectory('../config')
 ->addDirectory('../controller')
@@ -48,7 +48,7 @@ $loader = Autoloader::getInstance()
 
 
 //Librairy dependency
-require '../lib/SwiftMailer/swift_required.php';//Swift mailer
+require ROOT.'/lib/SwiftMailer/swift_required.php';//Swift mailer
 
 
 //define routes for the router
