@@ -55,8 +55,6 @@ require ROOT.'/lib/SwiftMailer/swift_required.php';//Swift mailer
 new Routes();
 
 
-exit($argv[1].' '.$argv[2]);
-
 //launch the dispacher
 new Dispatcher(new Cron($argv[1],$argv[2]));
 
