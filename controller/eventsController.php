@@ -60,7 +60,7 @@ class EventsController extends Controller{
 		else unset($params['extend']); //unset extend for the model
 
 		//
-		$params['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug';
+		$params['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed';
 
 
 		//initialize variable for days loop
@@ -120,6 +120,8 @@ class EventsController extends Controller{
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
+
+
 	
 		//google map API
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');

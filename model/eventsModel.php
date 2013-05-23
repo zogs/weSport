@@ -338,6 +338,11 @@ class EventsModel extends Model{
 		return $events;
 	}
 
+	public function getPreviousEvent($event_id){
+
+		
+	}
+
 	public function joinEventsParticipants($events, $proba = 1){
 
 		if(is_object($events)) {

@@ -31,7 +31,7 @@ foreach ($events as $date => $evts):
 <?php
 
 			foreach ($evts as $event):
-				
+			
 			?>
 			
 			<div class="events-bb <?php if($event->getUserParticipation()) echo 'events-userin' ?>">				
@@ -45,7 +45,7 @@ foreach ($events as $date => $evts):
 					</div>
 
 					<div class="events-content">
-						<span class="events-title"><?php echo $event->title; ?></span>	
+						<span class="events-title"><?php if($event->confirmed==1):?><span class="label label-success"><i class="icon icon-white icon-ok"></i></span><?php endif;?><?php echo $event->title; ?></span>	
 						<span class="events-city">à <?php echo $event->getCityName(); ?></span>	
 				
 						<div class="events-info">							
@@ -58,7 +58,9 @@ foreach ($events as $date => $evts):
 						<div class="events-user">
 							<?php 
 							foreach ($event->participants as $p):?>
+							<?php if($p->user_id == $event->user_id): ?>
 							<a href="<?php echo $p->getLink();?>"><img class="events-avatar" data-toggle="tooltip" title="<?php echo $p->getLogin();?>" src="<?php echo Router::webroot($p->getAvatar())?>" alt=""></a>
+							<?php endif;?>
 							<?php endforeach; ?>
 						</div>						
 					</div>

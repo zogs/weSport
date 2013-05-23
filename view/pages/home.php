@@ -9,9 +9,8 @@
 			
 			?>
 					
-			<form id="formSearch" method="GET" action="#" >
+			<form id="formSearch" method="GET" action="<?php echo Router::url('pages/home/'.$params['date']);?>" >
 				<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
-				<?php echo $this->Form->input("date","hidden",array("value"=>date('Y-m-d'))) ;?>
 				<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
 
 				<div class="cityRounded">
