@@ -608,8 +608,10 @@ class EventsModel extends Model{
 		$s->log = 'result';
 		$s->action = $action;
 
-		if($this->save($s)) return true;
-
+		if($this->save($s)) {
+			exit($action);
+			return true;
+		}
 		return false;
 	}
 

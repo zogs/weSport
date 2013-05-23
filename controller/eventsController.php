@@ -616,8 +616,10 @@ class EventsController extends Controller{
     	$this->loadModel('Events');
     	$this->view = 'none';
     	$this->layout = 'none';
-
+    	
     	$this->Events->testcron($this->request->controller.'/'.$this->request->action);
+
+    	return false;
     }
 
 
