@@ -78,7 +78,7 @@
                             </ul>
                         </div>  
                         <div class="btn-group pull-right">
-                            <a class="btn btn-mini bubble-bottom" title="Display new comments" >
+                            <a id="refresh_com" class="btn btn-mini bubble-bottom" title="Display new comments" >
                                 <i class="icon-repeat"></i>  Actualiser <span class="badge badge-inverse hide" id="badge"></span>
                             </a>
                             <span id="ajaxLoader" style="display:none"><img src="<?php echo Router::webroot('img/ajax-loader.gif');?>" alt="Loading" /></span>

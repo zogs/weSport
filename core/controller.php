@@ -311,5 +311,28 @@ class Controller {
 			}			
 		}
 	}
+
+	public function sendEmails($emails,$subject,$body){
+
+		//Création d'une instance de swift mailer
+        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+
+        //Création du mail
+        $message = Swift_Message::newInstance()
+          ->setSubject($subject)
+          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+          ->setTo($emails)
+          ->setBody($body, 'text/html', 'utf-8');          
+       
+        //Envoi du message et affichage des erreurs éventuelles si échoue 
+        if (!$mailer->send($message, $failures))
+        {
+            debug("Erreur lors de l'envoi du email à :");
+            debug($failures);            
+            return false;
+        }
+
+        return true;
+	}
 }
 ?>

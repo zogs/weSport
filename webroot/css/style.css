@@ -254,6 +254,7 @@ h4.event-info { font-size:14px; color:#0B6C90; margin:0; padding: 0; display: in
 
 .event-title { text-align: left; }
 .event-title h1 { font-size: 23px; font-weight: bold; display:inline; color:#0B6C90;}
+.event-confirm { margin-left:50px; }
 .event-date { margin-left:50px; }
 .event-time { margin-left:50px; }
 .event-location { margin-left:50px;}

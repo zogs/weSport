@@ -28,6 +28,15 @@
 				<img class="event-logo" src="<?php echo $event->getSportLogo();?>" alt="<?php echo $event->sport;?>">				
 				<h1><?php echo $event->title;?></h1></div>
 
+				<div class="event-confirm">
+					<?php if($event->confirmed==1): ?>
+					<span class="label label-success">Confirmé</span>
+					<?php endif ?>
+					<?php if($event->confirmed==0): ?>
+					<span class="label">En attente de <?php echo ($event->nbmin-count($event->participants));?> participants</span>
+					<?php endif;?>
+				</div>
+
 				<div class="event-actions">			
 				
 					<?php if($this->session->user()->isLog()): ?>

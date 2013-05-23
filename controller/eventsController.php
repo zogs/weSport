@@ -158,6 +158,8 @@ class EventsController extends Controller{
 
 			$data = $this->request->get();
 
+
+			//Si un utilisateur est loggé
 			if(!$this->session->user()->isLog()) throw new zException('User must log in before trying to participate',1);
 
 			//Si les donnees sont bien numerique
@@ -167,11 +169,11 @@ class EventsController extends Controller{
 			if($data->user_id!=$this->session->user()->getID()) throw new zException("user is different from session's user", 1);
 				
 			//On vérifie si l'événement existe bien
-			$event = $this->Events->findFirst(array('fields'=>'id,date,slug','conditions'=>array('id'=>$data->event_id)));
+			$event = $this->Events->findFirst(array('conditions'=>array('id'=>$data->event_id)));
 			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
-			$user = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
+			$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$data->user_id)));
 			if(!$user->exist()) throw new zException("L'utilisateur n'existe pas",1);
 
 			//On vérifie qu'il ne participe pas déja
@@ -180,12 +182,31 @@ class EventsController extends Controller{
 				$this->session->setFlash("Tu participe déjà !","info");				
 			}
 
+			//Probabilité de participation ( default=1)
 			if(isset($data->proba)) $proba = $data->proba;
 			else $proba = 1;
 
+			//Sauver la participations
 			if($this->Events->saveParticipants($user, $event, $proba)){
 				
 				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success",4);
+
+				//Prévenir l'organisateur
+				$this->sendNewParticipant($event,$user);
+
+				//nombre actuel de participants
+				$nbparticip = $this->Events->countParticipants($event->id);
+
+				//Si ne nombre est atteint, on confirme l'evenement
+				if($event->nbmin == $nbparticip ) {
+
+					$this->Events->confirmEvent($event->id);
+
+					//Envoi un mailing  aux participants
+					$this->sendEventConfirmed($event);
+				}
+
+
 			}
 			else
 				throw new zException('Unknown error while saving user participation',1);
@@ -217,7 +238,7 @@ class EventsController extends Controller{
 			if($data->user_id!=$this->session->user()->getID()) throw new zException("user is different from session's user", 1);
 				
 			//On vérifie si l'événement existe bien
-			$event = $this->Events->findFirst(array('fields'=>'id,date,slug','conditions'=>array('id'=>$data->event_id)));
+			$event = $this->Events->findFirst(array('conditions'=>array('id'=>$data->event_id)));
 			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
@@ -229,13 +250,25 @@ class EventsController extends Controller{
 			
 			if(!empty($check)) {
 				
-				$p = new StdClass();
-				$p->table = "sporters";
-				$p->key = 'id';
-				$p->id = $check->id;
-				$this->Events->delete($p);
+				if($this->Events->cancelParticipation($check->id)){
 
-				$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);		
+					$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);
+					
+					//nombre actuel de participants
+					$nbparticip = $this->Events->countParticipants($event->id);
+
+					//Si ne nombre est atteint, on confirme l'evenement
+					if( $nbparticip == $event->nbmin-1 ) {
+
+						if($this->Events->cancelEvent($event->id)) $this->session->setFlash("L'événement est suspendu...","warning",2);
+
+						//Envoi un mailing  aux participants
+						if($this->sendEventCanceled($event)) $this->session->setFlash("Les participants ont été prévenues","warning",3);
+					}
+
+				}
+				else throw new zException("error cancel participation", 1);
+						
 			}			
 						
 			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
@@ -331,8 +364,9 @@ class EventsController extends Controller{
 					//find if change occurs
 					if($evt->exist()){
 						$changes = array();
+						$silent_changes = array('slug');
 						foreach ($Event as $key => $value) {
-							if($Event->$key!=$evt->$key) $changes[$key] = $Event->$key;
+							if( $Event->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $Event->$key;
 						}
 					}
 
@@ -426,33 +460,46 @@ class EventsController extends Controller{
 
 		
 	}
+
+
+	public function findEmailsParticipants($event,$withAuthor=false){
+
+		$emails = array();
+
+		$this->loadModel('Events');
+		$this->loadModel('Users');
+
+		//get emails of participants  	
+		$sporters = $this->Events->findParticipants($event->id);	
+
+		//pour chaque participants on cherche son email dans la bdd
+		foreach ($sporters as $sporter) {
+
+			if(!$withAuthor && $sporter->user_id==$event->user_id) continue; //sauf si on saute l'organisateur de l'evt
+
+			$user = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('user_id'=>$sporter->user_id)));
+			$emails[] = $user->email;
+		}
+		
+		return $emails;
+	}
 	
 
 	public function sendEventDeleting($event)
     {
 
-    	$this->loadModel('Users');
-    	$this->loadModel('Events');
-    	
-    	//get emails of participants  	
-		$sporters = $this->Events->findParticipants($event->id);	
-		$sporters = $this->Users->JOIN('users','email','user_id=:user_id',$sporters);			
-		$emails = array();
-		foreach ($sporters as $sporter) {
-			if($sporter->user_id!=$event->user_id) $emails[] = $sporter->email;
-		}
-		//si il ny a pas de particpants return true
-		if(empty($emails)) return true;
+    	$subject = "Un événement auquel vous participez a été supprimé - ".Conf::$website;
 
-		
-        //Création d'une instance de swift mailer
-        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
-       
-        			
+    	//get emails participants
+    	$emails = $this->findEmailsParticipants($event);        	        
+
+        //Récupère le template
+        $body = file_get_contents('../view/email/eventDeleted.html');
+
+        //Init varaible
         $lien = Conf::getSiteUrl()."/events/create";
 
-        //Récupère le template et remplace les variables
-        $body = file_get_contents('../view/email/eventDeleted.html');
+        // remplace variables dans la template
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
         $body = preg_replace("~{date}~i", Date::datefr($event->date), $body);
@@ -460,73 +507,106 @@ class EventsController extends Controller{
         $body = preg_replace("~{time}~i", $event->time, $body);
         $body = preg_replace("~{ville}~i", $event->cityName, $body);
 
-        //Création du mail
-        $message = Swift_Message::newInstance()
-          ->setSubject("Un événement auquel vous participez a été supprimé - ".Conf::$website)
-          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
-          ->setTo($emails)
-          ->setBody($body, 'text/html', 'utf-8');          
-       
-        //Envoi du message et affichage des erreurs éventuelles
-        if (!$mailer->send($message, $failures))
-        {
-            echo "Erreur lors de l'envoi du email à :";
-            print_r($failures);
-            return false;
-        }
-        else return true;
+        if($this->sendEmails($emails,$subject,$body)) return true;
+        else return false;
     }
 
-	public function sendEventChanges($event,$changes)
+	private function sendEventChanges($event,$changes)
     {
+    	//Sujet du mail
+    	$subject = "Un événement auquel vous participez a été modifié - ".Conf::$website;    
 
-    	$this->loadModel('Events');
-    	$this->loadModel('Users');
+    	//get emails participatns
+    	$emails = $this->findEmailsParticipants($event);
 
-    	$sporters = $this->Events->findParticipants($event->id);
-		$sporters = $this->Users->JOIN('users','*','user_id=:user_id',$sporters);
-		$emails = array();
-		foreach ($sporters as $user) {
-			//si l'user nest pas organisateur il aura un mail
-			if($user->user_id!=$event->user_id) $emails[] = $user->email;
-		}
-		//si il ny a pas de particpants return true
-		if(empty($emails)) return true;
+        //Récupère le template 
+        $body = file_get_contents('../view/email/eventChanges.html');
 
-        //Création d'une instance de swift mailer
-        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
-       
-       	//Contenu
+        //init variable
         $content = "";
         foreach ($changes as $key => $value) {
         	$content .= $key." : <strong>".$value."</strong><br />";
-        }
-        			
+        }        		
         $lien = Conf::getSiteUrl()."/events/view/".$event->id;
 
-        //Récupère le template et remplace les variables
-        $body = file_get_contents('../view/email/eventChanges.html');
+        //remplace les variables dans la template
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
         $body = preg_replace("~{date}~i", Date::datefr($event->date), $body);
         $body = preg_replace("~{lien}~i", $lien, $body);
         $body = preg_replace("~{content}~i", $content, $body);
 
-        //Création du mail
-        $message = Swift_Message::newInstance()
-          ->setSubject("Un événement auquel vous participez a été modifié - ".Conf::$website)
-          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
-          ->setTo($emails)
-          ->setBody($body, 'text/html', 'utf-8');          
-       
-        //Envoi du message et affichage des erreurs éventuelles
-        if (!$mailer->send($message, $failures))
-        {
-            echo "Erreur lors de l'envoi du email à :";
-            print_r($failures);
-            return false;
-        }
-        else return true;
+        
+        if($this->sendEmails($emails,$subject,$body)) return true;
+        else return false;
+    }
+
+    private function sendEventConfirmed($event){
+
+    	$subject = "L'événement ".$event->title." est confirmé !";
+
+    	$emails = $this->findEmailsParticipants($event);
+
+    	$body = file_get_contents('../view/email/eventConfirmation.html');
+
+    	$lien = Conf::getSiteUrl()."/events/view/".$event->id;
+
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{title}~i", $event->title, $body);
+        $body = preg_replace("~{date}~i", Date::datefr($event->date), $body);
+        $body = preg_replace("~{time}~i", $event->time, $body);
+        $body = preg_replace("~{ville}~i", $event->cityName, $body);
+        $body = preg_replace("~{lien}~i", $lien, $body);
+
+        if($this->sendEmails($emails,$subject,$body)) return true;
+        else return false;
+
+    }
+
+    private function sendEventCanceled($event){
+
+    	$subject = "Un sportif s'est désisté, l'événement est suspendu...";
+
+    	$emails = $this->findEmailsParticipants($event,true);
+
+    	$body = file_get_contents('../view/email/eventAnnulation.html');
+
+    	$lien = Conf::getSiteUrl()."/events/view/".$event->id;
+
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{title}~i", $event->title, $body);
+        $body = preg_replace("~{date}~i", Date::datefr($event->date), $body);
+        $body = preg_replace("~{time}~i", $event->time, $body);
+        $body = preg_replace("~{ville}~i", $event->cityName, $body);
+        $body = preg_replace("~{lien}~i", $lien, $body);
+
+        if($this->sendEmails($emails,$subject,$body)) return true;
+        else return false;
+
+    }
+
+    private function sendNewParticipant($event,$user){
+
+    	$subject = $user->login." participe à votre événement !";
+
+    	$this->loadModel('Users');
+    	$author = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$event->user_id)));
+    	$email = $author->email;
+
+    	$body = file_get_contents('../view/email/eventNewParticipant.html');
+
+    	$eventLink = Conf::getSiteUrl()."/events/view/".$event->id;
+    	$userLink = Conf::getSiteUrl()."/users/view/".$user->getID().'/'.$user->getLogin();
+
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{title}~i", $event->title, $body);
+        $body = preg_replace("~{author}~i", $author->getLogin(), $body);
+        $body = preg_replace("~{sporter}~i", $user->getLogin(), $body);
+        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
+        $body = preg_replace("~{sporterlink}~i", $userLink, $body);
+
+        if($this->sendEmails($email,$subject,$body)) return true;
+        else return false;
     }
 
 

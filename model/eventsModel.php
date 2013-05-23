@@ -413,6 +413,18 @@ class EventsModel extends Model{
 		return true;
 	}
 
+	public function cancelParticipation($user_id){
+
+		$p = new StdClass();
+		$p->table = "sporters";
+		$p->key = 'id';
+		$p->id = $user_id;
+
+		if($this->delete($p)) return true;
+
+		return false;
+	}
+
 	public function findParticipants($event_id, $proba = 1){
 
 		if(!is_numeric($event_id)) return false;
@@ -424,6 +436,36 @@ class EventsModel extends Model{
 		return $participants;
 	}
 
+	public function countParticipants($event_id){
+
+		$p = $this->findParticipants($event_id);
+
+		return count($p);
+	}
+
+	public function confirmEvent($event_id){
+
+		$s = new stdClass();
+		$s->table = 'events';
+		$s->id = $event_id;
+		$s->confirmed = 1;
+
+		if($this->save($s)) return true;
+
+		return false;
+	}
+
+	public function cancelEvent($event_id){
+
+		$s = new stdClass();
+		$s->table = 'events';
+		$s->id = $event_id;
+		$s->confirmed = 0;
+
+		if($this->save($s)) return true;
+
+		return false;
+	}
 
 	public function joinUserParticipation($events,$user_id){
 
@@ -681,8 +723,8 @@ class Event{
 
 		if($this->date < date('Y-m-d') ) return 'past';
 		if($this->date > date('Y-m-d') ) return 'tocome';
-		if($this->date == date('Y-m-d') && $this->time < date('H:i:s')) return 'tocome';
-		if($this->date == date('Y-m-d') && $this->time >= date('H:i:s')) return 'past';
+		if($this->date == date('Y-m-d') && $this->time >= date('H:i:s')) return 'tocome';
+		if($this->date == date('Y-m-d') && $this->time < date('H:i:s')) return 'past';
 		if($this->date == date('Y-m-d') && $this->time == date('H:i:s')) return 'current';
 	}
 

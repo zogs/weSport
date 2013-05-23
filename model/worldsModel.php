@@ -262,13 +262,26 @@ class WorldsModel extends Model
  			if(isset($params['prefix'])) $QUERY = $params['prefix'];
  			else return false;
 
+			$values = array(':CC1'=>$CC1,':QUERY'=>$QUERY.'%');
+
  			$sql = "SELECT DISTINCT City.UNI as city_id, City.FULLNAMEND as name, City.CC1, City.ADM1, City.ADM2, City.ADM3, City.ADM4, City.LATITUDE, City.LONGITUDE 
  								FROM world_cities as City
 								LEFT JOIN world_country as Pays ON Pays.CC1=City.CC1
-								WHERE City.CC1=:CC1 AND (City.LC=Pays.LO OR City.LC='') AND City.FULLNAME LIKE :QUERY LIMIT ".$nbResult;
+								WHERE City.CC1=:CC1 AND (City.LC=Pays.LO OR City.LC='') 
 
-			$values = array(':CC1'=>$CC1,':QUERY'=>$QUERY.'%');
+								AND ( City.FULLNAME LIKE :QUERY ";
 
+								//replace space by -								
+								if(strpos($QUERY,' ')!==0) {
+									$QUERY_2 = str_replace(' ', '-', $QUERY).'%';
+									$values[':QUERY_2'] = $QUERY_2;
+									$sql .= " OR City.FULLNAME LIKE :QUERY_2 ";
+								}
+								$sql.= ' ) ';
+
+			$sql .= " LIMIT ".$nbResult;
+
+		
 			$cities = $this->query($sql,$values);
 
 			$array=array();
