@@ -56,7 +56,7 @@ new Routes();
 
 
 //launch the dispacher
-new Dispatcher(new Cron($argv[1]));
+new Dispatcher(new Cron($argv[1],$argv[2]));
 
 ?>
 

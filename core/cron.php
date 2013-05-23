@@ -8,9 +8,9 @@ class Cron{
 	public $data = false; 
 
 	//Permet de récupérer la requete url demandé
-	function __construct( $url ) {
+	function __construct( $controller , $action ) {
 		
-		$this->url = $url;
+		$this->url = $controller.'/'.$action;
 		//$this->url = str_replace(BASE_URL."/", "", $_SERVER['REQUEST_URI']); //Recuperation du PATH_INFO 		
 	}
 
