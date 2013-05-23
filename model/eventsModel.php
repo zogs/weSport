@@ -340,7 +340,7 @@ class EventsModel extends Model{
 
 	public function getPreviousEvent($event_id){
 
-		
+
 	}
 
 	public function joinEventsParticipants($events, $proba = 1){
@@ -598,6 +598,19 @@ class EventsModel extends Model{
 		else
 			return false;
 
+	}
+
+	public function testcron($action){
+
+		$s = new stdClass();
+		$s->table = 'log';
+		$s->type = 'cron';
+		$s->log = 'result';
+		$s->action = $action;
+
+		if($this->save($s)) return true;
+
+		return false;
 	}
 
 } 

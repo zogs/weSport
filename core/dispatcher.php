@@ -4,10 +4,10 @@ class Dispatcher{
 
 	var $request;
 
-	function __construct() {
+	function __construct( $request ) {
 
 		//Intanciation d'un objet requete
-		$this->request = new Request();
+		$this->request = $request;
 
 		//Appel de la class Router pour decortiquer la requete url
 		Router::parse($this->request->url,$this->request);

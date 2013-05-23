@@ -54,8 +54,9 @@ require '../lib/SwiftMailer/swift_required.php';//Swift mailer
 //define routes for the router
 new Routes();
 
+
 //launch the dispacher
-new Dispatcher(new Request());
+new Dispatcher(new Cron($argv[1]));
 
 ?>
 
