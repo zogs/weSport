@@ -21,7 +21,7 @@ class Request{
 			foreach ($_GET as $k => $v) {
 
 				if($k!='_')
-					$this->get->$k = urldecode($v);
+					$this->get->$k = $v;
 			}						
 
 		}

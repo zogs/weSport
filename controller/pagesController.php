@@ -17,19 +17,16 @@ class PagesController extends Controller {
 					
 					$params[$key] = $value;
 				}	
-
 				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
 				if(!isset($params['cityID'])) {					
 					if(isset($params['cityName'])){
-						$cities = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$params['cityName'])); //on recupere les villes qui correspondent
-						debug($cities);
+						$cities = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$params['cityName'])); //on recupere les villes qui correspondent						
 						if(!empty($cities)){
 							$params['cityID'] = $cities[0]->city_id; //et on choisi la premiere ville
 							$params['cityName'] = $cities[0]->name;
 						}
 					}
 				}
-
 			}
 
 			//Sinon on utilise les parametres du cookie
