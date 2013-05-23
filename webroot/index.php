@@ -40,11 +40,11 @@ set_exception_handler('uncatchException');
 //page github https://github.com/jonathankowalski/autoload
 include CORE.'/autoloader.php';
 $loader = Autoloader::getInstance()
-->addDirectory('../config')
-->addDirectory('../controller')
-->addDirectory('../core')
-->addDirectory('../model')
-->addEntireDirectory('../lib');
+->addDirectory(ROOT.'/config')
+->addDirectory(ROOT.'/controller')
+->addDirectory(ROOT.'/core')
+->addDirectory(ROOT.'/model')
+->addEntireDirectory(ROOT.'/lib');
 
 
 //Librairy dependency
