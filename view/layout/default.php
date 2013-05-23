@@ -13,7 +13,7 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="navbar-innerOO">
 	    <div class="container" id="navbar-bkg">
-      		<a class="brand" href="#">
+      		<a class="brand" href="<?php echo Router::url('pages/home');?>">
 	      	  	<?php echo Conf::$website; ?>
 			</a>
 			<ul class="nav">
