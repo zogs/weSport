@@ -6,6 +6,8 @@ class Request{
 	public $page = 1; //Pagination
 	public $prefix =false; //Prefixes
 	public $data = false; //Donnees de formulaire
+	public $get;
+	public $data;
 
 	//Permet de récupérer la requete url demandé
 	function __construct() {

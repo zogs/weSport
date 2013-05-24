@@ -6,6 +6,9 @@ class Cron{
 	public $page = 1; 
 	public $prefix =false; 
 	public $data = false; 
+	public $get;
+	public $data;
+
 
 	//Permet de récupérer la requete url demandé
 	function __construct( $controller , $action ) {
@@ -15,11 +18,11 @@ class Cron{
 	}
 
 	public function get(){
-
+		return false;
 	}
 
 	public function post(){
-
-	}
+		return false;
+	}	
 
 }
