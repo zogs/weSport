@@ -6,8 +6,8 @@ class Cron{
 	public $page = 1; 
 	public $prefix =false; 
 	public $data = false; 
-	public $get;
-	public $data;
+	public $get = false;
+
 
 
 	//Permet de récupérer la requete url demandé
