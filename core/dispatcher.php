@@ -42,7 +42,7 @@ class Dispatcher{
 
 		//autoload du controller
 		$controller =  new $name($this->request); //retourne une instance du bon controleur ( representé par le $name ! )
-		debug($controller);
+		
 		return $controller;
 	}
 
