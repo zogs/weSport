@@ -33,7 +33,7 @@ class zHandlingErrors {
 		$error->file = $e->getFile();
 		$error->context = $e->getTraceAsString();
 
-		$controller = new Controller;
+		$controller = new Controller();
 		$controller->exception($error);
 
 

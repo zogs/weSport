@@ -36,8 +36,6 @@ class Dispatcher{
  
 	// Permet d'inclure le bon controlleur
 	function loadController() {
-
-
 		
 		//nom du controller
 		$name = ucfirst($this->request->controller).'Controller'; //On recupere le nom du controller ( en lui mettant une majuscule ^^)
@@ -51,6 +49,7 @@ class Dispatcher{
 	//Renvoi un controlleur error
 	function error($message){
 
+		echo 'dispatcher/error';
 		$controller = new Controller($this->request);
 		$controller->e404($message);
 
