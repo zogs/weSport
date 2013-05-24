@@ -1,7 +1,7 @@
-<Files cron.php>
-order deny,allow
-deny from all
-</Files> 
+#<Files cron.php>
+#order deny,allow
+#deny from all
+#</Files> 
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
