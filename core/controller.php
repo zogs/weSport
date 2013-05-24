@@ -14,9 +14,8 @@ class Controller {
 
 		$this->Form = new Form($this);
 		$this->Date = new Date($this->session);
-		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
-		
-		if(get_class($request)!='Cron') $this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
+		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);		
+		$this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
 
 
 		if($request){

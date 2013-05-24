@@ -49,7 +49,6 @@ class Dispatcher{
 	//Renvoi un controlleur error
 	function error($message){
 
-		echo 'dispatcher/error';
 		$controller = new Controller($this->request);
 		$controller->e404($message);
 
