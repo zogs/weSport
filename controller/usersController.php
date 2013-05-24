@@ -754,6 +754,7 @@ class UsersController extends Controller{
     	//find events
     	$futurParticipation = $this->Events->findUserFuturParticipations($uid);
     	$pastParticipation = $this->Events->findUserPastParticipations($uid);
+    	
     	$hasOrganized = $this->Events->findEventsUserOrganized($uid);
     	$hasBeenReviewed = $this->Events->findReviewByEvents($hasOrganized);
 

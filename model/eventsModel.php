@@ -389,6 +389,16 @@ class EventsModel extends Model{
 		return $users;
 	}
 
+	public function saveEvent($event){
+
+
+		$event->timestamp = strtotime($event->date.' '.$event->time);
+
+		if($id = $this->save($event)) return $id;
+
+		return false;
+	}
+
 	public function saveParticipants($users,$event,$proba = 1){
 		
 		if(is_object($users)){
@@ -500,7 +510,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters as S
 				JOIN events as E ON E.id=S.event_id
-				WHERE S.user_id=$uid AND S.date >= NOW() ";
+				WHERE S.user_id=$uid AND CURDATE() > E.timestamp ";
 		$res = $this->query($sql);
 
 		$events = array();
@@ -514,7 +524,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters as S 
 				JOIN events as E ON E.id=S.event_id
-				WHERE S.user_id=$uid AND S.date < NOW() ";
+				WHERE S.user_id=$uid AND CURDATE() < E.timestamp ";
 		$res = $this->query($sql);
 
 		$events = array();		

@@ -11,14 +11,14 @@
 				<h4>participe bientôt à :</h4>		
 				<ul>
 					<?php foreach ($futurParticipation as $event):?>
-						<li><img src="<?php echo $event->getSportLogo();?>"><?php echo $event->title;?></li>
+						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->title;?></a></li>
 					<?php endforeach; ?>
 				</ul>
 
 				<h4>a participé à :</h4>		
 				<ul>
 					<?php foreach ($pastParticipation as $event):?>
-						<li><img src="<?php echo $event->getSportLogo();?>"><?php echo $event->getTitle();?></li>
+						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->getTitle();?></a></li>
 					<?php endforeach; ?>
 				</ul>
 			</div>
@@ -28,7 +28,7 @@
 				<ul>
 					<?php foreach ($hasOrganized as $event):?>
 						<li>
-							<img src="<?php echo $event->getSportLogo();?>"><?php echo $event->getTitle();?>
+							<img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->getTitle();?></a>
 							<?php if(!empty($event->reviews)):?>
 							<ul>
 								

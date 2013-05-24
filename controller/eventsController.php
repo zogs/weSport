@@ -373,7 +373,7 @@ class EventsController extends Controller{
 					}
 
 					//save event
-					if($event_id = $this->Events->save($Event)){
+					if($event_id = $this->Events->saveEvent($Event)){
 
 						$this->session->setFlash("L'annonce a bien été enregistré, elle est visible dès maintenant");
 						
@@ -616,7 +616,7 @@ class EventsController extends Controller{
     	$this->loadModel('Events');
     	$this->view = 'none';
     	$this->layout = 'none';
-    	
+
     	$this->Events->testcron($this->request->controller.'/'.$this->request->action);
 
     	return false;
