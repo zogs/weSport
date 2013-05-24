@@ -8,7 +8,7 @@ class Conf {
 
 	//Website information
 	static $website = 'weSport';
-	static $websiteURL = 'http://wesport.zogs.org';
+	static $websiteURL = 'wesport.zogs.org';
 	static $websiteURLs = array(
 		'localhost'=>'http://localhost/wesport',
 		'wesport.zogs.org'=>'http://wesport.zogs.org'
@@ -112,8 +112,16 @@ class Conf {
 	    }
 
 
+	    public static function getHost(){
+
+	    	if(isset($_SERVER['HTTP_HOST'])) return $_SERVER['HTTP_HOST'];
+	    	
+	    	return $websiteURL;
+	    }
+
 	    public static function getSiteUrl(){
-	    	$host = $_SERVER['HTTP_HOST'];
+	    	
+	    	$host = self::getHost();
 	    	
 	    	return self::$websiteURLs[$host];
 	    }

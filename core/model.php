@@ -19,7 +19,7 @@
  		}
  		
  		//Recupération de l'évironnement
-	 	$host = $_SERVER['HTTP_HOST'];
+	 	$host = Conf::getHost();
  		
  		//Si la connexion existe déja, return true
  		if(isset(Model::$connections[$host])){
