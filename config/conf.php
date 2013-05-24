@@ -116,7 +116,7 @@ class Conf {
 
 	    	if(isset($_SERVER['HTTP_HOST'])) return $_SERVER['HTTP_HOST'];
 	    	
-	    	return $websiteURL;
+	    	return self::$websiteURL;
 	    }
 
 	    public static function getSiteUrl(){
