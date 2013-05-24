@@ -25,7 +25,7 @@ header('Content-Type: text/html; charset=UTF-8');
 //Errors gestion
 include CORE.'/errors.php';
 function uncatchError($errno, $errstr, $errfile, $errline ) {
-	echo 'uncatchError';
+	echo 'uncatchError '.$errstr.' n:'.$errno.' file:'.$errfile.' line:'.$errline;
     new zErrorException($errno, $errstr, $errfile, $errline);
 }
 function uncatchException($exception){
