@@ -14,12 +14,13 @@ class Controller {
 
 		$this->Form = new Form($this);
 		$this->Date = new Date($this->session);
-		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);		
-		$this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
+		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
+		
+		//Si la request nest pas une requete cron on instancie les cookies
+		if(get_class($request)!='Cron') $this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
 
-
+		//Si une request est passé on effectue des vérifications de sécurité
 		if($request){
-
 
 			$this->request = $request; //ON stocke la request dans l'instance
 			$this->security($request); //On check le jeton de sécurité
