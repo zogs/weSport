@@ -54,7 +54,7 @@ require ROOT.'/lib/SwiftMailer/swift_required.php';//Swift mailer
 //define routes for the router
 new Routes();
 
-//get params of the cron call
+//get controller/action of the cron call
 $controller = (isset($argv[1]))? $argv[1] : 'events';
 $action = (isset($argv[2]))? $argv[2] : 'testcron';
 
