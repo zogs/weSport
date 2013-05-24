@@ -16,12 +16,12 @@ class Controller {
 		$this->Date = new Date($this->session);
 		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
 		
-
+		if(get_class($request)!='Cron') $this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
 
 
 		if($request){
 
-			$this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
+
 			$this->request = $request; //ON stocke la request dans l'instance
 			$this->security($request); //On check le jeton de sécurité
 			require ROOT.DS.'config'.DS.'hook.php'; //Systeme de hook pour changer le layer en fonction du prefixe
