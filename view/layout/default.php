@@ -17,9 +17,9 @@
 	      	  	<?php echo Conf::$website; ?>
 			</a>
 			<ul class="nav">
-				<li><a href="<?php echo Router::url('pages/home');?>">Trouver des sportifs</a></li>				
-				<li><a href="<?php echo Router::url('events/create');?>">Poster un événement</a></li>	
-				<li><a href="<?php echo Router::url('blog');?>">Le Blog du sportif</a></li>
+				<li><a href="<?php echo Router::url('pages/home');?>">Trouve un sport</a></li>				
+				<li><a href="<?php echo Router::url('events/create');?>">Propose un sport</a></li>	
+				<li><a href="<?php echo Router::url('blog');?>">Le Blog</a></li>
 				
 				<?php
 				//Admin section button
