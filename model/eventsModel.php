@@ -659,7 +659,7 @@ class Event{
 
 	public function getLogin(){
 
-		return <1this></1this>->login;
+		return $this->login;
 	}
 
 	public function getLinkAuthor(){
