@@ -6,6 +6,8 @@ class UsersController extends Controller{
 	public $table = 'users';
 	public $table_recovery = 'users_mail_recovery';
 
+
+
 	public function login(){
 
 		$this->layout = 'default';
@@ -30,17 +32,27 @@ class UsersController extends Controller{
 
 				if($user->hash == md5($user->salt.$data->password)){
 
+					//if th remember checbox is checked
+					if(isset($data->remember)){
+						//set secret key cookie
+						$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
+						setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'localhost', false, true);
+
+					}
+
+					//unset useless info
 					unset( $user->hash);
 					unset( $user->salt);
 					unset($_SESSION['user']);
 					unset($_SESSION['token']);
 
+					//write session
 					$this->user = $user;
-
 					$this->session->write('user', $user);
 					$this->session->setToken();				
 					$this->session->setFlash('Vous êtes maintenant connecté','success',2);
-					
+
+					//redirection					
 					$loc = $_SERVER['HTTP_REFERER'];
 					if(strpos($loc,'users/login')||strpos($loc,'users/validate')){
 
@@ -66,20 +78,58 @@ class UsersController extends Controller{
 
 	}
 
+	/**
+	* logout
+	*/
 	public function logout(){
 		
 		unset($_SESSION['user']);
 		unset($_SESSION['token']);
+		setcookie('auto_connect','', time() - 3600, '/', 'localhost', false, true);
+
 		$this->session->setFlash('Vous êtes maintenant déconnecté','info',2);	
 		$this->reload();
 
 
 	}		
 
-	/*===========================================================	        
-	Register
-	@param object of a user
-	============================================================*/
+
+	/**
+	* auto_connect
+	* search for cookie, auto connect and extend cookie if exist, delete cookie if not
+	* @param session $session
+	*/
+	static function auto_connect($session){
+		
+		//if user not connected and cookie auto connect	exist
+		if(isset($_COOKIE['auto_connect']) && !$session->user()->exist()){
+			
+			$auth = $_COOKIE['auto_connect'];
+			$auth = explode('----',$auth);
+
+			$db = new UsersModel();
+			$user = $db->findFirstUser(array('conditions'=>array('user_id'=>$auth[0])));
+			$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
+
+				//if cookie match 
+				if($key == $auth[1]){
+					//write user session
+					$session->write('user',$user);
+					$session->setToken();
+					setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'localhost', false , true);
+				}
+				//if not delete cookie
+				else {					
+					setcookie('auto_connect','',time() - 3600);
+				}
+		}
+	}
+
+
+	/**
+	* register
+	* @param $data
+	*/
 	public function register( $data = null){
 
 		$this->loadModel('Users');				

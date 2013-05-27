@@ -40,7 +40,7 @@
 
 				<div class="event-actions">			
 				
-					<?php if($this->session->user()->isLog()): ?>
+					<?php if($this->session->user()->online()): ?>
 						<?php if(!$event->isAdmin($this->session->user()->getID())): ?>
 							<?php if(isset($event->UserParticipation)): ?>
 								<a class="btn btn-success" > 
@@ -64,7 +64,7 @@
 						<a class="btn btn-small" href="<?php echo Router::url('events/create/'.$event->id);?>">Modifier mon annonce</a>					
 						<?php endif;?>
 					<?php else: ?>		
-						Vous devez <a href="<?php echo Router::url('users/login');?>">vous connecter</a> pour participer à cet événement
+						<a class="btn" href="<?php echo Router::url('users/login');?>">Connectez-vous pour participer !</a>
 					<?php endif; ?>
 				</div>
 
@@ -93,7 +93,12 @@
 			<div class="event-location">
 				<i class="icon icon-map-marker"></i>
 				<h2 class="event-info"><?php echo $event->getCityName();?></h2>
+				<?php if($this->session->user()->online()): ?>
 				<h3 class="event-info"><?php echo stripcslashes($event->address);?></h3>
+				<?php else: ?>
+				<small><a href="<?php echo Router::url('users/login');?>">Connectez-vous</a> pour voir l'adresse</small>
+				<?php endif; ?>
+
 			</div>
 
 			<div class="event-organizer">
@@ -103,11 +108,13 @@
 				<span class="event-info">(<?php echo $event->getAge();?> ans )<span>
 			</div>
 
+			<?php if($this->session->user()->online()): ?>
 			<div class="event-description">
 				<img src="<?php echo Router::webroot('img/icon-quote-left.png');?>" alt="" class="lquote">
 				<img src="<?php echo Router::webroot('img/icon-quote-right.png');?>" alt="" class="rquote">
 				<span><?php echo $event->description;?></span>
 			</div>
+			<?php endif; ?>
 
 
 			<div class="event-participants">
@@ -153,9 +160,11 @@
 
 		
 		<div class="span4">
+			<?php if($this->session->user()->online()): ?>
 			<div>					        
 				<?php echo $gmap->getGoogleMap(); ?>
 			</div>
+			<?php endif; ?>
 		</div>
 	
 	</div>

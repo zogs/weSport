@@ -335,7 +335,13 @@ class User {
 
 	public function isLog(){
 		if($this->user_id!==0) return true;
+		return false;
 	}
+	public function online(){
+		if($this->user_id!==0) return true;
+		return false;
+	}
+
 
 	public function setLang($lang){
 		$this->lang = $lang;

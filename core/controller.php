@@ -16,8 +16,11 @@ class Controller {
 		$this->Date = new Date($this->session);
 		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
 		
-		//Si la request nest pas une requete cron on instancie les cookies
+		//Si la request nest pas une requete cron on instancie le cookie recherche
 		if(get_class($request)!='Cron') $this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
+
+		//Initialisation autoconnection
+		UsersController::auto_connect($this->session);
 
 		//Si une request est passé on effectue des vérifications de sécurité
 		if($request){
