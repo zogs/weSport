@@ -348,7 +348,7 @@ class EventsModel extends Model{
 		if(is_array($events)){
 			foreach ($events as $key => $event) {
 				$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$event->user_id)));
-				if(empty($author)) continue;
+				if(empty($author)) unset($events[$key]);
 				$event->author = new User($author);
 			}
 			return $events;
