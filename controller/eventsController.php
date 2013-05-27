@@ -61,18 +61,19 @@ class EventsController extends Controller{
 		$numDaysPerWeek = 7; //number of days showed
 		//find the first day of the week
 		$firstday = (isset($day))? $day : date('Y-m-d');
-		//init
+		
+		//loop init
 		$weekday = $firstday;		
 		$events = array();
 		$dayevents = array();
+		
 		//for each days , get the events
 		for($i=1; $i<= $numDaysPerWeek; $i++){
  
 			//set date param
 			$params['date'] = array('day'=> $weekday) ;
 			//find events in db
-			$dayevents = $this->Events->findEvents($params);
-			$dayevents = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$dayevents);
+			$dayevents = $this->Events->findEvents($params);			
 			$dayevents = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$dayevents);		
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
@@ -110,13 +111,11 @@ class EventsController extends Controller{
 
 		if($event->slug != $slug) $this->redirect('events/view/'.$event->id.'/'.$event->slug);
 
-		$event = $this->Events->JOIN('users','login,avatar,age',array('user_id'=>':user_id'),$event);
 		$event = $this->Worlds->JOIN_GEO($event);
 		$event = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$event);		
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
-
 
 	
 		//google map API

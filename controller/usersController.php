@@ -408,12 +408,14 @@ class UsersController extends Controller{
 
 		    				if($db->hash == md5($db->salt.$this->request->post('oldpassword'))){
 
-		    					$data = new stdClass();
-		    					$data->hash = md5($db->salt.$this->request->post('oldpassword'));
-		    					$data->user_id = $user_id;
+		    					$newpw = new stdClass();
+		    					$newpw->hash = md5($db->salt.$this->request->post('password'));
+		    					$newpw->user_id = $user_id;
 		    					
-		    					$this->Users->save($data);
-		    					$this->session->setFlash('Your password have been changed !');
+		    					if($this->Users->save($newpw))
+		    						$this->session->setFlash('Your password have been changed !');
+		    					else
+		    						$this->session->setFlash('Error while saving your password','error');
 
 		    				}
 		    				else $this->session->setFlash('Your old password is not correct','error');

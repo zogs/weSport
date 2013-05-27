@@ -127,9 +127,7 @@ class EventsModel extends Model{
 			$sql .= $extend_zone;
 
 		//FROM SQL TABLE
-		$sql .= ' FROM events as E
-					JOIN users as U ON U.user_id=E.user_id
-
+		$sql .= ' FROM events as E					
 
 				';
 
@@ -285,7 +283,15 @@ class EventsModel extends Model{
 		$events = array();
 		foreach ($results as $event) {
 			
-			$events[] = new Event($event);
+			//create new event object
+			$event = new Event($event);
+			//join author
+			$event = $this->joinEventsAuthor($event);
+			//if author not exist jump to the next event
+			if(empty($event->author)) continue;			
+
+			//add the event in the array
+			$events[] = $event;
 		}
 
 		
@@ -294,14 +300,10 @@ class EventsModel extends Model{
 
 	public function findEventByID($event_id, $fields = '*'){
 
-		$sql = 'SELECT ';
-		$sql .= $this->sqlfields($fields);
-		$sql .= ' FROM events WHERE id='.$event_id;
-
-		$res = $this->query($sql);
+		$res = $this->findEvents(array('conditions'=>array('id'=>$event_id)));
 
 		if(!empty($res))
-			return new Event($res[0]);
+			return $res[0];
 		else
 			return new Event();
 		
@@ -344,6 +346,25 @@ class EventsModel extends Model{
 
 	public function getPreviousEvent($event_id){
 
+
+	}
+
+	public function joinEventsAuthor($events){
+
+		if(empty($events)) return $events;
+		if(is_array($events)){
+			foreach ($events as $key => $event) {
+				$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$event->user_id)));
+				$event->author = new User($author);
+			}
+			return $events;
+		}
+
+		if(is_object($events)){
+			$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$events->user_id)));
+			$events->author = new User($author);
+			return $events;
+		}
 
 	}
 
@@ -657,13 +678,14 @@ class Event{
 		return true;
 	}
 
-	public function getLogin(){
+	public function getAuthor(){
 
-		return $this->login;
+		if(isset($this->author->login)) return $this->author->login;
+		return '';
 	}
 
 	public function getLinkAuthor(){
-		return Router::url('users/view/'.$this->user_id.'/'.$this->getLogin());
+		return Router::url('users/view/'.$this->user_id.'/'.$this->getAuthor());
 	}
 
 	public function isAdmin($user_id){

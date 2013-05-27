@@ -46,7 +46,7 @@ foreach ($events as $date => $evts):
 				
 						<div class="events-info">							
 							
-							<span class="events-users">avec <b><?php echo $event->getLogin();?></b> <?php echo '('.$event->getAge().' ans)';?> 						
+							<span class="events-users">avec <b><?php echo $event->author->getLogin();?></b> <?php echo '('.$event->author->getAge().' ans)';?> 						
 							<?php if($event->getNbParticipants()>1) echo 'et '.$event->getNbParticipants().' autres'; ?>
 							</span>												
 						</div>
@@ -54,7 +54,7 @@ foreach ($events as $date => $evts):
 						<div class="events-user">
 							<?php 
 							foreach ($event->participants as $p):?>
-							<?php if($p->user_id == $event->user_id ||$p->user_id == $this->session->user()->getID()): ?>
+							<?php if($p->user_id == $event->author->user_id ||$p->user_id == $this->session->user()->getID()): ?>
 							<a href="<?php echo $p->getLink();?>"><img class="events-avatar" data-toggle="tooltip" title="<?php echo $p->getLogin();?>" src="<?php echo Router::webroot($p->getAvatar())?>" alt=""></a>
 							<?php endif;?>
 							<?php endforeach; ?>
@@ -63,9 +63,9 @@ foreach ($events as $date => $evts):
 				</a>
 			</div>
 
-
-			<?php				
-			endforeach;
+<?php	
+						
+	endforeach;
 
 ?>	
 	</div>

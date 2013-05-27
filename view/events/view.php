@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="pub">PUB</div>
 	<?php echo $this->session->flash(); ?>
-	<a href="<?php echo Router::url('pages/home/'.$event->date);?>">Retour au calendrier</a>
+	<a href="<?php echo Router::url('pages/home/');?>">Retour au calendrier</a>
 	<div class="event">	
 
 		<?php if($event->timingSituation() == 'past'):?>
@@ -104,8 +104,8 @@
 			<div class="event-organizer">
 				<i class="icon icon-user"></i>					
 				<h4 class="event-info">Organisateur :</h4>
-				<a class="event-user" href="<?php echo $event->getLinkAuthor();?>"><?php echo $event->getLogin();?></a>
-				<span class="event-info">(<?php echo $event->getAge();?> ans )<span>
+				<a class="event-user" href="<?php echo $event->getLinkAuthor();?>"><?php echo $event->author->getLogin();?></a>
+				<span class="event-info">(<?php echo $event->author->getAge();?> ans )<span>
 			</div>
 
 			<?php if($this->session->user()->online()): ?>
