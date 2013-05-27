@@ -283,17 +283,10 @@ class EventsModel extends Model{
 		$events = array();
 		foreach ($results as $event) {
 			
-			//create new event object
-			$event = new Event($event);
-			//join author
-			$event = $this->joinEventsAuthor($event);
-			//if author not exist jump to the next event
-			if(empty($event->author)) continue;			
-
-			//add the event in the array
-			$events[] = $event;
+			$events[] = new Event($event);
 		}
 
+		$events = $this->joinEventsAuthor($events);
 		
 		return $events;
 	}
@@ -355,6 +348,7 @@ class EventsModel extends Model{
 		if(is_array($events)){
 			foreach ($events as $key => $event) {
 				$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$event->user_id)));
+				if(empty($author)) continue;
 				$event->author = new User($author);
 			}
 			return $events;
@@ -362,6 +356,7 @@ class EventsModel extends Model{
 
 		if(is_object($events)){
 			$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$events->user_id)));
+			if(empty($author)) return false;
 			$events->author = new User($author);
 			return $events;
 		}
