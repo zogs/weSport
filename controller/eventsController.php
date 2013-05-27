@@ -25,18 +25,12 @@ class EventsController extends Controller{
 			//get params from get ajax request
 			if(is_string($params)) {
 
-				//nombre de jour en plus ou moins
-				$delta_days = $params;
-				//get reference date from cookie
-				$date = $this->cookieEventSearch->read('date');				
-				//calcul new day of reference with delta days
-				$day = date('Y-m-d', strtotime($date." ".$delta_days." day"));				
-				//get params from cookie
+				//day param
+				$day = $params;				
+				//rewrite cookie parameters
 				$params = $this->cookieEventSearch->arr();
-				//set new param date
 				$params['date'] = $day;
-				//rewrite the cookie
-				$this->cookieEventSearch->write($params);
+				$this->cookieEventSearch->write($params);				
 			}
 		}			
 
@@ -64,15 +58,15 @@ class EventsController extends Controller{
 
 
 		//initialize variable for days loop
-		$num_days = 7; //number of days showed
+		$numDaysPerWeek = 7; //number of days showed
 		//find the first day of the week
-		$firstday = (date('N')==1)? $day : date('Y-m-d',strtotime($day.' last monday'));
+		$firstday = (isset($day))? $day : date('Y-m-d');
 		//init
 		$weekday = $firstday;		
 		$events = array();
 		$dayevents = array();
 		//for each days , get the events
-		for($i=1; $i<= $num_days; $i++){
+		for($i=1; $i<= $numDaysPerWeek; $i++){
  
 			//set date param
 			$params['date'] = array('day'=> $weekday) ;
@@ -91,6 +85,8 @@ class EventsController extends Controller{
 
 
 		$d['events'] = $events;
+		$d['firstday'] = $firstday;
+		$d['numDaysPerWeek'] = $numDaysPerWeek;
 		
 		
 		$this->set($d);

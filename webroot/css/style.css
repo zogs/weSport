@@ -1,5 +1,7 @@
 /*@charset "utf-8";*/
 /* Add CSS code here */
+.container-fluid { padding:0;}
+
 #navbar { position:relative;}
 #navbar-bkg:before {
   content:'';
@@ -169,16 +171,16 @@ TYPEAHEAD CUSTOM STYLE
 
 .calendar { width:100%; float:left; }
 .calendar-nav {height: 40px;}
-.calendar-content { width:100%; margin:0 1% 0 1% ; position:relative; }
+.calendar-content { width:100%; margin:0; position:relative; }
 
 .events-nav {  }
 .events-nav.with-ajax { }
-.events-prev { }
-.events-next { }
+.events-prev { float:left; width:4%; min-height:600px; background:#CCC;}
+.events-next { float:left; width:5%; min-height:600px; background:#CCC;}
 
 .events-slider { }
 .events-week { position: absolute; top:0; left:0; width:100%;}
-.events-colomn { width:14%; float:left; position:relative; min-height:600px; border:1px solid rgba(60,142,172,0.4); border-top:0; background-color: rgba(60,142,172,0.2); border-radius: 10px; }
+.events-colomn { width:13%; float:left; position:relative; min-height:600px; border:1px solid rgba(60,142,172,0.4); border-top:0; background-color: rgba(60,142,172,0.2); border-radius: 10px; }
 
 .events-colomn-today { background-color:rgba(60,142,172,0.3); border-radius: 0}
 .events-colomn-today:before { content:'TODAY'; position:absolute; width:100%; top:-40px; height:40px; padding:10px 0; text-align: center; font:bold 20px Arial; text-transform:uppercase; color:black; border:2px solid rgba(0,0,0,0.3); border-bottom:0; background-color:rgba(60,142,172,0.3); border-radius:20px; border-bottom-right-radius: 0; border-bottom-left-radius: 0;}

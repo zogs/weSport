@@ -127,7 +127,11 @@ class EventsModel extends Model{
 			$sql .= $extend_zone;
 
 		//FROM SQL TABLE
-		$sql .= ' FROM events as E';
+		$sql .= ' FROM events as E
+					JOIN users as U ON U.user_id=E.user_id
+
+
+				';
 
 		//add CITIES TABLE
 		if(!empty($extend_zone))
@@ -655,7 +659,7 @@ class Event{
 
 	public function getLogin(){
 
-		return $this->login;
+		return <1this></1this>->login;
 	}
 
 	public function getLinkAuthor(){

@@ -44,16 +44,6 @@
 		</div>
 
 		<div class="calendar">
-			<div class="calendar-nav">
-				<?php 
-				$previousWeek = date('Y-m-d', strtotime($params['date'].' -7 days'));
-				$nextWeek = date('Y-m-d', strtotime($params['date'].' +7 days'));
-				?>
-				<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar');?>/-7/"><span><-</span></a>
-				<a class="calendar-nav calendar-prev fleft" href="<?php echo Router::url('pages/home/'.$previousWeek);?>">Previous week</a>
-				<a class="with-ajax calendar-nav calendar-next fright" href="<?php echo Router::url('events/calendar');?>/+7/"><span>-></span></a>
-				<a class="calendar-nav calendar-next fright" href="<?php echo Router::url('pages/home/'.$nextWeek);?>">Next Week</a>
-			</div>
 			<div class="calendar-content">
 					<?php $this->request('events','calendar',array($params)); ?>							
 			</div>
@@ -69,35 +59,35 @@
 
 $(document).ready(function(){
 
-	$('.colomn-date a').click(function(e){
+	// $('.colomn-date a').click(function(e){
 		
-		e.preventDefault();
+	// 	e.preventDefault();
 
-		var colomn = $(this).parent().parent();			
-		var others = $('.events-colomn');
-		var ms = 200;
+	// 	var colomn = $(this).parent().parent();			
+	// 	var others = $('.events-colomn');
+	// 	var ms = 200;
 
-		if(colomn.hasClass('colomn-open')==true) { 
+	// 	if(colomn.hasClass('colomn-open')==true) { 
 
 
-			colomn.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});
-			others.find('.events-bb').animate({width:'100%',margin:'0%'},{duration:ms,queue:false,ease:'ease-out'});
-			others.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});	
-			colomn.removeClass('colomn-open');		
+	// 		colomn.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});
+	// 		others.find('.events-bb').animate({width:'100%',margin:'0%'},{duration:ms,queue:false,ease:'ease-out'});
+	// 		others.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});	
+	// 		colomn.removeClass('colomn-open');		
 			
-		}
-		else {
+	// 	}
+	// 	else {
 
-			others.removeClass('colomn-open');			
-			$('.events-colomn').animate({width:'10%'},{duration:ms,queue:false,ease:'ease-out'});
-			colomn.animate({width:'40%'},{duration:ms,queue:false,ease:'ease-out'});
-			others.find('.events-bb').animate({width:'100%'},{duration:ms,queue:false,ease:'ease-out'});
-			colomn.find('.events-bb').animate({width:'30%',margin:'1%'},{duration:ms,queue:false,ease:'ease-out'});
-			colomn.addClass('colomn-open');
+	// 		others.removeClass('colomn-open');			
+	// 		$('.events-colomn').animate({width:'10%'},{duration:ms,queue:false,ease:'ease-out'});
+	// 		colomn.animate({width:'40%'},{duration:ms,queue:false,ease:'ease-out'});
+	// 		others.find('.events-bb').animate({width:'100%'},{duration:ms,queue:false,ease:'ease-out'});
+	// 		colomn.find('.events-bb').animate({width:'30%',margin:'1%'},{duration:ms,queue:false,ease:'ease-out'});
+	// 		colomn.addClass('colomn-open');
 			
-		}
+	// 	}
 		
-	});
+	// });
 
 
 	$('.events-avatar').tooltip({placement:'bottom'});
@@ -115,51 +105,56 @@ $(document).ready(function(){
 	});
 
 
-	$("a.calendar-nav.with-ajax").bind('click',function(e){
-		
-  		var url = $(this).attr('href');
-  		var form = $("#formSearch");
-  		var datas = form.serialize();
-  		var direction;
-  		if($(this).hasClass("calendar-next")) direction = 'next';
-  		if($(this).hasClass("calendar-prev")) direction = 'prev';
+	$('a.calendar-nav.with-ajax').livequery(function(){
 
-  		var screenWidth = $(window).width();
-  		
-  		$.ajax({
-  				type:'GET',
-  				url: url,
-  				data : datas,
-  				success: function( data ){
+		$("a.calendar-nav.with-ajax").bind('click',function(e){
+			
+	  		var url = $(this).attr('href');
+	  		var form = $("#formSearch");
+	  		var datas = form.serialize();
+	  		var direction;
+	  		if($(this).hasClass("calendar-next")) direction = 'next';
+	  		if($(this).hasClass("calendar-prev")) direction = 'prev';
 
-  					$(".calendar-content").append( data );
+	  		var screenWidth = $(window).width();
+	  		
+	  		$.ajax({
+	  				type:'GET',
+	  				url: url,
+	  				data : datas,
+	  				success: function( data ){
 
-  					if(direction == 'next') {
-  						contentPosition = screenWidth;
-  						contentSliding = '-='+screenWidth;
-  					}
-  					if(direction == 'prev') {
-  						contentPosition = -screenWidth;
-  						contentSliding = '+='+screenWidth;
-  					}
+	  					$(".calendar-content").append( data );
 
-  					$(".events-week").last().css({'left':contentPosition+'px'});
-  					$(".events-week").last().addClass('new-week');
+	  					if(direction == 'next') {
+	  						contentPosition = screenWidth;
+	  						contentSliding = '-='+screenWidth;
+	  					}
+	  					if(direction == 'prev') {
+	  						contentPosition = -screenWidth;
+	  						contentSliding = '+='+screenWidth;
+	  					}
 
-  					$('.events-week').animate({
-  						left:contentSliding,
-  						},500,function(){ ;
-  							if(!$(this).hasClass('new-week')) $(this).remove();
-  							$(this).removeClass('new-week');
-  					});
-  					
-  				},
-  				dataType:'html'
-  		});
+	  					$(".events-week").last().css({'left':contentPosition+'px'});
+	  					$(".events-week").last().addClass('new-week');
+
+	  					$('.events-week').animate({
+	  						left:contentSliding,
+	  						},500,function(){ ;
+	  							if(!$(this).hasClass('new-week')) $(this).remove();
+	  							$(this).removeClass('new-week');
+	  					});
+	  					
+	  				},
+	  				dataType:'html'
+	  		});
 
 
-  		return false;
-  	});
+	  		return false;
+	  	});
+
+	});
+
 
 });
 

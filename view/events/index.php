@@ -1,36 +1,32 @@
 <div class="events-week">
+
+<div class="events-prev">
+	<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>"><span><-</span></a>
+	<a href="<?php echo Router::url('pages/home/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>">PREV</a>
+</div>
 <?php
+
+//Boucle des jours de la semaine
+
 $cdate='';
 foreach ($events as $date => $evts):
 ?>
 
-<?php
 
-	$today_class = '';
-	if($date==date('Y-m-d')){
-		$today_class = "events-colomn-today events-colomn-today-".$this->getLang();
-	}
-?>
-
-	<div class="events-colomn <?php echo $today_class;?>">
+	<div class="events-colomn">
 		<div class="colomn-date">
 			<a href="">
 			<?php
-
 				if($cdate!=$date) {
-
 					echo '<strong>'.Date::dayoftheweek(date('D',strtotime($date))).'</strong>';
-					echo '<i>'.Date::datefr($date).'</i>';
-							
+					echo '<i>'.Date::datefr($date).'</i>';							
 				}
-
 			?>
 			</a>
 		</div>
-
 <?php
 
-			foreach ($evts as $event):
+	foreach ($evts as $event):
 			
 			?>
 			
@@ -80,4 +76,9 @@ foreach ($events as $date => $evts):
 $cdate = $date;
 endforeach;
 ?>
+
+<div class="events-next">
+	<a href="<?php echo Router::url('pages/home/'.date('Y-m-d',strtotime($firstday." + ".$numDaysPerWeek." days")));?>">NEXT</a>
+	<a class="with-ajax calendar-nav calendar-next fright" href="<?php echo Router::url('events/calendar/'.date('Y-m-d',strtotime($firstday." + ".$numDaysPerWeek." days")));?>"><span>-></span></a>
+</div>
 </div>
