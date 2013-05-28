@@ -529,7 +529,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters as S
 				JOIN events as E ON E.id=S.event_id
-				WHERE S.user_id=$uid AND CURDATE() > E.timestamp ";
+				WHERE S.user_id=$uid AND UNIX_TIMESTAMP() > E.timestamp ";
 		$res = $this->query($sql);
 
 		$events = array();
@@ -543,7 +543,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters as S 
 				JOIN events as E ON E.id=S.event_id
-				WHERE S.user_id=$uid AND CURDATE() < E.timestamp ";
+				WHERE S.user_id=$uid AND UNIX_TIMESTAMP() < E.timestamp ";
 		$res = $this->query($sql);
 
 		$events = array();		
@@ -555,7 +555,7 @@ class EventsModel extends Model{
 
 	public function findEventsUserOrganize($uid){
 
-		$sql = "SELECT * FROM events WHERE user_id=$uid AND CURDATE() >= timestamp";
+		$sql = "SELECT * FROM events WHERE user_id=$uid AND UNIX_TIMESTAMP() >= timestamp";
 		$res = $this->query($sql);
 
 		$events = array();
@@ -570,7 +570,7 @@ class EventsModel extends Model{
 
 	public function findEventsUserHasOrganized($uid){
 
-		$sql = "SELECT * FROM events WHERE user_id=$uid AND CURDATE() < timestamp";
+		$sql = "SELECT * FROM events WHERE user_id=$uid AND UNIX_TIMESTAMP() < timestamp";
 		$res = $this->query($sql);
 
 		$events = array();
