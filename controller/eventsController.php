@@ -329,7 +329,10 @@ class EventsController extends Controller{
 			$evt = new Event();
 
 		}
-		
+
+		//Join sport name
+		$evt = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$evt);
+
 		//if new data are sended
 		if($this->request->post()){				
 
@@ -417,6 +420,7 @@ class EventsController extends Controller{
 		$d['user_events_in_futur'] = $this->Events->findEvents(array('date'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		
+
 		$d['event'] = $evt;
 
 		$this->set($d);

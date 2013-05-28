@@ -1,8 +1,10 @@
 <div class="events-week">
 
 <div class="events-prev">
+	<?php if($firstday!=date('Y-m-d')): ?>
 	<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>"><span><-</span></a>
 	<a href="<?php echo Router::url('pages/home/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>">PREV</a>
+	<?php endif; ?>
 </div>
 <?php
 
@@ -17,10 +19,15 @@ foreach ($events as $date => $evts):
 		<div class="colomn-date">
 			<a href="">
 			<?php
-				if($cdate!=$date) {
-					echo '<strong>'.Date::dayoftheweek(date('D',strtotime($date))).'</strong>';
-					echo '<i>'.Date::datefr($date).'</i>';							
-				}
+					if($date==date('Y-m-d')){
+						echo "<strong>Aujourd'hui</strong>";	
+						echo '<i>'.Date::datefr($date).'</i>';	
+					}
+					else{						
+						echo '<strong>'.Date::dayoftheweek(date('D',strtotime($date))).'</strong>';
+						echo '<i>'.Date::datefr($date).'</i>';							
+					}
+				
 			?>
 			</a>
 		</div>

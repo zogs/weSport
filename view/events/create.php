@@ -5,14 +5,18 @@
 		<div class="span7">
 
 			<div class="module module-rounded">
-				<h3>
+								
 				<?php if($event->exist()): ?>
+				<a href="<?php echo Router::url('events/view/'.$event->getID());?>">Retourner à l'événement</a>
+				<h4>
 					<img src="<?php echo $event->getSportLogo();?>"/>
 					<?php echo '<a href="'.Router::url('events/view/'.$event->getID()).'">'.$event->getTitle().'</a>';?>
+				</h4>
 				<?php else: ?>
+				<h4>
 					Proposer un nouvel événement !
+				</h4>
 				<?php endif; ?>
-				</h3>
 
 				<form class="form" action="<?php echo Router::url('events/create/'.$event->id);?>" method="POST">
 
