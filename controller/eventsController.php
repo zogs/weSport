@@ -66,7 +66,7 @@ class EventsController extends Controller{
 		$weekday = $firstday;		
 		$events = array();
 		$dayevents = array();
-		
+
 		//for each days , get the events
 		for($i=1; $i<= $numDaysPerWeek; $i++){
  
@@ -475,7 +475,7 @@ class EventsController extends Controller{
 			if(!$withAuthor && $sporter->user_id==$event->user_id) continue; //sauf si on saute l'organisateur de l'evt
 
 			$user = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('user_id'=>$sporter->user_id)));
-			$emails[] = $user->email;
+			if($user->exist()) $emails[] = $user->email;
 		}
 		
 		return $emails;

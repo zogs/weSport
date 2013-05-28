@@ -116,31 +116,7 @@ class UsersModel extends Model{
 		//if there is nothing to save
 		$tab = (array) $user;
 		if( (count($tab)==0 ) || (count($tab)==1 && isset($tab['user_id'])))
-			return true;
-
-		//if new user , check unique value
-		if(!isset($user->user_id)){
-
-			//check if login already exist
-			$check = $this->findFirst(array(
-											'fields'=>'user_id',
-											'conditions'=>array('login'=>$user->login)
-											));
-			if(!empty($check)){
-				$this->session->setFlash("Sorry this login is in use.","error");
-				return false;
-			}
-
-			//check if mail already in use
-			$checkmail = $this->findFirst(array(
-												'fields'=>'mail',
-												'conditions'=>array('mail'=>$user->mail)
-												));
-			if(!empty($checkmail)){
-				$this->session->setFlash("This email is already in use. Please try to recovery your password","error");
-				return false;
-			}
-		}		
+			return true;	
 
 		if($this->save($user))
 			return true;

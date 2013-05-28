@@ -337,11 +337,6 @@ class EventsModel extends Model{
 		return $events;
 	}
 
-	public function getPreviousEvent($event_id){
-
-
-	}
-
 	public function joinEventsAuthor($events){
 
 		if(empty($events)) return $events;

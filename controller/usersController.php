@@ -282,66 +282,55 @@ class UsersController extends Controller{
 				If POST DATA are sended
 			========================*/
 	    	if($this->request->data) {							    		
-
 	    		
 	    		$data = $this->request->data;
 
 	    		/*====================
 	    			MODIFY ACCOUNT
 	    		====================*/
-	    		if($this->request->post('action')=='account'){
-
+	    		if($this->request->post('action')=='account' || $this->request->post('action')==''){
+	    			
 	    			if($this->Users->validates($data,'account_info')){
 
 						$user = $this->Users->findFirstUser(array('fields'=>'login, email','conditions'=>array('user_id'=>$this->request->post('user_id'))));
-																
-						//If it's the not same user name
-						if($user->login != $this->request->post('login'))
-							$checklogin = $this->Users->findFirstUser(array('fields'=>'login','conditions'=>array('login'=>$this->request->post('login'))));
-						else
-							unset($data->login);							
-						
-
-						//if its not the same email
-						if($user->email != $this->request->post('email'))							
-							$checkemail = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('email'=>$this->request->post('email'))));
-						else
-							unset($data->email);
 							
-	    				if(empty($checklogin)){
 
-	    					if(empty($checkemail)){
-
-		    					if($this->Users->saveUser($data,$user_id)){
-
-									$this->session->setFlash("Your account have been saved !","success");
-
-									//update session login									
-									$user = $this->session->user();
-			    					if(isset($data->login)) $user->login = $data->login;
-			    					if(isset($data->lang)) $user->lang = $data->lang;			    					
-			    					$this->session->write('user', $user);
-			    					
-								}
-								else{
-									$this->session->setFlash("Your account have not been saved, please retry","error");
-								}
+						if($user->login!=$data->login){
+							$check = $this->Users->findFirstUser(array('fields'=>'login','conditions'=>array('login'=>$data->login)));
+							if($check->exist()) {
+								unset($data->login);
+								$this->session->setFlash('Ce pseudo est déjà utilisé');
 							}
-							else {
-								$this->session->setFlash("This email is already in use","error");
+						}
+
+						if($user->email!=$data->email){
+							$check = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('email'=>$data->email)));
+							if($check->exist()){
+								unset($data->email);
+								$this->session->setFlash('Cette email est déjà utilisé dans notre système.');
 							}
-	    				}
-	    				else {
-	    					$this->session->setFlash("This login is already in use","error");
-	    				}
+						}
+					
+    					if($this->Users->saveUser($data,$user_id)){
+
+							$this->session->setFlash("Your account have been saved !","success");
+
+							//update session login									
+							$user = $this->session->user();
+	    					if(isset($data->login)) $user->login = $data->login;
+	    					if(isset($data->lang)) $user->lang = $data->lang;			    					
+	    					$this->session->write('user', $user);
+	    					
+						}
+						else{
+							$this->session->setFlash("Error while saving your data, please retry","error");
+						}
+							
 	    			}
 	    			else {
 	    				$this->session->setFlash("Please review the form","error");
 	    			}
-	    		}
-	    		else {
-	    			if($this->request->post('login')) unset($_POST['login']);
-	    		}
+	    		}	    		
 
 
 	    		/*====================
