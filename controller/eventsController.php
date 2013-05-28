@@ -330,9 +330,6 @@ class EventsController extends Controller{
 
 		}
 
-		//Join sport name
-		$evt = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$evt);
-
 		//if new data are sended
 		if($this->request->post()){				
 

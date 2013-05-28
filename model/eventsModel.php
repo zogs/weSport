@@ -700,7 +700,8 @@ class Event{
 
 	public function getSportLogo(){
 
-		return Router::webroot('img/sport_icons/icon_'.$this->sport.'.png');
+		if(file_exists(WEBROOT.'/img/sport_icons/icon_'.$this->sport.'.png')) return Router::webroot('img/sport_icons/icon_'.$this->sport.'.png');
+		return Router::webroot('img/sport_icons/icon_curling.png');
 	}
 
 	public function getAvatar(){
