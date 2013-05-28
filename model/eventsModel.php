@@ -619,6 +619,15 @@ class EventsModel extends Model{
 
 	public function findReviewByUser($user_id){
 
+		$reviews = $this->find(array('table'=>'events_review','conditions'=>array('user_id'=>$user_id)));
+		foreach ($reviews as $key => $review) {
+				$event = $this->findEventByID($review->event_id);
+				if($event->exist()) $review->event = $event;				
+		}
+		
+		return $reviews;
+		
+
 	}	
 
 	public function saveReview($event_id,$user_id,$review_tx,$lang){

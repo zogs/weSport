@@ -53,13 +53,15 @@
 			<div class="span12">
 				<h3>Avis</h3>
 
-				<?php foreach ($eventsReviewed as $key => $event): ?>
+				<?php foreach ($eventsReviewed as $key => $review): ?>
+				<?php if(!empty($review->event)): ?>
 				<div class="event-review">
 					<div class="bulle">
-						<span><?php echo $event->review; ?></span>				
-						<small><?php echo $event->title; ?></small>						
+						<span><?php echo $review->review; ?></span>				
+						<small><?php echo $review->event->title; ?></small>						
 					</div>
 				</div>
+				<?php endif; ?>
 				<?php endforeach; ?>
 				
 			</div>
