@@ -8,23 +8,7 @@
 
 		<div class="row">
 			<div class="span6">
-				<h4>participe bientôt à :</h4>		
-				<ul>
-					<?php foreach ($futurParticipation as $event):?>
-						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->title;?></a></li>
-					<?php endforeach; ?>
-				</ul>
-
-				<h4>a participé à :</h4>		
-				<ul>
-					<?php foreach ($pastParticipation as $event):?>
-						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->getTitle();?></a></li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-
-			<div class="span6">
-				<h4>a organisé :</h4>
+				<h3>Organise</h3>
 				<ul>
 					<?php foreach ($hasOrganized as $event):?>
 						<li>
@@ -42,6 +26,32 @@
 				</ul>
 
 
+				
+			</div>
+			<div class="span6">
+				<h3>participe</h3>		
+				<ul>
+					<?php foreach ($futurParticipation as $event):?>
+						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->title;?></a></li>
+					<?php endforeach; ?>
+				</ul>				
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span12">
+				<p>
+					a organisé <?php echo count($hasOrganized); ?> événements
+				</p>
+				<p>
+					a participé à <?php echo count($pastParticipation);?> événements
+				</p>						
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="span12">
+				<h3>Avis</h3>
 				
 			</div>
 		</div>

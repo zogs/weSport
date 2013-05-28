@@ -34,7 +34,7 @@
 					<span class="label label-success">Confirmé</span>
 					<?php endif ?>
 					<?php if($event->confirmed==0): ?>
-					<span class="label">En attente de <?php echo ($event->nbmin-count($event->participants));?> participants</span>
+					<span class="label">En attente</span> de <?php echo ($event->nbmin-count($event->participants));?> participants
 					<?php endif;?>
 				</div>
 

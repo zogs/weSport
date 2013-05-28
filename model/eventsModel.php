@@ -553,9 +553,24 @@ class EventsModel extends Model{
 		return $events;
 	}
 
-	public function findEventsUserOrganized($uid){
+	public function findEventsUserOrganize($uid){
 
-		$sql = "SELECT * FROM events WHERE user_id=$uid ";
+		$sql = "SELECT * FROM events WHERE user_id=$uid AND CURDATE() >= timestamp";
+		$res = $this->query($sql);
+
+		$events = array();
+		foreach ($res as $event) {
+			
+			$event->reviews = $this->findReviewByEventId($event->id);
+
+			$events[] = new Event($event);
+		}		
+		return $events;
+	}
+
+	public function findEventsUserHasOrganized($uid){
+
+		$sql = "SELECT * FROM events WHERE user_id=$uid AND CURDATE() < timestamp";
 		$res = $this->query($sql);
 
 		$events = array();
