@@ -291,6 +291,14 @@ h4.event-info { font-size:14px; color:#0B6C90; margin:0; padding: 0; display: in
 
 
 /*
+User page
+*/
+.event-review { float:left; clear:left; margin:10px; }
+.event-review .bulle { width:100%; padding:20px; background-color:white; border-radius:20px;}
+.event-review span { width:100%; display:block; text-align:left; color:grey; font-size:18px; font-style:italic;}
+.event-review small { width:100%; display:block; text-align:right; color:#AAA;  font-size:12px;}
+
+/*
 Commentaires
 */
 .comments { float:left; width:98%; margin:50px 1% 0 1%; }

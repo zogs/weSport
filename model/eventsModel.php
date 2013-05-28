@@ -574,9 +574,7 @@ class EventsModel extends Model{
 		$res = $this->query($sql);
 
 		$events = array();
-		foreach ($res as $event) {
-			
-			$event->reviews = $this->findReviewByEventId($event->id);
+		foreach ($res as $event) {	
 
 			$events[] = new Event($event);
 		}		
@@ -585,19 +583,18 @@ class EventsModel extends Model{
 	
 	public function findReviewByEvents($events){
 
-		$reviews = array();
+		
 		foreach ($events as $k=>$event) {
 			
-			if($review = $this->findReviewByEventId($event->id)) $reviews[] = $review;
+			if($review = $this->findReviewByEventId($event->id)) $events[$k] = $review;
 
 		}
-		return $reviews;
+		return $events;
 	}
 
 	public function findReviewByEventId($event_id){
 		
-		$res = $this->find(array('table'=>'events_review','conditions'=>array('event_id'=>$event_id)));
-		
+		$res = $this->findFirst(array('table'=>'events_review','conditions'=>array('event_id'=>$event_id)));
 		return $res;
 	}	
 
