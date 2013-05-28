@@ -379,7 +379,6 @@ class EventsController extends Controller{
 						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 						$this->Events->saveParticipants($u,$evt);
 						
-
 						//email the changes 
 						if(!empty($changes)){
 							

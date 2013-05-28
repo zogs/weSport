@@ -319,6 +319,9 @@ class Controller {
 
 	public function sendEmails($emails,$subject,$body){
 
+		//Si il ny a pas d'email retourne vrai
+		if(empty($emails)) return true;
+
 		//Création d'une instance de swift mailer
         $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
 
