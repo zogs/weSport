@@ -40,7 +40,10 @@ class EventsModel extends Model{
 				array(
 					'rule'=>'notEmpty',
 					'message'=>"Une date doit être renseigné"
-				)
+				),
+				array(
+					'rule'=>'datefutur',
+					'message'=>'La date de l\'événement doit être dans le futur')
 			)
 		),
 		'time' => array(

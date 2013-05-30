@@ -522,6 +522,11 @@ public function validates($data, $rules = null, $field = null){
 
 							if(!preg_match('/'.$rule['regex'].'/',$data->$field)) $errors[$field] = $rule['message'];
 						}
+						elseif($rule['rule']=='datefutur'){
+
+							$now = date('Y/m/d');
+							if(Date::date2number($data->$field) < Date::date2number($now)) $errors[$field] = $rule['message'];
+						}
 						elseif($rule['rule']=='file'){
 							continue;
 						}

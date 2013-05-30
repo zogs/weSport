@@ -63,7 +63,13 @@
 		$mois = $type_mois[$num_mois];
 		//on retourne la valeur
 		return "$jour"." "."$mois"." "."$annee"; 
-	}		 
+	}	
+
+	public static function date2number($date){
+		
+		$d = explode('/',$date);
+		return $d[2].$d[1].$d[0];
+	} 
 
  	// public function month($num){
 
