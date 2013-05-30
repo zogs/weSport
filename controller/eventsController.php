@@ -387,7 +387,7 @@ class EventsController extends Controller{
 						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 						$this->Events->saveParticipants($u,$evt);
 						
-						debug($changes);
+					
 						//email the changes 
 						if(!empty($changes)){
 							
@@ -468,7 +468,7 @@ class EventsController extends Controller{
 	}
 
 
-	public function findEmailsParticipants($event,$withAuthor=false){
+	private function findEmailsParticipants($event,$withAuthor=false){
 
 		$emails = array();
 
@@ -481,20 +481,21 @@ class EventsController extends Controller{
 		//pour chaque participants on cherche son email dans la bdd
 		foreach ($sporters as $sporter) {
 
-			if(!$withAuthor && $sporter->user_id==$event->user_id) continue; //sauf si on saute l'organisateur de l'evt
+			if($withAuthor===false && $sporter->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
 
 			$user = $this->Users->findFirstUser(array('fields'=>'user_id,email','conditions'=>array('user_id'=>$sporter->user_id)));			
+	
 			if($user->exist()) $emails[] = $user->email;
 		}
-		
+
 		return $emails;
 	}
 	
 
-	public function sendEventDeleting($event)
+	private function sendEventDeleting($event)
     {
 
-    	$subject = "Un événement auquel vous participez a été supprimé - ".Conf::$website;
+    	$subject = "L'événement auquel vous participez a été supprimé - ".Conf::$website;
 
     	//get emails participants
     	$emails = $this->findEmailsParticipants($event);        	        
@@ -520,7 +521,7 @@ class EventsController extends Controller{
 	private function sendEventChanges($event,$changes)
     {
     	//Sujet du mail
-    	$subject = "Un événement auquel vous participez a été modifié - ".Conf::$website;    
+    	$subject = "L'événement auquel vous participez a été modifié - ".Conf::$website;    
 
     	//get emails participatns
     	$emails = $this->findEmailsParticipants($event);
