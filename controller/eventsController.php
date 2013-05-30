@@ -194,6 +194,8 @@ class EventsController extends Controller{
 				//nombre actuel de participants
 				$nbparticip = $this->Events->countParticipants($event->id);
 
+				debug($nbparticip);
+				debug($event->nbmin);
 				//Si ne nombre est atteint, on confirme l'evenement
 				if($event->nbmin == $nbparticip ) {
 
@@ -321,7 +323,13 @@ class EventsController extends Controller{
 			if(!$evt->isAdmin($this->session->user()->getID())){
 				$this->session->setFlash("Vous n'êtes pas le créateur de cette annonce","error");				
 				$this->redirect('users/login');			
-			}			
+			}	
+			
+			//if event is confirm , dont allow modification
+			if($evt->isConfirm()){				
+				$this->session->setFlash('Cet événement a été confirmé, vous ne pouvez le modifier...','danger');
+				$this->request->data = null;
+			}		
 			
 		}
 		else{
@@ -361,7 +369,7 @@ class EventsController extends Controller{
 					//find if change occurs
 					if($evt->exist()){
 						$changes = array();
-						$silent_changes = array('slug');
+						$silent_changes = array('slug','nbmin');
 						foreach ($Event as $key => $value) {
 							if( $Event->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $Event->$key;
 						}
@@ -379,6 +387,7 @@ class EventsController extends Controller{
 						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 						$this->Events->saveParticipants($u,$evt);
 						
+						debug($changes);
 						//email the changes 
 						if(!empty($changes)){
 							
@@ -474,7 +483,7 @@ class EventsController extends Controller{
 
 			if(!$withAuthor && $sporter->user_id==$event->user_id) continue; //sauf si on saute l'organisateur de l'evt
 
-			$user = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('user_id'=>$sporter->user_id)));
+			$user = $this->Users->findFirstUser(array('fields'=>'user_id,email','conditions'=>array('user_id'=>$sporter->user_id)));			
 			if($user->exist()) $emails[] = $user->email;
 		}
 		
@@ -533,7 +542,7 @@ class EventsController extends Controller{
         $body = preg_replace("~{lien}~i", $lien, $body);
         $body = preg_replace("~{content}~i", $content, $body);
 
-        
+      
         if($this->sendEmails($emails,$subject,$body)) return true;
         else return false;
     }

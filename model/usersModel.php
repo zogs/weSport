@@ -279,7 +279,7 @@ class User {
 
 	public function exist(){
 
-		if($this->user_id==0) return false;
+		if($this->user_id===0) return false;
 		return true;
 	}
 

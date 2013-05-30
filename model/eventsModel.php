@@ -709,6 +709,11 @@ class Event{
 		return false;
 	}
 
+	public function isConfirm(){
+		if($this->confirmed==1) return true;
+		return false;
+	}
+
 	public function getTime(){
 
 		return $this->time;
