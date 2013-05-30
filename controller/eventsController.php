@@ -477,17 +477,17 @@ class EventsController extends Controller{
 
 		//get emails of participants  	
 		$sporters = $this->Events->findParticipants($event->id);	
-
+		
 		//pour chaque participants on cherche son email dans la bdd
 		foreach ($sporters as $sporter) {
 
 			if($withAuthor===false && $sporter->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
 
 			$user = $this->Users->findFirstUser(array('fields'=>'user_id,email','conditions'=>array('user_id'=>$sporter->user_id)));			
-	
+			
 			if($user->exist()) $emails[] = $user->email;
 		}
-
+		
 		return $emails;
 	}
 	
@@ -586,6 +586,7 @@ class EventsController extends Controller{
         $body = preg_replace("~{time}~i", $event->time, $body);
         $body = preg_replace("~{ville}~i", $event->cityName, $body);
         $body = preg_replace("~{lien}~i", $lien, $body);
+        
 
         if($this->sendEmails($emails,$subject,$body)) return true;
         else return false;
