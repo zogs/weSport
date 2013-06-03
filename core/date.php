@@ -65,18 +65,6 @@
 		return "$jour"." "."$mois"." "."$annee"; 
 	}	
 
-	public static function date2number($date){
-		
-		if(strpos($date,'-')!=0) {
-			$d = explode('-',$date);
-			return $d[2].$d[1].$d[0];
-		}
-		if(strpos($date,'/')!=0) {
-			$d = explode('/',$date);
-			return $d[2].$d[1].$d[0];
-		}
-	} 
-
  	// public function month($num){
 
  	// 	$array = array('fr' => array('Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre')

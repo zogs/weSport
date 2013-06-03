@@ -524,8 +524,8 @@ public function validates($data, $rules = null, $field = null){
 						}
 						elseif($rule['rule']=='datefutur'){
 
-							$now = date('Y/m/d');
-							if(Date::date2number($data->$field) < Date::date2number($now)) $errors[$field] = $rule['message'];
+							$now = date('Y/m/d');		
+							if(strtotime($data->$field) < strtotime($now)) $errors[$field] = $rule['message'];
 						}
 						elseif($rule['rule']=='file'){
 							continue;

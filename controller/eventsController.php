@@ -381,7 +381,7 @@ class EventsController extends Controller{
 					//save event
 					if($event_id = $this->Events->saveEvent($Event)){
 
-						$this->session->setFlash("L'annonce a bien été enregistré, elle est visible dès maintenant");
+						$this->session->setFlash("L'annonce a bien été enregistrée, elle est visible dès maintenant");
 						
 						//get event
 						$evt = $this->Events->findEventById($event_id);
@@ -396,7 +396,7 @@ class EventsController extends Controller{
 							
 							if($this->sendEventChanges($Event,$changes)){
 
-								$this->session->setFlash('Les modifications ont été envoyés aux participants','warning');
+								$this->session->setFlash('Les modifications ont été envoyées aux participants','warning');
 							}
 						}
 
