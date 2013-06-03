@@ -551,19 +551,25 @@ class EventsController extends Controller{
         else return false;
     }
 
-    private function sendMailNewComment($user_id,$event_id,$comment){
+    public function sendMailNewComment($event_id,$comment_id){
+
+    	if(!is_numeric($event_id)) throw new zException("Error Processing Request", 1);
+    	if(!is_numeric($comment_id)) throw new zException("Error Processing Request", 1);
+    	
 
     	$this->loadModel('Events');
-    	$this->loadModel('Users');
+    	$this->loadModel('Comments');
+    	$this->view = 'none';
+    	$this->layout = 'none';
 
     	$event = $this->Events->findEventById($event_id);
+    	$email = $event->author->email;
 
-    	$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$user_id))); 
+    	$com = $this->Comments->getComment($comment_id);
+    	$content = $com->content;
 
+    	$user = $com->user;
     	$subject = $user->login.' vous a posé une question !';
-
-    	$author = $this->Users->findFirstUser(array('fields'=>'email,user_id','conditions'=>array('user_id',$user_id)));
-    	$email = $author->email;
 
     	$body = file_get_contents('../view/email/eventNewComment.html');
 
@@ -572,7 +578,7 @@ class EventsController extends Controller{
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
         $body = preg_replace("~{user}~i", $user->login, $body);
-        $body = preg_replace("~{comment}~i", $comment, $body);
+        $body = preg_replace("~{comment}~i", $content, $body);
         $body = preg_replace("~{subject}~i", $subject, $body);
         $body = preg_replace("~{lien}~i", $lien, $body);
 
