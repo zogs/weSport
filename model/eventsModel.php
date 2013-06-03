@@ -14,7 +14,7 @@ class EventsModel extends Model{
 				),
 				array(
 					'rule'=>'notNull',
-					'message'=>"Un sport doit être reseigné"
+					'message'=>"Un sport doit être renseigné"
 				)
 			)
 		),
@@ -437,7 +437,7 @@ class EventsModel extends Model{
 				$s->event_id = $event->id;
 				$s->user_id = $user->user_id;
 				$s->date = date('Y-m-d');
-				$s->date_event = $event->date;
+				$s->date_event = $event->timestamp;
 				$s->table = 'sporters';	
 				$s->proba = $proba;			
 				$this->save($s);			
@@ -529,8 +529,8 @@ class EventsModel extends Model{
 	public function findUserFuturParticipations($uid){
 		
 		$sql = "SELECT * FROM sporters as S
-				JOIN events as E ON E.id=S.event_id
-				WHERE S.user_id=$uid AND UNIX_TIMESTAMP() > E.timestamp ";
+				JOIN events as E ON E.id = S.event_id 
+				WHERE S.user_id=$uid AND S.date_event > UNIX_TIMESTAMP() ";
 		$res = $this->query($sql);
 
 		$events = array();
@@ -542,9 +542,9 @@ class EventsModel extends Model{
 
 	public function findUserPastParticipations($uid){
 		
-		$sql = "SELECT * FROM sporters as S 
-				JOIN events as E ON E.id=S.event_id
-				WHERE S.user_id=$uid AND UNIX_TIMESTAMP() < E.timestamp ";
+		$sql = "SELECT * FROM sporters as S
+				JOIN events as E ON E.id = S.event_id 
+				WHERE S.user_id=$uid AND S.date_event < UNIX_TIMESTAMP() ";
 		$res = $this->query($sql);
 
 		$events = array();		

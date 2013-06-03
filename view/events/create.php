@@ -7,14 +7,14 @@
 			<div class="module module-rounded">
 								
 				<?php if($event->exist()): ?>
-				<a href="<?php echo Router::url('events/view/'.$event->getID());?>">Retourner à l'événement</a>
+				<a href="<?php echo Router::url('events/view/'.$event->getID());?>">Retourner à l'évènement</a>
 				<h4>
 					<img src="<?php echo $event->getSportLogo();?>"/>
 					<?php echo '<a href="'.Router::url('events/view/'.$event->getID()).'">'.$event->getTitle().'</a>';?>
 				</h4>
 				<?php else: ?>
 				<h4>
-					Proposer un nouvel événement !
+					Proposer un nouvel évènement !
 				</h4>
 				<?php endif; ?>
 
@@ -29,9 +29,9 @@
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 					<?php echo $this->Form->input('address','Adresse exacte',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
-					<?php echo $this->Form->input('date',"Date de l'événement",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
+					<?php echo $this->Form->input('date',"Date de l'évènement",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
 					<?php echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','placeholder'=>'ex: 06:00, 13:00, 18:30 , ...','value'=>(isset($event->time)? $event->time : '12:00'))) ;?>
-					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'événement ait lieu","value"=>(isset($event->nbmin)? $event->nbmin : '2'))) ;?>
+					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'évènement ait lieu","value"=>(isset($event->nbmin)? $event->nbmin : '2'))) ;?>
 					<?php echo $this->Form->input('description','Commentaires',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à amener, le coût (si location de la salle ou autre), préciser la durée, le fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
 					<?php echo $this->Form->input("phone","Téléphone de contact",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
 									
@@ -48,7 +48,7 @@
 			<div class="module module-rounded">					
 				<?php if($event->exist()): ?>
 					<?php echo $this->Form->input("Mettre à jour l'annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>					
-					<a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'événement </a>
+					<a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'évènement </a>
 					<a href="<?php echo Router::url('events/report/'.$event->getID());?>" class="btn btn-link">Reporter à la semaine suivant</a>
 
 				<?php else: ?>
@@ -60,7 +60,7 @@
 
 			<div class="module module-rounded">
 				<div class="module-header">
-						<h5>Mes événements</h5>
+						<h5>Mes évènements</h5>
 				</div>
 
 				<?php if(!empty($user_events_in_futur)):?>
@@ -95,7 +95,7 @@
 				<?php endif; ?>
 
 				<p>
-					<a href="<?php echo Router::url('events/create');?>" class="btn btn-link">Créer un nouvel événement</a>
+					<a href="<?php echo Router::url('events/create');?>" class="btn btn-link">Créer un nouvel évènement</a>
 				</p>
 			</div>
 		</div>

@@ -14,11 +14,11 @@
 					<ul class="dashboard-links">
 						<?php
 							$links = array(										
-											'account'=>'Account',
-											'profil'=>'Profil',
-											'avatar'=>'Avatar',									
-											'password'=>'Password',
-											'delete'=>'Delete'
+											'account'=>'Mon Compte',
+											'profil'=>'Mon Profil',
+											'avatar'=>'Mon Avatar',									
+											'password'=>'Mon mot de passe',
+											'delete'=>'Suppression'
 										);
 
 							foreach ($links as $key => $value) {
@@ -54,7 +54,7 @@
 						
 						<?php echo $this->Form->input('prenom','Prenom',array('icon'=>'icon-user','placeholder'=>'Prenom')); ?>
 						<?php echo $this->Form->input('nom','Nom',array('icon'=>'icon-user','placeholder'=>'Nom')); ?>					
-						<?php echo $this->Form->SelectNumber('age','Birth year',2006,1950,array('default'=>$user->age,'icon'=>'icon-gift','placeholder'=>"( Your birth year )")) ;?>	
+						<?php echo $this->Form->SelectNumber('age','Birth year',2006,1950,array('default'=>$user->age,'icon'=>'icon-gift','placeholder'=>"( Votre année de naissance )")) ;?>	
 
 						<div class="control-group">	
 							<label for="CC1" class="control-label">Localisation</label>			
@@ -74,14 +74,14 @@
 					<?php if($action=='account'||$action==''): ?>
 
 						<div class="module-header">
-							<h2>Account</h2>
+							<h2>Mon Compte</h2>
 							<p class="subheader"></p>
 						</div>
 
 						<?php echo $this->Form->input('login','Login',array('icon'=>'icon-user','required'=>'required','data-url'=>Router::url('users/check'))); ?>
 						<?php echo $this->Form->input('email','Email',array('icon'=>'icon-envelope','required'=>'required','type'=>'email','data-url'=>Router::url('users/check'))); ?>
-						<?php echo $this->Form->Select('lang','Language',Conf::$languageAvailable,array('default'=>$user->lang,'placeholder'=>'( your language )','icon'=>'icon-book')) ;?>				
-						<?php echo $this->Form->input('Save account','submit',array('class'=>'btn btn-large btn-inverse')) ;?>
+						<?php echo $this->Form->Select('lang','Langue',Conf::$languageAvailable,array('default'=>$user->lang,'placeholder'=>'( votre langue )','icon'=>'icon-book')) ;?>				
+						<?php echo $this->Form->input('Sauvegarder','submit',array('class'=>'btn btn-large btn-inverse')) ;?>
 
 
 					<?php endif ;?>
@@ -93,8 +93,8 @@
 					<?php if($action=='avatar'): ?>
 
 						<div class="module-header">
-							<h2>Avatar</h2>
-							<p class="subheader">Votre image bla bla</p>
+							<h2>Mon avatar</h2>
+							<p class="subheader">Votre image de profil</p>
 						</div>
 
 						<div class='avatar'>
@@ -104,7 +104,7 @@
 							
 						<?php echo $this->Form->input('avatar','Avatar',array('icon'=>'icon-bullhorn','type'=>'file')); ?>
 							
-						<input type="submit" class="btn btn-large btn-inverse" value="Save avatar" />		
+						<input type="submit" class="btn btn-large btn-inverse" value="Sauvegarder" />		
 				
 					<?php endif ;?>
 
@@ -118,10 +118,10 @@
 						</div>
 
 
-						<?php echo $this->Form->input('oldpassword','Old password',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Old password')); ?>
-						<?php echo $this->Form->input('password','New password',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'New password')); ?>
-						<?php echo $this->Form->input('confirm','Confirm password',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Confirm password')); ?>
-						<input class="btn btn-large btn-inverse" type="submit" value="Save Password" />	
+						<?php echo $this->Form->input('oldpassword','Ancien mot de passe',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Ancien mot de passe')); ?>
+						<?php echo $this->Form->input('password','Nouveau mot de passe',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Nouveau mot de passe')); ?>
+						<?php echo $this->Form->input('confirm','Confirmer mot de passe',array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Confirmer mot de passe')); ?>
+						<input class="btn btn-large btn-inverse" type="submit" value="Sauvegarder" />	
 						
 					<?php endif ;?>
 
@@ -135,9 +135,9 @@
 						</div>
 
 				
-						<?php echo $this->Form->input('password','Yes i do', array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Type your password and delete')); ?>
+						<?php echo $this->Form->input('password','Yes i do', array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Entrer votre mot de passe pour supprimer')); ?>
 						<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
-						<input class="btn btn-large btn-inverse" type="submit" value="Delete" />
+						<input class="btn btn-large btn-inverse" type="submit" value="Supprimer" />
 
 					<?php endif ;?>
 

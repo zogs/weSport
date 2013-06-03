@@ -57,15 +57,7 @@ foreach ($events as $date => $evts):
 							<?php if($event->getNbParticipants()>1) echo 'et '.$event->getNbParticipants().' autres'; ?>
 							</span>												
 						</div>
-
-						<div class="events-user">
-							<?php 
-							foreach ($event->participants as $p):?>
-							<?php if($p->user_id == $event->author->user_id ||$p->user_id == $this->session->user()->getID()): ?>
-							<a href="<?php echo $p->getLink();?>"><img class="events-avatar" data-toggle="tooltip" title="<?php echo $p->getLogin();?>" src="<?php echo Router::webroot($p->getAvatar())?>" alt=""></a>
-							<?php endif;?>
-							<?php endforeach; ?>
-						</div>						
+											
 					</div>
 				</a>
 			</div>

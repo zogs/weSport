@@ -473,7 +473,8 @@ public function validates($data, $rules = null, $field = null){
 					foreach ($rules as $rule) {
 
 						if($rule['rule']=='notEmpty'){
-							if(empty($data->$field)) $errors[$field] = $rule['message'];				
+
+							if(!isset($data->$field) || trim($data->$field)=='') $errors[$field] = $rule['message'];				
 						}
 						elseif($rule['rule']=='notNull'){
 
