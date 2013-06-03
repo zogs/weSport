@@ -46,11 +46,29 @@ class EventsModel extends Model{
 					'message'=>'La date de l\'événement doit être dans le futur')
 			)
 		),
-		'time' => array(
+		'hours' => array(
 			"rules"=>array(
 				array(
 					'rule'=>'notEmpty',
 					'message'=>"Un horaire doit être renseigné"
+				),
+				array(
+					'rule'=>'regex',
+					'regex'=>'[0-9]{2}',
+					'message'=>"L'heure n'est pas dans le bon format !"
+				)
+			)
+		),
+		'minutes' => array(
+			"rules"=>array(
+				array(
+					'rule'=>'notEmpty',
+					'message'=>"Un horaire doit être renseigné"
+				),
+				array(
+					'rule'=>'regex',
+					'regex'=>'[0-9]{2}',
+					'message'=>"L'heure n'est pas dans le bon format !"
 				)
 			)
 		),
@@ -413,8 +431,15 @@ class EventsModel extends Model{
 
 	public function saveEvent($event){
 
+		//time of the event
+		$event->time = $event->hours.':'.$event->minutes;
+		unset($event->hours);
+		unset($event->minutes);
 
+		//timestamp of the event date
 		$event->timestamp = strtotime($event->date.' '.$event->time);
+
+		
 		if($id = $this->save($event)) return $id;
 		return false;
 	}
@@ -670,14 +695,17 @@ class EventsModel extends Model{
 
 class Event{
 
-	public $id = 0;
-	public $sport = 0;
-	public $cityID = '';
-	public $ADM1 = '';
-	public $ADM2 = '';
-	public $ADM3 = '';
-	public $ADM4 = '';
-	public $CC1 = '';
+	public $id      = 0;
+	public $sport   = 0;
+	public $cityID  = '';
+	public $ADM1    = '';
+	public $ADM2    = '';
+	public $ADM3    = '';
+	public $ADM4    = '';
+	public $CC1     = '';
+	public $hours   = 12;
+	public $minutes = 00;
+	public $time    = '12:00:00';
 
 	public function __construct( $fields = array() ){
 
@@ -715,14 +743,29 @@ class Event{
 		return false;
 	}
 
+	public function getTitle(){
+
+		return $this->title;
+	}
+
 	public function getTime(){
 
 		return $this->time;
 	}
 
-	public function getTitle(){
+	public function getHours(){
+		$d = explode(':',$this->time);
+		return $d[0];
+	}
 
-		return $this->title;
+	public function getMinutes(){
+		$d = explode(':',$this->time);
+		return $d[1];
+	}
+
+	public function getSecondes(){
+		$d = explode(':',$this->time);
+		return $d[2];
 	}
 
 	public function getSportLogo(){
