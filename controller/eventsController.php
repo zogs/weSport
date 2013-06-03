@@ -199,8 +199,6 @@ class EventsController extends Controller{
 				//nombre actuel de participants
 				$nbparticip = $this->Events->countParticipants($event->id);
 
-				debug($nbparticip);
-				debug($event->nbmin);
 				//Si ne nombre est atteint, on confirme l'evenement
 				if($event->nbmin == $nbparticip ) {
 
