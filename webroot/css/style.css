@@ -175,7 +175,7 @@ TYPEAHEAD CUSTOM STYLE
 
 .events-nav {  }
 .events-nav.with-ajax { }
-.events-prev { float:left; width:4%; min-height:600px; background:#CCC;}
+.events-prev { float:left; width:4%; min-height:600px; bbackground:#CCC;}
 .events-next { float:left; width:5%; min-height:600px; background:#CCC;}
 
 .events-slider { }

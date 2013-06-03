@@ -67,7 +67,9 @@
 
 	public static function date2number($date){
 		
-		$d = explode('/',$date);
+		if(strpos($date,'-')!==0) $d = explode('-',$date);
+		if(strpos($date,'/')!==0) $d = explode('/',$date);
+
 		return $d[2].$d[1].$d[0];
 	} 
 

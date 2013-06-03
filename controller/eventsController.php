@@ -19,7 +19,11 @@ class EventsController extends Controller{
 			//get params from pagesController home 
 			if(is_array($params)){ 
 
-				$day = $params['date'];				
+				$day = $params['date'];
+				$cookie = $this->cookieEventSearch->arr();	
+				$cookie['date'] = $day;			
+				$this->cookieEventSearch->write($cookie);
+							
 			}
 			//if its the prev/next week
 			//get params from get ajax request
@@ -29,8 +33,9 @@ class EventsController extends Controller{
 				$day = $params;				
 				//rewrite cookie parameters
 				$params = $this->cookieEventSearch->arr();
-				$params['date'] = $day;
-				$this->cookieEventSearch->write($params);				
+				$params['date'] = $day;			
+				$this->cookieEventSearch->write($params);
+						
 			}
 		}			
 
@@ -60,7 +65,7 @@ class EventsController extends Controller{
 		//initialize variable for days loop
 		$numDaysPerWeek = 7; //number of days showed
 		//find the first day of the week
-		$firstday = (isset($day))? $day : date('Y-m-d');
+		$firstday = (isset($day))? $day : $this->cookieEventSearch->read('date');
 		
 		//loop init
 		$weekday = $firstday;		

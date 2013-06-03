@@ -10,10 +10,18 @@ class PagesController extends Controller {
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
 		
 			//date
-			if($day === null )
-				$params['date'] = date('Y-m-d');
-			else
+			if($day === null ){
+
+					$params['date'] = date('Y-m-d');				
+			}
+			else {
+
 				$params['date'] = $day;
+				$cookie = $this->cookieEventSearch->arr();
+				$cookie['date'] = $day;			
+				$this->cookieEventSearch->write($cookie);
+				
+			}
 
 			//si une requete est passée
 			if($this->request->get()){
@@ -38,8 +46,7 @@ class PagesController extends Controller {
 			//Sinon on utilise les parametres du cookie
 			else {
 
-				
-				
+								
 				$params['sports'] = $this->cookieEventSearch->read('sports');
 				$params['cityID'] = $this->cookieEventSearch->read('cityID');
 				$params['cityName'] = $this->cookieEventSearch->read('cityName');

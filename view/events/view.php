@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="pub">PUB</div>
 	<?php echo $this->session->flash(); ?>
-	<a href="<?php echo Router::url('pages/home/');?>">Retour au calendrier</a>
+	<a href="<?php echo Router::url('pages/home/'.$this->cookieEventSearch->read('date'));?>">Retour au calendrier</a>
 	<div class="event">	
 
 		<?php if($event->timingSituation() == 'past'):?>
