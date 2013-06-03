@@ -221,10 +221,17 @@
 
  			if($id = $this->Comments->saveComment($com)){
 
+
+ 				if($com->context=='events'){
+
+ 					$event = new EventsController();
+ 					$event->sendMailNewComment($com);
+ 				}
+ 				
+
+
  				$com = $this->Comments->getComment($id);
-
  				if($com->isEmpty()) $d['fail'] = 'The comment is empty';
-
  				$d['com'] = $com;
  			}
  			else {

@@ -415,9 +415,7 @@ class EventsModel extends Model{
 
 
 		$event->timestamp = strtotime($event->date.' '.$event->time);
-
 		if($id = $this->save($event)) return $id;
-
 		return false;
 	}
 

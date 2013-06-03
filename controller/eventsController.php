@@ -551,6 +551,36 @@ class EventsController extends Controller{
         else return false;
     }
 
+    private function sendMailNewComment($user_id,$event_id,$comment){
+
+    	$this->loadModel('Events');
+    	$this->loadModel('Users');
+
+    	$event = $this->Events->findEventById($event_id);
+
+    	$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$user_id))); 
+
+    	$subject = $user->login.' vous a posé une question !';
+
+    	$author = $this->Users->findFirstUser(array('fields'=>'email,user_id','conditions'=>array('user_id',$user_id)));
+    	$email = $author->email;
+
+    	$body = file_get_contents('../view/email/eventNewComment.html');
+
+    	$lien = Conf::getSiteUrl()."/events/view/".$event->id."/".$event->slug;
+
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{title}~i", $event->title, $body);
+        $body = preg_replace("~{user}~i", $user->login, $body);
+        $body = preg_replace("~{comment}~i", $comment, $body);
+        $body = preg_replace("~{subject}~i", $subject, $body);
+        $body = preg_replace("~{lien}~i", $lien, $body);
+
+        if($this->sendEmails($email,$subject,$body)) return true;
+        else return false;
+
+    }
+
     private function sendEventConfirmed($event){
 
     	$subject = "L'événement ".$event->title." est confirmé !";
@@ -572,6 +602,7 @@ class EventsController extends Controller{
         else return false;
 
     }
+
 
     private function sendEventCanceled($event){
 

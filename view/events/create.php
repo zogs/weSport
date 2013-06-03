@@ -30,8 +30,8 @@
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 					<?php echo $this->Form->input('address','Adresse exacte',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
 					<?php echo $this->Form->input('date',"Date de l'événement",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
-					<?php echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','placeholder'=>'ex: 10h30, 6pm, ...','value'=>'12:00')) ;?>
-					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'événement ait lieu","value"=>2)) ;?>
+					<?php echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','placeholder'=>'ex: 10h30, 6pm, ...','value'=>(isset($event->time)? $event->time : '12:00'))) ;?>
+					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'événement ait lieu","value"=>(isset($event->nbmin)? $event->nbmin : '2'))) ;?>
 					<?php echo $this->Form->input('description','Commentaires',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à amener, le coût (si location de la salle ou autre), préciser la durée, le fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
 					<?php echo $this->Form->input("phone","Téléphone de contact",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
 									
