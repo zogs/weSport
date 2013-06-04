@@ -5,7 +5,7 @@
 	<div class="event">	
 
 		<?php if($event->timingSituation() == 'past'):?>
-			<div class="alert alert-danger"><button class="close" data-dismiss="alert">×</button><p>Cet événement est terminé !</p></div>		
+			<div class="alert alert-danger"><button class="close" data-dismiss="alert">×</button><p>Cette activité est terminée !</p></div>		
 
 			<?php if($event->isUserParticipate($this->session->user()->getID())):?>
 				<div class="alert alert-info">
@@ -52,7 +52,7 @@
 							<?php else: ?>
 								<a class="btn btn-primary" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>">
 									<icon class="icon-white icon-ok"></icon>
-									Comptez sur moi !
+									Compter sur moi !
 								</a>
 								<a style="display:none" class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>">
 									<icon class="icon-white icon-asterisk"></icon>

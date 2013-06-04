@@ -14,10 +14,10 @@
 					<ul class="dashboard-links">
 						<?php
 							$links = array(										
-											'account'=>'Mon Compte',
-											'profil'=>'Mon Profil',
-											'avatar'=>'Mon Avatar',									
-											'password'=>'Mon mot de passe',
+											'account'=>'Compte',
+											'profil'=>'Profil',
+											'avatar'=>'Avatar',									
+											'password'=>'Mot de passe',
 											'delete'=>'Suppression'
 										);
 
@@ -48,13 +48,13 @@
 					<?php if($action=='profil'): ?>
 
 						<div class="module-header">
-							<h2>Profil</h2>
+							<h2>Mon Profil</h2>
 						</div>
 										
 						
 						<?php echo $this->Form->input('prenom','Prenom',array('icon'=>'icon-user','placeholder'=>'Prenom')); ?>
 						<?php echo $this->Form->input('nom','Nom',array('icon'=>'icon-user','placeholder'=>'Nom')); ?>					
-						<?php echo $this->Form->SelectNumber('age','Birth year',2006,1950,array('default'=>$user->age,'icon'=>'icon-gift','placeholder'=>"( Votre année de naissance )")) ;?>	
+						<?php echo $this->Form->SelectNumber('age','Année de naissance',2006,1950,array('default'=>$user->age,'icon'=>'icon-gift','placeholder'=>"( Votre année de naissance )")) ;?>	
 
 						<div class="control-group">	
 							<label for="CC1" class="control-label">Localisation</label>			
@@ -94,7 +94,7 @@
 
 						<div class="module-header">
 							<h2>Mon avatar</h2>
-							<p class="subheader">Votre image de profil</p>
+
 						</div>
 
 						<div class='avatar'>
@@ -113,8 +113,8 @@
 					<?php if($action=='password'):?>
 
 						<div class="module-header">
-							<h2>Mot de passe</h2>
-							<p class="subheader">Changer votre mot de passe</p>
+							<h2>Mon mot de passe</h2>
+					
 						</div>
 
 
@@ -130,12 +130,12 @@
 					<?php if($action=='delete'): ?>
 
 						<div class="module-header">
-							<h2>Delete</h2>
-							<p class="subheader">Do you want to delete your account ?</p>
+							<h2>Supprimer mon compte</h2>
+							
 						</div>
 
 				
-						<?php echo $this->Form->input('password','Yes i do', array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Entrer votre mot de passe pour supprimer')); ?>
+						<?php echo $this->Form->input('password','Je veux supprimer', array('type'=>'password','icon'=>'icon-lock','placeholder'=>'Entrer votre mot de passe pour supprimer')); ?>
 						<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 						<input class="btn btn-large btn-inverse" type="submit" value="Supprimer" />
 

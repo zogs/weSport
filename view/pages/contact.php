@@ -10,8 +10,8 @@
 			//debug($user);
 			 ?>
 			<form class="form" action="<?php echo Router::url('pages/contact/#');?>" method="POST">
-				<?php echo $this->Form->input("name","Votre nom",array("type"=>"text","value"=>$user->login)) ;?>
-				<?php echo $this->Form->input("email","Votre mail",array("type"=>"text","value"=>$user->email)) ;?>
+				<?php echo $this->Form->input("name","Votre nom",array("type"=>"text","value"=>$user->getLogin())) ;?>
+				<?php echo $this->Form->input("email","Votre mail",array("type"=>"text","value"=>$user->getEmail())) ;?>
 				<?php echo $this->Form->input("token","hidden",array("value"=>$this->session->token())) ;?>
 				<?php echo $this->Form->input("time","hidden",array("value"=>time())) ;?>
 				<?php echo $this->Form->input("login","hidden",array("value"=>"")) ;?>

@@ -259,10 +259,11 @@ class User {
 
 
 	public $user_id = 0;
-	public $role  = 'visitor';
+	public $login = '';
+	public $email = '';
 	public $avatar  = 'img/logo_yp.png';
 	public $account = 'visitor';
-	public $email = '';
+	public $role = 'visitor';
 
 	public function __construct( $fields = array() ){
 
@@ -287,6 +288,10 @@ class User {
 
 		if($this->account=='anonym') return 'anonym_'.$this->user_id;
 		else return $this->login;
+	}
+
+	public function getEmail(){
+		return $this->email;
 	}
 
 	public function getAvatar(){

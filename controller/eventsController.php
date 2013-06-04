@@ -308,7 +308,7 @@ class EventsController extends Controller{
 		//if user is logged
 		if(!$this->session->user()->isLog()) {
 
-			$this->session->setFlash("Vous devez vous connecter pour proposer un événement !","info");
+			$this->session->setFlash("Vous devez vous connecter pour proposer un sport !","info");
 			$this->redirect('users/login');
 			exit();
 		}
@@ -330,7 +330,7 @@ class EventsController extends Controller{
 			
 			//if event is confirm , dont allow modification
 			if($evt->isConfirm()){				
-				$this->session->setFlash('Cet événement a été confirmé, vous ne pouvez le modifier...','danger');
+				$this->session->setFlash('Cette activité a été confirmé, vous ne pouvez le modifier...','danger');
 				$this->request->data = null;
 			}		
 			
@@ -447,14 +447,14 @@ class EventsController extends Controller{
 		$evt = $this->Events->findEventById($eid);		
 
 		//check if event exit
-		if(!$evt->exist()) $this->e404('Cet événement n\'existe pas');
+		if(!$evt->exist()) $this->e404('Cette activité n\'existe pas');
 
 		//check if user is admin
-		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cet événement');
+		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cette activité');
 
 		//delete the event
 		if($this->Events->deleteEvent($evt)){
-			$this->session->setFlash("Evenement supprimé !","success");
+			$this->session->setFlash("Activité supprimée !","success");
 
 			//send Mailing to sporters				
 			if($this->sendEventDeleting($evt)){
@@ -463,7 +463,7 @@ class EventsController extends Controller{
 			
 			$this->redirect('events/create');
 		} else {
-			$this->session->setFlash("Erreur... l'événement n'a pu être supprimé","danger");
+			$this->session->setFlash("Erreur... l'activité n'a pu être supprimée","danger");
 			$this->redirect('events/create/'.$eid);
 		}
 
@@ -498,7 +498,7 @@ class EventsController extends Controller{
 	private function sendEventDeleting($event)
     {
 
-    	$subject = "L'événement auquel vous participez a été supprimé - ".Conf::$website;
+    	$subject = "L'activité à laquelle vous participez a été supprimée - ".Conf::$website;
 
     	//get emails participants
     	$emails = $this->findEmailsParticipants($event);        	        
@@ -524,7 +524,7 @@ class EventsController extends Controller{
 	private function sendEventChanges($event,$changes)
     {
     	//Sujet du mail
-    	$subject = "L'événement auquel vous participez a été modifié - ".Conf::$website;    
+    	$subject = "L'activité à laquelle vous participez a été modifiée - ".Conf::$website;    
 
     	//get emails participatns
     	$emails = $this->findEmailsParticipants($event);
@@ -589,7 +589,7 @@ class EventsController extends Controller{
 
     private function sendEventConfirmed($event){
 
-    	$subject = "L'événement ".$event->title." est confirmé !";
+    	$subject = "L'activité ".$event->title." est confirmée !";
 
     	$emails = $this->findEmailsParticipants($event,true);
 
@@ -612,7 +612,7 @@ class EventsController extends Controller{
 
     private function sendEventCanceled($event){
 
-    	$subject = "Un sportif s'est désisté, l'événement est suspendu...";
+    	$subject = "Un sportif s'est désisté, l'activité est suspendue...";
 
     	$emails = $this->findEmailsParticipants($event,true);
 
@@ -635,7 +635,7 @@ class EventsController extends Controller{
 
     private function sendNewParticipant($event,$user){
 
-    	$subject = $user->login." participe à votre événement !";
+    	$subject = $user->login." participe à votre activité !";
 
     	$this->loadModel('Users');
     	$author = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$event->user_id)));

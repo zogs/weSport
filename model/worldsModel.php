@@ -102,7 +102,7 @@ class WorldsModel extends Model
  			'lvl'=>'CC1',
  			'parent'=>'list',
  			'country'=>'country',
- 			'title'=>'Select a country',
+ 			'title'=>'Séléctionner un pays',
  			'list'=>$countries
  			);
 

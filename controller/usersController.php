@@ -52,38 +52,26 @@ class UsersController extends Controller{
 					$this->session->setToken();				
 					$this->session->setFlash('Vous êtes maintenant connecté','success',2);
 
-					//redirection						
-					
-					$currurl = $_SERVER['HTTP_REFERER'];
-					//if connexion from the login's page , redirect to previous landing page
-					if(strpos($currurl,'users/login')||strpos($currurl,'users/validate')){
-
-						if(!empty($data->previous_url)){
-
-							$prevurl = $data->previous_url;	
-							$prevurl = strtolower($prevurl);
-							$siteurl = Conf::getSiteUrl();	
-							//if url from our domain redirect on the previous page 					
-							if(strpos($prevurl,$siteurl)===0){
-								$prevurl = str_replace(Conf::getSiteUrl(),'',$prevurl);						
-								$this->redirect($prevurl);
-							}
-							else {
-								//the previous url is not from our domain
-								$this->redirect('users/account');
-							}							
+					//redirection
+					// redirect to the previous location if the user use the login page
+					if(isset($data->previous_url)){
+						if(strpos($data->previous_url,'/events/')) { //if the previous page is about an event redirect to the page						
+							header('Location: '.$data->previous_url);
+							exit();
 						}
-						else {
-							$this->redirect('users/account');
-						}
-
-					}				
+					}
+					//else the user is using the navbar formular, redirect current page
 					else {
-						//the connexion is from the navbar formular
-						$this->reload(); 
-					}				
-					
 
+						$this->reload();
+					}
+
+					//if the current page is an user action, redirect to the homepage
+					if(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'/users/')){
+
+						$this->redirect('/');
+					}				
+				
 				}
 				else {
 					$this->session->setFlash('Mauvais mot de passe','error');
@@ -168,7 +156,7 @@ class UsersController extends Controller{
 
 			//check if accept TOS
 			if(isset($user->accept)&&$user->accept!=1){
-				$this->session->setFlash("Please accept the terms of use","error");
+				$this->session->setFlash("Veuillez accepter les conditions d'utilisations","error");
 				$this->set(array('data'=>$user));
 				return;		
 			}
@@ -187,7 +175,7 @@ class UsersController extends Controller{
 			//check if login exist
 			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
 			if(!empty($check)) {
-				$this->session->setFlash("This login is already used","error");
+				$this->session->setFlash("Ce nom d'utilisateur est déjà pris","error");
 				$this->set(array('data'=>$user));
 				return;
 			}
@@ -196,7 +184,7 @@ class UsersController extends Controller{
 			//check if email exist
 			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('email'=>$user->email)));
 			if(!empty($check)) {
-				$this->session->setFlash("The email ".$user->email." is already used","error");
+				$this->session->setFlash("Cet email ".$user->email." est déjà utilisé","error");
 				$this->set(array('data'=>$user));
 				return;
 
@@ -212,8 +200,8 @@ class UsersController extends Controller{
 
 					if($this->sendValidateMail(array('dest'=>$user->email,'user'=>$user->login,'codeactiv' =>$user->codeactiv,'user_id'=>$user_id)))
 					{						
-						$this->session->setFlash("Un email <strong>a été envoyé</strong> à votre boite email. Pour confirmer votre incription, <strong>veuillez cliquer sur le lien</strong> présent dans cette email", "success");
-						$this->session->setFlash("Il est possible que ce email soit placé parmis les <strong>indésirables ou spam</strong> , pensez à vérifier !", "info");
+						$this->session->setFlash("Un email <strong>a été envoyé</strong> dans votre boite email. <strong>Veuillez cliquer sur le lien</strong> pour activer votre compte.", "success");
+						$this->session->setFlash("Il est possible que cet email soit placé parmis les <strong>indésirables ou spam</strong> , pensez à vérifier !", "info");
 					}
 					else {
 						$this->session->setFlash("Il y a eu une erreur lors de l'envoi de l'email de validation", "error");
@@ -333,7 +321,7 @@ class UsersController extends Controller{
 					
     					if($this->Users->saveUser($data,$user_id)){
 
-							$this->session->setFlash("Your account have been saved !","success");
+							$this->session->setFlash("Votre compte a été changé !","success");
 
 							//update session login									
 							$user = $this->session->user();
@@ -364,7 +352,7 @@ class UsersController extends Controller{
 
 	    				if($this->Users->saveUser($data,$user_id)){
 
-	    					$this->session->setFlash('Your profil have been saved ! ','success');
+	    					$this->session->setFlash('Votre profil a été changé !','success');
 	    				}
 	    				else {
 	    					$this->session->setFlash("Sorry but something goes wrong please retry",'error');
@@ -372,7 +360,7 @@ class UsersController extends Controller{
 			    		
 		    		}
 		    		else 
-		    			$this->session->setFlash('Please review your informations','error');
+		    			$this->session->setFlash('Veuillez revoir vos données','error');
 		    	
 	    		}
 
@@ -386,7 +374,7 @@ class UsersController extends Controller{
 
 	    				if($destination = $this->Users->saveFile('avatar','u'.$data->user_id)){
 
-	    					$this->session->setFlash('Your avatar have been changed ! ', 'success');
+	    					$this->session->setFlash('Votre avatar a été changé ! ', 'success');
 
 	    					$u = new stdClass();
 	    					$u->user_id = $data->user_id;
@@ -400,7 +388,7 @@ class UsersController extends Controller{
 	    				}
 	    			}	    			
 	    			else
-	    				$this->session->setFlash('Please review your file','error');
+	    				$this->session->setFlash('Veuillez revoir votre fichier','error');
 	    		}
 	    		/*====================
 					MODIFY PASSWORD
@@ -422,15 +410,15 @@ class UsersController extends Controller{
 		    					$newpw->user_id = $user_id;
 		    					
 		    					if($this->Users->save($newpw))
-		    						$this->session->setFlash('Your password have been changed !');
+		    						$this->session->setFlash('Votre mot de passe a été changé !');
 		    					else
 		    						$this->session->setFlash('Error while saving your password','error');
 
 		    				}
-		    				else $this->session->setFlash('Your old password is not correct','error');
+		    				else $this->session->setFlash('Votre ancien mot de passe n\'est pas correct','error');
 		    		}
 		    		else 
-		    			$this->session->setFlash('Please review your informations','error');
+		    			$this->session->setFlash('Veuillez revoir vos données','error');
 	    		}
 
 	    		/*====================
@@ -451,15 +439,15 @@ class UsersController extends Controller{
 	    					$this->Users->delete($user_id);
 	    					unset($_SESSION['user']);
 	    					$user_id = 0;
-	    					$this->session->setFlash('Your account has been delete... but... <strong>Why did you do that ???:)</strong>');
+	    					$this->session->setFlash('Votre compte a été supprimé... A bientôt ;)');
 
 	    				}
 	    				else
-	    					$this->session->setFlash('Your password is not good','error');
+	    					$this->session->setFlash('Votre mot de passe n\'est pas correct','error');
 
 	    			}
 	    			else
-	    				$this->session->setFlash('Please review your password','error');
+	    				$this->session->setFlash('Veuillez revoir votre mot de passe','error');
 
 	    		}	    			    			  
 		    	
@@ -516,13 +504,13 @@ class UsersController extends Controller{
 			if($user->exist()){
 
 				//show password form
-				$this->session->setFlash('Enter your new password','success');
+				$this->session->setFlash('Entrer votre nouveau mot de passe','success');
 				$action = 'show_form_password';
 
 			}
 			else {
 				//else the link isnot good anymmore
-				$this->session->setFlash('Your link is not valid anymore. Please ask for a new password reset.','error');
+				$this->session->setFlash('Votre lien n\'est plus valide, veuillez demander une nouvelle réinitialisation de mot de passe','error');
 				$action = 'show_form_email';
 				
 			}
@@ -581,7 +569,7 @@ class UsersController extends Controller{
 						$this->Users->delete($del);
 
 						//redirect to connexion page
-						$this->session->setFlash("Your password have been changed !","success");
+						$this->session->setFlash("Votre mot de passe a été changé !","success");
 						$this->redirect('users/login');
 					}
 					else {
@@ -591,14 +579,14 @@ class UsersController extends Controller{
 				}
 				else {
 					$action = 'show_form_password';
-					$this->session->setFlash("Please review your data","error");
+					$this->session->setFlash("Veuillez revoir vos données","error");
 				}
 
 			}
 			else
 			{
 				$action = 'show_form_email';
-				$this->session->setFlash("Error. Please ask for a new password reset.","error");
+				$this->session->setFlash("Veuillez demander une nouvelle réinitialisation de mot de passe","error");
 			}
 
 			$d['code'] = $code;
@@ -654,8 +642,8 @@ class UsersController extends Controller{
 					//send email to user
 					if($this->sendRecoveryMail(array('dest'=>$user->email,'user'=>$user->login,'code' =>$code,'user_id'=>$user->user_id))){
 
-						$this->session->setFlash('An email have been send to you.','success');
-						$this->session->setFlash("Please tcheck the spam box if you can't find it.","warning");
+						$this->session->setFlash('Un email vous a été envoyé !','success');
+						$this->session->setFlash("Pensez à vérifier dans les indésirables ou spam !","warning");
 
 					}
 					else{

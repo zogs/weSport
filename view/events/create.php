@@ -14,7 +14,7 @@
 				</h4>
 				<?php else: ?>
 				<h4>
-					Proposer un nouvel évènement !
+					Proposer une nouvelle activité !
 				</h4>
 				<?php endif; ?>
 
@@ -23,25 +23,24 @@
 					<?php echo $this->Form->input("id","hidden",array("value"=>$event->id)) ;?>
 					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
 					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
-					<?php echo $this->Form->input('title',"Intitulé de l'annonce",array('placeholder'=>"Petit match entre amis, ...")) ;?>
-					<?php echo $this->Form->select('sport','Quel sport ?',$sports_available,array('default'=>$event->sport,'placeholder'=>"Choississez un sport")); ?>
+					<?php echo $this->Form->input('title',"Titre",array('placeholder'=>"Petit match entre amis, ...")) ;?>
+					<?php echo $this->Form->select('sport','Sport',$sports_available,array('default'=>$event->sport,'placeholder'=>"Choisir un sport")); ?>
 					<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
-					<?php echo $this->Form->input('address','Adresse exacte',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
-					<?php echo $this->Form->input('date',"Date de l'évènement",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
+					<?php echo $this->Form->input('address','Adresse',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
+					<?php echo $this->Form->input('date',"Date",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
 					<div class="control-group" id="control-time">
-						<div class="control-label">Heure du rendez-vous</div>
+						<div class="control-label">Heure</div>
 						<div class="controls">
 							<?php echo $this->Form->_select('hours',Form::Hours(),array('default'=>$event->getHours(),'style'=>'float:left;width:30%')); ?>
 							<?php echo $this->Form->_select('minutes',Form::Minutes(),array('default'=>$event->getMinutes(),'style'=>'float:left;width:30%')); ?>
 						</div>
 					</div>
 					<?php //echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','placeholder'=>'ex: 06:00, 13:00, 18:30 , ...','value'=>(isset($event->time)? $event->time : '12:00'))) ;?>
-					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'évènement ait lieu","value"=>(isset($event->nbmin)? $event->nbmin : '2'))) ;?>
-					<?php echo $this->Form->input('nbmin','Nombre minimum',array('type'=>'range','value'=>10,'max'=>200,'min'=>0,'step'=>1),array()); ?>
-					<?php echo $this->Form->input('description','Commentaires',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à amener, le coût (si location de la salle ou autre), préciser la durée, le fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
-					<?php echo $this->Form->input("phone","Téléphone de contact",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
+					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'évènement ait lieu","value"=>(isset($event->nbmin)? $event->nbmin : '2'))) ;?>					
+					<?php echo $this->Form->input('description','Descriptif',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à amener, le coût (si location de la salle ou autre), préciser la durée, le fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
+					<?php echo $this->Form->input("phone","Téléphone",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
 									
 
 				
@@ -68,7 +67,7 @@
 
 			<div class="module module-rounded">
 				<div class="module-header">
-						<h5>Mes évènements</h5>
+						<h5>Mes activités</h5>
 				</div>
 
 				<?php if(!empty($user_events_in_futur)):?>
@@ -103,7 +102,7 @@
 				<?php endif; ?>
 
 				<p>
-					<a href="<?php echo Router::url('events/create');?>" class="btn btn-link">Créer un nouvel évènement</a>
+					<a href="<?php echo Router::url('events/create');?>" class="btn btn-link">Proposer une nouvelle activité</a>
 				</p>
 			</div>
 		</div>
