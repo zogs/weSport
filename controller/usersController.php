@@ -32,7 +32,7 @@ class UsersController extends Controller{
 
 				if($user->hash == md5($user->salt.$data->password)){
 
-					//if th remember checbox is checked
+					//if the remember checbox is checked
 					if(isset($data->remember)){
 						//set secret key cookie
 						$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
@@ -52,14 +52,27 @@ class UsersController extends Controller{
 					$this->session->setToken();				
 					$this->session->setFlash('Vous êtes maintenant connecté','success',2);
 
-					//redirection					
-					$loc = $_SERVER['HTTP_REFERER'];
-					if(strpos($loc,'users/login')||strpos($loc,'users/validate')){
+					//redirection	
+					$prevurl = $data->previous_url;	
+					$currurl = $_SERVER['HTTP_REFERER'];
+					//if connexion from the login's page , redirect to previous landing page
+					if(strpos($currurl,'users/login')||strpos($currurl,'users/validate')){
 
-						$this->redirect('users/account');
+						$prevurl = strtolower($prevurl);
+						$siteurl = Conf::getSiteUrl();	
+						//if url from our domain redirect on the previous page 					
+						if(strpos($prevurl,$siteurl)===0){
+							$prevurl = str_replace(Conf::getSiteUrl(),'',$prevurl);						
+							$this->redirect($prevurl);
+						}
+						else {
+							//the previous url is not from our domain
+							$this->redirect('users/account');
+						}
+
 					}				
 					else {
-
+						//the connexion is from the navbar formular
 						$this->reload(); 
 					}				
 					
