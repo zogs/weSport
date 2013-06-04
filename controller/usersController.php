@@ -52,21 +52,28 @@ class UsersController extends Controller{
 					$this->session->setToken();				
 					$this->session->setFlash('Vous êtes maintenant connecté','success',2);
 
-					//redirection	
-					$prevurl = $data->previous_url;	
+					//redirection						
+					
 					$currurl = $_SERVER['HTTP_REFERER'];
 					//if connexion from the login's page , redirect to previous landing page
 					if(strpos($currurl,'users/login')||strpos($currurl,'users/validate')){
 
-						$prevurl = strtolower($prevurl);
-						$siteurl = Conf::getSiteUrl();	
-						//if url from our domain redirect on the previous page 					
-						if(strpos($prevurl,$siteurl)===0){
-							$prevurl = str_replace(Conf::getSiteUrl(),'',$prevurl);						
-							$this->redirect($prevurl);
+						if(!empty($data->previous_url)){
+
+							$prevurl = $data->previous_url;	
+							$prevurl = strtolower($prevurl);
+							$siteurl = Conf::getSiteUrl();	
+							//if url from our domain redirect on the previous page 					
+							if(strpos($prevurl,$siteurl)===0){
+								$prevurl = str_replace(Conf::getSiteUrl(),'',$prevurl);						
+								$this->redirect($prevurl);
+							}
+							else {
+								//the previous url is not from our domain
+								$this->redirect('users/account');
+							}							
 						}
 						else {
-							//the previous url is not from our domain
 							$this->redirect('users/account');
 						}
 
