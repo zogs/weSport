@@ -555,7 +555,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters as S
 				JOIN events as E ON E.id = S.event_id 
-				WHERE S.user_id=$uid AND S.date_event > UNIX_TIMESTAMP() ";
+				WHERE S.user_id=$uid AND S.date_event > UNIX_TIMESTAMP() ORDER BY S.date_event ASC";
 		$res = $this->query($sql);
 
 		$events = array();
@@ -569,7 +569,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters as S
 				JOIN events as E ON E.id = S.event_id 
-				WHERE S.user_id=$uid AND S.date_event < UNIX_TIMESTAMP() ";
+				WHERE S.user_id=$uid AND S.date_event < UNIX_TIMESTAMP() ORDER BY S.date_event ASC";
 		$res = $this->query($sql);
 
 		$events = array();		

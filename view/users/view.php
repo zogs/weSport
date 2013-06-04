@@ -12,7 +12,10 @@
 				<ul>
 					<?php foreach ($hasOrganized as $event):?>
 						<li>
-							<img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->getTitle();?></a>
+							<img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>">
+								<?php echo $event->getTitle();?>
+								<small>le <?php echo Date::datefr($event->date);?></small>
+							</a>
 							<?php if(!empty($event->reviews)):?>
 							<ul>
 								
@@ -32,7 +35,10 @@
 				<h3>participe</h3>		
 				<ul>
 					<?php foreach ($futurParticipation as $event):?>
-						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>"><?php echo $event->title;?></a></li>
+						<li><img src="<?php echo $event->getSportLogo();?>"><a href="<?php echo Router::url('events/view/'.$event->id.'/'.$event->slug);?>">
+							<?php echo $event->title;?>
+							<small>le <?php echo Date::datefr($event->date);?></small>
+						</a></li>
 					<?php endforeach; ?>
 				</ul>				
 			</div>
