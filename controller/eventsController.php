@@ -745,13 +745,16 @@ class EventsController extends Controller{
 
     	foreach ($sporters as $key => $sporter) {
     		
+    		//find user
     		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
+    		//if user dont exist jump out
     		if(!$sporter->user->exist()) continue;
 
+    		//find event
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
+    		//if event dont exist jump out
     		if(!$sporter->event->exist()) continue;
     		
-
     		//jump out if the user dont want the mail
     		if(empty($sporter->user->mailOpinion)) {
     			$nb_mail_silent++;
@@ -765,10 +768,21 @@ class EventsController extends Controller{
     			continue;
     		}
 
-    		 $nb_mail_error++;
+
+    		//emailing
+	    	$subject = 'Alors c\'était comment ?!';
+	    	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
+	    	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
+	    	$body = file_get_contents('../view/email/eventPastEventReminder.html');
+			$body = preg_replace("~{site}~i", Conf::$website, $body);
+	        $body = preg_replace("~{title}~i", $sporter->event->title, $body);
+	        $body = preg_replace("~{subject}~i", $subject, $body);
+	        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
+
+    		$nb_mail_error++;
     	}
     	
-    	$timer = ' généré en '.round(microtime(true) - $debut,5).' secondes';
+    	$timer = round(microtime(true) - $debut,5).'s';
 
 
     	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters.'  '.$timer;
