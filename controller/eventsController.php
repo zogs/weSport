@@ -770,14 +770,14 @@ class EventsController extends Controller{
 
 
     		//emailing
-	    	$subject = 'Alors c\'était comment ?!';
-	    	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
-	    	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
-	    	$body = file_get_contents('../view/email/eventPastEventReminder.html');
-			$body = preg_replace("~{site}~i", Conf::$website, $body);
-	        $body = preg_replace("~{title}~i", $sporter->event->title, $body);
-	        $body = preg_replace("~{subject}~i", $subject, $body);
-	        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
+	  //   	$subject = 'Alors c\'était comment ?!';
+	  //   	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
+	  //   	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
+	  //   	$body = file_get_contents('../view/email/eventPastEventReminder.html');
+			// $body = preg_replace("~{site}~i", Conf::$website, $body);
+	  //       $body = preg_replace("~{title}~i", $sporter->event->title, $body);
+	  //       $body = preg_replace("~{subject}~i", $subject, $body);
+	  //       $body = preg_replace("~{eventlink}~i", $eventLink, $body);
 
     		$nb_mail_error++;
     	}
