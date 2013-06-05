@@ -742,6 +742,7 @@ class EventsController extends Controller{
     	$nb_mail_sended = 0;
     	$nb_mail_silent = 0;
     	$nb_mail_error = 0;
+    	$mail_content = file_get_contents('../view/email/eventPastEventReminder.html');
 
     	foreach ($sporters as $key => $sporter) {
     		
@@ -773,7 +774,7 @@ class EventsController extends Controller{
 	    	$subject = 'Alors c\'était comment ?!';
 	    	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
 	    	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
-	    	$body = file_get_contents('../view/email/eventPastEventReminder.html');
+	    	$body = $mail_content;
 	    	$body = preg_replace("~{site}~i", Conf::$website, $body);
 	        $body = preg_replace("~{title}~i", $sporter->event->title, $body);
 	        $body = preg_replace("~{subject}~i", $subject, $body);
