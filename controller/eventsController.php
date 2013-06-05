@@ -773,6 +773,7 @@ class EventsController extends Controller{
 	    	$subject = 'Alors c\'était comment ?!';
 	    	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
 	    	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
+	    	$body = file_get_contents('../view/email/eventPastEventReminder.html');
 
 
 
