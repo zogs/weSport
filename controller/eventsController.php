@@ -727,30 +727,13 @@ class EventsController extends Controller{
 
     public function testcron(){
 
-    	//if(get_class($this->request)!='Cron') exit('cron only');
+    	if(get_class($this->request)!='Cron') exit();
 
     	$this->view = 'none';
     	$this->layout = 'none';
-    	$this->loadModel('Users');
+
     	$this->loadModel('Events');
     	$this->Events->saveLog('cron','testcron','testcron');
-
-    	$sporters = $this->Events->findSportersNotYetMailed();
-    	foreach ($sporters as $key => $sporter) {
-    		
-    		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
-    		$sporter->event = $this->Events->findEventById($sporter->event_id);
-    	}
-
-    	$nb_sporters = count($sporters);
-    	$nb_mail_sended = 0;
-    	$nb_mail_silent = 0;
-    	$nb_mail_error = 0;
-
-
-    	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent;
-    	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
-    	exit($log);
     }
 
 
