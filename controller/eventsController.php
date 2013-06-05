@@ -727,7 +727,7 @@ class EventsController extends Controller{
 
     public function testcron(){
 
-    	$this->Events->saveLog('cron','testcron','testcron');
+    	
 
     	if(get_class($this->request)!='Cron') exit();
 
@@ -736,7 +736,7 @@ class EventsController extends Controller{
     	$this->loadModel('Events');
     	$this->loadModel('Users');
 
-    	$sporters = $this->Events->findSportersNotYetMailed();
+    	$sporters = array();
 
     	// foreach ($sporters as $key => $sporter) {
     		
@@ -753,6 +753,7 @@ class EventsController extends Controller{
     	
     	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters;
     	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
+    	$this->Events->saveLog('cron','testcron','testcron');
     }
 
 
