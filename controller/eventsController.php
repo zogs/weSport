@@ -727,7 +727,7 @@ class EventsController extends Controller{
 
     public function testcron(){
 
-    	
+
 
     	if(get_class($this->request)!='Cron') exit();
 
@@ -736,7 +736,7 @@ class EventsController extends Controller{
     	$this->loadModel('Events');
     	$this->loadModel('Users');
 
-    	$sporters = array();
+    	$sporters = $this->Events->findSportersNotYetMailed();
 
     	// foreach ($sporters as $key => $sporter) {
     		
