@@ -744,6 +744,25 @@ class EventsController extends Controller{
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
     	}
 
+    	foreach ($sporters as $key => $sporter) {
+    		
+    		//jump out if the user dont want the mail
+    		if(empty($sporter->user->mailOpinion)) {
+    			$nb_mail_silent++;
+    			$this->Events->mailReminderSended($sporter->id); //set the mailing to done
+    			continue;
+    		}
+
+    		//jump out if the user is the organisator
+    		if($sporter->user_id==$sporter->event->user_id){    			
+    			$this->Events->mailReminderSended($sporter->id); //set the mailing to done
+    			continue;
+    		}
+
+    		
+	        $nb_mail_error++;
+    	}
+
     	$nb_sporters = count($sporters);
     	$nb_mail_sended = 0;
     	$nb_mail_silent = 0;
@@ -753,7 +772,7 @@ class EventsController extends Controller{
     	
     	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters;
     	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
-    	
+
     }
 
 
