@@ -749,13 +749,13 @@ class EventsController extends Controller{
     		//jump out if the user dont want the mail
     		if(empty($sporter->user->mailOpinion)) {
     			$nb_mail_silent++;
-    			$this->Events->mailReminderSended($sporter->id); //set the mailing to done
+    			//$this->Events->mailReminderSended($sporter->id); //set the mailing to done
     			continue;
     		}
 
     		//jump out if the user is the organisator
     		if($sporter->user_id==$sporter->event->user_id){    			
-    			$this->Events->mailReminderSended($sporter->id); //set the mailing to done
+    			//$this->Events->mailReminderSended($sporter->id); //set the mailing to done
     			continue;
     		}
 
