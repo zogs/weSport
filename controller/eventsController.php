@@ -768,6 +768,14 @@ class EventsController extends Controller{
     			continue;
     		}
 
+
+    		//emailing
+	    	$subject = 'Alors c\'était comment ?!';
+	    	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
+	    	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
+
+
+
     		$nb_mail_error++;
     	}
     	
