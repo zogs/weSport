@@ -385,7 +385,20 @@
  	}
 
 
+ 	public function saveLog($type,$action,$log){
 
+		$s = new stdClass();
+		$s->table  = 'log';
+		$s->type   = $type;
+		$s->log    = $log;
+		$s->action = $action;
+
+		if($this->save($s)) {
+			
+			return true;
+		}
+		return false;
+	}
 
  	public function increment($data){
 

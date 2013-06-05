@@ -496,6 +496,19 @@ class EventsModel extends Model{
 		return $participants;
 	}
 
+	public function findSportersNotYetMailed(){
+		
+		$sql = "SELECT * FROM sporters WHERE date_event < UNIX_TIMESTAMP() AND mail=0";
+
+		return $this->query($sql);
+	}
+
+	public function mailReminderSended($sporter_id){
+
+		$sql = "UPDATE sporters SET mail=1 WHERE id=$sporter_id";
+		return $this->query($sql);
+	}
+
 	public function countParticipants($event_id){
 
 		$p = $this->findParticipants($event_id);
@@ -676,20 +689,7 @@ class EventsModel extends Model{
 
 	}
 
-	public function testcron($action){
-
-		$s = new stdClass();
-		$s->table = 'log';
-		$s->type = 'cron';
-		$s->log = 'result';
-		$s->action = $action;
-
-		if($this->save($s)) {
-			exit($action);
-			return true;
-		}
-		return false;
-	}
+	
 
 } 
 

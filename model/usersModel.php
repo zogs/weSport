@@ -361,11 +361,9 @@ class User {
 	}
 
 	public function getAge(){
+		if(empty($this->birthday)) return '??';
+		return date('Y-m-d') - date($this->birthdate);
 
-		if(isset($this->birthdate))
-			return date('Y-m-d') - date($this->birthdate);
-		else 
-			return 'N.A';
 	}
 
 	public function getBirthyear(){
