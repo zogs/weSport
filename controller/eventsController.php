@@ -727,9 +727,9 @@ class EventsController extends Controller{
 
     public function testcron(){
 
-
-
     	if(get_class($this->request)!='Cron') exit();
+
+    	$debut = microtime(true);
 
     	$this->view = 'none';
     	$this->layout = 'none';
@@ -768,8 +768,10 @@ class EventsController extends Controller{
     		 $nb_mail_error++;
     	}
     	
-    	
-    	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters;
+    	$timer = ' généré en '.round(microtime(true) - $debut,5).' secondes';
+
+
+    	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters.'  '.$timer;
     	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
 
     }
