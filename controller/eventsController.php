@@ -747,8 +747,9 @@ class EventsController extends Controller{
     		
     		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
     		if(!$sporter->user->exist()) continue;
-    		
+
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
+    		if(!$sporter->event->exist()) continue;
     		
 
     		//jump out if the user dont want the mail
