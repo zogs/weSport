@@ -262,9 +262,9 @@ class Controller {
 
 	public function getLang(){
 		
-		if($this->request->get('lang')) return $this->request->get('lang');
-		if($this->session->user()->getLang()) return $this->session->user()->getLang();
-		if($this->CookieRch->read('lang')) return $this->CookieRch->read('lang');
+		if(isset($this->request) && $this->request->get('lang')) return $this->request->get('lang');
+		if(isset($this->session) && $this->session->user()->getLang()) return $this->session->user()->getLang();
+		if(isset($this->CookieRch) && $this->CookieRch->read('lang')) return $this->CookieRch->read('lang');
 
 		return Conf::$languageDefault;
 	}
