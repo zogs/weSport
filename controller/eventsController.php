@@ -659,6 +659,7 @@ class EventsController extends Controller{
 
     public function sendMailUserEventOpinion(){
 
+
     	//if not cron job exit
     	if(get_class($this->request)!='Cron') exit();
     	
@@ -718,10 +719,23 @@ class EventsController extends Controller{
 
 
     	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent;
-    	$this->Events->saveLog('mail','sendMailUserEventOpinion',$log);
+    	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
 
     	exit($log);
     	
+    }
+
+    public function testcron(){
+
+    	if(get_class($this->request)!='Cron') exit('cron only');
+
+    	$this->view = 'none';
+    	$this->layout = 'none';
+
+    	$this->loadModel('Events');
+    	$this->Events->saveLog('cron','testcron','testcron');
+
+    	exit('testcron');
     }
 
 
