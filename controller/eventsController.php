@@ -779,14 +779,16 @@ class EventsController extends Controller{
 	        $body = preg_replace("~{subject}~i", $subject, $body);
 	        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
 
+	        if($this->sendEmails($sporter->user->email,$subject,$body)){
 
+	        	$this->Events->mailReminderSended($sporter->id);
+	        	$nb_mail_sended++;
 
-    		$nb_mail_error++;
+	        }
+	        else $nb_mail_error++;
     	}
     	
     	$timer = round(microtime(true) - $debut,5).'s';
-
-
     	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters.'  '.$timer;
     	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
 
