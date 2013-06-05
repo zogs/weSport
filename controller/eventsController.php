@@ -744,12 +744,7 @@ class EventsController extends Controller{
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
     	}
 
-    	foreach ($sporters as $key => $sporter) {
-    		    		
-
-    		
-	        $nb_mail_error++;
-    	}
+    	
 
     	$nb_sporters = count($sporters);
     	$nb_mail_sended = 0;
