@@ -746,6 +746,8 @@ class EventsController extends Controller{
     	foreach ($sporters as $key => $sporter) {
     		
     		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
+    		if(!$sporter->user->exist()) continue;
+    		
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
     		
 
