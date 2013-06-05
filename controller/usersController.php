@@ -24,7 +24,7 @@ class UsersController extends Controller{
 				$field = 'login';
 			
 			$user = $this->Users->findFirstUser(array(
-				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account,age',
+				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account,birthdate',
 				'conditions' => array($field=>$login,'valid'=>1))
 			);
 
@@ -78,7 +78,7 @@ class UsersController extends Controller{
 				}						
 			}
 			else {
-				$this->session->setFlash("Le ".$field." <strong>".$data->login."</strong> n'existe pas dans la base de donnée",'error');
+				$this->session->setFlash("Le ".$field." <strong>".$data->login."</strong> n'existe pas ou le compte n'a pas été activé...",'error');
 			}
 			$data->password = "";				
 
@@ -191,7 +191,7 @@ class UsersController extends Controller{
 			}
 
 			//Save
-			if($this->Users->save($user)) {
+			if($this->Users->saveUser($user)) {
 
 				$user_id = $this->Users->id;
 
@@ -206,6 +206,8 @@ class UsersController extends Controller{
 					else {
 						$this->session->setFlash("Il y a eu une erreur lors de l'envoi de l'email de validation", "error");
 					}
+
+					$this->redirect('users/login');
 			}
 			else {
 				debug($user);

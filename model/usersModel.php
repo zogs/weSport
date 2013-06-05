@@ -28,16 +28,28 @@ class UsersModel extends Model{
 			'nom' => array(
 				'rule' => 'optional',
 				),
-			'age' => array(
+			'day' => array(
 				'rules'=> array(
 							array(
-								'rule'=> '19[0-9]{1}[0-9]{1}',
-								'message'=> "Between 1900 and 1999..."
-							),
+								'rule'=> '[0-9]{1,2}',
+								'message'=> "Votre jour de naissance n'est pas correct"
+							),							
+						)
+				),
+			'month' => array(
+				'rules'=> array(
 							array(
-								'rule'=>'optional',
-								'message'=>''
-							)
+								'rule'=> '[0-9]{1,2}',
+								'message'=> "Votre mois de naissance n'est pas correct"
+							),							
+						)
+				),
+			'year' => array(
+				'rules'=> array(
+							array(
+								'rule'=> '[0-9]{4}',
+								'message'=> "Votre année de naissance n'est pas correct"
+							),							
 						)
 				)
 		),
@@ -113,7 +125,16 @@ class UsersModel extends Model{
 		if(isset($user->action)) unset($user->action);
 		//set user_id for updating
 		if(isset($user_id)) $user->user_id = $user_id;
-		//if there is nothing to save
+
+		//birthday
+		if(isset($user->day)&&isset($user->month)&&isset($user->year)){
+			$user->birthdate = $user->year.'-'.$user->month.'-'.$user->day;
+			unset($user->day);
+			unset($user->month);
+			unset($user->year);
+		}
+
+		//maybye there is nothing to save
 		$tab = (array) $user;
 		if( (count($tab)==0 ) || (count($tab)==1 && isset($tab['user_id'])))
 			return true;	
@@ -341,14 +362,29 @@ class User {
 
 	public function getAge(){
 
-		if(isset($this->age))
-			return date('Y')-$this->age;
+		if(isset($this->birthdate))
+			return date('Y-m-d') - date($this->birthdate);
 		else 
 			return 'N.A';
 	}
 
 	public function getBirthyear(){
-		return $this->age;
+		$d = explode('-',$this->birthdate);
+		return $d[0];
+	}
+	public function getBirthMonth(){
+		$d = explode('-',$this->birthdate);
+		return $d[1];
+	}
+	public function getBirthDay(){
+		$d = explode('-',$this->birthdate);
+		return $d[2];
+	}
+	public function getBirthDate(){
+		if(isset($this->birthdate)) return $this->birthdate;
+	}
+	public function getSexe(){		
+		if(!empty($this->sexe)) return $this->sexe;
 	}
 
 }

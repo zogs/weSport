@@ -53,8 +53,16 @@
 										
 						
 						<?php echo $this->Form->input('prenom','Prenom',array('icon'=>'icon-user','placeholder'=>'Prenom')); ?>
-						<?php echo $this->Form->input('nom','Nom',array('icon'=>'icon-user','placeholder'=>'Nom')); ?>					
-						<?php echo $this->Form->SelectNumber('age','Année de naissance',2006,1950,array('default'=>$user->age,'icon'=>'icon-gift','placeholder'=>"( Votre année de naissance )")) ;?>	
+						<?php echo $this->Form->input('nom','Nom',array('icon'=>'icon-user','placeholder'=>'Nom')); ?>	
+						<?php echo $this->Form->select('sexe','Sexe',array('h'=>'Homme','f'=>'Femme'),array('placeholder'=>'Sexe','icon'=>'icon-star-empty','default'=>$user->getSexe())); ?>				
+						<div class="control-group" id="control-birthday">
+							<label for="birthday" class="control-label">Anniversaire</label>
+							<div class="controls">
+								<?php echo $this->Form->_select('day',Form::MonthDays(),array('default'=>$user->getBirthDay(),'style'=>'width:30%;float:left','icon'=>'icon-gift')); ?>
+								<?php echo $this->Form->_select('month',Form::Months(),array('default'=>$user->getBirthMonth(),'style'=>'width:30%;float:left')); ?>
+								<?php echo $this->Form->_selectNumber('year',2003,1940,array('default'=>$user->getBirthYear(),'style'=>'width:30%;float:left')) ?>
+							</div>
+						</div>						
 
 						<div class="control-group">	
 							<label for="CC1" class="control-label">Localisation</label>			

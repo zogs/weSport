@@ -189,6 +189,7 @@ class Form{
 		(isset($params['default']))? $selected = $params['default'] : $selected = '';
 		(isset($params['placeholder']))? $placeholder = $params['placeholder'] : $placeholder = '';
 		(isset($params['javascript']))? $javascript = $params['javascript'] : $javascript = '';
+		(isset($params['style']))? $style = $params['style'] : $style = '';
 
 		$years = array();
 
@@ -224,11 +225,16 @@ class Form{
 		(isset($params['placeholder']))? $placeholder = $params['placeholder'] : $placeholder = '';
 		(isset($params['javascript']))? $javascript = $params['javascript'] : $javascript = '';
 		(isset($params['style']))? $style = $params['style'] : $style = '';
+		(isset($params['icon']))? $icon = $params['icon'] : $icon = '';
 
 		if(!empty($options))
 		{
 
-			$html ='<select id="'.$id.'" name="'.$id.'" class="'.$class.'" style="'.$style.'" '.$javascript.' >';
+			$html = '';
+			
+			if(!empty($params['icon'])) $html .= '<i class="icon-form '.$params['icon'].'"></i>';
+
+			$html .='<select id="'.$id.'" name="'.$id.'" class="'.$class.'" style="'.$style.'" '.$javascript.' >';
 			$html .= '<option value=" ">'.$placeholder.'</options>';
 			
 			if(is_object($options)) $options = (array) $options;
@@ -414,6 +420,17 @@ class Form{
 
 		return array('00'=>'00','10'=>'10','20'=>'20','30'=>'30','40'=>'40','50'=>'50');
 	}
+
+	public static function MonthDays(){
+
+		return array('01'=>'01','02'=>'02','03'=>'03','04'=>'04','05'=>'05','06'=>'07','08'=>'08','09'=>'09','10'=>'10','11'=>'11','12'=>'12','13'=>'13','14'=>'14','15'=>'15','16'=>'16','17'=>'17','18'=>'18','19'=>'19','20'=>'20','21'=>'21','22'=>'22','23'=>'23','24'=>'24','25'=>'25','26'=>'26','27'=>'27','28'=>'28','29'=>'29','30'=>'30','31'=>'31');
+	}
+
+	public static function Months(){
+
+		return array('01'=>'Janvier','02'=>'Février','03'=>'Mars','04'=>'Avril','05'=>'Mai','06'=>'Juin','07'=>'Juillet','08'=>'Août','09'=>'Septembre','10'=>'Octobre','11'=>'Novembre','12'=>'Décembre');
+	}
+
 }
 
  ?>
