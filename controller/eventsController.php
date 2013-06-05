@@ -738,11 +738,11 @@ class EventsController extends Controller{
 
     	$sporters = $this->Events->findSportersNotYetMailed();
 
-    	// foreach ($sporters as $key => $sporter) {
+    	foreach ($sporters as $key => $sporter) {
     		
-    	// 	$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
-    	// 	$sporter->event = $this->Events->findEventById($sporter->event_id);
-    	// }
+    		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
+    		$sporter->event = $this->Events->findEventById($sporter->event_id);
+    	}
 
     	$nb_sporters = count($sporters);
     	$nb_mail_sended = 0;
@@ -753,7 +753,7 @@ class EventsController extends Controller{
     	
     	$log = 'Mail sended:'.$nb_mail_sended.', error:'.$nb_mail_error.' , silent:'.$nb_mail_silent.'  total:'.$nb_sporters;
     	$this->Events->saveLog('cron mail','events/sendMailUserEventOpinion',$log);
-    	$this->Events->saveLog('cron','testcron','testcron');
+    	
     }
 
 
