@@ -5,6 +5,7 @@ class PagesController extends Controller {
 
 		public function home( $day = null ){					
 
+			
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
@@ -13,12 +14,12 @@ class PagesController extends Controller {
 			if($day === null ){
 
 					$params['date'] = date('Y-m-d');				
+
 			}
 			else {
-
 				$params['date'] = $day;
 				$cookie = $this->cookieEventSearch->arr();
-				$cookie['date'] = $day;			
+				$cookie['date'] = $day;						
 				$this->cookieEventSearch->write($cookie);
 				
 			}
