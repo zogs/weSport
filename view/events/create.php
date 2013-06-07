@@ -38,7 +38,7 @@
 						</div>
 					</div>
 					<?php //echo $this->Form->input('time','Heure du rendez-vous',array('type'=>'time','placeholder'=>'ex: 06:00, 13:00, 18:30 , ...','value'=>(isset($event->time)? $event->time : '12:00'))) ;?>
-					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Nombre de participants minimum pour que l'évènement ait lieu","value"=>(isset($event->nbmin)? $event->nbmin : '2'))) ;?>					
+					<?php echo $this->Form->input('nbmin','Nombre minimum',array("type"=>"number",'placeholder'=>"Minimum 2 (vous inclus)","value"=>(isset($event->nbmin)? $event->nbmin : ''))) ;?>					
 					<?php echo $this->Form->input('description','Descriptif',array('type'=>'textarea','rows'=>'5','placeholder'=>"Préciser niveau de jeu, matériel à amener, le coût (si location de la salle ou autre), préciser la durée, le fonctionnement de l'activité, mixité ou non et si les «pompom girls» ou «pompom boys» sont accepté(e)s !!! Il en faut pour toutes et tous haha!")) ;?>
 					<?php echo $this->Form->input("phone","Téléphone",array("type"=>"tel","placeholder"=>"optionnel")) ;?>
 									

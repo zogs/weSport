@@ -48,8 +48,11 @@ foreach ($events as $date => $evts):
 					</div>
 
 					<div class="events-content">
-						<span class="events-title"><?php if($event->confirmed==1):?><span class="label label-success"><i class="icon icon-white icon-ok"></i></span><?php endif;?><?php echo $event->title; ?></span>	
-						<span class="events-city">à <?php echo $event->getCityName(); ?></span>	
+						<span class="events-title">
+							<?php if($event->confirmed==1):?><span class="label label-success"><i class="icon icon-white icon-ok"></i></span><?php endif;?>
+							<?php echo $event->title; ?>
+							<?php if(isset($event->UserParticipation)): ?><span class="label label-important"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
+						</span>							
 				
 						<div class="events-info">							
 							
