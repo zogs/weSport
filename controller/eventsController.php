@@ -484,9 +484,9 @@ class EventsController extends Controller{
 		//pour chaque participants on cherche son email dans la bdd
 		foreach ($sporters as $sporter) {
 
-			if($withAuthor===false && $sporter->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
-
 			$user = $this->Users->findFirstUser(array('fields'=>'user_id,email','conditions'=>array('user_id'=>$sporter->user_id)));			
+			
+			if($withAuthor===false && $user->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
 			
 			if($user->exist()) $emails[] = $user->email;
 		}
