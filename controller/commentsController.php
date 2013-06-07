@@ -266,15 +266,14 @@
 
 	 			if($id = $this->Comments->saveComment($com)){
 
+	 				if($com->context=='events'){
+	 					$event = new EventsController();
+	 					$event->sendMailNewReply($com->reply_to,$id);
+ 					}
+
 	 				$com = $this->Comments->getComment($com->reply_to);
 	 				if($com->isEmpty()) $d['fail'] = 'the comment is empty';
 	 				$d['com']  = $com;
-
-	 				if($com->context=='events'){
-
- 					$event = new EventsController();
- 					$event->sendMailNewReply($com->reply_to,$id);
- 				}
 	 			
 	 			} else 
 	 				$d['fail'] = 'Error while saving comment (reply:commentsModel)';	 			
