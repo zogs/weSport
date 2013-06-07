@@ -568,6 +568,8 @@ class EventsController extends Controller{
     	$com = $this->Comments->getComment($comment_id);
     	$content = $com->content;
 
+    	if($event->author->user_id==$com->user_id) return false;
+
     	$user = $com->user;
     	$subject = $user->login.' vous a posé une question !';
 
@@ -578,6 +580,51 @@ class EventsController extends Controller{
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
         $body = preg_replace("~{user}~i", $user->login, $body);
+        $body = preg_replace("~{comment}~i", $content, $body);
+        $body = preg_replace("~{subject}~i", $subject, $body);
+        $body = preg_replace("~{lien}~i", $lien, $body);
+
+        if($this->sendEmails($email,$subject,$body)) return true;
+        else return false;
+
+    }
+
+    public function sendMailNewReply($comment_id,$reply_id){
+
+    	if(!is_numeric($reply_id)) throw new zException("Error Processing Request", 1);
+    	if(!is_numeric($comment_id)) throw new zException("Error Processing Request", 1);
+    	
+
+    	$this->loadModel('Events');
+    	$this->loadModel('Comments');
+    	$this->view = 'none';
+    	$this->layout = 'none';
+
+    	$comment = $this->Comments->getComment($comment_id);
+    	if(!$comment->exist()) exit('comment not exist');
+
+    	$reply = $this->Comments->getComment($reply_id);
+    	if(!$reply->exist()) exit('reply not exist');
+
+    	$event = $this->Events->findEventById($comment->context_id);
+    	if(!$event->exist()) exit('event not exist');
+
+    	$email = $comment->user->email;    	
+
+    	$content = $reply->content;
+
+    	if($event->author->user_id==$comment->user_id) exit('user reply to himself');
+    	
+
+    	$subject = $reply->user->login.' vous a répondu !';
+
+    	$body = file_get_contents('../view/email/eventNewReply.html');
+
+    	$lien = Conf::getSiteUrl()."/events/view/".$event->id."/".$event->slug;
+
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{title}~i", $event->title, $body);
+        $body = preg_replace("~{user}~i", $reply->user->login, $body);
         $body = preg_replace("~{comment}~i", $content, $body);
         $body = preg_replace("~{subject}~i", $subject, $body);
         $body = preg_replace("~{lien}~i", $lien, $body);

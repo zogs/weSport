@@ -495,6 +495,12 @@ class Comment {
 		}
 	}
 
+	public function exist(){
+
+		if(isset($this->id)) return true;
+		return false;
+	}
+
 	public function haveReplies(){
 
 		return (!empty($this->replies))? true : false;
