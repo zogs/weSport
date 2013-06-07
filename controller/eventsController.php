@@ -670,7 +670,7 @@ class EventsController extends Controller{
 
     	$sporters = $this->Events->findSportersNotYetMailed();
 
-    	$nb_sporters = count($sporters);
+    	$nb_sporters = 0;
     	$nb_mail_sended = 0;
     	$nb_mail_silent = 0;
     	$nb_mail_error = 0;
@@ -703,6 +703,8 @@ class EventsController extends Controller{
     			continue;
     		}
 
+    		$nb_sporters++;
+
 
     		//emailing
 	    	$subject = 'Alors c\'était comment ?!';
@@ -714,7 +716,7 @@ class EventsController extends Controller{
 	        $body = preg_replace("~{subject}~i", $subject, $body);
 	        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
 
-	        debug($boby);
+	        debug($body);
 	        // if($this->sendEmails($sporter->user->email,$subject,$body)){
 
 	        // 	$this->Events->mailReminderSended($sporter->id);
