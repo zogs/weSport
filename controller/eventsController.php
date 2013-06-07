@@ -676,8 +676,7 @@ class EventsController extends Controller{
     	$nb_mail_error = 0;
     	$mail_content = file_get_contents('../view/email/eventPastEventReminder.html');
 
-    	debug($mail_content);
-    	exit();
+    	
 
     	foreach ($sporters as $key => $sporter) {
     		
@@ -715,13 +714,14 @@ class EventsController extends Controller{
 	        $body = preg_replace("~{subject}~i", $subject, $body);
 	        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
 
-	        if($this->sendEmails($sporter->user->email,$subject,$body)){
+	        debug($boby);
+	        // if($this->sendEmails($sporter->user->email,$subject,$body)){
 
-	        	$this->Events->mailReminderSended($sporter->id);
-	        	$nb_mail_sended++;
+	        // 	$this->Events->mailReminderSended($sporter->id);
+	        // 	$nb_mail_sended++;
 
-	        }
-	        else $nb_mail_error++;
+	        // }
+	        // else $nb_mail_error++;
     	}
     	
     	$timer = round(microtime(true) - $debut,5).'s';
