@@ -716,14 +716,14 @@ class EventsController extends Controller{
 	        $body = preg_replace("~{subject}~i", $subject, $body);
 	        $body = preg_replace("~{eventlink}~i", $eventLink, $body);
 
-	        debug($body);
-	        // if($this->sendEmails($sporter->user->email,$subject,$body)){
+	        
+	        if($this->sendEmails($sporter->user->email,$subject,$body)){
 
-	        // 	$this->Events->mailReminderSended($sporter->id);
-	        // 	$nb_mail_sended++;
+	        	$this->Events->mailReminderSended($sporter->id);
+	        	$nb_mail_sended++;
 
-	        // }
-	        // else $nb_mail_error++;
+	        }
+	        else $nb_mail_error++;
     	}
     	
     	$timer = round(microtime(true) - $debut,5).'s';
