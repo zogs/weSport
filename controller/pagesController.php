@@ -78,30 +78,51 @@ class PagesController extends Controller {
 		// $param $id id du post dans la bdd
 		public function view($id){
 
-				//On charge le model
-				$this->loadModel('Posts');
-				//On utlise la methode findFirst du model
-				$page = $this->Posts->findFirst(array(
-					'conditions'=> array('id'=>$id,'online'=>1,'type'=>'page') //En envoyant les parametres
-					));
-				//Si le resultat est vide on dirige sur la page 404
-				if(empty($page)){
-					$this->e404('Page introuvable');
-				}
-				//Atttribution de l'objet $page a une variable page
-				$this->set('page',$page);
-
+			//On charge le model
+			$this->loadModel('Pages');
 				
+			//On cherche la page		
+			$page = $this->Pages->getPage($id);
+
+			//Si la page n'existe pas on redirige sur 404
+			if(empty($page)){
+				$this->e404('Page introuvable');
+			}
+
+			//On cherche le contenu
+			$page = $this->Pages->JOIN_i18n($page, $this->getLang());
+
+			//Si la traduction demandé n'existe pas on cherche la langue par default , si n'existe pas redirege 404
+			if(!$page->isTraductionExist() || !$page->isTraductionValid()){
+				Session::setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$id.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
+				$this->e404('Page introuvable');
+			}
+
+			//Atttribution de l'objet $page a une variable page
+			$this->set('page',$page);				
 		}
 
 		//Permet de recuperer les pages pour le menu
 		public function getMenu(){
 
-			$this->loadModel('Posts');
-			return $this->Posts->find(array(
-				'conditions'=> array('online'=>1,'type'=>'page')
+			$this->loadModel('Pages');
 
-				));
+			//get requested lang
+			$lang = $this->getLang();
+			//search all pages to appears in menu
+			$pages = $this->Pages->findPages();
+			//find all traduction for requested language
+			$pages = $this->Pages->JOINS_i18n($pages, $lang);
+			//Unset page that have no traduction for requested lang
+			foreach ($pages as $k => $page) {				
+				if(!$page->isTraductionExist() || $page->isTraductionValid() )  unset($pages[$k]);
+			}
+
+			//return pages if exist
+			if(!empty($pages))
+				return  $pages;	
+			else 
+				return array();				
 		}
 
 
@@ -175,33 +196,33 @@ class PagesController extends Controller {
 
 		public function sendMailContact($sender_name,$sender_mail,$title,$message){
 
-			//Création d'une instance de swift mailer
-	        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+				//Création d'une instance de swift mailer
+			        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
 
-	        //Récupère le template et remplace les variables
-	        $body = file_get_contents('../view/email/contact.html');
-	        $body = preg_replace("~{site}~i", Conf::$website, $body);
-	        $body = preg_replace("~{title}~i", $title, $body);
-	        $body = preg_replace("~{name}~i", $sender_name, $body);
-	        $body = preg_replace("~{date}~i", Date::datefr(date('Y-m-d')), $body);
-	        $body = preg_replace("~{message}~i", $message, $body);
+			        //Récupère le template et remplace les variables
+			        $body = file_get_contents('../view/email/contact.html');
+			        $body = preg_replace("~{site}~i", Conf::$website, $body);
+			        $body = preg_replace("~{title}~i", $title, $body);
+			        $body = preg_replace("~{name}~i", $sender_name, $body);
+			        $body = preg_replace("~{date}~i", Date::datefr(date('Y-m-d')), $body);
+			        $body = preg_replace("~{message}~i", $message, $body);
 
-	        //Création du mail
-	        $message = Swift_Message::newInstance()
-	          ->setSubject("Contact de - ".$sender_name)
-	          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
-	          ->setTo(Conf::$contactEmail)
-	          ->setBody($body, 'text/html', 'utf-8');          
-	       
-	        //Envoi du message et affichage des erreurs éventuelles
-	        if (!$mailer->send($message, $failures))
-	        {
-	            echo "Erreur lors de l'envoi du email à :";
-	            print_r($failures);
-	            return false;
-	        }
-	        else return true;
-			}
+			        //Création du mail
+			        $message = Swift_Message::newInstance()
+			          ->setSubject("Contact de - ".$sender_name)
+			          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+			          ->setTo(Conf::$contactEmail)
+			          ->setBody($body, 'text/html', 'utf-8');          
+			       
+			        //Envoi du message et affichage des erreurs éventuelles
+			        if (!$mailer->send($message, $failures))
+			        {
+			            echo "Erreur lors de l'envoi du email à :";
+			            print_r($failures);
+			            return false;
+			        }
+			        else return true;
+		}
 }
 
 ?>
