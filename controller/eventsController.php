@@ -194,20 +194,19 @@ class EventsController extends Controller{
 				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success",4);
 
 				//Prévenir l'organisateur
-				$this->sendNewParticipant($event,$user);
+				if($this->sendNewParticipant($event,$user)){
 
-				//nombre actuel de participants
-				$nbparticip = $this->Events->countParticipants($event->id);
-
-				//Si ne nombre est atteint, on confirme l'evenement
-				if($event->nbmin == $nbparticip ) {
-
-					$this->Events->confirmEvent($event->id);
-
-					//Envoi un mailing  aux participants
-					$this->sendEventConfirmed($event);
+					//Vérifier si le nombre est atteint
+					//nombre actuel de participants
+					$nbparticip = $this->Events->countParticipants($event->id);
+					//Si ne nombre est atteint
+					if($event->nbmin == $nbparticip ) {
+						// on confirme l'evenement
+						$this->Events->confirmEvent($event->id);
+						//Envoi un mailing  aux participants
+						$this->sendEventConfirmed($event);
+					}
 				}
-
 
 			}
 			else
@@ -249,23 +248,29 @@ class EventsController extends Controller{
 
 			//On vérifie qu'il participe
 			$check = $this->Users->findFirst(array('table'=>'sporters','fields'=>'id','conditions'=>array('user_id'=>$data->user_id,'event_id'=>$data->event_id)));
-			
+			//Si il participe
 			if(!empty($check)) {
-				
+				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
-
+					//On previens
 					$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);
-					
+					//On vérifie si le nombre min nest pas atteint
 					//nombre actuel de participants
 					$nbparticip = $this->Events->countParticipants($event->id);
-
-					//Si ne nombre est atteint, on confirme l'evenement
+					//Si ne nombre est atteint, on annule l'evenement
 					if( $nbparticip == $event->nbmin-1 ) {
+						//on annule l'événement
+						if($this->Events->cancelEvent($event->id)){
+							//on previens
+							$this->session->setFlash("L'événement est suspendu...","warning",2);
+							//on envoi un mailing  aux participants
+							if($this->sendEventCanceled($event)) {
 
-						if($this->Events->cancelEvent($event->id)) $this->session->setFlash("L'événement est suspendu...","warning",2);
+								$this->session->setFlash("Les participants ont été prévenues","warning",3);	
+							}
 
-						//Envoi un mailing  aux participants
-						if($this->sendEventCanceled($event)) $this->session->setFlash("Les participants ont été prévenues","warning",3);
+						} 
+	
 					}
 
 				}

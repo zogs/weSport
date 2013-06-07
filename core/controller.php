@@ -332,7 +332,8 @@ class Controller {
 		if(empty($emails)) return true;
 
 		//Création d'une instance de swift mailer
-        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+		if(!isset($mailer))
+			$mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
 
         //Création du mail
         $message = Swift_Message::newInstance()
