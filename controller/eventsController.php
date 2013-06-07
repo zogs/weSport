@@ -676,6 +676,9 @@ class EventsController extends Controller{
     	$nb_mail_error = 0;
     	$mail_content = file_get_contents('../view/email/eventPastEventReminder.html');
 
+    	debug($mail_content);
+    	exit();
+
     	foreach ($sporters as $key => $sporter) {
     		
     		//find user
