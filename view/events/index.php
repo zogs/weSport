@@ -52,14 +52,7 @@ foreach ($events as $date => $evts):
 							<?php if($event->confirmed==1):?><span class="label label-success"><i class="icon icon-white icon-ok"></i></span><?php endif;?>
 							<?php echo $event->title; ?>
 							<?php if(isset($event->UserParticipation)): ?><span class="label label-important"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
-						</span>							
-				
-						<div class="events-info">							
-							
-							<span class="events-users">avec <b><?php echo $event->author->getLogin();?></b> <?php echo '('.$event->author->getAge().' ans)';?> 						
-							<?php if($event->getNbParticipants()>1) echo 'et '.$event->getNbParticipants().' autres'; ?>
-							</span>												
-						</div>
+						</span>																	
 											
 					</div>
 				</a>
