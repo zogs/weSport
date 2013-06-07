@@ -94,7 +94,7 @@ class PagesController extends Controller {
 
 			//Si la traduction demandé n'existe pas on cherche la langue par default , si n'existe pas redirege 404
 			if(!$page->isTraductionExist() || !$page->isTraductionValid()){
-				Session::setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$id.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
+				$this->session->setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$id.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
 				$this->e404('Page introuvable');
 			}
 
@@ -110,7 +110,7 @@ class PagesController extends Controller {
 			//get requested lang
 			$lang = $this->getLang();
 			//search all pages to appears in menu
-			$pages = $this->Pages->findPages();
+			$pages = $this->Pages->findAllPages();			
 			//find all traduction for requested language
 			$pages = $this->Pages->JOINS_i18n($pages, $lang);
 			//Unset page that have no traduction for requested lang
@@ -123,6 +123,104 @@ class PagesController extends Controller {
 				return  $pages;	
 			else 
 				return array();				
+		}
+
+		public function admin_index(){
+
+			$this->loadModel('Pages');
+
+			if($this->request->post()){
+
+				if($this->Pages->savePage($this->request->post())){
+
+					$this->session->setFlash("Page sauvegardé !","success");
+				}
+				else
+					$this->session->setFlash("message","type");
+			}
+
+			$lang = $this->getLang();
+
+			$pages = $this->Pages->findAllPages();			
+			$traductions = $this->Pages->countPagesTraduction($pages);
+			$pages = $this->Pages->JOINS_i18n($pages,$lang);			
+
+			if(empty($pages)) $pages = array();
+
+			$d['traductions'] = $traductions;
+			$d['pages'] = $pages;
+			$d['lang'] = $lang;
+			
+			$this->set($d);			
+		}
+
+		public function admin_delete($id){
+
+			$this->loadModel('Pages');
+
+			if($this->Pages->deleteContent($id)){
+
+				$this->session->setFlash("Page supprimé","success");
+
+				if($this->Pages->deletei18nContents($id)){
+					$this->session->setFlash("Traductions supprimés","success");
+				}
+				else {
+					$this->session->setFlash("Error lors de la suppression des traductions","error");
+				}				
+			}
+			else {
+				$this->session->setFlash("Error lors de la suppression","error");
+			}
+			$this->redirect('admin/pages/index');
+		}
+
+		public function admin_edit($id = null){
+
+			$this->loadModel('Pages');
+			$d['id'] = $id;
+
+			$lang = $this->getLang();		
+
+			if($this->request->data){
+
+				$new = $this->request->data;
+				$new->slug = String::slugify($new->title);
+
+				if($this->Pages->validates($new)){
+					
+					if($page_id = $this->Pages->savePage($new)){
+
+						if($this->Pages->saveTraduction($new,$page_id)){
+
+							$this->session->setFlash("Page saved","success");
+							$this->redirect('admin/pages/edit/'.$page_id.'?lang='.$lang);
+						}
+					}
+					else
+						$this->session->setFlash("Error saving page","error");
+				}
+
+				//on recupere la langue des données envoyés
+				$lang = $new->lang;
+			}
+							
+			if($id){
+				$c = $this->Pages->getContent($id);
+				$c = $this->Pages->JOIN_i18n($c,$lang);
+
+				$trad = $this->Pages->findTraduction($id);
+				
+				$d['id'] = $id;
+				$d['trad'] = $trad;
+				$d['content'] = $c;
+				$this->request->data = $c;
+				
+			}
+
+			
+
+			$this->set($d);
 		}
 
 

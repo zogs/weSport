@@ -70,7 +70,7 @@
 		<div class="container">
 			<ul>
 				<li><a href="<?php echo Router::url('pages/view/conditions');?>">Conditions d'utilisations</li>
-				<li><a href="<?php echo Router::url('pages/view/metions');?>">Mentions Légales</li>
+				<li><a href="<?php echo Router::url('pages/view/mentions');?>">Mentions Légales</li>
 				<li><a href="<?php echo Router::url('pages/view/apropos');?>">A Propos de nous</li>
 				<li><a href="<?php echo Router::url('pages/contact');?>">Contact</li>
 			</ul>

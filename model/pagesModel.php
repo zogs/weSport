@@ -32,13 +32,18 @@ class PagesModel extends Model {
 		return new Page($page);
 	}
 
-	public function findPages(){
+	public function findAllPages(){
 
 		$pages = $this->find(array('conditions'=>array('type'=>'page')));				
 		foreach ($pages as $key => $page) {
 			$pages[$key] = new Page($page);
 		}
 		return $pages;
+	}
+
+	public function findPage($params){
+
+		//$page = $this->findFirst(array('conditions'=>$params));
 	}
 
 	public function countContent( $type , $lang){
@@ -50,12 +55,13 @@ class PagesModel extends Model {
 
 		$sql = "SELECT lang FROM $this->table_i18n WHERE page_id=$page_id";
 		$res = $this->query($sql);
-
 		$langs = array();
 		foreach ($res as $r) {
 			$langs[] = $r->lang;
-		}		
-		return $langs;
+		}	
+		
+		if(!empty($langs)) return $langs;
+		else return array();
 	}
 	public function findTraductions($pages){
 
@@ -109,35 +115,22 @@ class PagesModel extends Model {
 		else return false;
 	}
 
-	public function saveContent($data){
+	public function saveTraduction($data,$page_id){
 
 		
-		//Champs des tables
-		$page_fields = array('id','position','type','date','online','menu','langDefault');
-		$i18n_fields = array('id_i18n','page_id','lang','content','title','date','valid','slug');
-		
-		//On sauvegarde les métadata de la page
-		$c = new stdClass();		
-		foreach ($page_fields as $key) {			
-			if(!empty($data->$key)) $c->$key = $data->$key;
-		}
-		if($this->save($c)) 
-			$pageID = $this->id; //On recupere l'ID de la page
-		else
-			throw new zException("Error saving page metadata", 1);
-
+		$i18n_fields = array('id_i18n','page_id','lang','content','title','date','valid','slug');		
 		
 		//On sauvegarde la traduction de la page
 		$i18n = new stdClass();
 		$i18n->table = $this->table_i18n;
 		$i18n->key = 'id_i18n';
-		$i18n->page_id = $pageID;
+		$i18n->page_id = $page_id;
 		foreach ($i18n_fields as $key) {			
 			if(isset($data->$key)) $i18n->$key = $data->$key;
 		}	
 		
 		 if($this->save($i18n)) 
-		 	return $pageID;
+		 	return $page_id;
 		 else
 		 	throw new zException("Error saving i18n content", 1);
 
@@ -151,14 +144,19 @@ class PagesModel extends Model {
 		$p->type = 'page';
 
 		if(!empty($data->id)){
-			$p->id = $data->id;
+			$p->id = $data->id;			
+		}
+		else {
+			$p->titleDefault = $data->title;
+			$p->langDefault = $data->lang;
+			$p->slugDefault = String::slugify($data->title);
 		}
 
 		$p->table = $this->table;
 		$p->key = 'id';
 
-		if($this->save($p)){
-			return true;
+		if($id = $this->save($p)){
+			return $id;
 		}
 	}
 

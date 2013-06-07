@@ -1,8 +1,12 @@
 <div class="page-header">
 	<h1>Editer une page</h1>
-	<?php foreach ($trad as $lang) : ?> 
+	<?php
+	if(isset($trad)):
+	 foreach ($trad as $lang) : ?> 
 	<a href="?lang=<?php echo $lang;?>"><i class="flag flag-<?php echo $this->getFlagLang($lang);?>"></i> <?php echo Conf::$languageAvailable[$lang];?></a>
-	<?php endforeach; ?>
+	<?php endforeach;
+	endif;
+	 ?>
 </div>
 
 <form class="form-horizontal" action="<?php echo Router::url('admin/pages/edit/'.$id); ?>" method="post">
@@ -22,11 +26,13 @@
 	</div>
 </div>
 
-<?php echo $this->Form->input('valid','Publié',array("type"=>"checkbox")) ;?>
+<?php echo $this->Form->input('online','Publié',array("type"=>"checkbox")) ;?>
+<?php echo $this->Form->input('valid','Traduction valide',array("type"=>"checkbox")) ;?>
+<?php echo $this->Form->input('menu','Menu',array("type"=>"checkbox")) ;?>
 <?php echo $this->Form->input('type','type de contenu',array("value"=>$this->request->get('type'))) ;?>
 <?php echo $this->Form->input('position','Position',array()) ;?>
 
-<?php echo $this->Form->input('token','hidden',array('value'=>Session::token())) ;?>
+<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 
 <div class="control-group">
 	<label for="" class="control-label"></label>
