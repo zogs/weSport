@@ -500,7 +500,7 @@ class EventsModel extends Model{
 		
 		$sql = "SELECT * FROM sporters AS S 
 				JOIN events AS E ON E.id = S.event_id 
-				WHERE E.confirmed=1 AND S.date_event < UNIX_TIMESTAMP() AND S.mail=0";
+				WHERE S.date_event < UNIX_TIMESTAMP() AND S.mail=0";
 
 		return $this->query($sql);
 	}
