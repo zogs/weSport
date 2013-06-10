@@ -1,6 +1,7 @@
 <div class="container createEvent">
 	<div class="row">
 		<?php echo $this->session->flash(); ?>
+
 		<div class="span7">
 
 			<div class="module module-rounded">
@@ -54,7 +55,12 @@
 			<div class="module module-rounded">					
 				<?php if($event->exist()): ?>
 					<?php echo $this->Form->input("Mettre à jour l'annonce",'submit',array('class'=>'btn btn-primary btn-large')) ;?>					
-					<a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'évènement </a>
+					<a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'activité </a>
+					
+					<?php if(!$event->isConfirm()): ?>
+					<a href="<?php echo Router::url('events/confirm/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être confirmé, êtes-vous sûr ?')">Confirmer l'activité</a>
+					<?php endif; ?>
+					
 					<a href="<?php echo Router::url('events/report/'.$event->getID());?>" class="btn btn-link">Reporter à la semaine suivant</a>
 
 				<?php else: ?>

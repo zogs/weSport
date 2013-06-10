@@ -304,6 +304,24 @@ class EventsController extends Controller{
 		$this->redirect('events/view/'.$eid);
 	}
 
+	public function confirm($eid){
+
+		if(!isset($eid) ||!is_numeric($eid)) exit();
+
+		$this->loadModel('Events');
+		$evt = $this->Events->findEventById($eid);
+
+		if($evt->isAdmin($this->session->user()->getID())){
+
+			$this->Events->confirmEvent($eid);
+
+			$this->session->setFlash("L'activité est confirmée ! Amusez-vous bien !");
+		}
+
+		$this->redirect('events/view/'.$evt->id.'/'.$evt->slug);
+
+	}
+
 	public function create($event_id = 0){
 
 		$this->loadModel('Events');
@@ -350,42 +368,59 @@ class EventsController extends Controller{
 		if($this->request->post()){				
 
 			//data to save		
-			$Event = $this->request->post();
+			$new = $this->request->post();
 			
 			// if cityID is not defined			
-			 if(empty($Event->cityID)){
+			 if(empty($new->cityID)){
 				//find cityID with cityName
-				if(!empty($Event->cityName)){
-					$c = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$Event->cityName));
+				if(!empty($new->cityName)){
+					$c = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$new->cityName));
 					
 					if(!empty($c)){
-						$Event->cityID = $c[0]->city_id;
-						$Event->cityName = $c[0]->name;
+						$new->cityID = $c[0]->city_id;
+						$new->cityName = $c[0]->name;
 					}
 					else {
-						$Event->cityName = '';
+						$new->cityName = '';
 					}
 				}
 			}
 
 			//init var
-			$Event->slug = slugify($Event->title);
+			$new->slug = slugify($new->title);
 
 
-				if($this->Events->validates($Event)){
+				if($this->Events->validates($new)){
 					
-					//find if change occurs
+					//Si l'evt existe déjà
 					if($evt->exist()){
+
+						//On regarde quel sont les changements , dans le but d'avertir les participants
 						$changes = array();
 						$silent_changes = array('slug','nbmin','cityID');
-						foreach ($Event as $key => $value) {
-							if( $Event->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $Event->$key;
+						foreach ($new as $key => $value) {
+							if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
 						}
+
+
+						//On regarde si le nombre minimum est réduit, pour le confirmer si jamais
+						if( $new->nbmin < $evt->nbmin ) {
+							//On recupere le nombre de participants
+							$nbparticipants = $this->Events->countParticipants($evt->id);
+							//Si il y a plus de participants que nombre_min, on confirme l'événement
+							if($nbparticipants >= $new->nbmin){
+
+								$new->confirmed = 1;
+								$this->session->setFlash("Le nombre de participants est atteint ! L'activité est confirmée !");
+							}
+						}
+
 					}
 					
 
+
 					//save event
-					if($event_id = $this->Events->saveEvent($Event)){
+					if($event_id = $this->Events->saveEvent($new)){
 
 						$this->session->setFlash("L'annonce a bien été enregistrée, elle est visible dès maintenant");
 						
@@ -400,7 +435,7 @@ class EventsController extends Controller{
 						//email the changes 
 						if(!empty($changes)){
 							
-							if($this->sendEventChanges($Event,$changes)){
+							if($this->sendEventChanges($new,$changes)){
 
 								$this->session->setFlash('Les modifications ont été envoyées aux participants','warning');
 							}
@@ -419,7 +454,7 @@ class EventsController extends Controller{
 				}
 				else{
 					//if not validate , return a incomplete event fill with the data
-					$evt = new Event($Event);					
+					$evt = new Event($new);					
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
 				}
 			

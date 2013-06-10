@@ -197,7 +197,7 @@ TYPEAHEAD CUSTOM STYLE
 .events-userin { }
 .events-link:hover .events-title { color:#0B6C8C;;}
 .events-sport-logo { float:left; margin-right:0px; background-color:rgba(40,155,309,0.1); padding:10px 10px 0 10px; border-radius:100px; border-bottom-left-radius:0; border-bottom-right-radius:0;}
-.events-sport-logo img { width:40px; }
+.events-sport-logo img { width:30px; }
 .events-time { float:left; font-size: 20px; padding:15px 5px 0 5px; color:#FFF;}
 .events-content { float:left; width:100%; padding:10px 0 15px 5px; background-color:rgba(40,155,309,0.1); border-radius:20px; border-top-left-radius:0; }
 .events-title {  font-size: 15px; font-weight:bold; color:#0B698C;}
