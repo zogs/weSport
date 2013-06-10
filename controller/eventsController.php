@@ -726,7 +726,7 @@ class EventsController extends Controller{
     	$nb_mail_sended = 0;
     	$nb_mail_silent = 0;
     	$nb_mail_error = 0;
-    	$mail_content = file_get_contents('../view/email/eventPastEventReminder.html');
+    	$mail_content = file_get_contents(ROOT.'/view/email/eventPastEventReminder.html');
 
     	
 
