@@ -496,6 +496,16 @@ class EventsModel extends Model{
 		return $participants;
 	}
 
+	public function findSportsList($lang = 'fr'){
+
+		$sports = $this->find(array('table'=>'sports','fields'=>array('slug',$lang)));
+		$r = array();
+		foreach ($sports as $key => $sport) {
+			$r[$sport->slug] = $sport->$lang;
+		}
+		return $r;		
+	}
+
 	public function findSportersNotYetMailed(){
 		
 		$sql = "SELECT S.* FROM sporters AS S 
@@ -772,8 +782,8 @@ class Event{
 
 	public function getSportLogo(){
 
-		if(file_exists(WEBROOT.'/img/sport_icons/icon_'.$this->sport.'.png')) return Router::webroot('img/sport_icons/icon_'.$this->sport.'.png');
-		return Router::webroot('img/sport_icons/icon_curling.png');
+		if(file_exists(WEBROOT.'/img/sport_icons/30gif/'.$this->sport.'.gif')) return Router::webroot('img/sport_icons/30gif/'.$this->sport.'.gif');
+		return Router::webroot('img/sport_icons/30gif/relaxation.gif');
 	}
 
 	public function getAvatar(){

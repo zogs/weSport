@@ -1,7 +1,6 @@
 <div class="container createEvent">
 	<div class="row">
 		<?php echo $this->session->flash(); ?>
-
 		<div class="span7">
 
 			<div class="module module-rounded">
@@ -24,7 +23,7 @@
 					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
 					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 					<?php echo $this->Form->input('title',"Titre",array('placeholder'=>"Petit match entre amis, ...")) ;?>
-					<?php echo $this->Form->select('sport','Sport',$sports_available,array('default'=>$event->sport,'placeholder'=>"Choisir un sport")); ?>
+					<?php echo $this->Form->select('sport','Sport',$sports_available,array('default'=>$event->sport,'placeholder'=>"Choisir un sport",'style'=>'width:100%;')); ?>
 					<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>

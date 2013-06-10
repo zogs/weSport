@@ -79,7 +79,7 @@ class EventsController extends Controller{
 			$params['date'] = array('day'=> $weekday) ;
 			//find events in db
 			$dayevents = $this->Events->findEvents($params);			
-			$dayevents = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$dayevents);		
+			$dayevents = $this->Events->JOIN('sports','slug as sport',array('slug'=>':sport'),$dayevents);		
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
 			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
@@ -117,7 +117,7 @@ class EventsController extends Controller{
 		if($event->slug != $slug) $this->redirect('events/view/'.$event->id.'/'.$event->slug);
 
 		$event = $this->Worlds->JOIN_GEO($event);
-		$event = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$event);		
+		$event = $this->Events->JOIN('sports','slug as sport',array('slug'=>':sport'),$event);		
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
@@ -377,11 +377,12 @@ class EventsController extends Controller{
 					//find if change occurs
 					if($evt->exist()){
 						$changes = array();
-						$silent_changes = array('slug','nbmin');
+						$silent_changes = array('slug','nbmin','cityID');
 						foreach ($Event as $key => $value) {
 							if( $Event->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $Event->$key;
 						}
 					}
+					
 
 					//save event
 					if($event_id = $this->Events->saveEvent($Event)){
@@ -430,7 +431,8 @@ class EventsController extends Controller{
 					
 		}
 
-		$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug')));
+		
+		$d['sports_available'] = $this->Events->findSportsList($this->getLang());
 		$d['user_events_in_futur'] = $this->Events->findEvents(array('date'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		
@@ -537,10 +539,20 @@ class EventsController extends Controller{
         //Récupère le template 
         $body = file_get_contents('../view/email/eventChanges.html');
 
+        //if time has been changed
+        if(isset($changes['hours']) ||isset($changes['minutes'])) {
+        	$changes['time'] = $changes['hours'].':'.$changes['minutes'];
+        	unset($changes['hours']);
+        	unset($changes['minutes']);
+        }
+
+        //Traduction
+        $trad = array('title'=>'Titre','sport'=>'Sport','cityName'=>'Ville','address'=>'Adresse','date'=>'Date','time'=>'Heure','description'=>'Descriptif','phone'=>'Téléphone');
+
         //init variable
         $content = "";
         foreach ($changes as $key => $value) {
-        	$content .= $key." : <strong>".$value."</strong><br />";
+        	$content .= $trad[$key]." : <strong>".$value."</strong><br />";
         }        		
         $lien = Conf::getSiteUrl()."/events/view/".$event->id;
 
@@ -551,7 +563,7 @@ class EventsController extends Controller{
         $body = preg_replace("~{lien}~i", $lien, $body);
         $body = preg_replace("~{content}~i", $content, $body);
 
-      
+
         if($this->sendEmails($emails,$subject,$body)) return true;
         else return false;
     }

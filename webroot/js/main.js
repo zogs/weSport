@@ -132,6 +132,18 @@ $(document).ready(function(){
     $("select#CC1").select2({ formatResult: addCountryFlagToSelectState, formatSelection: addCountryFlagToSelectState});
 
 
+
+    /*==================================
+    	SPORTS
+    ===================================*/
+
+    if($("select#sport").length != 0){
+
+    	$("select#sport").select2({ formatResult: addSportIcon, formatSelection: addSportIcon});
+    	
+    }
+
+
 	/*===========================================================
 		COMMENT SYSTEM
 	============================================================*/
@@ -955,6 +967,15 @@ function showRegion(value,region)
 function addCountryFlagToSelectState(state) {
 
 	return "<img class='flag flag-"+state.id.toLowerCase()+"' />"+state.text;
+}
+
+
+function addSportIcon(sport){
+
+	if(trim(sport.id)!='')
+		return "<img src='http://wesport.zogs.org/img/sport_icons/30gif/"+sport.id+".gif' /> "+sport.text;
+	else 
+		return sport.text;
 }
 
 /*============================
