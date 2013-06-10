@@ -728,10 +728,10 @@ class EventsController extends Controller{
     	$nb_mail_error = 0;
     	$mail_content = file_get_contents(ROOT.'/view/email/eventPastEventReminder.html');
 
-    	
+    	debug($sporters);
 
     	foreach ($sporters as $key => $sporter) {
-    		
+    			
     		//find user
     		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
     		//if user dont exist jump out
@@ -741,7 +741,7 @@ class EventsController extends Controller{
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
     		//if event dont exist jump out
     		if(!$sporter->event->exist()) continue;
-    		
+    			
     		//jump out if the user dont want the mail
     		if(empty($sporter->user->mailOpinion)) {
     			$nb_mail_silent++;

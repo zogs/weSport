@@ -498,9 +498,9 @@ class EventsModel extends Model{
 
 	public function findSportersNotYetMailed(){
 		
-		$sql = "SELECT * FROM sporters AS S 
+		$sql = "SELECT S.* FROM sporters AS S 
 				JOIN events AS E ON E.id = S.event_id 
-				WHERE S.date_event < UNIX_TIMESTAMP() AND S.mail=0";
+				WHERE E.confirmed=1 AND S.date_event < UNIX_TIMESTAMP() AND S.mail=0";
 
 		return $this->query($sql);
 	}
