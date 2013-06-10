@@ -539,11 +539,11 @@ class EventsController extends Controller{
         //Récupère le template 
         $body = file_get_contents('../view/email/eventChanges.html');
 
-        //if time has been changed
-        if(isset($changes['hours']) ||isset($changes['minutes'])) {
-        	$changes['time'] = $changes['hours'].':'.$changes['minutes'];
-        	unset($changes['hours']);
-        	unset($changes['minutes']);
+        //if time has been changed       
+        if(isset($changes['hours']) || isset($changes['minutes'])) {
+        	$changes['time'] = $event->time;
+        	if(isset($changes['hours'])) unset($changes['hours']);
+        	if(isset($changes['minutes'])) unset($changes['minutes']);
         }
 
         //Traduction
