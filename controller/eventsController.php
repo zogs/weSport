@@ -765,7 +765,7 @@ class EventsController extends Controller{
 
     public function sendMailUserEventOpinion(){
 
-    	//if(get_class($this->request)!='Cron') exit();
+    	if(get_class($this->request)!='Cron') exit();
 
     	$debut = microtime(true);
 
@@ -782,7 +782,6 @@ class EventsController extends Controller{
     	$nb_mail_error = 0;
     	$mail_content = file_get_contents(ROOT.'/view/email/eventPastEventReminder.html');
 
-    	debug($sporters);
 
     	foreach ($sporters as $key => $sporter) {
     			

@@ -184,7 +184,7 @@
 
 					<?php endforeach; ?>
 					</ul>
-					<a href="<?php echo Router::url('users/view/'.$review->user_id);?>">Voir tous les avis</a>
+					<a href="<?php echo Router::url('users/view/'.$review->orga_id);?>">Voir tous les avis</a>
 				</div>
 			</div>
 			<?php endif; ?>
