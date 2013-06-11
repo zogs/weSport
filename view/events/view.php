@@ -13,7 +13,11 @@
 						<button class="close" data-dismiss="alert">×</button>
 						<strong>Vous y êtiez ;)</strong> 
 						<input type="text" name="review" placeholder="Comment ça s'est passé ?">
+						<input type="hidden" name="event_id" value="<?php echo $event->id;?>">
+						<input type="hidden" name="user_id" value="<?php echo $this->session->user()->getID();?>">
+						<input type="hidden" name="orga_id" value="<?php echo $event->user_id;?>">
 						<input type="hidden" name="token" value="<?php echo $this->session->token();?>">
+						<input type="hidden" name="lang" value="<?php echo $this->getLang();?>">
 						<input type="submit" value="Envoyer">
 					</form>
 					
@@ -122,10 +126,10 @@
 				<h4 class="event-info">Participants :</h4>
 				<div class="event-participants-avatars">
 				<?php foreach ($event->participants as $participant):?>										
-					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-participant-avatar" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/></a>
+					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/></a>
 				<?php endforeach;?>
 				<?php foreach ($event->uncertains as $participant):?>										
-					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-uncertains-avatar" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
+					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-uncertains-avatar tooltiptop" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
 				<?php endforeach;?>
 					
 				</div>
@@ -161,10 +165,30 @@
 		
 		<div class="span4">
 			<?php if($this->session->user()->online()): ?>
-			<div>					        
+			<div>	
+				<h5>Plan géographique</h5>				        
 				<?php echo $gmap->getGoogleMap(); ?>
 			</div>
 			<?php endif; ?>
+
+			<?php if($event->authorReviewed()): ?>
+			<div>
+				<h5>Dernier avis sur l'organisateur</h5>
+				<div>
+					<ul>
+					<?php foreach ($event->reviews as $key => $review):?>					
+						<li>
+							<img class="event-avatar tooltiptop" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)" src="<?php echo Router::webroot($review->user->getAvatar());?>">  
+							<?php echo $review->review;?>
+						</li>
+
+					<?php endforeach; ?>
+					</ul>
+					<a href="<?php echo Router::url('users/view/'.$review->user_id);?>">Voir tous les avis</a>
+				</div>
+			</div>
+			<?php endif; ?>
+
 		</div>
 	
 	</div>
@@ -172,11 +196,5 @@
 </div>
 
 <script type="text/javascript">
-
-	$(document).ready(function(){
-
-		$('.event-avatar').tooltip({placement:'top'});
-
-	});
 
 </script>

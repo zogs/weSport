@@ -810,7 +810,8 @@ class UsersController extends Controller{
     	$hasOrganized = $this->Events->findEventsUserHasOrganized($uid);
 
     	//find reviewed events
-    	$eventsReviewed = $this->Events->findReviewByUser($uid);  
+    	$eventsReviewed = $this->Events->findReviewByUser($uid); 
+    	$eventsReviewed = $this->Events->joinUser($eventsReviewed);    	
 
     	$d['user'] = $user;
     	$d['futurParticipation'] = $futurParticipation;

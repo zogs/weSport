@@ -27,7 +27,9 @@
 						</li>
 					<?php endforeach; ?>
 				</ul>
-
+				<p>
+					a organisé <?php echo count($hasOrganized); ?> événements
+				</p>
 
 				
 			</div>
@@ -40,31 +42,25 @@
 							<small>le <?php echo Date::datefr($event->date);?></small>
 						</a></li>
 					<?php endforeach; ?>
-				</ul>				
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="span12">
-				<p>
-					a organisé <?php echo count($hasOrganized); ?> événements
-				</p>
+				</ul>
 				<p>
 					a participé à <?php echo count($pastParticipation);?> événements
-				</p>						
+				</p>				
 			</div>
 		</div>
+	
 
 		<div class="row">
 			<div class="span12">
 				<h3>Avis</h3>
 
 				<?php foreach ($eventsReviewed as $key => $review): ?>
-				<?php if(!empty($review->event)): ?>
+				<?php if(!empty($review->event)):?>
 				<div class="event-review">
 					<div class="bulle">
+						<img class="event-avatar tooltiptop" src="<?php echo Router::webroot($review->user->getAvatar());?>" alt="" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)">
 						<span><?php echo $review->review; ?></span>				
-						<small><?php echo $review->event->title; ?></small>						
+						<small><a href="<?php echo Router::url('events/view/'.$review->event->id.'/'.$review->event->slug);?>"><?php echo $review->event->title; ?></a></small>						
 					</div>
 				</div>
 				<?php endif; ?>

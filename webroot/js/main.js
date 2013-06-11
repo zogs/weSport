@@ -91,11 +91,11 @@ $(document).ready(function(){
 	/*===========================================================
 		Tooltip bootstrap
 	============================================================*/
-	$('a.bubble-top').livequery(function(){
+	$('.tooltiptop').livequery(function(){
 
 		$(this).tooltip( { delay: { show: 500, hide: 100 }} );
 	});
-	$('a.bubble-bottom').livequery(function(){
+	$('.bubble-bottom').livequery(function(){
 
 		$(this).tooltip( { placement : 'bottom', delay: { show: 2000, hide: 100 }} );
 	});

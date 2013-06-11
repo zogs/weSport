@@ -363,7 +363,7 @@ class EventsModel extends Model{
 		if(empty($events)) return $events;
 		if(is_array($events)){
 			foreach ($events as $key => $event) {
-				$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$event->user_id)));
+				$author = $this->findFirst(array('table'=>'users',"fields"=>"user_id,avatar,login,email",'conditions'=>array('user_id'=>$event->user_id)));
 				//if no author, remove event and jump to the next
 				if(empty($author)) {
 					unset($events[$key]);
@@ -671,28 +671,40 @@ class EventsModel extends Model{
 	public function findReviewByUser($user_id){
 
 		$reviews = $this->find(array('table'=>'events_review','conditions'=>array('user_id'=>$user_id)));
+
 		foreach ($reviews as $key => $review) {
 				$event = $this->findEventByID($review->event_id);
-				if($event->exist()) $review->event = $event;				
-		}
-		
+				if($event->exist()) $review->event = $event;
+				else unset($reviews[$key]);				
+		}		
 		return $reviews;
-		
+	}
 
+	public function findReviewByOrga($orga_id){
+
+		$reviews = $this->find(array('table'=>'events_review','conditions'=>array('orga_id'=>$orga_id)));
+
+		foreach ($reviews as $key => $review) {
+				$event = $this->findEventByID($review->event_id);
+				if($event->exist()) $review->event = $event;
+				else unset($reviews[$key]);				
+		}		
+		return $reviews;
 	}	
 
-	public function saveReview($event_id,$user_id,$review_tx,$lang){
+	public function saveReview($data){
 
 		//if exist
-		$exist = $this->findFirst(array('table'=>'events_review','conditions'=>array('event_id'=>$event_id,'user_id'=>$user_id)));
+		$exist = $this->findFirst(array('table'=>'events_review','conditions'=>array('event_id'=>$data->event_id,'user_id'=>$data->user_id)));
 		if(!empty($exist)) return 'already';
 		
 		$review = new stdClass();
 		$review->table = 'events_review';
-		$review->event_id = $event_id;
-		$review->user_id = $user_id;
-		$review->review = $review_tx;
-		$review->lang = $lang;
+		$review->event_id = $data->event_id;
+		$review->user_id = $data->user_id;
+		$review->orga_id = $data->orga_id;
+		$review->review = $data->review;
+		$review->lang = $data->lang;
 
 		if($this->save($review))
 			return true;
@@ -871,6 +883,17 @@ class Event{
 		}
 
 		return false;
+	}
+
+	public function authorReviewed(){
+
+		if(!empty($this->reviews)) return true;
+		return false;
+	}
+
+	public function authorReviews(){
+
+		return $this->reviews;
 	}
 
 }

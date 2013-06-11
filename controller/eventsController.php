@@ -106,7 +106,8 @@ class EventsController extends Controller{
 	public function view($id = null,$slug = null){
 
 		$this->loadModel('Events');
-		$this->loadModel('Worlds');
+		$this->loadModel('Worlds');	
+		$this->loadModel('Users');	
 
 		if(!isset($id) || !is_numeric($id)) return false;
 
@@ -116,12 +117,18 @@ class EventsController extends Controller{
 
 		if($event->slug != $slug) $this->redirect('events/view/'.$event->id.'/'.$event->slug);
 
+		//events
 		$event = $this->Worlds->JOIN_GEO($event);
 		$event = $this->Events->JOIN('sports','slug as sport',array('slug'=>':sport'),$event);		
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
+		
+		//Participants
 		$event->participants = $this->Events->eventsParticipants($event->id,1);
 		$event->uncertains = $this->Events->eventsParticipants($event->id,0);
 
+		//review
+		$event->reviews = $this->Events->findReviewByOrga($event->user_id);
+		$event->reviews = $this->Users->joinUser($event->reviews,'login,user_id,avatar');
 	
 		//google map API
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
@@ -291,7 +298,7 @@ class EventsController extends Controller{
 
 			$data = $this->request->post();
 				
-			if($res = $this->Events->saveReview($eid,$this->session->user()->getID(),$data->review, $this->getLang() )){
+			if($res = $this->Events->saveReview($data)){
 				
 				if($res==='already') {
 					$this->session->setFlash("Vous avez déjà donné votre avis","warning");
