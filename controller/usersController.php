@@ -110,7 +110,7 @@ class UsersController extends Controller{
 	static function auto_connect($session){
 		
 		//autoconnect with facebook
-		//self::auto_connect_with_facebook();
+		if(self::auto_connect_with_facebook();
 
 		//if user not connected and cookie auto connect	exist
 		if(isset($_COOKIE['auto_connect']) && !$session->user()->exist()){
@@ -148,32 +148,76 @@ class UsersController extends Controller{
 
 	}
 
-	public function register_with_facebook(){
+	public function connect_with_facebook(){
 
 		$this->view = 'users/login';
+		$this->loadModel('Users');
 
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
 
-		try{
-			
-			$user = $facebook->getUser();
-			debug($user);
+		$fbuser = $facebook->getUser();
 
-			$me = $facebook->api('/me');
-			debug($me);
+		if($fbuser) 
+		{
+			$user = $this->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser)));
 
-			$this->session->setFlash('register_with_facebook','success');
-			
-		}
-		catch(zException $e){
+			if(!$user->exist){
 
-			$this->session->setFlash('register_with_facebook','danger');
-			debug($e);
-		}
+				try{
 
+					$fb = $facebook->getUser();
+					$fb = $facebook->api('/me');
+					debug($fb);
 
+					$user              = new stcClass();
+					$user->login       = $fb['username'];
+					$user->prenom      = $fb['first_name'];
+					$user->nom         = $fb['last_name']; 
+					$user->email       = $fb['email'];
+					$user->avatar      = 'https://graph.facebook.com/'.$fb['id'].'/picture';
+					$user->hash        = md5(String::random(10));
+					$user->salt        = String::random(10);
+					$user->birthdate   = str_replace('/','-',$fb['birthday']);
+					$user->sexe        = ($fb['gender']=='male')? 'h' : 'f'; 
+					$user->valid       = 1;
+					$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
+					$fblocale          = explode('_',$fb['locale']);
+					$user->lang        = $fblocale[0];
+					$user->CC1         = $fblocale[1];
+					$user->facebook_id = $fb['id']; 					
+					
+				}
+				catch(zException $e){
+					$this->session->setFlash('register_with_facebook','danger');
+					debug($e);
+				}
 
+				if($user_id = $this->Users->saveUser($user)){
+					$user->user_id = $user_id;
+				}
+				else {
+					$this->session->setFlash('error while saving facebook user','warning');
+				}
+			}
+
+			//unset
+			unset( $user->hash);
+			unset( $user->salt);
+			unset($_SESSION['user']);
+			unset($_SESSION['token']);
+
+			//write session			
+			$this->session->write('user', $user);
+			$this->session->setToken();				
+			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook','success');
+
+			$this->redirect('/');
+		}	
+		else {
+
+			return false;
+		}			
 	}
 
 	public static function link_register_with_facebook(){
@@ -184,7 +228,7 @@ class UsersController extends Controller{
 		$user = $facebook->getUser();
 
 		$loginUrl = $facebook->getLoginUrl(array(
-			'redirect_uri'=>'http://wesport.zogs.org/users/register_with_facebook',
+			'redirect_uri'=>'http://wesport.zogs.org/users/connect_with_facebook',
 			'scope'=>'email,user_birthday,user_hometown,user_location,publish_actions'));
 
 		return $loginUrl;

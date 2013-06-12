@@ -127,7 +127,7 @@ class UsersModel extends Model{
 		if(isset($user_id)) $user->user_id = $user_id;
 
 		//birthday
-		if(isset($user->day)&&isset($user->month)&&isset($user->year)){
+		if(!isset($user->birthdate)&&isset($user->day)&&isset($user->month)&&isset($user->year)){
 			$user->birthdate = $user->year.'-'.$user->month.'-'.$user->day;
 			unset($user->day);
 			unset($user->month);
