@@ -170,7 +170,7 @@ class UsersController extends Controller{
 					$fb = $facebook->api('/me');
 
 					debug($fb);
-					debug($this->session->read('state'));
+					debug($this->session->read('fbstate'));
 
 					exit();
 					//set an object for insertion
@@ -256,7 +256,7 @@ class UsersController extends Controller{
 
 		//unique id that facebook send back to protect csrf attacks
 		$state = String::random(20);
-		$this->session->write('state',$state);
+		$_SESSION['fbstate'] = $state;
 
 		$loginUrl = $facebook->getLoginUrl(array(
 			'redirect_uri'=>'http://wesport.zogs.org/users/connect_with_facebook',
