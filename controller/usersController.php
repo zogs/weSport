@@ -127,7 +127,7 @@ class UsersController extends Controller{
 					//write user session
 					$session->write('user',$user);
 					$session->setToken();
-					setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'localhost', false , true);
+					setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false , true);
 				}
 				//if not delete cookie
 				else {					
@@ -144,20 +144,23 @@ class UsersController extends Controller{
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
 
+		//get the facebook user
 		$fbuser = $facebook->getUser();
 
+		//if the facebook exist
 		if($fbuser) 
-		{
+		{		
 			$user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser)));
-
+			//if the user is not in our database
 			if(!$user->exist()){
 
-				try{
-
+				try
+				{
+					//get the facebook data
 					$fb = $facebook->getUser();
 					$fb = $facebook->api('/me');
-					//debug($fb);
 
+					//set an object for insertion
 					$user              = new stdClass();
 					$user->login       = $fb['username'];
 					$user->prenom      = $fb['first_name'];
@@ -177,37 +180,49 @@ class UsersController extends Controller{
 					$user->facebook_id = $fb['id']; 					
 					
 				}
-				catch(zException $e){
-					$this->session->setFlash('exception register_with_facebook','danger');
-				}
+				catch(Exception $e){}
 
+				//save the user
 				if($user_id = $this->Users->saveUser($user)){
 					$user->user_id = $user_id;
 					$user = new User($user);
-					$this->session->setFlash('user succefuly insert in db','success');
 				}
 				else {
-					$this->session->setFlash('error while saving facebook user','warning');
+					throw new zException("Error Processing Save Facebook User", 1);
+					
 				}
 			}
 
-			//unset
+			//set cookie for autoconnexion			
+			$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);//set secret key cookie
+			setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false, true);
+
+			//unset session data
 			unset( $user->hash);
 			unset( $user->salt);
 			unset($_SESSION['user']);
 			unset($_SESSION['token']);
 
-			//write session			
+			//write session	data		
 			$this->session->write('user', $user);
 			$this->session->setToken();				
-			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook','success');
-				
-			header('Location:http://wesport.zogs.org');
-			exit();
+			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook !','success');
+
+			//redirection
+			//to the homepage if current page is users/login or else...
+			if(strpos($_SERVER['REQUEST_URI'],'/users/')){
+				$this->redirect('/');
+			}
+			else {
+				//else reload the page
+				$this->reload();
+			}
+			
 		}	
 		else {
 
-			return false;
+			$this->session->setFlash('Please register with facebook first !','warning');
+			$this->redirect('/users/register');			
 		}			
 	}
 
