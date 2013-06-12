@@ -183,6 +183,7 @@ class UsersController extends Controller{
 
 				if($user_id = $this->Users->saveUser($user)){
 					$user->user_id = $user_id;
+					$user = new User($user);
 					$this->session->setFlash('user succefuly insert in db','success');
 				}
 				else {
