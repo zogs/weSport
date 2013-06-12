@@ -110,7 +110,7 @@ class UsersController extends Controller{
 	static function auto_connect($session){
 		
 		//autoconnect with facebook
-		if(self::auto_connect_with_facebook();
+		//if(self::auto_connect_with_facebook();
 
 		//if user not connected and cookie auto connect	exist
 		if(isset($_COOKIE['auto_connect']) && !$session->user()->exist()){
@@ -134,18 +134,6 @@ class UsersController extends Controller{
 					setcookie('auto_connect','',time() - 3600);
 				}
 		}
-	}
-
-	static function auto_connect_with_facebook(){
-
-		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-
-		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
-
-		$user = $facebook->getUser();
-
-		debug($user);
-
 	}
 
 	public function connect_with_facebook(){
