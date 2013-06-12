@@ -158,7 +158,7 @@ class UsersController extends Controller{
 					$fb = $facebook->api('/me');
 					debug($fb);
 
-					$user              = new stcClass();
+					$user              = new stdClass();
 					$user->login       = $fb['username'];
 					$user->prenom      = $fb['first_name'];
 					$user->nom         = $fb['last_name']; 
