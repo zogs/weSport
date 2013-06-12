@@ -160,6 +160,11 @@ class UsersController extends Controller{
 					$fb = $facebook->getUser();
 					$fb = $facebook->api('/me');
 
+					debug($fb);
+					debug($this->session->read('state'));
+
+					exit();
+
 					//set an object for insertion
 					$user              = new stdClass();
 					$user->login       = $fb['username'];
@@ -182,6 +187,19 @@ class UsersController extends Controller{
 				}
 				catch(Exception $e){}
 
+				//check if login exist
+				$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
+				if(!empty($check)) {
+					$this->session->setFlash("Ce nom d'utilisateur est déjà pris !","error");
+					$this->e404('Inscription avec facebook impossible, nous sommes désolé mais ce nom est déjà pris...');
+				}				
+				//check if email exist
+				$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('email'=>$user->email)));
+				if(!empty($check)) {
+					$this->session->setFlash("Cet email est déjà utilisé","error");
+					$this->e404('Inscription aveec facebook impossible, cet email est déjà pris !');
+
+				//if its good
 				//save the user
 				if($user_id = $this->Users->saveUser($user)){
 					$user->user_id = $user_id;
@@ -209,14 +227,8 @@ class UsersController extends Controller{
 			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook !','success');
 
 			//redirection
-			//to the homepage if current page is users/login or else...
-			if(strpos($_SERVER['REQUEST_URI'],'/users/')){
-				$this->redirect('/');
-			}
-			else {
-				//else reload the page
-				$this->reload();
-			}
+			//to the homepage
+			$this->redirect('/');
 			
 		}	
 		else {
@@ -233,9 +245,15 @@ class UsersController extends Controller{
 
 		$user = $facebook->getUser();
 
+		//unique id that facebook send back to protect csrf attacks
+		$state = String::random(20);
+		$this->session->write('state'=>$state);
+
 		$loginUrl = $facebook->getLoginUrl(array(
 			'redirect_uri'=>'http://wesport.zogs.org/users/connect_with_facebook',
-			'scope'=>'email,user_birthday,user_hometown,user_location,publish_actions'));
+			'scope'=>'email,user_birthday,user_hometown,user_location,publish_actions',
+			'state'=>$state,
+			));
 
 		return $loginUrl;
 		
