@@ -164,7 +164,6 @@ class UsersController extends Controller{
 					debug($this->session->read('state'));
 
 					exit();
-
 					//set an object for insertion
 					$user              = new stdClass();
 					$user->login       = $fb['username'];
@@ -198,6 +197,7 @@ class UsersController extends Controller{
 				if(!empty($check)) {
 					$this->session->setFlash("Cet email est déjà utilisé","error");
 					$this->e404('Inscription aveec facebook impossible, cet email est déjà pris !');
+				}
 
 				//if its good
 				//save the user
@@ -247,7 +247,7 @@ class UsersController extends Controller{
 
 		//unique id that facebook send back to protect csrf attacks
 		$state = String::random(20);
-		$this->session->write('state'=>$state);
+		$this->session->write('state',$state);
 
 		$loginUrl = $facebook->getLoginUrl(array(
 			'redirect_uri'=>'http://wesport.zogs.org/users/connect_with_facebook',
