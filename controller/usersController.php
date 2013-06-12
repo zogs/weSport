@@ -191,18 +191,16 @@ class UsersController extends Controller{
 			}
 
 			//unset
-			// unset( $user->hash);
-			// unset( $user->salt);
-			// unset($_SESSION['user']);
-			// unset($_SESSION['token']);
+			unset( $user->hash);
+			unset( $user->salt);
+			unset($_SESSION['user']);
+			unset($_SESSION['token']);
 
 			//write session			
 			$this->session->write('user', $user);
 			$this->session->setToken();				
 			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook','success');
-
-			debug($this->session);
-			$this->redirect('/');
+				
 		}	
 		else {
 
