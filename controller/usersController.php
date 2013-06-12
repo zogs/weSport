@@ -156,7 +156,7 @@ class UsersController extends Controller{
 
 					$fb = $facebook->getUser();
 					$fb = $facebook->api('/me');
-					debug($fb);
+					//debug($fb);
 
 					$user              = new stdClass();
 					$user->login       = $fb['username'];
@@ -201,6 +201,7 @@ class UsersController extends Controller{
 			$this->session->setToken();				
 			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook','success');
 				
+			header('Location:http://wesport.zogs.org');
 		}	
 		else {
 
