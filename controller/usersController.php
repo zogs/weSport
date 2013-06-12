@@ -150,7 +150,7 @@ class UsersController extends Controller{
 		{
 			$user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser)));
 
-			if(!$user->exist){
+			if(!$user->exist()){
 
 				try{
 
