@@ -166,7 +166,7 @@ class UsersController extends Controller{
 					$user->avatar      = 'https://graph.facebook.com/'.$fb['id'].'/picture';
 					$user->hash        = md5(String::random(10));
 					$user->salt        = String::random(10);
-					$user->birthdate   = str_replace('/','-',$fb['birthday']);
+					$user->birthdate   = $fb['birthday'];
 					$user->sexe        = ($fb['gender']=='male')? 'h' : 'f'; 
 					$user->valid       = 1;
 					$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
@@ -177,12 +177,13 @@ class UsersController extends Controller{
 					
 				}
 				catch(zException $e){
-					$this->session->setFlash('register_with_facebook','danger');
+					$this->session->setFlash('exception register_with_facebook','danger');
 					debug($e);
 				}
 
 				if($user_id = $this->Users->saveUser($user)){
 					$user->user_id = $user_id;
+					$this->session->setFlash('user succefuly insert in db','success');
 				}
 				else {
 					$this->session->setFlash('error while saving facebook user','warning');
