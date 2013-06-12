@@ -173,7 +173,7 @@
 
 			<?php if($event->authorReviewed()): ?>
 			<div>
-				<h5>Dernier avis sur l'organisateur</h5>
+				<h5>Derniers avis sur les activités de <a class="event-user" href="<?php echo $event->author->getLink();?>"><?php echo $event->author->getLogin();?></a></h5>
 				<div>
 					<ul>
 					<?php foreach ($event->reviews as $key => $review):?>					

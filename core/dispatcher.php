@@ -30,7 +30,7 @@ class Dispatcher{
 
 		//Appel le rendu du controlleur Auto rendering
 		$controller->render($action);
-
+		
 	}
 
  

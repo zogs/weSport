@@ -109,6 +109,9 @@ class UsersController extends Controller{
 	*/
 	static function auto_connect($session){
 		
+		//autoconnect with facebook
+		//self::auto_connect_with_facebook();
+
 		//if user not connected and cookie auto connect	exist
 		if(isset($_COOKIE['auto_connect']) && !$session->user()->exist()){
 			
@@ -131,6 +134,61 @@ class UsersController extends Controller{
 					setcookie('auto_connect','',time() - 3600);
 				}
 		}
+	}
+
+	static function auto_connect_with_facebook(){
+
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+
+		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
+
+		$user = $facebook->getUser();
+
+		debug($user);
+
+	}
+
+	public function register_with_facebook(){
+
+		$this->view = 'users/login';
+
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
+
+		try{
+			
+			$user = $facebook->getUser();
+			debug($user);
+
+			$me = $facebook->api('/me');
+			debug($me);
+
+			$this->session->setFlash('register_with_facebook','success');
+			
+		}
+		catch(zException $e){
+
+			$this->session->setFlash('register_with_facebook','danger');
+			debug($e);
+		}
+
+
+
+	}
+
+	public static function link_register_with_facebook(){
+
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
+
+		$user = $facebook->getUser();
+
+		$loginUrl = $facebook->getLoginUrl(array(
+			'redirect_uri'=>'http://wesport.zogs.org/users/register_with_facebook',
+			'scope'=>'email,user_birthday,user_hometown,user_location,publish_actions'));
+
+		return $loginUrl;
+		
 	}
 
 

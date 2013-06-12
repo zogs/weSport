@@ -9,7 +9,7 @@ class Controller {
 	private $vars       = array();
 
 	function __construct($request=null){
-
+		
 		$this->session = new Session($this);	
 
 		$this->Form = new Form($this);
@@ -22,7 +22,7 @@ class Controller {
 
 		//Initialisation autoconnection
 		UsersController::auto_connect($this->session);
-
+		
 		//Si une request est passé on effectue des vérifications de sécurité
 		if($request){
 
