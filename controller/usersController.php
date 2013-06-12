@@ -36,7 +36,7 @@ class UsersController extends Controller{
 					if(isset($data->remember)){
 						//set secret key cookie
 						$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
-						setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'localhost', false, true);
+						setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false, true);
 
 					}
 
@@ -93,7 +93,7 @@ class UsersController extends Controller{
 		
 		unset($_SESSION['user']);
 		unset($_SESSION['token']);
-		setcookie('auto_connect','', time() - 3600, '/', 'localhost', false, true);
+		setcookie('auto_connect','', time() - 3600, '/', 'wesport.zogs.org', false, true);
 
 		$this->session->setFlash('Vous êtes maintenant déconnecté','info',2);	
 		$this->reload();
@@ -118,21 +118,30 @@ class UsersController extends Controller{
 			$auth = $_COOKIE['auto_connect'];
 			$auth = explode('----',$auth);
 
+			//find user in db
 			$db = new UsersModel();
 			$user = $db->findFirstUser(array('conditions'=>array('user_id'=>$auth[0])));
+
+			//if user not exist delete cookie
+			if(!$user->exist()) {				
+				setcookie('auto_connect','', time() - 3600, '/', 'wesport.zogs.org', false, true);
+				return false;
+			}
+
+			//compute the key
 			$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
 
-				//if cookie match 
-				if($key == $auth[1]){
-					//write user session
-					$session->write('user',$user);
-					$session->setToken();
-					setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false , true);
-				}
-				//if not delete cookie
-				else {					
-					setcookie('auto_connect','',time() - 3600);
-				}
+			//if cookie match the key
+			if($key == $auth[1]){
+				//write user session
+				$session->write('user',$user);
+				$session->setToken();
+				setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false , true);
+			}
+			//if not delete cookie
+			else {					
+				setcookie('auto_connect','',time() - 3600);
+			}
 		}
 	}
 
