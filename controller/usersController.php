@@ -166,7 +166,7 @@ class UsersController extends Controller{
 					$user->avatar      = 'https://graph.facebook.com/'.$fb['id'].'/picture';
 					$user->hash        = md5(String::random(10));
 					$user->salt        = String::random(10);
-					$user->birthdate   = $fb['birthday'];
+					$user->birthdate   = str_replace('/','-',$fb['birthday']);
 					$user->sexe        = ($fb['gender']=='male')? 'h' : 'f'; 
 					$user->valid       = 1;
 					$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
@@ -183,6 +183,7 @@ class UsersController extends Controller{
 
 				if($user_id = $this->Users->saveUser($user)){
 					$user->user_id = $user_id;
+					debug($user);
 					$this->session->setFlash('user succefuly insert in db','success');
 				}
 				else {
@@ -201,7 +202,7 @@ class UsersController extends Controller{
 			$this->session->setToken();				
 			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook','success');
 
-			$this->redirect('/');
+			//$this->redirect('/');
 		}	
 		else {
 
