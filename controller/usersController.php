@@ -203,6 +203,7 @@ class UsersController extends Controller{
 			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook','success');
 				
 			header('Location:http://wesport.zogs.org');
+			exit();
 		}	
 		else {
 
