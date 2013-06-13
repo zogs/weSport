@@ -153,6 +153,7 @@ class UsersController extends Controller{
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true,'state'=>$this->request->get('state')));
 
+		exit();
 		//get the facebook user
 		$fbuser = $facebook->getUser();		
 
