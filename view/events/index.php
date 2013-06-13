@@ -3,7 +3,7 @@
 <div class="events-prev">
 	<?php if($firstday!=date('Y-m-d')): ?>
 	<a class="with-ajax calendar-nav calendar-prev fleft" href="<?php echo Router::url('events/calendar/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>"><span><-</span></a>
-	<a href="<?php echo Router::url('pages/home/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>">PREV</a>
+	<a href="<?php echo Router::url('date/'.date('Y-m-d',strtotime($firstday." - ".$numDaysPerWeek." days")));?>">PREV</a>
 	<?php endif; ?>
 </div>
 <?php
@@ -73,7 +73,7 @@ endforeach;
 ?>
 
 <div class="events-next">
-	<a href="<?php echo Router::url('pages/home/'.date('Y-m-d',strtotime($firstday." + ".$numDaysPerWeek." days")));?>">NEXT</a>
+	<a href="<?php echo Router::url('date/'.date('Y-m-d',strtotime($firstday." + ".$numDaysPerWeek." days")));?>">NEXT</a>
 	<a class="with-ajax calendar-nav calendar-next fright" href="<?php echo Router::url('events/calendar/'.date('Y-m-d',strtotime($firstday." + ".$numDaysPerWeek." days")));?>"><span>-></span></a>
 </div>
 </div>

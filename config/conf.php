@@ -4,7 +4,7 @@ class Conf {
 
 	
 	//Prefix to access backend
-	static $adminPrefix = 'lhassa';
+	static $adminPrefix = 'vestiaire';
 
 	//Website information
 	static $website = 'weSport';

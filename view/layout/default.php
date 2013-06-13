@@ -13,18 +13,21 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="navbar-innerOO">
 	    <div class="container" id="navbar-bkg">
-      		<a class="brand" href="<?php echo Router::url('pages/home');?>">
+      		<a class="brand" href="<?php echo Router::url('/');?>">
 	      	  	<?php echo Conf::$website; ?>
 			</a>
 			<ul class="nav">
-				<li><a href="<?php echo Router::url('home');?>">Trouver un sport</a></li>				
-				<li><a href="<?php echo Router::url('events/create');?>">Proposer un sport</a></li>	
-				<li><a href="<?php echo Router::url('blog');?>">Le Blog</a></li>
+				<?php 
+				$menu = $this->request('pages','getMenu',array('top'));
+				foreach ($menu as $page):
+				?>
+				 <li><a href="<?php echo Router::url($page->slug);?>"><?php echo $page->title;?></a></li>
+				<?php endforeach;?>				
 				
 				<?php
 				//Admin section button
 				if($this->session->user()->getRole()=='admin'):?>
-				<li><a href="<?php echo Router::url('admin/posts/index');?>">Admin.</a></li>
+				<li><a href="<?php echo Router::url('admin/pages/index');?>">Admin.</a></li>
 				<?php endif;
 				
 				?>			
@@ -69,10 +72,13 @@
 	<div class="footer container-fluid">
 		<div class="container">
 			<ul>
-				<li><a href="<?php echo Router::url('pages/view/conditions');?>">Conditions d'utilisations</li>
-				<li><a href="<?php echo Router::url('pages/view/mentions');?>">Mentions Légales</li>
-				<li><a href="<?php echo Router::url('pages/view/apropos');?>">A Propos de nous</li>
-				<li><a href="<?php echo Router::url('pages/contact');?>">Contact</li>
+				<?php 
+				$menu = $this->request('pages','getMenu',array('bottom'));
+				foreach ($menu as $page):
+				?>
+					<li><a href="<?php echo Router::url($page->slug);?>"><?php echo $page->title;?></a></li>
+				<?php endforeach;?>
+				 			
 			</ul>
 		</div>
 	</div>

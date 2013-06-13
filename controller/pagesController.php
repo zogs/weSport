@@ -3,7 +3,7 @@
 class PagesController extends Controller {
 
 
-		public function home( $day = null ){					
+		public function accueil( $day = null ){					
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
@@ -77,7 +77,7 @@ class PagesController extends Controller {
 		// Permet de rentre une page
 		// $param $id id du post dans la bdd
 		public function view($slug){
-
+		
 			//Si le slug correspond a une page particuliere
 			if(method_exists($this, $slug)){
 				$method = $slug;
@@ -112,9 +112,10 @@ class PagesController extends Controller {
 
 			//Si la traduction demandé n'existe pas on cherche la langue par default , si n'existe pas redirege 404
 			if(!$page->isTraductionExist() || !$page->isTraductionValid()){
-				Session::setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$page->slug.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
+				$this->session->setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$page->slug.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
 				$this->e404('Page introuvable');
 			}
+
 
 			//Atttribution de l'objet $page a une variable page
 			$this->set('page',$page);				
@@ -154,10 +155,10 @@ class PagesController extends Controller {
 
 				if($this->Pages->savePage($this->request->post())){
 
-					Session::setFlash("Page sauvegardé !","success");
+					$this->session->setFlash("Page sauvegardé !","success");
 				}
 				else
-					Session::setFlash("message","type");
+					$this->session->setFlash("message","type");
 			}
 
 			$lang = $this->getLang();			
@@ -188,17 +189,17 @@ class PagesController extends Controller {
 
 			if($this->Pages->deleteContent($id)){
 
-				Session::setFlash("Page supprimé","success");
+				$this->session->setFlash("Page supprimé","success");
 
 				if($this->Pages->deletei18nContents($id)){
-					Session::setFlash("Traductions supprimés","success");
+					$this->session->setFlash("Traductions supprimés","success");
 				}
 				else {
-					Session::setFlash("Error lors de la suppression des traductions","error");
+					$this->session->setFlash("Error lors de la suppression des traductions","error");
 				}				
 			}
 			else {
-				Session::setFlash("Error lors de la suppression","error");
+				$this->session->setFlash("Error lors de la suppression","error");
 			}
 			$this->redirect('admin/pages/index');
 		}
@@ -213,7 +214,6 @@ class PagesController extends Controller {
 			if($this->request->data){
 
 				$new = $this->request->data;
-				$new->slug = String::slugify($new->title);
 
 				if($this->Pages->validates($new)){
 					
@@ -221,7 +221,7 @@ class PagesController extends Controller {
 
 						if($this->Pages->saveTraduction($new,$page_id)){
 
-							Session::setFlash('Contenu modifié');
+							$this->session->setFlash('Contenu modifié');
 							$this->redirect('admin/pages/edit/'.$page_id.'?lang='.$lang);
 						}
 					}
@@ -236,7 +236,7 @@ class PagesController extends Controller {
 				$c = $this->Pages->JOIN_i18n($c,$lang);
 
 				$trad = $this->Pages->findTraduction($id);
-				
+
 				$d['id'] = $id;
 				$d['trad'] = $trad;
 				$d['content'] = $c;
@@ -292,6 +292,12 @@ class PagesController extends Controller {
 
 		public function contact(){
 
+			$this->view = 'pages/contact';
+			$this->loadModel('Pages');
+			$page = $this->Pages->findPageBySlugAndLang('contact',$this->getLang());
+			$page = $this->Pages->JOIN_i18n($page,$this->getLang());
+			$d['page'] = $page;
+
 
 			if($this->request->post()){
 
@@ -313,7 +319,7 @@ class PagesController extends Controller {
 			$this->loadModel('Users');
 			$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$this->session->user()->getID())));
 			$d['user'] = $user;
-
+			
 			$this->set($d);
 		}
 

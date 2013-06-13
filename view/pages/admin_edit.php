@@ -12,11 +12,12 @@
 	
 </div>
 
-<form class="form-horizontal" action="<?php echo Router::url('admin/pages/edit/'.$id); ?>" method="post">
+<form class="form-vertical" action="<?php echo Router::url('admin/pages/edit/'.$id); ?>" method="post">
 
 
 <?php echo $this->Form->_select('lang',Conf::$languageAvailable,array("style"=>"width:auto; float:right",'default'=>$this->getLang()));?>
 <?php echo $this->Form->input('title','Titre du contenu');  ?>
+<?php echo $this->Form->input('slug','Slug'); ?>
 <?php echo $this->Form->input('id','hidden');  ?>
 <?php echo $this->Form->input('page_id','hidden') ;?>
 <?php echo $this->Form->input('id_i18n','hidden') ;?>
@@ -29,13 +30,14 @@
 	</div>
 </div>
 
+
 <?php echo $this->Form->input('online','Publié',array("type"=>"checkbox")) ;?>
 <?php echo $this->Form->input('valid','Traduction valide',array("type"=>"checkbox")) ;?>
 <?php echo $this->Form->input('menu','Menu',array()); ?>
-<?php echo $this->Form->input('type','type de contenu',array("value"=>$this->request->get('type'))) ;?>
+<?php echo $this->Form->input('type','type de contenu') ;?>
 <?php echo $this->Form->input('position','Position',array()) ;?>
 
-<?php echo $this->Form->input('token','hidden',array('value'=>Session::token())) ;?>
+<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 
 <div class="control-group">
 	<label for="" class="control-label"></label>

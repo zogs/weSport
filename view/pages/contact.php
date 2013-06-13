@@ -4,8 +4,10 @@
 
 	<div class="row">
 		<div class="span8 offset2">
-			<h1>Contact</h1>
-			<span>Si tu es blonde a forte poitrine laisse nous un pti message !</span>
+			<h1><?php echo $page->title;?></h1>
+			<?php echo $page->content;?>
+
+			
 			<?php 
 			//debug($user);
 			 ?>

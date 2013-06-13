@@ -1,12 +1,10 @@
 <?php 
-
-
-$title_for_layout = $page->name;
-
-
+$title_for_layout = $page->title;
 ?>
 
-<div class="hero-unit">
-	<h1><?php echo $page->name;?></h1>
-	<small><?php echo $page->content; ?></small>
+<div class="container">
+	<div class="hero-unit">
+		<h1><?php echo $page->title;?></h1>
+		<small><?php echo $page->content; ?></small>
+	</div>
 </div>

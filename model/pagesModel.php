@@ -168,11 +168,12 @@ class PagesModel extends Model {
 		$i18n->table = $this->table_i18n;
 		$i18n->key = 'id_i18n';
 		$i18n->page_id = $page_id;
+		if(empty($data->slug)) $data->slug = String::slugify($data->title);
 		$i18n_fields = array('id_i18n','lang','content','title','date','valid','slug');	
 		foreach ($i18n_fields as $key) {			
 			if(isset($data->$key)) $i18n->$key = $data->$key;
 		}	
-		
+	
 		 if($this->save($i18n)) 
 		 	return $page_id;
 		 else
@@ -194,7 +195,8 @@ class PagesModel extends Model {
 		else {
 			$p->titleDefault = $data->title;
 			$p->langDefault = $data->lang;
-			$p->slugDefault = String::slugify($data->title);
+			if(empty($data->slug)) $p->slugDefault = String::slugify($data->title);
+			
 		}
 
 		$p->table = $this->table;

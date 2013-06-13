@@ -226,6 +226,17 @@ top: 40%;
 .oups table tr td { vertical-align: middle; text-align:center; font:350% Impact,'Arial Black'; }
 
 
+
+/*=============
+BACK END ADMIN
+==============*/
+.backend_admin {}
+
+.backend_admin form input[type=text] { height:auto; width:60%; font-size:14px; padding:3px 2px;}
+.backend_admin form label {color:#888;}
+
+
+
 /*==============
     FLAGS
     // code from flag-sprites.com modified to fit database country id... dont change !!

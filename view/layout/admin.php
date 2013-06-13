@@ -8,7 +8,7 @@
 	<title><?php echo isset($title_for_layout)?$title_for_layout : 'Admin.'.Conf::$website;?></title>
 	
 </head>
-<body>
+<body class="backend_admin">
 
 	<div class="navbar navbar-fixed-top">
 	  <div class="navbar-inner">
@@ -16,9 +16,6 @@
 	      <a class="brand" href="<?php echo Router::url('admin/posts/index'); ?>">
 	  			Admin.
 			</a>
-			<form class ="navbar-search pull-left">
-			<input type ="text" class="search-query" placeholder="Search">
-			</form>
 
 			<ul class="nav">
 				<li><a href="<?php echo Router::url('/'); ?>">Voir le site</a></li>				
