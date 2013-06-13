@@ -260,7 +260,7 @@ class UsersController extends Controller{
 		$loginUrl = $facebook->getLoginUrl(array(
 			'redirect_uri'=>'http://wesport.zogs.org/users/connect_with_facebook',
 			'scope'=>'email,user_birthday,user_hometown,user_location,publish_actions',
-			'state'=>$state,
+			//'state'=>$state,
 			));
 
 		return $loginUrl;
