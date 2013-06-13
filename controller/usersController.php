@@ -155,7 +155,8 @@ class UsersController extends Controller{
 
 		//get the facebook user
 		$fbuser = $facebook->getUser();
-
+		debug($fbuser);
+		exit();
 		//if the facebook exist
 		if($fbuser) 
 		{		
