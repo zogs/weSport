@@ -118,6 +118,11 @@ class Router{
 	static function url($url){
 
 		trim($url,'/');
+		
+		//Si cest la racine retourne la racine
+		if($url=='/') return '/';
+
+		//Sinon on boucle sur les routes
 		foreach (self::$routes as $v ){
 
 			if(preg_match($v['originreg'], $url, $match)){		
