@@ -154,9 +154,11 @@ class UsersController extends Controller{
 		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
 
 		//get the facebook user
-		$fbuser = $facebook->getUser();
-		debug($fbuser);
-		exit();
+		try{
+			$fbuser = $facebook->getUser();
+		}
+		catch(Exception $e){}
+
 		//if the facebook exist
 		if($fbuser) 
 		{		
