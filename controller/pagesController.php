@@ -5,10 +5,10 @@ class PagesController extends Controller {
 
 		public function home( $day = null ){					
 
-			
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
+			$this->view = 'pages/home';
 		
 			//date
 			if($day === null ){
@@ -76,25 +76,43 @@ class PagesController extends Controller {
 		//===================
 		// Permet de rentre une page
 		// $param $id id du post dans la bdd
-		public function view($id){
+		public function view($slug){
 
-			//On charge le model
-			$this->loadModel('Pages');
-				
-			//On cherche la page		
-			$page = $this->Pages->getPage($id);
-
-			//Si la page n'existe pas on redirige sur 404
-			if(empty($page)){
-				$this->e404('Page introuvable');
+			//Si le slug correspond a une page particuliere
+			if(method_exists($this, $slug)){
+				$method = $slug;
+				$this->$method(); //lance la methode particuliere du controller
+				return;
 			}
 
+			//On charge le model
+			$this->loadModel('Pages');			
+				
+			//On cherche la page		
+			if(!$this->request->get('lang'))
+				$page = $this->Pages->findPageBySlug($slug);
+			else {
+				$page = $this->Pages->findPageBySlugAndLang($slug,$this->request->get('lang'));
+			}
+
+			//Si la page n'existe pas on redirige sur 404
+			if(!$page->exist()){
+				$this->e404('Page introuvable');
+			}
+			
 			//On cherche le contenu
-			$page = $this->Pages->JOIN_i18n($page, $this->getLang());
+			$page = $this->Pages->JOIN_i18n($page,$page->lang);
+
+			//Si la page a une methode particuliere
+			if(method_exists($this, $page->slug)){
+				$method = $page->slug;
+				$this->$method();
+				return;
+			}
 
 			//Si la traduction demandé n'existe pas on cherche la langue par default , si n'existe pas redirege 404
 			if(!$page->isTraductionExist() || !$page->isTraductionValid()){
-				$this->session->setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$id.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
+				Session::setFlash("La traduction demandé n'est pas disponible... <a href=".Router::url('pages/view/'.$page->slug.'/?lang='.$page->langDefault).">Cliquez ici</a> pour voir la page dans sa langue d origine ","warning");
 				$this->e404('Page introuvable');
 			}
 
@@ -103,21 +121,23 @@ class PagesController extends Controller {
 		}
 
 		//Permet de recuperer les pages pour le menu
-		public function getMenu(){
+		public function getMenu($menu){
 
 			$this->loadModel('Pages');
 
 			//get requested lang
 			$lang = $this->getLang();
 			//search all pages to appears in menu
-			$pages = $this->Pages->findAllPages();			
+			$pages = $this->Pages->findMenu($menu);
+			//debug($pages);			
 			//find all traduction for requested language
 			$pages = $this->Pages->JOINS_i18n($pages, $lang);
+			
 			//Unset page that have no traduction for requested lang
 			foreach ($pages as $k => $page) {				
-				if(!$page->isTraductionExist() || $page->isTraductionValid() )  unset($pages[$k]);
+				if(!$page->isTraductionExist() || !$page->isTraductionValid() )  unset($pages[$k]);
 			}
-
+			
 			//return pages if exist
 			if(!empty($pages))
 				return  $pages;	
@@ -125,7 +145,8 @@ class PagesController extends Controller {
 				return array();				
 		}
 
-		public function admin_index(){
+
+		public function admin_index($menu=null){
 
 			$this->loadModel('Pages');
 
@@ -133,24 +154,31 @@ class PagesController extends Controller {
 
 				if($this->Pages->savePage($this->request->post())){
 
-					$this->session->setFlash("Page sauvegardé !","success");
+					Session::setFlash("Page sauvegardé !","success");
 				}
 				else
-					$this->session->setFlash("message","type");
+					Session::setFlash("message","type");
 			}
 
-			$lang = $this->getLang();
+			$lang = $this->getLang();			
 
-			$pages = $this->Pages->findAllPages();			
+			if(!isset($menu))
+				$pages = $this->Pages->findPages();
+			else
+				$pages = $this->Pages->findMenu($menu);
+
 			$traductions = $this->Pages->countPagesTraduction($pages);
-			$pages = $this->Pages->JOINS_i18n($pages,$lang);			
+			$pages = $this->Pages->JOINS_i18n($pages,$lang);	
+			$menus = $this->Pages->findDistinctMenu();		
 
 			if(empty($pages)) $pages = array();
 
 			$d['traductions'] = $traductions;
+			$d['menus'] = $menus;
 			$d['pages'] = $pages;
 			$d['lang'] = $lang;
-			
+
+
 			$this->set($d);			
 		}
 
@@ -160,17 +188,17 @@ class PagesController extends Controller {
 
 			if($this->Pages->deleteContent($id)){
 
-				$this->session->setFlash("Page supprimé","success");
+				Session::setFlash("Page supprimé","success");
 
 				if($this->Pages->deletei18nContents($id)){
-					$this->session->setFlash("Traductions supprimés","success");
+					Session::setFlash("Traductions supprimés","success");
 				}
 				else {
-					$this->session->setFlash("Error lors de la suppression des traductions","error");
+					Session::setFlash("Error lors de la suppression des traductions","error");
 				}				
 			}
 			else {
-				$this->session->setFlash("Error lors de la suppression","error");
+				Session::setFlash("Error lors de la suppression","error");
 			}
 			$this->redirect('admin/pages/index');
 		}
@@ -193,12 +221,10 @@ class PagesController extends Controller {
 
 						if($this->Pages->saveTraduction($new,$page_id)){
 
-							$this->session->setFlash("Page saved","success");
+							Session::setFlash('Contenu modifié');
 							$this->redirect('admin/pages/edit/'.$page_id.'?lang='.$lang);
 						}
 					}
-					else
-						$this->session->setFlash("Error saving page","error");
 				}
 
 				//on recupere la langue des données envoyés
@@ -222,7 +248,6 @@ class PagesController extends Controller {
 
 			$this->set($d);
 		}
-
 
 		public function blog(){
 

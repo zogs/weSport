@@ -32,19 +32,64 @@ class PagesModel extends Model {
 		return new Page($page);
 	}
 
-	public function findAllPages(){
+	public function findPage($params = array()){
 
-		$pages = $this->find(array('conditions'=>array('type'=>'page')));				
+		$default = array('type'=>'page');
+		$page = $this->findFirst(array('conditions'=>array_merge($default,$params)));
+		return new Page($page);
+	}
+
+	public function findPageBySlug($slug){
+
+		$page = $this->findFirst(array('table'=>$this->table_i18n,'fields'=>'page_id as id,lang','conditions'=>array('slug'=>$slug)));		
+		return new Page($page);
+	}
+
+	public function findPageBySlugAndLang($slug,$lang){
+		//On cherche si la page existe dans la langue souhaité
+		$page = $this->findPageBySlug($slug);
+		if($page->exist() && $page->lang == $lang){
+			return $page;
+		}
+		else {
+			//Sinon on cherche si le slug existe
+			$slug = $this->findFirst(array('table'=>$this->table_i18n,'fields'=>'page_id,lang','conditions'=>array('slug'=>$slug)));
+			//Si oui, on renvoi la page correspondante dans la langue du slug
+			if(!empty($slug)){
+				$page = $this->getPage($slug->page_id);
+				$page = $this->JOIN_i18n($page,$slug->lang);
+				return new Page($page);
+			}		
+		}
+		return new Page();
+	}
+
+	public function findPages($params = array()){
+
+		$default = array('type'=>'page');
+		$conditions = array_merge($params,$default);
+		$pages = $this->find(array('conditions'=>$conditions));				
 		foreach ($pages as $key => $page) {
 			$pages[$key] = new Page($page);
 		}
 		return $pages;
 	}
 
-	public function findPage($params){
+	public function findMenu($menu){
 
-		//$page = $this->findFirst(array('conditions'=>$params));
+		$menu = $this->find(array('conditions'=>array('type'=>'page','menu'=>$menu),'order'=>'position ASC'));
+		foreach ($menu as $key => $m) {
+			$menu[$key] = new Page($m);
+		}
+		return $menu;
 	}
+
+	public function findDistinctMenu(){
+
+		$menus = $this->find(array('conditions'=>array('type'=>'page'),'fields'=>'DISTINCT menu as name'));
+		return $menus;		
+	}
+
 
 	public function countContent( $type , $lang){
 
@@ -55,13 +100,12 @@ class PagesModel extends Model {
 
 		$sql = "SELECT lang FROM $this->table_i18n WHERE page_id=$page_id";
 		$res = $this->query($sql);
+
 		$langs = array();
 		foreach ($res as $r) {
 			$langs[] = $r->lang;
-		}	
-		
-		if(!empty($langs)) return $langs;
-		else return array();
+		}		
+		return $langs;
 	}
 	public function findTraductions($pages){
 
@@ -109,22 +153,22 @@ class PagesModel extends Model {
 
 	public function i18nExist( $page_id , $lang){
 
+		if(empty($page_id)) return false;
+
 		$c = $this->findFirst(array('table'=>$this->table_i18n,'fields'=>'id_i18n as id','conditions'=>array('page_id'=>$page_id,'lang'=>$lang)));
 		
 		if(!empty($c)) return $c->id;
 		else return false;
 	}
 
-	public function saveTraduction($data,$page_id){
-
-		
-		$i18n_fields = array('id_i18n','page_id','lang','content','title','date','valid','slug');		
+	public function saveTraduction($data,$page_id){	
 		
 		//On sauvegarde la traduction de la page
 		$i18n = new stdClass();
 		$i18n->table = $this->table_i18n;
 		$i18n->key = 'id_i18n';
 		$i18n->page_id = $page_id;
+		$i18n_fields = array('id_i18n','lang','content','title','date','valid','slug');	
 		foreach ($i18n_fields as $key) {			
 			if(isset($data->$key)) $i18n->$key = $data->$key;
 		}	
@@ -141,6 +185,7 @@ class PagesModel extends Model {
 		$p = new stdClass();
 		$p->online = $data->online;
 		$p->menu = $data->menu;
+		$p->position = $data->position;
 		$p->type = 'page';
 
 		if(!empty($data->id)){
@@ -194,6 +239,11 @@ class Page {
 		}
 	}
 
+	public function exist(){		
+		if(!empty($this->id) || !empty($this->page_id)) return true;
+		return false;
+	}
+
 	public function getTitle(){
 		return $this->title;
 	}
@@ -202,7 +252,7 @@ class Page {
 		return $this->online;
 	}
 
-	public function isOnMenu(){
+	public function whatMenu(){
 		return $this->menu;
 	}
 

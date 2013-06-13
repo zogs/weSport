@@ -1,12 +1,21 @@
 <div class="page-header">
 	<h1>Pages du site</h1>
-	<?php foreach ($traductions as $lang => $number): ?>
-	<a href="?lang=<?php echo $lang;?>"><i class="flag flag-<?php echo $this->getFlagLang($lang);?>"></i><?php echo Conf::$languageAvailable[$lang];?> (<?php echo $number;?>)</a>
+	<?php foreach ($traductions as $langCode => $number): ?>
+	<a href="?lang=<?php echo $langCode;?>"><i class="flag flag-<?php echo $this->getFlagLang($langCode);?>"></i><?php echo Conf::$languageAvailable[$langCode];?> (<?php echo $number;?>)</a>
 	<?php endforeach; ?>
 	
+	<span style="float:right">
+		
+		<small><strong>Menus: </strong></small>
+		<a href="<?php echo Router::url('admin/pages/index');?>">All</a> -
+		<?php if(!empty($menus)): ?>
+		<?php foreach ($menus as $menu):?>
+		<a href="<?php echo Router::url('admin/pages/index/'.$menu->name);?>"><?php echo $menu->name;?></a> -
+		<?php endforeach; ?>
+		<?php endif; ?>
+	</span>
 
 </div>
-
 
 <table class="table table-striped">
 	<thead>
@@ -35,9 +44,8 @@
 			 		</td>
 
 			 		<td>
-			 			<span class="label<?php echo ($v->isOnMenu()==1)? ' label-success' : ''; ?>">Menu</span>
-			 			<?php echo $this->Form->_input('menu','',array('type'=>'checkbox','value'=>$v->isOnMenu())) ;?>
-			 		</td>
+			 			<?php echo $v->whatMenu(); ?>
+			 		</td>			 
 
 			 		<td>
 			 			<i class="flag flag-<?php echo $this->getFlagLang($v->lang);?>"></i>
@@ -57,7 +65,7 @@
 			 		<td><?php echo $v->id ?></td>
 			 	</tr>
 			 	<?php echo $this->Form->input('id','hidden',array('value'=>$v->id)) ;?>
-			 	<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
+			 	<?php echo $this->Form->input('token','hidden',array('value'=>Session::token())) ;?>
 				 </form>
 			<?php endif; ?>
 		 <?php endforeach ?>
