@@ -165,14 +165,13 @@ class UsersController extends Controller{
 
 				try
 				{
+					//security tcheck the state value to protect from csrf attack
+					if($this->request->get('state')!=$this->session->read('fbstate')) throw new zException("CSRF attack on facebook registration", 1);
+					
 					//get the facebook data
 					$fb = $facebook->getUser();
 					$fb = $facebook->api('/me');
 
-					debug($fb);
-					debug($this->session->read('fbstate'));
-
-					exit();
 					//set an object for insertion
 					$user              = new stdClass();
 					$user->login       = $fb['username'];
