@@ -242,7 +242,7 @@ class UsersController extends Controller{
 		else {
 
 			$this->session->setFlash('Please register with facebook first !','warning');
-			$this->redirect('/users/register');			
+			$this->redirect('users/register');			
 		}			
 	}
 
