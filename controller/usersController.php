@@ -179,7 +179,7 @@ class UsersController extends Controller{
 
 		  //Confirm the token by querying the Graph
 		  $graph_url = "https://graph.facebook.com/me?access_token=".$access_token;
-		  $response = curl_get_file_content($graph_url);
+		  $response = curl_get_file_contents($graph_url);
 		  $decode_response = json_decode($response);
 
 		  //Chech for errors
