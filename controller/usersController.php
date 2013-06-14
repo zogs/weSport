@@ -145,6 +145,41 @@ class UsersController extends Controller{
 		}
 	}
 
+	public function facebook_connect(){
+
+		$this->view = "users/login";
+		$this->loadModel('Users');
+
+		$app_id = '153720748148187';
+		$app_secret = '7a181d394b1f1dab0054176f9031a637';
+		$my_url = 'http://wesport.zogs.org/users/facebook_connect';
+
+		//store in db
+		$access_token = '';
+
+		$code = $_REQUEST['code'];
+
+		// If we get a code, it means that we have re-authed the user 
+		  //and can get a valid access_token. 
+		  if (isset($code)) {
+		  	debug($code);
+		    $token_url="https://graph.facebook.com/oauth/access_token?client_id="
+		      . $app_id . "&redirect_uri=" . urlencode($my_url) 
+		      . "&client_secret=" . $app_secret 
+		      . "&code=" . $code . "&display=popup";
+		    $response = file_get_contents($token_url);
+		    $params = null;
+		    parse_str($response, $params);
+		    $access_token = $params['access_token'];
+		    debug($access_token);
+		  }
+		  else {
+		  	debug('REQUEST CODE dont exist');
+		  }
+
+	}
+
+
 	public function connect_with_facebook(){
 
 		$this->view = 'users/login';
