@@ -40,6 +40,9 @@ class UsersController extends Controller{
 
 					}
 
+					//increment user connexion
+					$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$user->getID(),'field'=>'user_connexion'));
+
 					//unset useless info
 					unset( $user->hash);
 					unset( $user->salt);
@@ -198,7 +201,7 @@ class UsersController extends Controller{
 		  }
 		  //if no errors, user is in the decoded_response
 		  else {
-		  	$fbuser = $decoded_response		  			  	
+		  	$fbuser = $decoded_response;	  			  	
 		  }
 
 
@@ -1006,7 +1009,11 @@ class UsersController extends Controller{
 
     	//find reviewed events
     	$eventsReviewed = $this->Events->findReviewByOrga($uid); 
-    	$eventsReviewed = $this->Events->joinUser($eventsReviewed);    	
+    	$eventsReviewed = $this->Events->joinUser($eventsReviewed); 
+
+    	//count week participation
+    	$weekParticipation = $this->Events->findWeekParticipation($uid);
+    	$monthParticipation = $this->Events->findMonthParticipation($uid);
 
     	$d['user'] = $user;
     	$d['futurParticipation'] = $futurParticipation;
@@ -1014,6 +1021,8 @@ class UsersController extends Controller{
     	$d['organiseEvents'] = $organiseEvents;
     	$d['hasOrganized'] = $hasOrganized;
     	$d['eventsReviewed'] = $eventsReviewed;
+    	$d['monthParticipation'] = $monthParticipation;
+    	$d['weekParticipation'] = $weekParticipation;
 
     	$this->set($d);
     }

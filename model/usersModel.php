@@ -139,11 +139,39 @@ class UsersModel extends Model{
 		if( (count($tab)==0 ) || (count($tab)==1 && isset($tab['user_id'])))
 			return true;	
 
-		if($this->save($user))
+		if($id = $this->save($user)){
+
+			//create statistics
+			$this->saveUserStatistics($id);
+
 			return true;
+		}
 		else
 			return false;
 
+	}
+
+	public function saveUserStatistics($user_id,$array = array()){
+
+		$stat_exist = $this->findFirst(array('table'=>'users_stat','fields'=>'id,account_updated','conditions'=>array('user_id'=>$user_id)));		
+
+		$stat = new stdClass();		
+		$stat->table = 'users_stat';
+		$stat->key = 'id';
+		$stat->user_id = $user_id;
+		if(!empty($stat_exist)) {
+			$stat->id = $stat_exist->id;
+			$stat->account_updated = ($stat_exist->account_updated+1);
+		}
+
+		foreach ($array as $key=>$val) {
+			$stat->$key = $val;
+		}
+
+		if($this->save($stat))
+			return true;
+		else
+			return false;
 	}
 
 	public function saveUserAvatar($user_id){

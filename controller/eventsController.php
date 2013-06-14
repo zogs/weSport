@@ -198,6 +198,7 @@ class EventsController extends Controller{
 			//Sauver la participations
 			if($this->Events->saveParticipants($user, $event, $proba)){
 				
+				//Set flash
 				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success",4);
 
 				//Prévenir l'organisateur
@@ -260,7 +261,7 @@ class EventsController extends Controller{
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
 					//On previens
-					$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);
+					$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);					
 					//On vérifie si le nombre min nest pas atteint
 					//nombre actuel de participants
 					$nbparticip = $this->Events->countParticipants($event->id);
@@ -303,8 +304,10 @@ class EventsController extends Controller{
 				if($res==='already') {
 					$this->session->setFlash("Vous avez déjà donné votre avis","warning");
 				}
-				else
+				else {
+
 					$this->session->setFlash("Merci d'avoir donné votre avis !","success");	
+				}
 				
 			}
 		}
@@ -319,9 +322,9 @@ class EventsController extends Controller{
 		$evt = $this->Events->findEventById($eid);
 
 		if($evt->isAdmin($this->session->user()->getID())){
-
-			$this->Events->confirmEvent($eid);
-
+			//Confirm event
+			$this->Events->confirmEvent($eid);			
+			//set Flash
 			$this->session->setFlash("L'activité est confirmée ! Amusez-vous bien !");
 		}
 
@@ -436,7 +439,7 @@ class EventsController extends Controller{
 					
 						//save organizator participation		
 						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
-						$this->Events->saveParticipants($u,$evt);
+						$this->Events->saveParticipants($u,$evt);						
 						
 					
 						//email the changes 
@@ -786,12 +789,14 @@ class EventsController extends Controller{
     	foreach ($sporters as $key => $sporter) {
     			
     		//find user
-    		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));
+    		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));    		
     		//if user dont exist jump out
     		if(!$sporter->user->exist()) continue;
 
     		//find event
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
+    		$sporter->event->numParticipants = $this->Events->countParticipants($sporter->event->id);
+
     		//if event dont exist jump out
     		if(!$sporter->event->exist()) continue;
     			
@@ -826,6 +831,11 @@ class EventsController extends Controller{
 
 	        	$this->Events->mailReminderSended($sporter->id);
 	        	$nb_mail_sended++;
+
+	        	//increment events particpants						
+				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->event->user_id,'field'=>'events_participants','number'=>$sporter->event->numParticipants));
+				//increment sporters encourter
+				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
 
 	        }
 	        else $nb_mail_error++;

@@ -309,7 +309,8 @@
  		}
  		
  		$pre = $this->db->prepare($sql); //prepare la requete
- 		
+ 		// debug($sql);
+ 		// debug($tab);
  		$pre->execute($tab); //execute la requete grace au tableaux des valeurs ( :name, :contenu, :date, ...)
  		
  		//Si c'est un insert on recupere l'id de l'insertion
@@ -400,28 +401,41 @@
 		return false;
 	}
 
- 	public function increment($data){
+ 	public function increment($data,$number=1){
 
- 		if ( isset($data['table'])) {
- 			$table = $data['table'];
- 		}		
- 		else {
- 			$table = $this->table;
- 		}
+		$table  = (isset($data['table']))? $data['table'] : $this->table;
+		$key    = (isset($data['key']))? $data['key'] : $this->primaryKey;
+		$number = (isset($data['number']))? $data['number'] : 1;
+		$field  = $data['field'];
+		$id     = $data['id'];
 
- 		$field = $data['field'];
- 		$id = $data['id'];
-
- 		$sql = "UPDATE $this->table SET $field = $field+1 WHERE $this->primaryKey = $id";
+ 		$sql = "UPDATE $table SET $field = $field+$number WHERE $key = $id";
  		$pre = $this->db->prepare($sql);
  		$pre->execute();
 
- 		$sql ="SELECT $field FROM $this->table WHERE $this->primaryKey = $id";
+ 		$sql ="SELECT $field FROM $table WHERE $key = $id";
  		$pre = $this->db->prepare($sql);
  		$pre->execute();
  		return $pre->fetch(PDO::FETCH_OBJ);
  	}
 
+ 	public function decrement($data){
+
+		$table  = (isset($data['table']))? $data['table'] : $this->table;
+		$key    = (isset($data['key']))? $data['key'] : $this->primaryKey;
+		$number = (isset($data['number']))? $data['number'] : 1;
+		$field  = $data['field'];
+		$id     = $data['id'];
+
+ 		$sql = "UPDATE $table SET $field = $field-$number WHERE $key = $id";
+ 		$pre = $this->db->prepare($sql);
+ 		$pre->execute();
+
+ 		$sql ="SELECT $field FROM $table WHERE $key = $id";
+ 		$pre = $this->db->prepare($sql);
+ 		$pre->execute();
+ 		return $pre->fetch(PDO::FETCH_OBJ);
+ 	}
 	
 
 public function validates($data, $rules = null, $field = null){

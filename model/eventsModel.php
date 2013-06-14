@@ -440,7 +440,13 @@ class EventsModel extends Model{
 		$event->timestamp = strtotime($event->date.' '.$event->time);
 
 		
-		if($id = $this->save($event)) return $id;
+		if($id = $this->save($event)) {
+
+			//increment event created if new event					
+			if(isset($event->id)) $this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$event->user_id,'field'=>'events_created'));
+
+			return $id;
+		}
 		return false;
 	}
 
@@ -465,7 +471,12 @@ class EventsModel extends Model{
 				$s->date_event = $event->timestamp;
 				$s->table = 'sporters';	
 				$s->proba = $proba;			
-				$this->save($s);			
+				$this->save($s);	
+
+
+				//Increment user participation
+				$this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$user->user_id,'field'=>'user_participation'));
+		
 			}	
 				
 		}
@@ -480,7 +491,13 @@ class EventsModel extends Model{
 		$p->key = 'id';
 		$p->id = $user_id;
 
-		if($this->delete($p)) return true;
+		if($this->delete($p)) {
+			
+			//decrement user participation
+			$this->decrement(array('table'=>'users_stat','key'=>'user_id','id'=>$user_id,'field'=>'user_participation'));
+
+			return true;
+		}
 
 		return false;
 	}
@@ -504,6 +521,20 @@ class EventsModel extends Model{
 			$r[$sport->slug] = $sport->$lang;
 		}
 		return $r;		
+	}
+
+	public function findWeekParticipation($user_id,$nbweek = 1){
+
+		$sql = "SELECT * FROM sporters WHERE user_id = $user_id AND mail=1 AND FROM_UNIXTIME(date_event) > TIMESTAMPADD(WEEK,-$nbweek,NOW())";
+		return $this->query($sql);
+
+	}
+
+	public function findMonthParticipation($user_id,$nbmonth = 1){
+
+		$sql = "SELECT * FROM sporters WHERE user_id = $user_id AND mail=1 AND FROM_UNIXTIME(date_event) > TIMESTAMPADD(MONTH,-$nbmonth,NOW())";
+		return $this->query($sql);
+
 	}
 
 	public function findSportersNotYetMailed(){
@@ -535,7 +566,14 @@ class EventsModel extends Model{
 		$s->id = $event_id;
 		$s->confirmed = 1;
 
-		if($this->save($s)) return true;
+		if($this->save($s)) {
+
+			//increment event confirmed
+			$event = $this->findEventById($event_id);		
+			$this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$event->user_id,'field'=>'events_confirmed'));
+
+			return true;
+		}
 
 		return false;
 	}
@@ -706,8 +744,13 @@ class EventsModel extends Model{
 		$review->review = $data->review;
 		$review->lang = $data->lang;
 
-		if($this->save($review))
+		if($this->save($review)){
+
+			//increment user review
+			$this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$review->user_id,'field'=>'events_reviewed'));
+
 			return true;
+		}
 		else
 			return false;
 

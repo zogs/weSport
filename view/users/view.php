@@ -43,9 +43,9 @@
 						</a></li>
 					<?php endforeach; ?>
 				</ul>
-				<p>
-					a participé à <?php echo count($pastParticipation);?> événements
-				</p>				
+				<p>a participé à <?php echo count($pastParticipation);?> activitées</p>		
+				<p>a participé à <?php echo count($weekParticipation);?> activitées cette semaine</p>		
+				<p>a participé à <?php echo count($monthParticipation);?> activitées ce mois</p>
 			</div>
 		</div>
 	
