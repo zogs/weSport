@@ -177,6 +177,30 @@ class UsersController extends Controller{
 		  	debug('REQUEST CODE dont exist');
 		  }
 
+		  //Confirm the token by querying the Graph
+		  $graph_url = "https://graph.facebook.com/me?access_token=".$access_token;
+		  $response = curl_get_file_content($graph_url);
+		  $decode_response = json_decode($response);
+
+		  //Chech for errors
+		  if($decoded_response->error){
+		  	//check to seee if its an aAuth error
+		  	if($decoded_response->error->type=="OAuthException"){
+		  		//if error get a new valid token
+		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
+		  				."client_id=".$app_id
+		  				."&redirect_uri=".urlencode($myurl);
+		  		$this->redirect($dialog_url);
+		  	}
+		  	else {
+		  		throw new zException("Facebook connect : other error append", 1);		  		
+		  	}
+		  }
+		  else {
+		  	debug($decode_response);
+		  	debug($access_token);
+		  }
+
 	}
 
 
