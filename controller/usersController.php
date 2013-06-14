@@ -183,13 +183,13 @@ class UsersController extends Controller{
 		  $decoded_response = json_decode($response);
 		    
 		  //Check for errors 
-		  if ($decoded_response->error) {
+		  if (isset($decoded_response->error)) {
 		  	//check to seee if its an aAuth error
-		  	if($decoded_response->error->type=="OAuthException"){
+		  	if ($decoded_response->error->type== "OAuthException") {
 		  		//if error get a new valid token
 		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
 		  				."client_id=".$app_id
-		  				."&redirect_uri=".urlencode($myurl);
+		  				."&redirect_uri=".urlencode($my_url);
 		  		$this->redirect($dialog_url);
 		  	}
 		  	else {
