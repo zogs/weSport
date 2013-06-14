@@ -161,8 +161,7 @@ class UsersController extends Controller{
 
 		// If we get a code, it means that we have re-authed the user 
 		  //and can get a valid access_token. 
-		  if (isset($code)) {
-		  	debug($code);
+		  if (isset($code)) {		  	
 		    $token_url="https://graph.facebook.com/oauth/access_token?client_id="
 		      . $app_id . "&redirect_uri=" . urlencode($my_url) 
 		      . "&client_secret=" . $app_secret 
@@ -171,16 +170,16 @@ class UsersController extends Controller{
 		    $params = null;
 		    parse_str($response, $params);
 		    $access_token = $params['access_token'];
-		    debug($access_token);
+		    
 		  }
 		  else {
-		  	debug('REQUEST CODE dont exist');
+		  	throw new zException("Facebook connect : params -code- is not in $_REQUEST", 1);	
 		  }
 
 		  //Confirm the token by querying the Graph
 		  $graph_url = "https://graph.facebook.com/me?access_token=".$access_token;
 		  $response = curl_get_file_contents($graph_url);
-		  $decode_response = json_decode($response);
+		  $decoded_response = json_decode($response);
 
 		  //Chech for errors
 		  if($decoded_response->error){
@@ -197,7 +196,7 @@ class UsersController extends Controller{
 		  	}
 		  }
 		  else {
-		  	debug($decode_response);
+		  	debug($decoded_response);
 		  	debug($access_token);
 		  }
 
