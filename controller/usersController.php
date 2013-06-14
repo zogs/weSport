@@ -177,12 +177,13 @@ class UsersController extends Controller{
 		  }
 
 		  //Confirm the token by querying the Graph
-		  $graph_url = "https://graph.facebook.com/me?access_token=".$access_token;
+		  $graph_url = "https://graph.facebook.com/me?"
+		    . "access_token=" . $access_token;
 		  $response = curl_get_file_contents($graph_url);
 		  $decoded_response = json_decode($response);
-
-		  //Chech for errors
-		  if($decoded_response->error){
+		    
+		  //Check for errors 
+		  if ($decoded_response->error) {
 		  	//check to seee if its an aAuth error
 		  	if($decoded_response->error->type=="OAuthException"){
 		  		//if error get a new valid token
