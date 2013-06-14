@@ -186,7 +186,7 @@ class UsersController extends Controller{
 		  if (isset($decoded_response->error)) {
 		  	//check to seee if its an aAuth error
 		  	if ($decoded_response->error->type== "OAuthException") {
-		  		//if error get a new valid token
+		  		//if error get a new valid token and reload this methode
 		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
 		  				."client_id=".$app_id
 		  				."&redirect_uri=".urlencode($my_url);
@@ -196,10 +196,12 @@ class UsersController extends Controller{
 		  		throw new zException("Facebook connect : other error append", 1);		  		
 		  	}
 		  }
+		  //if no errors, user is in the decoded_response
 		  else {
-		  	debug($decoded_response);
-		  	debug($access_token);
+		  	$fbuser = $decoded_response		  			  	
 		  }
+
+
 
 	}
 
