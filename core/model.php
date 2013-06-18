@@ -401,7 +401,7 @@
 		return false;
 	}
 
- 	public function increment($data,$number=1){
+ 	public function increment($data){
 
 		$table  = (isset($data['table']))? $data['table'] : $this->table;
 		$key    = (isset($data['key']))? $data['key'] : $this->primaryKey;

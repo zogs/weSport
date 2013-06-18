@@ -201,7 +201,7 @@ class EventsController extends Controller{
 				//Set flash
 				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success",4);
 
-				//Prévenir l'organisateur
+				//On préviens l'organisateur
 				if($this->sendNewParticipant($event,$user)){
 
 					//Vérifier si le nombre est atteint
@@ -836,6 +836,8 @@ class EventsController extends Controller{
 				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->event->user_id,'field'=>'events_participants','number'=>$sporter->event->numParticipants));
 				//increment sporters encourter
 				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
+				//Set sport practiced for stat
+				$this->Events->setSportPracticed($sporter->user_id,$sporter->event->sport);
 
 	        }
 	        else $nb_mail_error++;

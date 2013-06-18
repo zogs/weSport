@@ -756,6 +756,27 @@ class EventsModel extends Model{
 
 	}
 
+
+	public function setSportPracticed($user_id,$current_sport){
+
+		$check = $this->findFirst(array('table'=>'users_sports_practiced','conditions'=>array('user_id'=>$user_id,'sport_slug'=>$current_sport)));
+
+		if(empty($check)){
+
+			$save = new stdClass();
+			$save->table = 'users_sports_practiced';
+			$save->user_id = $user_id;
+			$save->sport_slug = $current_sport;
+			if($this->save($save)) return true;
+		}
+		
+	}
+
+	public function getSportPracticed($user_id){
+
+		return $this->find(array('table'=>'users_sports_practiced','conditions'=>array('user_id'=>$user_id)));
+	}
+
 	
 
 } 
