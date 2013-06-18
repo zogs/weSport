@@ -1001,28 +1001,25 @@ class UsersController extends Controller{
     	if(!$user->exist()) $this->e404('User does not exist');
 
     	//find events
-    	$futurParticipation = $this->Events->findUserFuturParticipations($uid);
-    	$pastParticipation = $this->Events->findUserPastParticipations($uid);
+    	$d['futurParticipation'] = $this->Events->findUserFuturParticipations($uid);
+    	$d['pastParticipation'] = $this->Events->findUserPastParticipations($uid);
     	
-    	$organiseEvents = $this->Events->findEventsUserOrganize($uid);
-    	$hasOrganized = $this->Events->findEventsUserHasOrganized($uid);
+    	$d['organiseEvents'] = $this->Events->findEventsUserOrganize($uid);
+    	$d['hasOrganized'] = $this->Events->findEventsUserHasOrganized($uid);
 
     	//find reviewed events
-    	$eventsReviewed = $this->Events->findReviewByOrga($uid); 
-    	$eventsReviewed = $this->Events->joinUser($eventsReviewed); 
+    	$d['eventsReviewed'] = $this->Events->findReviewByOrga($uid); 
+    	$d['eventsReviewed'] = $this->Events->joinUser($eventsReviewed); 
 
     	//count week participation
-    	$weekParticipation = $this->Events->findWeekParticipation($uid);
-    	$monthParticipation = $this->Events->findMonthParticipation($uid);
+    	$d['weekParticipation'] = $this->Events->findWeekParticipation($uid);
+    	$d['monthParticipation'] = $this->Events->findMonthParticipation($uid);
+
+    	//Sport practiced
+    	$d['sportsPracticed'] = $this->Events->getSportsPracticed($uid);
 
     	$d['user'] = $user;
-    	$d['futurParticipation'] = $futurParticipation;
-    	$d['pastParticipation'] = $pastParticipation;
-    	$d['organiseEvents'] = $organiseEvents;
-    	$d['hasOrganized'] = $hasOrganized;
-    	$d['eventsReviewed'] = $eventsReviewed;
-    	$d['monthParticipation'] = $monthParticipation;
-    	$d['weekParticipation'] = $weekParticipation;
+ 
 
     	$this->set($d);
     }

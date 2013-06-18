@@ -772,7 +772,7 @@ class EventsModel extends Model{
 		
 	}
 
-	public function getSportPracticed($user_id){
+	public function getSportsPracticed($user_id){
 
 		return $this->find(array('table'=>'users_sports_practiced','conditions'=>array('user_id'=>$user_id)));
 	}

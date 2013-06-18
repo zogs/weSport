@@ -46,6 +46,7 @@
 				<p>a participé à <?php echo count($pastParticipation);?> activitées</p>		
 				<p>a participé à <?php echo count($weekParticipation);?> activitées cette semaine</p>		
 				<p>a participé à <?php echo count($monthParticipation);?> activitées ce mois</p>
+				<p>a déjà participé aux sports suivants : <?php foreach ($sportsPracticed as $sport):?><?php echo $sport->sport_slug;?><?php endforeach;?></p>
 			</div>
 		</div>
 	
