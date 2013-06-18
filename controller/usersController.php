@@ -1009,7 +1009,7 @@ class UsersController extends Controller{
 
     	//find reviewed events
     	$d['eventsReviewed'] = $this->Events->findReviewByOrga($uid); 
-    	$d['eventsReviewed'] = $this->Events->joinUser($eventsReviewed); 
+    	$d['eventsReviewed'] = $this->Events->joinUser($d['eventsReviewed']); 
 
     	//count week participation
     	$d['weekParticipation'] = $this->Events->findWeekParticipation($uid);
