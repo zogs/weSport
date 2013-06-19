@@ -207,6 +207,7 @@ class UsersController extends Controller{
 		  
 		  //On vérifie si il existe dans la base
 		  $user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id',$fbuser->id)));
+		  debug($user);
 		  //Si il n'existe pas on l'enregistre dans la base
 		  if(!$user->exist()){
 
