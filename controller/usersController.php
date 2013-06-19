@@ -204,6 +204,10 @@ class UsersController extends Controller{
 		  	$fbuser = $decoded_response;	  			  	
 		  }
 
+		  debug($fbuser);
+		  //On vérifie si il existe dans la base
+		  //$user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id',$)))
+
 
 
 	}
