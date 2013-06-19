@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="pub">PUB</div>
 	<?php echo $this->session->flash(); ?>
-	<a href="<?php echo Router::url('pages/home/'.$this->cookieEventSearch->read('date'));?>">Retour au calendrier</a>
+	<a href="<?php echo Router::url('/date/'.$this->cookieEventSearch->read('date'));?>">Retour au calendrier</a>
 	<div class="event">	
 
 		<?php if($event->timingSituation() == 'past'):?>
@@ -126,10 +126,10 @@
 				<h4 class="event-info">Participants :</h4>
 				<div class="event-participants-avatars">
 				<?php foreach ($event->participants as $participant):?>										
-					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/></a>
+					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/></a>
 				<?php endforeach;?>
 				<?php foreach ($event->uncertains as $participant):?>										
-					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-uncertains-avatar tooltiptop" src="<?php echo Router::webroot($participant->avatar);?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
+					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-uncertains-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
 				<?php endforeach;?>
 					
 				</div>
