@@ -204,11 +204,68 @@ class UsersController extends Controller{
 		  	$fbuser = $decoded_response;	  			  	
 		  }
 
-		  debug($fbuser);
+		  
 		  //On vérifie si il existe dans la base
-		  //$user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id',$)))
+		  $user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id',$fbuser->id)));
+		  //Si il n'existe pas on l'enregistre dans la base
+		  if(!$user->exist()){
 
+		  	//on vérifie que ce login n'existe pas déjà
+			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$fbuser->username)));							
+			if(!empty($check)) {
+				$this->session->setFlash("Ce nom d'utilisateur est déjà pris !","error");
+				$this->e404('Inscription avec facebook impossible, nous sommes désolé mais ce nom est déjà pris...');
+			}				
+			//on vérifie que ce mail n'exsite pas déjà
+			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('email'=>$fbuser->email)));
+			if(!empty($check)) {
+				$this->session->setFlash("Cet email est déjà utilisé","error");
+				$this->e404('Inscription aveec facebook impossible, cet email est déjà pris !');
+			}
 
+		  	$user = new stdClass();
+		  	$user->login = $fbuser->username;
+		  	$user->prenom = $fbuser->first_name;
+		  	$user->nom = $fbuser->last_name;
+		  	$user->email = $fbuser->email;
+		  	$user->avatar = 'https://graph.facebook.com/'.$fb['id'].'/picture';
+		  	$user->hash = md5(String::random(10));
+		  	$user->salt = String::random(10);
+		  	$birthday          = explode('/',$fbuser->birthday);
+			$user->birthdate   = $birthday[2].'-'.$birthday[0].'-'.$birthday[1];
+			$user->sexe = ($fbuser->gender=='male')? 'h' : 'f';
+			$user->valid = 1;
+			$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
+			$fblocale = explode('_',$fbuser->locale);
+			$user->lang = $fblocale[0];
+			$user->CC1 = $fblocale[1];
+			$user->facebook_id = $fbuser->id;
+			$user->facebook_token = $access_token;
+
+			if($user_id = $this->Users->saveUser($user)){
+					$user->user_id = $user_id;
+					$user = new User($user);
+			}
+			else {
+				throw new zException("Error Saving Facebook User", 1);
+				
+			}
+		  }
+
+		//set cookie for autoconnexion			
+		$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);//set secret key cookie
+		setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false, true);
+
+		//unset session data
+		unset( $user->hash);
+		unset( $user->salt);
+		unset($_SESSION['user']);
+		unset($_SESSION['token']);
+
+		//write session	data		
+		$this->session->write('user', $user);
+		$this->session->setToken();				
+		$this->session->setFlash('Vous êtes maintenant connecté grace à facebook !','success');
 
 	}
 
@@ -327,7 +384,7 @@ class UsersController extends Controller{
 
 		$loginUrl = $facebook->getLoginUrl(array(
 			'redirect_uri'=>'http://wesport.zogs.org/users/facebook_connect',
-			'scope'=>'email,user_birthday,user_hometown,user_location,publish_actions',
+			'scope'=>'email,user_birthday,publish_actions',
 			//'state'=>$state,
 			));
 
