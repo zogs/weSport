@@ -125,6 +125,7 @@
 				<i class="icon icon-user"></i>
 				<h4 class="event-info">Participants :</h4>
 				<div class="event-participants-avatars">
+					<?php debug($event->participants); ?>
 				<?php foreach ($event->participants as $participant):?>										
 					<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/></a>
 				<?php endforeach;?>
