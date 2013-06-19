@@ -68,7 +68,7 @@
         if($config->showFormReply ){
 
             $html.= "<form class='formCommentReply' action='".Router::url('comments/reply')."' method='POST'>                
-                        <img class='userAvatarCommentForm' src='".Router::webroot($user->getAvatar())."' />
+                        <img class='userAvatarCommentForm' src='".$user->getAvatar()."' />
                     ";
                 if($user->user_id!=0){
                 $html .= "<textarea name='content' class='formComment' placeholder='Reply to ".$com->user->getLogin()."'></textarea> 
@@ -102,7 +102,7 @@
         ob_start();
         ?>
             <div class="thread post <?php echo ($com->reply_to!=0)? 'reply':'';?> <?php echo 'type_'.$com->type;?> <?php echo (!empty($com->title))? 'type_news':'';?>" id="<?php echo 'com'.$com->id; ?>">  
-                <img class="logo" src="<?php echo Router::webroot($com->user->getAvatar()) ?>" alt="image avatar" />
+                <img class="logo" src="<?php echo $com->user->getAvatar() ?>" alt="image avatar" />
             
                 <div class="content">   
                     <?php if(!empty($com->title)): ?>                 

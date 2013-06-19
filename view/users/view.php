@@ -1,7 +1,7 @@
 <div class="userSheet">
 	<div class="container">
 		<div class="row">
-			<img src="<?php echo Router::url($user->getAvatar());?>" />
+			<img src="<?php echo $user->getAvatar();?>" />
 			<h1><?php echo $user->getLogin();?></h1>
 			<?php echo $user->getAge();?> ans
 		</div>
@@ -59,7 +59,7 @@
 				<?php if(!empty($review->event)):?>
 				<div class="event-review">
 					<div class="bulle">
-						<img class="event-avatar tooltiptop" src="<?php echo Router::webroot($review->user->getAvatar());?>" alt="" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)">
+						<img class="event-avatar tooltiptop" src="<?php echo $review->user->getAvatar();?>" alt="" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)">
 						<span><?php echo $review->review; ?></span>				
 						<small><a href="<?php echo Router::url('events/view/'.$review->event->id.'/'.$review->event->slug);?>"><?php echo $review->event->title; ?></a></small>						
 					</div>

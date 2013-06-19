@@ -15,7 +15,7 @@
 
                         <?php if ($this->session->user()->isLog()): ?>    
 
-                        <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
+                        <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
                         <div class="commentFormFields">
                             <?php 
                                 //Si c'est l'admin , il peut mettre un titre a son commentaire
@@ -42,7 +42,7 @@
                             <div id="commentPreview"></div>
                         </div>
                         <?php else: ?>
-                        <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
+                        <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
                         <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->noLoggedPlaceholder;?>"></textarea>
                         <?php endif; ?>
                     </form>                                   
@@ -112,7 +112,7 @@
                          <?php if($this->session->user()->isLog()):?>
                          <div class="replies" id="formCommentReply" >
                             <form class="formCommentReply" action="<?php echo Router::url('comments/reply'); ?>" method="POST">                
-                                <img class="userAvatarCommentForm" src="<?php echo Router::url($this->session->user()->getAvatar()); ?>" />
+                                <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
                                 <?php if($this->session->user()->isLog()):?>
                                 <textarea name="content" class="formComment" placeholder="Reply here"></textarea> 
                                 <input class="btn btn-small" type="submit" name="" value="Send">

@@ -36,7 +36,7 @@
 			<ul class="nav pull-right">
 				<?php if ($this->session->user()->isLog()): ?>
 					<li><a href="<?php echo Router::url('users/account');?>">
-							<img class="nav-avatar" src="<?php echo Router::webroot($this->session->user()->getAvatar()); ?>" />	
+							<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	
 							<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
 					</a></li>
 					<li class="dropdown">				

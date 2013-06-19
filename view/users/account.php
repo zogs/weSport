@@ -7,7 +7,7 @@
 			<div class="dashboard">		
 				<div class="module module-rounded">		
 					<a class="" href="<?php echo Router::url('users/view/'.$user->getID());?>">
-					<div class="fleft"><img src="<?php echo Router::webroot($this->session->user()->getAvatar());?>" class="avatar size32" alt="<?php echo $user->login;?>"></div>
+					<div class="fleft"><img src="<?php echo $this->session->user()->getAvatar();?>" class="avatar size32" alt="<?php echo $user->login;?>"></div>
 					<div class="fleft"><b><?php echo $user->login;?></b></div>
 					</a>
 				</div>

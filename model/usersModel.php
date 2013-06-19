@@ -345,8 +345,9 @@ class User {
 
 	public function getAvatar(){
 
-		if(isset($this->avatar)&&!empty($this->avatar)&&file_exists(WEBROOT.DS.$this->avatar)) return $this->avatar;
-		else return 'img/musclor.jpg';
+		if(isset($this->avatar)&&!empty($this->avatar)&&file_exists(WEBROOT.DS.$this->avatar)) return Router::webroot($this->avatar);
+		elseif(strpos($this->avatar,'http')) return $this->avatar;
+		else return 'img/LOGO.gif';
 	}
 
 	public function getLink(){

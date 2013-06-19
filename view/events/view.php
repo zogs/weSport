@@ -178,7 +178,7 @@
 					<ul>
 					<?php foreach ($event->reviews as $key => $review):?>					
 						<li>
-							<img class="event-avatar tooltiptop" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)" src="<?php echo Router::webroot($review->user->getAvatar());?>">  
+							<img class="event-avatar tooltiptop" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)" src="<?php echo $review->user->getAvatar();?>">  
 							<?php echo $review->review;?>
 						</li>
 
