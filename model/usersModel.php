@@ -144,7 +144,7 @@ class UsersModel extends Model{
 			//create statistics
 			$this->saveUserStatistics($id);
 
-			return true;
+			return $id;
 		}
 		else
 			return false;
