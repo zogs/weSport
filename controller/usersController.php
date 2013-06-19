@@ -228,7 +228,7 @@ class UsersController extends Controller{
 		  	$user->prenom = $fbuser->first_name;
 		  	$user->nom = $fbuser->last_name;
 		  	$user->email = $fbuser->email;
-		  	$user->avatar = 'https://graph.facebook.com/'.$fb['id'].'/picture';
+		  	$user->avatar = 'https://graph.facebook.com/'.$fbuser['id'].'/picture';
 		  	$user->hash = md5(String::random(10));
 		  	$user->salt = String::random(10);
 		  	$birthday          = explode('/',$fbuser->birthday);
