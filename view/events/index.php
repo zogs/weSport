@@ -1,4 +1,61 @@
-<div class="events-week">
+<div style="width:100%;overflow:hidden;">
+	<table style="width:100%;float:left;background:#DDD">
+		<tr style="text-align:center;">
+			<th style="width:1%;background:#473298"></th>
+			<th style="width:2%">Lundi</th>
+			<th style="width:2%">Mardi</th>
+			<th style="width:2%">Mercredi</th>
+			<th style="width:2%">Jeudi</th>
+			<th style="width:2%">Vendredi</th>
+			<th style="width:2%">Samedi</th>
+			<th style="width:2%">Dimanche</th>
+			<th style="width:1%;background:#473298"></th>
+		</tr>
+		<tr class="events-of-the-day">
+			<td style="background:#473298"></td>
+			<td>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#327632">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#327632">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#327632">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#327632">LOLILOL</div>
+			</td>
+			<td><div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#987234">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#987234">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#987234">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#987234">LOLILOL</div>
+			</td>
+			<td><div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238764">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238764">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238764">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238764">LOLILOL</div>
+			</td>
+			<td><div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238758">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238758">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238758">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#238758">LOLILOL</div>
+			</td>
+			<td><div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#983432">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#983432">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#983432">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#983432">LOLILOL</div>
+			</td>
+			<td><div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#732842">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#732842">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#732842">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#732842">LOLILOL</div>
+			</td>
+			<td><div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#532023">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#532023">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#532023">LOLILOL</div>
+				<div style="float:left;width:100%;padding:10px;text-align:center;margin:5px;background:#532023">LOLILOL</div>
+			</td>
+			<td style="background:#473298"></td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="events-week" style="display:none">
 
 <div class="events-prev">
 	<?php if($firstday!=date('Y-m-d')): ?>
@@ -40,7 +97,7 @@ foreach ($events as $date => $evts):
 			<div class="events-bb <?php if($event->getUserParticipation()) echo 'events-userin' ?>">				
 				<a class="events-link" href="<?php echo Router::url('events/view/'.$event->getID().'/'.$event->getSlug());?>">
 					<div class="events-sport-logo">
-						<img src="<?php echo $event->getSportLogo();?>" alt="<?php echo $event->sport;?>">				
+						<img src="<?php echo $event->getSportLogo();?>" alt="<?php echo $event->getSportSlug();?>">				
 					</div>
 	
 					<div class="events-time">

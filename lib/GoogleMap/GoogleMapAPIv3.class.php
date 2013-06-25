@@ -91,10 +91,10 @@ class GoogleMapAPI
 	protected $minLat = 1000000;
 
 	/** map center latitude (horizontal), calculated automatically as markers are added to the map **/
-	protected $centerLat = NULL;
+	public $centerLat = NULL;
 
 	/** map center longitude (vertical),  calculated automatically as markers are added to the map **/
-	protected $centerLng = NULL;
+	public $centerLng = NULL;
 
 	/** factor by which to fudge the boundaries so that when we zoom encompass, the markers aren't too close to the edge **/
 	protected $coordCoef = 0.01;

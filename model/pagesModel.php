@@ -267,5 +267,13 @@ class Page {
 		if($this->valid==1) return true;
 		return false;
 	}
+
+	public function isCurrentPage(){			
+		$url = str_ireplace('/weSport/','',$_SERVER['REQUEST_URI']);
+		if(strpos($url,$this->slug)===0) return true;
+		if($this->slug=='/'&& $url=='/') return true;
+		if($this->slug=='/'&& $url=='') return true;
+		return false;		
+	}
 }
 ?>

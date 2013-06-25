@@ -1,3 +1,4 @@
+
 <div class="container">
 	<div class="pub">PUB</div>
 	<?php echo $this->session->flash(); ?>
@@ -30,7 +31,7 @@
 		<div class="span7">
 			
 			<div class="event-title">
-				<img class="event-logo" src="<?php echo $event->getSportLogo();?>" alt="<?php echo $event->sport;?>">				
+				<img class="event-logo" src="<?php echo $event->getSportLogo();?>" alt="<?php echo $event->getSportName();?>">				
 				<h1><?php echo $event->title;?></h1></div>
 
 				<div class="event-confirm">

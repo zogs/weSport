@@ -274,14 +274,13 @@ class PagesController extends Controller {
 
 			//CREATE MARKERS
 			foreach ($eventsToCome as $event) {
-
-
-				$event = $this->Events->JOIN('sports','slug as sport',array('sport_id'=>':sport'),$event);
+				
+				$event = $this->Events->joinSport($event,$this->getLang());
 				$event = $this->Worlds->JOIN_GEO($event);
 				
 				$full_address = $event->address.', '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
 
-				$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->sport,$event->getSportLogo());
+				$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->getSportName()."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->getSportSlug(),$event->getSportLogo());
 			}			
 			$gmap->generate();
 			$d['gmap'] = $gmap;

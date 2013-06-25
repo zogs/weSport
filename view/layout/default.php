@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
-<head>
+<?php 
+
+//Si cette page est un objet OpenGraph on recupere les balises metas qui vont bien
+
+if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->OpenGraphObject['method'],array($event));
+
+?>
+<head <?php if(isset($openGraph['head'])) echo $openGraph['head'];?>>
+	<?php if(isset($openGraph['metas'])) echo $openGraph['metas']; ?>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<?php $this->loadCSS();?>
 	<?php $this->loadJS();?>	
@@ -10,18 +18,20 @@
 <body data-user_id="<?php echo $this->session->user()->getID(); ?>">
 
 
-	<div class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="navbar-innerOO">
-	    <div class="container" id="navbar-bkg">
-      		<a class="brand" href="<?php echo Router::url('/');?>">
-	      	  	<?php echo Conf::$website; ?>
+	<div class="navbar navbar-fixed-top">
+      		<a class="weSport" href="<?php echo Router::url('/');?>">
+      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
+	      	  	<i>we</i>Sport
 			</a>
 			<ul class="nav">
 				<?php 
+								
 				$menu = $this->request('pages','getMenu',array('top'));
 				foreach ($menu as $page):
+
 				?>
-				 <li><a href="<?php echo Router::url($page->slug);?>"><?php echo $page->title;?></a></li>
+				 <li><a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage())? 'currentPage':'';?>"><?php echo $page->title;?></a></li>
+
 				<?php endforeach;?>				
 				
 				<?php
@@ -59,12 +69,11 @@
 					<li><a href="<?php echo Router::url('users/login');?>">Login</a></li>	
 					<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
 				<?php endif ?>
-			</ul>
-		</div>
-	  </div>
+			</ul>	
 	</div>
 
-	<div class="container-fluid mainContainer">			
+	<div class="container-fluid mainContainer">	
+
 		<?php echo $content_for_layout;?>
 	</div>
 

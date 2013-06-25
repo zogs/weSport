@@ -153,9 +153,9 @@ class UsersController extends Controller{
 		$this->view = "users/login";
 		$this->loadModel('Users');
 
-		$app_id = '153720748148187';
-		$app_secret = '7a181d394b1f1dab0054176f9031a637';
-		$my_url = 'http://wesport.zogs.org/users/facebook_connect';
+		$app_id     = Conf::$facebook['appId'];
+		$app_secret = Conf::$facebook['secret'];
+		$my_url     = 'http://wesport.zogs.org/users/facebook_connect';
 
 		//store in db
 		$access_token = '';
@@ -207,7 +207,7 @@ class UsersController extends Controller{
 		  
 		  //On vérifie si il existe dans la base
 		  $user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser->id)));
-		  debug($user);
+		
 		  //Si il n'existe pas on l'enregistre dans la base
 		  if(!$user->exist()){
 
@@ -270,112 +270,10 @@ class UsersController extends Controller{
 
 	}
 
-
-	public function connect_with_facebook(){
-
-		$this->view = 'users/login';
-		$this->loadModel('Users');
-
-		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true,'state'=>$this->request->get('state')));
-
-		//get the facebook user
-		$fbuser = $facebook->getUser();		
-
-		//if the facebook exist
-		if($fbuser) 
-		{		
-			$user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser)));
-			//if the user is not in our database
-			if(!$user->exist()){
-
-				try
-				{
-					//security tcheck the state value to protect from csrf attack
-					//if($this->request->get('state')!=$this->session->read('fbstate')) throw new zException("CSRF attack on facebook registration", 1);
-					
-					//get the facebook data
-					$fb = $facebook->getUser();
-					$fb = $facebook->api('/me');
-
-					//set an object for insertion
-					$user              = new stdClass();
-					$user->login       = $fb['username'];
-					$user->prenom      = $fb['first_name'];
-					$user->nom         = $fb['last_name']; 
-					$user->email       = $fb['email'];
-					$user->avatar      = 'https://graph.facebook.com/'.$fb['id'].'/picture';
-					$user->hash        = md5(String::random(10));
-					$user->salt        = String::random(10);
-					$birthday          = explode('/',$fb['birthday']);
-					$user->birthdate   = $birthday[2].'-'.$birthday[0].'-'.$birthday[1];
-					$user->sexe        = ($fb['gender']=='male')? 'h' : 'f'; 
-					$user->valid       = 1;
-					$user->date_signin = $user->date_lastlogin = Date::MysqlNow();
-					$fblocale          = explode('_',$fb['locale']);
-					$user->lang        = $fblocale[0];
-					$user->CC1         = $fblocale[1];
-					$user->facebook_id = $fb['id']; 					
-					
-				}
-				catch(Exception $e){}
-
-				//check if login exist
-				$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$user->login)));							
-				if(!empty($check)) {
-					$this->session->setFlash("Ce nom d'utilisateur est déjà pris !","error");
-					$this->e404('Inscription avec facebook impossible, nous sommes désolé mais ce nom est déjà pris...');
-				}				
-				//check if email exist
-				$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('email'=>$user->email)));
-				if(!empty($check)) {
-					$this->session->setFlash("Cet email est déjà utilisé","error");
-					$this->e404('Inscription aveec facebook impossible, cet email est déjà pris !');
-				}
-
-				//if its good
-				//save the user
-				if($user_id = $this->Users->saveUser($user)){
-					$user->user_id = $user_id;
-					$user = new User($user);
-				}
-				else {
-					throw new zException("Error Processing Save Facebook User", 1);
-					
-				}
-			}
-
-			//set cookie for autoconnexion			
-			$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);//set secret key cookie
-			setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false, true);
-
-			//unset session data
-			unset( $user->hash);
-			unset( $user->salt);
-			unset($_SESSION['user']);
-			unset($_SESSION['token']);
-
-			//write session	data		
-			$this->session->write('user', $user);
-			$this->session->setToken();				
-			$this->session->setFlash('Vous êtes maintenant connecté grace à facebook !','success');
-
-			//redirection
-			//to the homepage
-			$this->redirect('/');
-			
-		}	
-		else {
-
-			$this->session->setFlash('Please register with facebook first !','warning');
-			$this->redirect('users/register');			
-		}			
-	}
-
 	public static function link_register_with_facebook(){
 
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-		$facebook = new Facebook(array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637','cookie'=>true));
+		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 
 		$user = $facebook->getUser();
 

@@ -79,7 +79,7 @@ class EventsController extends Controller{
 			$params['date'] = array('day'=> $weekday) ;
 			//find events in db
 			$dayevents = $this->Events->findEvents($params);			
-			$dayevents = $this->Events->JOIN('sports','slug as sport',array('slug'=>':sport'),$dayevents);		
+			$dayevents = $this->Events->joinSports($dayevents);	
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
 			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
@@ -119,7 +119,7 @@ class EventsController extends Controller{
 
 		//events
 		$event = $this->Worlds->JOIN_GEO($event);
-		$event = $this->Events->JOIN('sports','slug as sport',array('slug'=>':sport'),$event);		
+		$event = $this->Events->joinSport($event,$this->getLang());		
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		
 		//Participants
@@ -132,24 +132,23 @@ class EventsController extends Controller{
 	
 		//google map API
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
-
 		$gmap = new GoogleMapAPI();
 		$gmap->setDivId('eventmap');
 		$gmap->setSize('300px','250px');
 		$gmap->setLang('fr');
 		$gmap->setEnableWindowZoom(true);
-
 		$fullAddress = $event->address.' , '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
-		
-		$gmap->addMarkerByAddress( $fullAddress, $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->sport."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->sport);
+		$gmap->addMarkerByAddress( $fullAddress, $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->getSportName()."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->getSportName());
 		$gmap->setCenter($fullAddress);
 		$gmap->setZoom(12);
-
-		$gmap->generate();
+		$gmap->generate();		
 		$d['gmap'] = $gmap;
+		
+		//setet exact Lat & Lon from googlemap
+		$event->addressCoord = array('lat'=>$gmap->centerLat,'lng'=>$gmap->centerLng);
 
-		 // debug($event);
-
+		//this page contain OpenGraph Object
+		$this->OpenGraphObject = array('method'=>'getOpenGraphEventMarkup'); //set the function to get the code
 
 		$d['event'] = $event;
 		$this->set($d);
@@ -479,8 +478,10 @@ class EventsController extends Controller{
 		
 		$d['sports_available'] = $this->Events->findSportsList($this->getLang());
 		$d['user_events_in_futur'] = $this->Events->findEvents(array('date'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		$d['user_events_in_futur'] = $this->Events->joinSports($d['user_events_in_futur'],$this->getLang());
 		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
-		
+		$d['user_events_in_past'] = $this->Events->joinSports($d['user_events_in_past'],$this->getLang());
+
 
 		$d['event'] = $evt;
 
@@ -520,6 +521,32 @@ class EventsController extends Controller{
 		}
 
 		
+	}
+					
+	public function getOpenGraphEventMarkup($event){
+		//debug($event);
+		$head = "prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#'";
+		$metas = '<meta property="fb:app_id"                content="'.Conf::$facebook['appId'].'" /> 
+				  <meta property="og:type"                  content="event" /> 
+				  <meta property="og:url"                   content="'.$_SERVER['REQUEST_URI'].'" /> 
+				  <meta property="og:type"                  content="ogbeta:events.event" /> 
+				  <meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
+				  <meta property="og:image"                 content="'.Conf::$websiteURL.'/'.$event->getSportLogo().'" /> 
+				  <meta property="og:description"			content="'.$event->description.'" />
+				  <meta property="event:start_time"         content="'.$event->time.'" /> 
+				  <meta property="event:location:latitude"  content="'.$event->addressCoord['lat'].'" /> 
+				  <meta property="event:location:longitude" content="'.$event->addressCoord['lng'].'" />
+				  <meta property="og:street-address" content="'.$event->address.'" />
+					<meta property="og:locality" content="'.$event->cityName.'" />
+					<meta property="og:country-name" content="'.$event->CC1.'" />
+					<meta property="we-sport-:sport_name"      content="'.$event->getSportName().'" /> 
+					  <meta property="we-sport-:date"            content="'.$event->date.'" /> 
+					  <meta property="we-sport-:nb_participants" content="'.count($event->participants).'" /> 
+					  <meta property="we-sport-:nb_pending"      content="'.($event->nbmin-count($event->participants)).'" />
+
+				';
+
+		return array('head'=>$head,'metas'=>$metas);
 	}
 
 
@@ -837,7 +864,7 @@ class EventsController extends Controller{
 				//increment sporters encourter
 				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
 				//Set sport practiced for stat
-				$this->Events->setSportPracticed($sporter->user_id,$sporter->event->sport);
+				$this->Events->setSportPracticed($sporter->user_id,$sporter->event->getSportSlug());
 
 	        }
 	        else $nb_mail_error++;

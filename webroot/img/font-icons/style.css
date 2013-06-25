@@ -1,0 +1,234 @@
+@font-face {
+	font-family: 'ws-font';
+	src:url('fonts/ws-font.eot');
+	src:url('fonts/ws-font.eot?#iefix') format('embedded-opentype'),
+		url('fonts/ws-font.woff') format('woff'),
+		url('fonts/ws-font.ttf') format('truetype'),
+		url('fonts/ws-font.svg#ws-font') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'ws-font';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-ws-"] {
+*/
+.icon-ws-paintball, .icon-ws-relaxation, .icon-ws-volley, .icon-ws-velo, .icon-ws-ultimate, .icon-ws-tree, .icon-ws-tennis, .icon-ws-surf, .icon-ws-squach, .icon-ws-ski, .icon-ws-skate, .icon-ws-running, .icon-ws-rugby, .icon-ws-roller, .icon-ws-rando, .icon-ws-pingpong, .icon-ws-patin, .icon-ws-natation, .icon-ws-laser, .icon-ws-kayak, .icon-ws-karting, .icon-ws-horse, .icon-ws-handball, .icon-ws-golf, .icon-ws-FootUS, .icon-ws-foot, .icon-ws-fitness, .icon-ws-climbing, .icon-ws-circus, .icon-ws-bowls, .icon-ws-bowling, .icon-ws-bmx, .icon-ws-billard, .icon-ws-basketball, .icon-ws-baseball, .icon-ws-badminton, .icon-ws-phone, .icon-ws-location, .icon-ws-location-2, .icon-ws-tags, .icon-ws-tag, .icon-ws-alarm, .icon-ws-stopwatch, .icon-ws-calendar, .icon-ws-compass, .icon-ws-map, .icon-ws-map-2, .icon-ws-calendar-2, .icon-ws-bubble, .icon-ws-bubbles, .icon-ws-bubbles-2, .icon-ws-bubble-2, .icon-ws-bubbles-3, .icon-ws-bubbles-4, .icon-ws-user, .icon-ws-users, .icon-ws-thumbs-up, .icon-ws-heart, .icon-ws-heart-2, .icon-ws-star, .icon-ws-star-2, .icon-ws-happy, .icon-ws-happy-2, .icon-ws-smiley, .icon-ws-smiley-2 {
+	font-family: 'ws-font';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-ws-paintball:before {
+	content: "\21";
+}
+.icon-ws-relaxation:before {
+	content: "\22";
+}
+.icon-ws-volley:before {
+	content: "\23";
+}
+.icon-ws-velo:before {
+	content: "\24";
+}
+.icon-ws-ultimate:before {
+	content: "\25";
+}
+.icon-ws-tree:before {
+	content: "\26";
+}
+.icon-ws-tennis:before {
+	content: "\27";
+}
+.icon-ws-surf:before {
+	content: "\28";
+}
+.icon-ws-squach:before {
+	content: "\29";
+}
+.icon-ws-ski:before {
+	content: "\2a";
+}
+.icon-ws-skate:before {
+	content: "\2b";
+}
+.icon-ws-running:before {
+	content: "\2c";
+}
+.icon-ws-rugby:before {
+	content: "\2d";
+}
+.icon-ws-roller:before {
+	content: "\2e";
+}
+.icon-ws-rando:before {
+	content: "\2f";
+}
+.icon-ws-pingpong:before {
+	content: "\30";
+}
+.icon-ws-patin:before {
+	content: "\31";
+}
+.icon-ws-natation:before {
+	content: "\32";
+}
+.icon-ws-laser:before {
+	content: "\33";
+}
+.icon-ws-kayak:before {
+	content: "\34";
+}
+.icon-ws-karting:before {
+	content: "\35";
+}
+.icon-ws-horse:before {
+	content: "\36";
+}
+.icon-ws-handball:before {
+	content: "\37";
+}
+.icon-ws-golf:before {
+	content: "\38";
+}
+.icon-ws-FootUS:before {
+	content: "\39";
+}
+.icon-ws-foot:before {
+	content: "\3a";
+}
+.icon-ws-fitness:before {
+	content: "\3b";
+}
+.icon-ws-climbing:before {
+	content: "\3c";
+}
+.icon-ws-circus:before {
+	content: "\3d";
+}
+.icon-ws-bowls:before {
+	content: "\3e";
+}
+.icon-ws-bowling:before {
+	content: "\3f";
+}
+.icon-ws-bmx:before {
+	content: "\40";
+}
+.icon-ws-billard:before {
+	content: "\41";
+}
+.icon-ws-basketball:before {
+	content: "\42";
+}
+.icon-ws-baseball:before {
+	content: "\43";
+}
+.icon-ws-badminton:before {
+	content: "\44";
+}
+.icon-ws-phone:before {
+	content: "\45";
+}
+.icon-ws-location:before {
+	content: "\46";
+}
+.icon-ws-location-2:before {
+	content: "\47";
+}
+.icon-ws-tags:before {
+	content: "\48";
+}
+.icon-ws-tag:before {
+	content: "\49";
+}
+.icon-ws-alarm:before {
+	content: "\4a";
+}
+.icon-ws-stopwatch:before {
+	content: "\4b";
+}
+.icon-ws-calendar:before {
+	content: "\4c";
+}
+.icon-ws-compass:before {
+	content: "\4d";
+}
+.icon-ws-map:before {
+	content: "\4e";
+}
+.icon-ws-map-2:before {
+	content: "\4f";
+}
+.icon-ws-calendar-2:before {
+	content: "\50";
+}
+.icon-ws-bubble:before {
+	content: "\51";
+}
+.icon-ws-bubbles:before {
+	content: "\52";
+}
+.icon-ws-bubbles-2:before {
+	content: "\53";
+}
+.icon-ws-bubble-2:before {
+	content: "\54";
+}
+.icon-ws-bubbles-3:before {
+	content: "\55";
+}
+.icon-ws-bubbles-4:before {
+	content: "\56";
+}
+.icon-ws-user:before {
+	content: "\57";
+}
+.icon-ws-users:before {
+	content: "\58";
+}
+.icon-ws-thumbs-up:before {
+	content: "\59";
+}
+.icon-ws-heart:before {
+	content: "\5a";
+}
+.icon-ws-heart-2:before {
+	content: "\5b";
+}
+.icon-ws-star:before {
+	content: "\5c";
+}
+.icon-ws-star-2:before {
+	content: "\5d";
+}
+.icon-ws-happy:before {
+	content: "\5e";
+}
+.icon-ws-happy-2:before {
+	content: "\5f";
+}
+.icon-ws-smiley:before {
+	content: "\60";
+}
+.icon-ws-smiley-2:before {
+	content: "\61";
+}

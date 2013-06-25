@@ -415,6 +415,24 @@ class EventsModel extends Model{
 			return $events;
 
 	}
+
+	public function joinSports($events,$lang = 'fr'){
+
+		foreach ($events as $event) {
+			
+			$event = $this->joinSport($event,$lang = 'fr');					
+		}
+		return $events;
+	}
+
+	public function joinSport($event,$lang = 'fr'){
+
+		$sport = $this->findFirst(array('table'=>'sports','fields'=>'id,sport_id,slug,'.$lang.' as name','conditions'=>array('slug'=>$event->sport)));
+		if(empty($sport)) $sport = $this->findFirst(array('table'=>'sports','fields'=>'id,sport_id,slug,fr as name','conditions'=>array('slug'=>$event->sport)));
+		$event->sport = $sport;
+		return $event;
+
+	}
 	public function eventsParticipants($event_id,$proba){
 
 		$participants = $this->findParticipants($event_id, $proba);
@@ -857,11 +875,20 @@ class Event{
 	}
 
 	public function getSportLogo(){
-
-		if(file_exists(WEBROOT.'/img/sport_icons/30gif/'.$this->sport.'.gif')) return Router::webroot('img/sport_icons/30gif/'.$this->sport.'.gif');
+		
+		if(file_exists(WEBROOT.'/img/sport_icons/30gif/'.$this->sport->slug.'.gif')) return Router::webroot('img/sport_icons/30gif/'.$this->sport->slug.'.gif');
 		return Router::webroot('img/sport_icons/30gif/relaxation.gif');
 	}
 
+	public function getSportName(){
+
+		return $this->sport->name;
+	}
+
+	public function getSportSlug(){
+
+		return $this->sport->slug;
+	}
 	public function getAvatar(){
 
 		return $this->avatar;
