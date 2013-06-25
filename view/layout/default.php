@@ -54,9 +54,9 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
-							<li class="divider"></li>
 							<li><a href="<?php echo Router::url('users/account'); ?>">Mon Compte</a></li>						
+							<li class="divider"></li>
+							<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
 						</ul>
 					</li>
 				<?php else: ?>

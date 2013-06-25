@@ -482,8 +482,9 @@ class EventsController extends Controller{
 		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_past'] = $this->Events->joinSports($d['user_events_in_past'],$this->getLang());
 
-
+		$evt = $this->Events->joinSport($evt,$this->getLang());
 		$d['event'] = $evt;
+
 
 		$this->set($d);
 	}

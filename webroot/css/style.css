@@ -1,45 +1,62 @@
 @font-face {
   font-family: 'Bubblegum';
-  src: url("../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.eot");
-  src: url("../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.woff") format("woff"), url("../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.ttf") format("truetype"), url("../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.svg#BubblegumSansRegular") format("svg");
+  src: url("fonts/Bubblegum/BubblegumSans-Regular-webfont.eot");
+  src: url("fonts/Bubblegum/BubblegumSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/Bubblegum/BubblegumSans-Regular-webfont.woff") format("woff"), url("fonts/Bubblegum/BubblegumSans-Regular-webfont.ttf") format("truetype"), url("fonts/Bubblegum/BubblegumSans-Regular-webfont.svg#BubblegumSansRegular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
-/* line 19, ../scss/style.scss */
+@font-face {
+  font-family: 'albaregular';
+  src: url("fonts/alba___-webfont.eot");
+  src: url("fonts/alba___-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/alba___-webfont.woff") format("woff"), url("fonts/alba___-webfont.ttf") format("truetype"), url("fonts/alba___-webfont.svg#albaregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 43, ../scss/style.scss */
 html {
   background-color: #427b8b;
   font-size: 100%;
 }
 
-/* line 23, ../scss/style.scss */
+/* line 48, ../scss/style.scss */
+.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* line 50, ../scss/style.scss */
 .navbar {
   background-color: #a3caea;
   font-family: 'Bubblegum';
   padding: 0 5%;
 }
-/* line 28, ../scss/style.scss */
+/* line 55, ../scss/style.scss */
+.navbar .weSport, .navbar .nav li a {
+  font-size: 1.5rem;
+  color: #427b8b;
+  line-height: 2.5rem;
+  padding: 0 30px;
+  margin: 5px 0;
+  text-shadow: 0 0 0 white;
+}
+/* line 64, ../scss/style.scss */
 .navbar .weSport {
   float: left;
+  color: #1b3a43;
   margin-right: 50px;
 }
-/* line 31, ../scss/style.scss */
+/* line 68, ../scss/style.scss */
 .navbar .weSport i {
   font-style: normal;
   color: #0d83af;
 }
-/* line 32, ../scss/style.scss */
+/* line 69, ../scss/style.scss */
 .navbar .weSport img {
-  width: 25px;
+  width: 30px;
 }
-/* line 35, ../scss/style.scss */
-.navbar .weSport, .navbar .nav li a {
-  font-size: 1.5rem;
-  color: #427b8b;
-  padding: 15px 30px;
-  text-shadow: 0 0 0 white;
-}
-/* line 43, ../scss/style.scss */
+/* line 72, ../scss/style.scss */
 .navbar a.currentPage, .navbar a.currentPage:link, .navbar a.currentPage:hover, .navbar a.currentPage:visited, .navbar a.currentPage:active {
   background: #1b3a43;
   color: #a3caea;
@@ -48,17 +65,446 @@ html {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
-/* line 50, ../scss/style.scss */
-.navbar .nav.pull-right {
-  text-transform: uppercase;
-  font-size: 1.3rem;
+/* line 81, ../scss/style.scss */
+.navbar .nav.pull-right .nav-avatar {
+  position: relative;
+  height: 50px;
 }
-/* line 52, ../scss/style.scss */
+/* line 82, ../scss/style.scss */
 .navbar .nav.pull-right form {
   display: none;
 }
+/* line 86, ../scss/style.scss */
+.navbar .nav.pull-right li.dropdown ul li a {
+  font-size: 1.1rem;
+  margin: 0;
+}
+/* line 87, ../scss/style.scss */
+.navbar .nav.pull-right li.dropdown ul li a:hover {
+  color: #FFF;
+}
+/* line 88, ../scss/style.scss */
+.navbar .nav.pull-right li.dropdown li.divider {
+  margin: 0;
+  border-bottom: 1px solid #DDD;
+}
+/* line 89, ../scss/style.scss */
+.navbar .nav.pull-right li.dropdown a.dropdown-toggle {
+  padding: 0;
+}
+/* line 90, ../scss/style.scss */
+.navbar .nav.pull-right li.dropdown b.caret {
+  vertical-align: middle;
+  border-top: 10px solid #1b3a43;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+}
+
+/* line 95, ../scss/style.scss */
+#formSearch {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+/* line 101, ../scss/style.scss */
+#formSearch .cityRounded {
+  display: block;
+  width: 70%;
+  margin: 0 10%;
+  padding: 15px 20px 15px 40px;
+  background-color: #1b3a43;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+  -webkit-box-shadow: 0 0 0 20px #35636f;
+  -moz-box-shadow: 0 0 0 20px #35636f;
+  box-shadow: 0 0 0 20px #35636f;
+  border: 1px solid #FFF;
+}
+/* line 110, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs {
+  float: left;
+  width: 80%;
+  margin: 0;
+  padding: 0 30px;
+  padding-top: 20px;
+}
+/* line 118, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerExtend {
+  float: left;
+  width: 20%;
+  overflow: hidden;
+}
+/* line 119, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerExtend input {
+  width: 100%;
+}
+/* line 120, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerExtend #extend {
+  height: 100%;
+  margin-top: 30px;
+  width: 150%;
+  font-size: 1.2rem;
+  font-family: 'Alba';
+  color: #FFF;
+  line-height: 100%;
+  border: 0;
+  vertical-align: middle;
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: window;
+}
+/* line 121, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerExtend #extend option {
+  background-color: #1b3a43;
+  font-size: 0.8rem;
+  padding: 10px;
+  font-weight: bold;
+}
+/* line 123, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName {
+  float: left;
+  width: 80%;
+}
+/* line 125, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName #cityName {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  font-size: 3rem;
+  line-height: 100%;
+  border: 0;
+  background-color: transparent;
+}
+/* line 126, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead {
+  width: 100%;
+}
+/* line 127, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead > input {
+  height: 100%;
+  width: 100%;
+}
+/* line 128, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead > input {
+  font-size: 36px;
+  background: transparent;
+  font-family: 'Alba',Helvetica,Arial,sans-serif;
+  outline: 0;
+}
+/* line 129, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead > #cityName {
+  color: white;
+}
+/* line 130, ../scss/style.scss */
+#formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead .tt-hint {
+  font-size: 3rem;
+  color: #DDD;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: -4px;
+  margin-left: -6px;
+}
+/* line 134, ../scss/style.scss */
+#formSearch .cityRounded .cityAriane {
+  float: left;
+  width: 74%;
+  margin: 0 3%;
+  margin-top: -20px;
+  padding-top: 5px;
+  color: #FFF;
+  border-top: 2px solid #FFF;
+}
+/* line 144, ../scss/style.scss */
+#formSearch .cityRounded .citySubmit {
+  float: right;
+  background-color: #a3caea;
+  border: 12px solid #427b8b;
+  border-radius: 60px;
+  padding: 15px;
+}
+/* line 151, ../scss/style.scss */
+#formSearch .cityRounded .citySubmit .ws-icon-loupe {
+  color: #FFF;
+  font-size: 4rem;
+}
+/* line 157, ../scss/style.scss */
+#formSearch .sportCheckboxs {
+  width: 100%;
+  margin: 60px 0 20px 0;
+}
+/* line 161, ../scss/style.scss */
+#formSearch .sportCheckboxs .sportChoice {
+  float: left;
+  position: relative;
+  margin: 0 6px 2px 6px;
+}
+/* line 165, ../scss/style.scss */
+#formSearch .sportCheckboxs .sportChoice input {
+  z-index: 2;
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  visibility: hidden;
+}
+/* line 166, ../scss/style.scss */
+#formSearch .sportCheckboxs .sportChoice label {
+  z-index: 1;
+  position: relative;
+  left: 0;
+  top: 0;
+  background-color: #FFF;
+  border: 10px solid #FFF;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
+}
+/* line 167, ../scss/style.scss */
+#formSearch .sportCheckboxs .sportChoice label span {
+  font-size: 2.3rem;
+  margin: 2px;
+}
+/* line 169, ../scss/style.scss */
+#formSearch .sportCheckboxs .sportChoice label:hover {
+  border-color: #a3caea;
+}
+/* line 172, ../scss/style.scss */
+#formSearch .sportCheckboxs .sportChoice input:checked ~ label {
+  border-color: #1b3a43;
+}
+
+/* line 188, ../scss/style.scss */
+.calendar .calendar-header {
+  background-color: #1b3a43;
+  width: 100%;
+  height: 25px;
+}
+/* line 194, ../scss/style.scss */
+.calendar .colomn-date {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+/* line 200, ../scss/style.scss */
+.calendar .colomn-date a {
+  color: white;
+}
+/* line 203, ../scss/style.scss */
+.calendar .colomn-date strong {
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+/* line 207, ../scss/style.scss */
+.calendar .colomn-date i {
+  font-style: normal;
+}
+/* line 213, ../scss/style.scss */
+.calendar table {
+  min-height: 1000px;
+  table-layout: fixed;
+  width: 100%;
+}
+/* line 220, ../scss/style.scss */
+.calendar table td {
+  vertical-align: top;
+}
+/* line 221, ../scss/style.scss */
+.calendar table td.colomn-first {
+  background-color: #bf4e48;
+}
+/* line 222, ../scss/style.scss */
+.calendar table td.colomn-1 {
+  background-color: #f46d43;
+  -webkit-box-shadow: inset 0 0 0 30px #f36235;
+  -moz-box-shadow: inset 0 0 0 30px #f36235;
+  box-shadow: inset 0 0 0 30px #f36235;
+}
+/* line 223, ../scss/style.scss */
+.calendar table td.colomn-2 {
+  background-color: #fdae61;
+  -webkit-box-shadow: inset 0 0 0 30px #fda652;
+  -moz-box-shadow: inset 0 0 0 30px #fda652;
+  box-shadow: inset 0 0 0 30px #fda652;
+}
+/* line 224, ../scss/style.scss */
+.calendar table td.colomn-3 {
+  background-color: #fee08b;
+  -webkit-box-shadow: inset 0 0 0 30px #fedc7c;
+  -moz-box-shadow: inset 0 0 0 30px #fedc7c;
+  box-shadow: inset 0 0 0 30px #fedc7c;
+}
+/* line 225, ../scss/style.scss */
+.calendar table td.colomn-4 {
+  background-color: #ffffbf;
+  -webkit-box-shadow: inset 0 0 0 30px #ffffb0;
+  -moz-box-shadow: inset 0 0 0 30px #ffffb0;
+  box-shadow: inset 0 0 0 30px #ffffb0;
+}
+/* line 226, ../scss/style.scss */
+.calendar table td.colomn-5 {
+  background-color: #d9ef8b;
+  -webkit-box-shadow: inset 0 0 0 30px #d5ed7e;
+  -moz-box-shadow: inset 0 0 0 30px #d5ed7e;
+  box-shadow: inset 0 0 0 30px #d5ed7e;
+}
+/* line 227, ../scss/style.scss */
+.calendar table td.colomn-6 {
+  background-color: #a6d96a;
+  -webkit-box-shadow: inset 0 0 0 30px #9fd65e;
+  -moz-box-shadow: inset 0 0 0 30px #9fd65e;
+  box-shadow: inset 0 0 0 30px #9fd65e;
+}
+/* line 228, ../scss/style.scss */
+.calendar table td.colomn-7 {
+  background-color: #66bd63;
+  -webkit-box-shadow: inset 0 0 0 30px #5bb858;
+  -moz-box-shadow: inset 0 0 0 30px #5bb858;
+  box-shadow: inset 0 0 0 30px #5bb858;
+}
+/* line 229, ../scss/style.scss */
+.calendar table td.colomn-last {
+  background-color: #1a9850;
+}
+/* line 232, ../scss/style.scss */
+.calendar table td.colomn-first .colomn-date {
+  background-color: #b84640;
+}
+/* line 233, ../scss/style.scss */
+.calendar table td.colomn-1 .colomn-date {
+  background-color: #f36235;
+}
+/* line 234, ../scss/style.scss */
+.calendar table td.colomn-2 .colomn-date {
+  background-color: #fda652;
+}
+/* line 235, ../scss/style.scss */
+.calendar table td.colomn-3 .colomn-date {
+  background-color: #fedc7c;
+}
+/* line 236, ../scss/style.scss */
+.calendar table td.colomn-4 .colomn-date {
+  background-color: #ffffb0;
+}
+/* line 237, ../scss/style.scss */
+.calendar table td.colomn-5 .colomn-date {
+  background-color: #d5ed7e;
+}
+/* line 238, ../scss/style.scss */
+.calendar table td.colomn-6 .colomn-date {
+  background-color: #9fd65e;
+}
+/* line 239, ../scss/style.scss */
+.calendar table td.colomn-7 .colomn-date {
+  background-color: #5bb858;
+}
+/* line 240, ../scss/style.scss */
+.calendar table td.colomn-last .colomn-date {
+  background-color: #188b49;
+}
+/* line 243, ../scss/style.scss */
+.calendar table td.colomn-last a img {
+  margin-left: -5px;
+}
+/* line 246, ../scss/style.scss */
+.calendar table td.colomn-first a img {
+  margin-right: -5px;
+}
+/* line 250, ../scss/style.scss */
+.calendar table .events {
+  width: 96%;
+  margin: 5px auto;
+  padding: 10px;
+  min-height: 100px;
+  background-color: #FFF;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+}
+/* line 258, ../scss/style.scss */
+.calendar table .events .events-time {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #d0d0d0;
+}
+/* line 265, ../scss/style.scss */
+.calendar table .events .events-content .events-title {
+  position: relative;
+  float: left;
+  color: #427b8b;
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+}
+/* line 273, ../scss/style.scss */
+.calendar table .events .events-content .ws-sport-icon {
+  float: left;
+  margin-right: 5px;
+  margin-top: -5px;
+}
+/* line 277, ../scss/style.scss */
+.calendar table .events .events-content .ws-sport-icon span {
+  font-size: 2rem;
+  color: #000;
+}
+
+/*
+======================
+TYPEAHEAD CUSTOM STYLE
+=====================*/
+/* line 292, ../scss/style.scss */
+.tt-dropdown-menu {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 0;
+  text-align: left;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* line 295, ../scss/style.scss */
+.tt-suggestion {
+  padding: 8px 20px;
+}
+
+/* line 296, ../scss/style.scss */
+.tt-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #888;
+}
+
+/* line 297, ../scss/style.scss */
+.tt-sub {
+  font-size: 12px;
+  font-style: italic;
+  color: #999;
+}
+
+/* line 298, ../scss/style.scss */
+.tt-id {
+  font-size: 8px;
+  color: #AAA;
+  display: none;
+}
+
+/* line 299, ../scss/style.scss */
+.tt-suggestion.tt-is-under-cursor {
+  background-color: #0097cf;
+}
+
+/* line 300, ../scss/style.scss */
+.tt-suggestion.tt-is-under-cursor p {
+  color: white;
+}
+
+/* ==============
+=====*/

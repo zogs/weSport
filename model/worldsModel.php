@@ -50,6 +50,42 @@ class WorldsModel extends Model
  	}
 
 
+ 	private function convertLang2LC($lang){
+
+ 		$array = array('FR'=>'fra','EN'=>'eng','IT'=>'ita');
+
+ 		return $array[$lang];
+ 	}
+
+ 	public function findStatesNames($arr,$lang='FR'){
+
+ 		$lang = $this->convertLang2LC($lang);
+
+ 		$states = new stdClass();
+ 		if(!empty($arr->CC1)) {
+ 			$states->CC1 = $this->findFirst(array('table'=>'world_country','fields'=>'FULLNAME as name','conditions'=>array('CC1'=>$arr->CC1)));
+ 			$states->CC1 = $states->CC1->name;
+ 		}
+ 		if(!empty($arr->ADM1)) {
+ 			$states->ADM1 = $this->findFirst(array('table'=>'world_states','fields'=>'FULLNAMEND as name','conditions'=>array('CC1'=>$arr->CC1,'ADM_CODE'=>$arr->ADM1,'LC'=>$lang)));
+ 			$states->ADM1 = $states->ADM1->name;
+ 		}
+ 		if(!empty($arr->ADM2)) {
+ 			$states->ADM2 = $this->findFirst(array('table'=>'world_states','fields'=>'FULLNAMEND as name','conditions'=>array('CC1'=>$arr->CC1,'ADM_CODE'=>$arr->ADM2,'LC'=>$lang)));
+ 			$states->ADM2 = $states->ADM2->name;
+ 		}
+ 		if(!empty($arr->ADM3)) {
+ 			$states->ADM3 = $this->findFirst(array('table'=>'world_states','fields'=>'FULLNAMEND as name','conditions'=>array('CC1'=>$arr->CC1,'ADM_CODE'=>$arr->ADM3,'LC'=>$lang)));
+ 			$states->ADM3 = $states->ADM3->name;
+ 		}
+ 		if(!empty($arr->ADM4)) {
+ 			$states->ADM4 = $this->findFirst(array('table'=>'world_states','fields'=>'FULLNAMEND as name','conditions'=>array('CC1'=>$arr->CC1,'ADM_CODE'=>$arr->ADM4,'LC'=>$lang)));
+			$states->ADM4 = $states->ADM4->name;
+		}
+ 		
+ 		return $states;
+ 	}
+
 
  	private function writeCacheVersion($location, $content){
 
@@ -170,10 +206,12 @@ class WorldsModel extends Model
  	*
  	* @param id int
  	*/
- 	public function findCityById($id){
+ 	public function findCityById($id,$fields='*'){
 
- 		return $this->findFirst(array('table'=>'world_cities','conditions'=>array('UNI'=>$id)));
+ 		return $this->findFirst(array('table'=>'world_cities','fields'=>$fields,'conditions'=>array('UNI'=>$id)));
  	}
+
+
 
  	//Renvoi les villes suivant la/les regions
  	//$params string $CC1

@@ -65,6 +65,30 @@
 		return "$jour"." "."$mois"." "."$annee"; 
 	}	
 
+	public static function day_month($date){
+
+		//tableau des mois de l'année en francais
+		$type_mois['00']='00';
+		$type_mois['01']='Janvier';   $type_mois['02']='Février';
+		$type_mois['03']='Mars';      $type_mois['04']='Avril';
+		$type_mois['05']='Mai';       $type_mois['06']='Juin';
+		$type_mois['07']='Juillet';   $type_mois['08']='Août';
+		$type_mois['09']='Septembre'; $type_mois['10']='Octobre';
+		$type_mois['11']='Novembre';  $type_mois['12']='Décembre';
+
+		//si le format est 2013/05/25 corrige en 2013-05-25
+		$date = str_replace('/', '-', $date);
+		//on separe la date en jour mois annee
+		$split = explode("-",$date); 
+		$annee = $split[0]; 
+		$num_mois = $split[1]; 
+		$jour = $split[2]; 
+		//on associe le numero du mois au nom correspondant dans le tableau
+		$mois = $type_mois[$num_mois];
+		//on retourne la valeur
+		return "$jour"." "."$mois"; 
+	}
+
  	// public function month($num){
 
  	// 	$array = array('fr' => array('Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre')

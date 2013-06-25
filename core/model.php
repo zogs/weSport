@@ -706,7 +706,7 @@ public function validates($data, $rules = null, $field = null){
  	}
 
  	public function sqlConditions($conditions){
-
+ 		
  		$c='';
  		if($conditions && !empty($conditions)){
 	 		if(is_array($conditions)){

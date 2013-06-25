@@ -51,6 +51,7 @@ class Conf {
 						'bootstrap/css/bootstrap.css',
 						'css/default.css',
 						'css/style.css',
+						'css/font-icons/style.css',
 						'js/jquery/select2-2.1/select2.css',
 						'js/jquery/datepicker/css/datepicker.css'
 						);

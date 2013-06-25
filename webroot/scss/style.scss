@@ -1,10 +1,22 @@
 @font-face {
     font-family: 'Bubblegum';
-    src: url('../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.eot');
-    src: url('../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.woff') format('woff'),
-         url('../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.ttf') format('truetype'),
-         url('../img/fonts/Bubblegum/BubblegumSans-Regular-webfont.svg#BubblegumSansRegular') format('svg');
+    src: url('fonts/Bubblegum/BubblegumSans-Regular-webfont.eot');
+    src: url('fonts/Bubblegum/BubblegumSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Bubblegum/BubblegumSans-Regular-webfont.woff') format('woff'),
+         url('fonts/Bubblegum/BubblegumSans-Regular-webfont.ttf') format('truetype'),
+         url('fonts/Bubblegum/BubblegumSans-Regular-webfont.svg#BubblegumSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'albaregular';
+    src: url('fonts/alba___-webfont.eot');
+    src: url('fonts/alba___-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/alba___-webfont.woff') format('woff'),
+         url('fonts/alba___-webfont.ttf') format('truetype'),
+         url('fonts/alba___-webfont.svg#albaregular') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -16,39 +28,275 @@ $lightBlue:#a3caea;
 $deepBlue:#427b8b;
 $darkBlue:#1b3a43;
 
+$darkred:#a50026;
+$deepred:#bf4e48;
+$red:#f46d43;
+$softred:#fdae61;
+$lightred:#fee08b;
+$softyellow:#ffffbf;
+$lightgreen:#d9ef8b;
+$softgreen:#a6d96a;
+$green:#66bd63;
+$deepgreen:#1a9850;
+$darkgreen:#006837;
+
 html {
 	background-color:$deepBlue;
 	font-size:100%;
 }
+
+.container-fluid { padding-right:0; padding-left:0;}
+
 .navbar {
 	background-color:$lightBlue;
 	font-family: 'Bubblegum';
 	padding:0 5%;
 
-	.weSport{
-		float:left;
-		margin-right:50px;
-		i{font-style: normal; color:#0d83af}
-		img{width:25px;}
-	}
-
 	.weSport, .nav li a {
 		font-size:1.5rem;
 		color:$deepBlue;
-		padding:15px 30px;
-		@include text-shadow(0 0 0 #fff);
-		
+		line-height: 2.5rem;
+		padding:0 30px;
+		margin:5px 0;
+		@include text-shadow(0 0 0 #fff);	
+	}
+
+	.weSport{
+		float:left;
+		color:$darkBlue;
+		margin-right:50px;
+		i{font-style: normal; color:#0d83af}
+		img{width:30px;}
 	}
 
 	a.currentPage, a.currentPage:link, a.currentPage:hover, a.currentPage:visited, a.currentPage:active {
 		background:$darkBlue;
 		color:$lightBlue;
 		@include border-radius(5px);
-		padding-top:10px; padding-bottom:10px; margin-top:5px; margin-bottom:5px;
+		
 	}
 
 	.nav.pull-right { 
-		text-transform: uppercase; font-size: 1.3rem;
+		
+		.nav-avatar { position:relative; height:50px;}
 		form { display:none;}
+
+		li.dropdown {
+			ul li { }
+			ul li a { font-size: 1.1rem; margin:0;}
+			ul li a:hover { color: #FFF}
+			li.divider { margin:0; border-bottom: 1px solid #DDD;}
+			a.dropdown-toggle { padding:0;}
+			b.caret { vertical-align: middle; border-top:10px solid $darkBlue; border-right:10px solid transparent; border-left:10px solid transparent;}
+		}
 	}
 }
+
+#formSearch{
+	
+	width:70%;
+	margin:0 auto;
+	margin-top:50px;
+
+	.cityRounded {
+		display: block;
+		width:70%; margin:0 10%;
+		padding:15px 20px 15px 40px;
+		background-color:$darkBlue;
+		@include border-radius(100px);
+		@include box-shadow(0 0 0 20px darken($deepBlue,8%));
+		border:1px solid #FFF;		
+
+		.cityInputs {
+
+			float:left;
+			width:80%;
+			margin:0;
+			padding:0 30px;
+			padding-top:20px;
+
+			.containerExtend { float:left; width:20%; overflow:hidden;
+				input { width:100%;}
+				#extend { height: 100%; margin-top:30px; width: 150%; font-size: 1.2rem; font-family:'Alba'; color:#FFF; line-height: 100%; border:0; vertical-align:middle;  background:transparent; -webkit-appearance: none; -moz-appearance: window; }
+				#extend option { background-color:$darkBlue; font-size: 0.8rem; padding:10px; font-weight: bold;}
+			}
+			.containerCityName { 
+				float:left; width:80%;
+				#cityName { width:100%; height:auto; padding:0; font-size:3rem; line-height:100%; border:0; background-color:transparent; }
+				.twitter-typeahead {width:100%;}
+				.twitter-typeahead > input { height: 100%; width:100%;}
+				.twitter-typeahead > input { font-size: 36px; background:transparent; font-family:'Alba',Helvetica,Arial,sans-serif; outline:0; }
+				.twitter-typeahead > #cityName {color:white;}
+				.twitter-typeahead .tt-hint { font-size:3rem; color:#DDD; color:rgba(255,255,255,0.5);  margin-top:-4px; margin-left:-6px;}
+			}
+		}
+
+		.cityAriane {
+			float:left;			
+			width:74%;
+			margin:0 3%;
+			margin-top:-20px;
+			padding-top:5px;
+			color:#FFF;					
+			border-top:2px solid #FFF;
+		}
+
+		.citySubmit { 
+			float:right ; 					
+			background-color:$lightBlue;
+			border:12px solid $deepBlue; 
+			border-radius: 60px;
+			padding:15px;
+
+			.ws-icon-loupe { color:#FFF; font-size: 4rem;}
+
+		}
+		
+	}
+
+	.sportCheckboxs {
+		width:100%;
+		margin:60px 0 20px 0;
+
+		.sportChoice {
+			float: left;
+			position:relative;
+			margin:0 6px 2px 6px;
+			input { z-index:2; position:absolute; left:30%; top:30%; visibility: hidden; }
+			label { z-index:1; position:relative; left:0; top:0; background-color: #FFF; border:10px solid #FFF; @include border-radius(30px);}
+			label span {font-size: 2.3rem;margin:2px;}
+
+			label:hover {
+				border-color:$lightBlue;
+			}
+			input:checked ~ label {
+				border-color:$darkBlue;
+			}
+		}
+
+
+
+	}
+
+}
+
+
+
+
+.calendar {
+
+	.calendar-header {
+		background-color:$darkBlue;
+		width:100%;
+		height:25px;
+	}
+
+	.colomn-date {
+		width: 100%;
+		padding:15px 0;
+		text-align: center;
+		@include text-shadow(0 0 5px rgba(0,0,0,0.5));
+
+		a {
+			color:white;
+		}
+		strong {
+			text-transform: uppercase;
+			font-size: 1.1rem;
+		}
+		i {
+			font-style:normal;
+		}
+
+	}
+
+	table {
+		
+		$perCent:3%;
+		min-height:1000px;
+		table-layout: fixed;
+		width:100%;
+
+		td { vertical-align: top;  }
+		td.colomn-first { background-color: $deepred;}
+		td.colomn-1 { background-color: $red; @include box-shadow(inset 0 0 0 30px darken($red,$perCent));}
+		td.colomn-2 { background-color: $softred; @include box-shadow(inset 0 0 0 30px darken($softred,$perCent));}
+		td.colomn-3 { background-color: $lightred; @include box-shadow(inset 0 0 0 30px darken($lightred,$perCent));}
+		td.colomn-4 { background-color: $softyellow; @include box-shadow(inset 0 0 0 30px darken($softyellow,$perCent));}
+		td.colomn-5 { background-color: $lightgreen; @include box-shadow(inset 0 0 0 30px darken($lightgreen,$perCent));}
+		td.colomn-6 { background-color: $softgreen; @include box-shadow(inset 0 0 0 30px darken($softgreen,$perCent));}
+		td.colomn-7 { background-color: $green; @include box-shadow(inset 0 0 0 30px darken($green,$perCent));}
+		td.colomn-last { background-color: $deepgreen; }
+
+		
+		td.colomn-first .colomn-date { background-color: darken($deepred,$perCent);}
+		td.colomn-1 .colomn-date { background-color: darken($red,$perCent);}
+		td.colomn-2 .colomn-date { background-color: darken($softred,$perCent);}
+		td.colomn-3 .colomn-date { background-color: darken($lightred,$perCent);}
+		td.colomn-4 .colomn-date { background-color: darken($softyellow,$perCent);}
+		td.colomn-5 .colomn-date { background-color: darken($lightgreen,$perCent);}
+		td.colomn-6 .colomn-date { background-color: darken($softgreen,$perCent);}
+		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}
+		td.colomn-last .colomn-date { background-color: darken($deepgreen,$perCent);}
+
+		td.colomn-last {		
+			a img {margin-left:-5px;}
+		}
+		td.colomn-first {
+			a img {margin-right:-5px;}
+		}
+
+
+		.events {
+			width:96%;
+			margin:5px auto;
+			padding:10px;
+			min-height:100px;
+			background-color:#FFF;
+			@include border-radius(20px);
+
+			.events-time {
+				font-weight:bold;
+				font-size: 0.9rem;
+				color:#d0d0d0;
+			}
+
+			.events-content{
+				.events-title{
+					position:relative;
+					float:left;
+					color:$deepBlue;
+					font-size: 0.95rem;
+					font-weight: bold;
+					margin:5px 0 0 0;										
+				}
+				.ws-sport-icon { 
+					float:left;
+					margin-right:5px;
+					margin-top:-5px;
+					span {
+						font-size: 2rem; color:#000; 
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+/*
+======================
+TYPEAHEAD CUSTOM STYLE
+=====================*/
+.tt-dropdown-menu { width:100%; margin-top:10px; padding:8px 0; text-align: left; background-color: white; border:1px solid rgba(0,0,0,0.2); border-radius: 8px; box-shadow:0 5px 10px rgba(0,0,0,0.2);
+}
+
+.tt-suggestion {  padding:8px 20px;}
+.tt-name {  font-size:16px;  font-weight:bold;  color:#888;}
+.tt-sub {  font-size:12px;  font-style:italic;  color:#999;}
+.tt-id{  font-size:8px;  color:#AAA;  display: none;}
+.tt-suggestion.tt-is-under-cursor{  background-color:#0097cf;}
+.tt-suggestion.tt-is-under-cursor p{  color:white;}
+/* ==============
+=====*/

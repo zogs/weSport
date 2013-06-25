@@ -229,27 +229,22 @@ class EventsModel extends Model{
 			if(is_array($sports)){
 
 				if(count($sports)>1){
+
+					$i=1;
+
 					$arr = array();
 					foreach ($sports as $sport) {
 					
-						if(is_numeric($sport) && $sport!=0)
-							$arr[] = ' E.sport='.$sport;
-						else
-							throw new zException("Sport parameter must be an integer", 1);
-							
+						$arr[] = ' E.sport=:sport'.$i;
+						$values['sport'.$i] = $sport;
+						$i++;						
 					}
 					$sql .= '( '.implode(' OR ',$arr).' )';
 				}
 				else {
-					if(is_numeric($sports[0])){
 
-						if($sports[0]!=0)
-							$sql .= ' sport='.$sports[0];
-						else
-							$sql .= ' sport!=0';
-					}
-					else
-						throw new zException("Sport parameter must be an integer", 1);
+					$sql .= ' sport=:sport';
+					$values[':sport'] = $sports[0];
 					
 				}
 			}

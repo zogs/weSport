@@ -42,7 +42,13 @@ class PagesController extends Controller {
 						}
 					}
 				}
+				else {
+					$params['location'] = $this->Worlds->findCityById($params['cityID'],'CC1,ADM1,ADM2,ADM3,ADM4');
+					$params['location'] = $this->Worlds->findStatesNames($params['location']);
+					$params['location'] = (array) $params['location'];
+				}
 			}
+
 
 			//Sinon on utilise les parametres du cookie
 			else {
@@ -62,12 +68,12 @@ class PagesController extends Controller {
 										);
 
 			}
-
+		
 			//on réécrit le cookie avec les nouveaux parametres
 			$this->cookieEventSearch->write($params);		
 			
 			$d['params'] = $params;
-			$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug as name')));
+			$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug',$this->getLang().' as name')));			
 			
 			$this->set($d);
 

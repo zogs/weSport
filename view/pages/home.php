@@ -1,49 +1,66 @@
 <div class="homepage">
-
 	<div class="row-fluid">
-		
-		<div class="span8 offset2">
-	
-			<?php echo $this->session->flash() ;?>
-			<?php //debug($this->cookieEventSearch->arr());
-			
-			?>
-					
-			<form id="formSearch" method="GET" action="<?php echo Router::url('pages/home/'.$params['date']);?>" >
-				<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
-				<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
 
-				<div class="cityRounded">
-						
-					<div class="cityInputs">
-						<div class="containerCityName">
-							<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityName') : 'Ta ville ?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
-						</div>
-						<div class="containerExtend">
-							<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
-						</div>								
+	
+		<?php echo $this->session->flash() ;?>
+		<?php //debug($this->cookieEventSearch->arr());
+		
+		?>
+				
+		<form id="formSearch" method="GET" action="<?php echo Router::url('date/'.$params['date']);?>" >
+			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
+			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
+
+			<div class="cityRounded">
+					
+				<div class="cityInputs">
+					<div class="containerCityName">
+						<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityName') : 'Votre ville ?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
 					</div>
-										
-					<button class="citySubmit"><img src="<?php echo Router::webroot('img/search-icon.png');?>"></button>
+					<div class="containerExtend">
+						<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
+					</div>								
 				</div>
 
-				<a id="showSportBox" href="" >+ de sport ?</a>
-				<div class="sportCheckboxs">
-					<?php 
-						$sportsCols = array_chunk($sports_available, 5);
+				<button class="citySubmit"><span class="ws-icon-loupe"></span></button>
+				
+				<div class="cityAriane">
+					
+					<?php if($location = $this->cookieEventSearch->read('location')): ?>
+						<?php if(!empty($location['CC1'])) echo $location['CC1'].', ';?>
+						<?php if(!empty($location['ADM1'])) echo $location['ADM1'].', ';?>
+						<?php if(!empty($location['ADM2'])) echo $location['ADM2'].', ';?>
+						<?php if(!empty($location['ADM3'])) echo $location['ADM3'].', ';?>
+						<?php if(!empty($location['ADM4'])) echo $location['ADM4'].', ';?>
+						<?php if($this->cookieEventSearch->read('cityName')) echo $this->cookieEventSearch->read('cityName'); ?>
+					<?php endif; ?>
+				</div>
 
-						foreach ($sportsCols as $sportsCol):?>
-							<div class="sportsColumn">								
-								<?php echo $this->Form->_checkbox('sports[]','Sport',$sportsCol,array('default'=>$this->cookieEventSearch->read('sports'),'openwrap'=>'<div class="colomnCheckbox">','closewrap'=>'</div>'));?>
-							</div>							
-					 	<?php endforeach; ?>					
-					<?php ?>
-				</div>	
-			</form>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="sportCheckboxs">
+				<?php 
+					
+					$sports_selected = $this->cookieEventSearch->read('sports');									
+					foreach ($sports_available as $sport):
+				
+				?>
+						<div class="sportChoice">
+							<input type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
+							<label for="label-<?php echo $sport->slug;?>"><span class="ws-icon-<?php echo $sport->slug;?>"></span></label>
+						</div>
 						
-		</div>
+						
+													
+				 	<?php endforeach; ?>					
+				<?php ?>
+				<div class="clearfix"></div>
+			</div>	
+		</form>
 
 		<div class="calendar">
+			<div class="calendar-header"></div>
 			<div class="calendar-content">
 					<?php $this->request('events','calendar',array($params)); ?>							
 			</div>
@@ -91,13 +108,6 @@ $(document).ready(function(){
 
 
 	$('.events-avatar').tooltip({placement:'bottom'});
-
-
-	$('#showSportBox').click(function(){
-
-		$(".sportCheckboxs").toggle('fast');
-		return false;
-	})
 
 	$('.events-bb').livequery(function(){
 
