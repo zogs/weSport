@@ -1,22 +1,26 @@
 <div class="register">
+	<div class="top-banner">
+		<div class="void"></div>
+		<div class="fresque"></div>
+	</div>
+	<?php echo $this->session->flash(); ?>
 	<div class="container">
-		<?php echo $this->session->flash();?>	
-		
-		<div class="span6">
-			<form class="form no-label" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
-				<h1>Sign in</h1>
+		<div class="white-sheet">
+			<div class="head-sheet"><h1 class="title-sheet">INSCRIPTION</h1></div>
 
-				<?php echo $this->Form->input('login','',array('icon'=>'icon-user','required'=>'required','placeholder'=>"Pseudo",'data-url'=>Router::url('users/check'))) ?>
-				<?php echo $this->Form->input('email',"",array('type'=>'email', 'icon'=>"icon-envelope","required"=>"required","placeholder"=>"Email",'data-url'=>Router::url('users/check'))) ?>
-				<?php echo $this->Form->input('password','',array('type'=>"password",'icon'=>'icon-lock','required'=>'required','placeholder'=>'Mot de passe')) ?>
-				<?php echo $this->Form->input('confirm','', array('type'=>'password','icon'=>'icon-lock','required'=>'required','placeholder'=>'Confirmer le mot de passe')) ?>		
+			<form class="form form-wp w50 fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
+				<p class="intro">En 2min via le formulaire suivant:</p>
+				<?php echo $this->Form->input('login','Pseudo',array('icon'=>'icon-user','required'=>'required','placeholder'=>"Pseudo",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->input('email',"Email",array('type'=>'email', 'icon'=>"icon-envelope","required"=>"required","placeholder"=>"Email",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->input('password','Mot de passe',array('type'=>"password",'icon'=>'icon-lock','required'=>'required','placeholder'=>'Mot de passe')) ?>
+				<?php echo $this->Form->input('confirm','Confirmer', array('type'=>'password','icon'=>'icon-lock','required'=>'required','placeholder'=>'Confirmer le mot de passe')) ?>		
 				<?php echo $this->Form->select('sexe','Sexe',array('h'=>'Homme','f'=>'Femme'),array('placeholder'=>'Sexe','icon'=>'icon-star-empty')); ?>
 				<div class="control-group" id="control-birthday">
-					<label for="birthday" class="control-label"></label>
+					<label for="birthday" class="control-label">Date de naissance</label>
 					<div class="controls">
-						<?php echo $this->Form->_select('day',Form::MonthDays(),array('default'=>'1','style'=>'width:20%;float:left','icon'=>'icon-gift')); ?>
-						<?php echo $this->Form->_select('month',Form::Months(),array('default'=>'01','style'=>'width:30%;float:left')); ?>
-						<?php echo $this->Form->_selectNumber('year',2003,1940,array('default'=>1980,'style'=>'width:30%;float:left')) ?>
+						<?php echo $this->Form->_select('day',Form::MonthDays(),array('default'=>'1','style'=>'width:24%;float:left;margin-right:4%','icon'=>'icon-gift')); ?>
+						<?php echo $this->Form->_select('month',Form::Months(),array('default'=>'01','style'=>'width:29%;float:left;margin-right:4%')); ?>
+						<?php echo $this->Form->_selectNumber('year',2003,1940,array('default'=>1980,'style'=>'width:29%;float:left')) ?>
 					</div>
 				</div>
 				<div class="control-group">
@@ -32,24 +36,33 @@
 
 					</div>
 				</div>	
-				
 				<div class="actions">
 					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>			
-					<input class="btn btn-large btn-inverse" type="submit" value="C'est parti !" />
-					<p>En validant l'inscription j'accepte les conditions d'utilisations</p>
+					<div class="control-group control-submit">
+						<label for="" class="control-label"></label>
+						<input type="submit" class="btn-ws" value="C'est parti mon kiki !"/>	
+						<p class="help help-center">
+							En validant l'inscription j'accepte les <a href="<?php echo Router::url('conditions-d-utilisation');?>">conditions d'utilisations</a>	    			
+						</p>
+
+					</div>					
 				</div>
 
 			</form>
-		</div>
 
-		<div class="span4 offset1">
 
-			<form class="form">
-			<a class="btn" href="<?php echo UsersController::link_register_with_facebook();?>">S'inscrire avec facebook</a>
-				
+		
+
+			<form class="form-wp form-facebook">
+				<p class="intro">Ou en 1 clic seulement !</p>
+				<a href="<?php echo UsersController::link_register_with_facebook();?>">
+					<img src="<?php echo Router::webroot('img/register_with_facebook.png');?>"/>
+				</a>				
 			</form>
 			
+			<div class="clearfix"></div>
 		</div>
+		<div class="fresque"></div>
 	</div>
 </div>	
 

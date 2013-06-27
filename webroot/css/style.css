@@ -14,25 +14,31 @@
   font-style: normal;
 }
 
-/* line 43, ../scss/style.scss */
+/* line 48, ../scss/style.scss */
 html {
-  background-color: #427b8b;
   font-size: 100%;
+  background-color: #1b3a43;
 }
 
-/* line 48, ../scss/style.scss */
+/* line 53, ../scss/style.scss */
+.mainContainer {
+  background-color: #427b8b;
+  padding-bottom: 200px;
+}
+
+/* line 58, ../scss/style.scss */
 .container-fluid {
   padding-right: 0;
   padding-left: 0;
 }
 
-/* line 50, ../scss/style.scss */
+/* line 60, ../scss/style.scss */
 .navbar {
   background-color: #a3caea;
   font-family: 'Bubblegum';
   padding: 0 5%;
 }
-/* line 55, ../scss/style.scss */
+/* line 65, ../scss/style.scss */
 .navbar .weSport, .navbar .nav li a {
   font-size: 1.5rem;
   color: #427b8b;
@@ -41,22 +47,22 @@ html {
   margin: 5px 0;
   text-shadow: 0 0 0 white;
 }
-/* line 64, ../scss/style.scss */
+/* line 74, ../scss/style.scss */
 .navbar .weSport {
   float: left;
   color: #1b3a43;
   margin-right: 50px;
 }
-/* line 68, ../scss/style.scss */
+/* line 78, ../scss/style.scss */
 .navbar .weSport i {
   font-style: normal;
   color: #0d83af;
 }
-/* line 69, ../scss/style.scss */
+/* line 79, ../scss/style.scss */
 .navbar .weSport img {
   width: 30px;
 }
-/* line 72, ../scss/style.scss */
+/* line 82, ../scss/style.scss */
 .navbar a.currentPage, .navbar a.currentPage:link, .navbar a.currentPage:hover, .navbar a.currentPage:visited, .navbar a.currentPage:active {
   background: #1b3a43;
   color: #a3caea;
@@ -66,34 +72,34 @@ html {
   -o-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 81, ../scss/style.scss */
+/* line 91, ../scss/style.scss */
 .navbar .nav.pull-right .nav-avatar {
   position: relative;
   height: 50px;
 }
-/* line 82, ../scss/style.scss */
+/* line 92, ../scss/style.scss */
 .navbar .nav.pull-right form {
   display: none;
 }
-/* line 86, ../scss/style.scss */
+/* line 96, ../scss/style.scss */
 .navbar .nav.pull-right li.dropdown ul li a {
   font-size: 1.1rem;
   margin: 0;
 }
-/* line 87, ../scss/style.scss */
+/* line 97, ../scss/style.scss */
 .navbar .nav.pull-right li.dropdown ul li a:hover {
   color: #FFF;
 }
-/* line 88, ../scss/style.scss */
+/* line 98, ../scss/style.scss */
 .navbar .nav.pull-right li.dropdown li.divider {
   margin: 0;
   border-bottom: 1px solid #DDD;
 }
-/* line 89, ../scss/style.scss */
+/* line 99, ../scss/style.scss */
 .navbar .nav.pull-right li.dropdown a.dropdown-toggle {
   padding: 0;
 }
-/* line 90, ../scss/style.scss */
+/* line 100, ../scss/style.scss */
 .navbar .nav.pull-right li.dropdown b.caret {
   vertical-align: middle;
   border-top: 10px solid #1b3a43;
@@ -101,13 +107,39 @@ html {
   border-left: 10px solid transparent;
 }
 
-/* line 95, ../scss/style.scss */
+/* line 105, ../scss/style.scss */
+.fresque {
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  background-image: url(../img/fresque.jpg);
+  background-repeat: repeat-y;
+  background-size: 100% 1px;
+}
+
+/* line 114, ../scss/style.scss */
+.top-banner {
+  width: 100%;
+  padding: 5px 0;
+  background-color: #1b3a43;
+}
+/* line 119, ../scss/style.scss */
+.top-banner .fresque {
+  height: 10px;
+}
+/* line 122, ../scss/style.scss */
+.top-banner .void {
+  width: 100%;
+  height: 30px;
+}
+
+/* line 130, ../scss/style.scss */
 #formSearch {
   width: 70%;
   margin: 0 auto;
   margin-top: 50px;
 }
-/* line 101, ../scss/style.scss */
+/* line 136, ../scss/style.scss */
 #formSearch .cityRounded {
   display: block;
   width: 70%;
@@ -124,7 +156,7 @@ html {
   box-shadow: 0 0 0 20px #35636f;
   border: 1px solid #FFF;
 }
-/* line 110, ../scss/style.scss */
+/* line 145, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs {
   float: left;
   width: 80%;
@@ -132,17 +164,17 @@ html {
   padding: 0 30px;
   padding-top: 20px;
 }
-/* line 118, ../scss/style.scss */
+/* line 153, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerExtend {
   float: left;
   width: 20%;
   overflow: hidden;
 }
-/* line 119, ../scss/style.scss */
+/* line 154, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerExtend input {
   width: 100%;
 }
-/* line 120, ../scss/style.scss */
+/* line 155, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerExtend #extend {
   height: 100%;
   margin-top: 30px;
@@ -157,19 +189,19 @@ html {
   -webkit-appearance: none;
   -moz-appearance: window;
 }
-/* line 121, ../scss/style.scss */
+/* line 156, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerExtend #extend option {
   background-color: #1b3a43;
   font-size: 0.8rem;
   padding: 10px;
   font-weight: bold;
 }
-/* line 123, ../scss/style.scss */
+/* line 158, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName {
   float: left;
   width: 80%;
 }
-/* line 125, ../scss/style.scss */
+/* line 160, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName #cityName {
   width: 100%;
   height: auto;
@@ -179,27 +211,27 @@ html {
   border: 0;
   background-color: transparent;
 }
-/* line 126, ../scss/style.scss */
+/* line 161, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead {
   width: 100%;
 }
-/* line 127, ../scss/style.scss */
+/* line 162, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead > input {
   height: 100%;
   width: 100%;
 }
-/* line 128, ../scss/style.scss */
+/* line 163, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead > input {
   font-size: 36px;
   background: transparent;
   font-family: 'Alba',Helvetica,Arial,sans-serif;
   outline: 0;
 }
-/* line 129, ../scss/style.scss */
+/* line 164, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead > #cityName {
   color: white;
 }
-/* line 130, ../scss/style.scss */
+/* line 165, ../scss/style.scss */
 #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead .tt-hint {
   font-size: 3rem;
   color: #DDD;
@@ -207,7 +239,7 @@ html {
   margin-top: -4px;
   margin-left: -6px;
 }
-/* line 134, ../scss/style.scss */
+/* line 169, ../scss/style.scss */
 #formSearch .cityRounded .cityAriane {
   float: left;
   width: 74%;
@@ -217,7 +249,7 @@ html {
   color: #FFF;
   border-top: 2px solid #FFF;
 }
-/* line 144, ../scss/style.scss */
+/* line 179, ../scss/style.scss */
 #formSearch .cityRounded .citySubmit {
   float: right;
   background-color: #a3caea;
@@ -225,23 +257,23 @@ html {
   border-radius: 60px;
   padding: 15px;
 }
-/* line 151, ../scss/style.scss */
+/* line 186, ../scss/style.scss */
 #formSearch .cityRounded .citySubmit .ws-icon-loupe {
   color: #FFF;
   font-size: 4rem;
 }
-/* line 157, ../scss/style.scss */
+/* line 192, ../scss/style.scss */
 #formSearch .sportCheckboxs {
   width: 100%;
   margin: 60px 0 20px 0;
 }
-/* line 161, ../scss/style.scss */
+/* line 196, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice {
   float: left;
   position: relative;
   margin: 0 6px 2px 6px;
 }
-/* line 165, ../scss/style.scss */
+/* line 200, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice input {
   z-index: 2;
   position: absolute;
@@ -249,7 +281,7 @@ html {
   top: 30%;
   visibility: hidden;
 }
-/* line 166, ../scss/style.scss */
+/* line 201, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice label {
   z-index: 1;
   position: relative;
@@ -263,158 +295,169 @@ html {
   -o-border-radius: 30px;
   border-radius: 30px;
 }
-/* line 167, ../scss/style.scss */
+/* line 202, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice label span {
   font-size: 2.3rem;
   margin: 2px;
 }
-/* line 169, ../scss/style.scss */
+/* line 204, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice label:hover {
   border-color: #a3caea;
 }
-/* line 172, ../scss/style.scss */
+/* line 207, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice input:checked ~ label {
   border-color: #1b3a43;
 }
 
-/* line 188, ../scss/style.scss */
+/* line 220, ../scss/style.scss */
 .calendar .calendar-header {
   background-color: #1b3a43;
   width: 100%;
   height: 25px;
 }
-/* line 194, ../scss/style.scss */
+/* line 226, ../scss/style.scss */
+.calendar .calendar-footer {
+  background: #1b3a43;
+  width: 100%;
+  height: 50px;
+  border-bottom: 10px solid #2a5967;
+}
+/* line 233, ../scss/style.scss */
 .calendar .colomn-date {
   width: 100%;
   padding: 15px 0;
   text-align: center;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
-/* line 200, ../scss/style.scss */
+/* line 239, ../scss/style.scss */
 .calendar .colomn-date a {
   color: white;
 }
-/* line 203, ../scss/style.scss */
+/* line 242, ../scss/style.scss */
 .calendar .colomn-date strong {
   text-transform: uppercase;
   font-size: 1.1rem;
 }
-/* line 207, ../scss/style.scss */
+/* line 246, ../scss/style.scss */
 .calendar .colomn-date i {
   font-style: normal;
 }
-/* line 213, ../scss/style.scss */
+/* line 252, ../scss/style.scss */
 .calendar table {
   min-height: 1000px;
   table-layout: fixed;
   width: 100%;
 }
-/* line 220, ../scss/style.scss */
+/* line 260, ../scss/style.scss */
+.calendar table tr {
+  height: 100%;
+}
+/* line 262, ../scss/style.scss */
 .calendar table td {
   vertical-align: top;
 }
-/* line 221, ../scss/style.scss */
+/* line 263, ../scss/style.scss */
 .calendar table td.colomn-first {
   background-color: #bf4e48;
 }
-/* line 222, ../scss/style.scss */
+/* line 264, ../scss/style.scss */
 .calendar table td.colomn-1 {
   background-color: #f46d43;
   -webkit-box-shadow: inset 0 0 0 30px #f36235;
   -moz-box-shadow: inset 0 0 0 30px #f36235;
   box-shadow: inset 0 0 0 30px #f36235;
 }
-/* line 223, ../scss/style.scss */
+/* line 265, ../scss/style.scss */
 .calendar table td.colomn-2 {
   background-color: #fdae61;
   -webkit-box-shadow: inset 0 0 0 30px #fda652;
   -moz-box-shadow: inset 0 0 0 30px #fda652;
   box-shadow: inset 0 0 0 30px #fda652;
 }
-/* line 224, ../scss/style.scss */
+/* line 266, ../scss/style.scss */
 .calendar table td.colomn-3 {
   background-color: #fee08b;
   -webkit-box-shadow: inset 0 0 0 30px #fedc7c;
   -moz-box-shadow: inset 0 0 0 30px #fedc7c;
   box-shadow: inset 0 0 0 30px #fedc7c;
 }
-/* line 225, ../scss/style.scss */
+/* line 267, ../scss/style.scss */
 .calendar table td.colomn-4 {
   background-color: #ffffbf;
   -webkit-box-shadow: inset 0 0 0 30px #ffffb0;
   -moz-box-shadow: inset 0 0 0 30px #ffffb0;
   box-shadow: inset 0 0 0 30px #ffffb0;
 }
-/* line 226, ../scss/style.scss */
+/* line 268, ../scss/style.scss */
 .calendar table td.colomn-5 {
   background-color: #d9ef8b;
   -webkit-box-shadow: inset 0 0 0 30px #d5ed7e;
   -moz-box-shadow: inset 0 0 0 30px #d5ed7e;
   box-shadow: inset 0 0 0 30px #d5ed7e;
 }
-/* line 227, ../scss/style.scss */
+/* line 269, ../scss/style.scss */
 .calendar table td.colomn-6 {
   background-color: #a6d96a;
   -webkit-box-shadow: inset 0 0 0 30px #9fd65e;
   -moz-box-shadow: inset 0 0 0 30px #9fd65e;
   box-shadow: inset 0 0 0 30px #9fd65e;
 }
-/* line 228, ../scss/style.scss */
+/* line 270, ../scss/style.scss */
 .calendar table td.colomn-7 {
   background-color: #66bd63;
   -webkit-box-shadow: inset 0 0 0 30px #5bb858;
   -moz-box-shadow: inset 0 0 0 30px #5bb858;
   box-shadow: inset 0 0 0 30px #5bb858;
 }
-/* line 229, ../scss/style.scss */
+/* line 271, ../scss/style.scss */
 .calendar table td.colomn-last {
   background-color: #1a9850;
 }
-/* line 232, ../scss/style.scss */
+/* line 274, ../scss/style.scss */
 .calendar table td.colomn-first .colomn-date {
   background-color: #b84640;
 }
-/* line 233, ../scss/style.scss */
+/* line 275, ../scss/style.scss */
 .calendar table td.colomn-1 .colomn-date {
   background-color: #f36235;
 }
-/* line 234, ../scss/style.scss */
+/* line 276, ../scss/style.scss */
 .calendar table td.colomn-2 .colomn-date {
   background-color: #fda652;
 }
-/* line 235, ../scss/style.scss */
+/* line 277, ../scss/style.scss */
 .calendar table td.colomn-3 .colomn-date {
   background-color: #fedc7c;
 }
-/* line 236, ../scss/style.scss */
+/* line 278, ../scss/style.scss */
 .calendar table td.colomn-4 .colomn-date {
   background-color: #ffffb0;
 }
-/* line 237, ../scss/style.scss */
+/* line 279, ../scss/style.scss */
 .calendar table td.colomn-5 .colomn-date {
   background-color: #d5ed7e;
 }
-/* line 238, ../scss/style.scss */
+/* line 280, ../scss/style.scss */
 .calendar table td.colomn-6 .colomn-date {
   background-color: #9fd65e;
 }
-/* line 239, ../scss/style.scss */
+/* line 281, ../scss/style.scss */
 .calendar table td.colomn-7 .colomn-date {
   background-color: #5bb858;
 }
-/* line 240, ../scss/style.scss */
+/* line 282, ../scss/style.scss */
 .calendar table td.colomn-last .colomn-date {
   background-color: #188b49;
 }
-/* line 243, ../scss/style.scss */
+/* line 285, ../scss/style.scss */
 .calendar table td.colomn-last a img {
   margin-left: -5px;
 }
-/* line 246, ../scss/style.scss */
+/* line 288, ../scss/style.scss */
 .calendar table td.colomn-first a img {
   margin-right: -5px;
 }
-/* line 250, ../scss/style.scss */
+/* line 292, ../scss/style.scss */
 .calendar table .events {
   width: 96%;
   margin: 5px auto;
@@ -427,13 +470,13 @@ html {
   -o-border-radius: 20px;
   border-radius: 20px;
 }
-/* line 258, ../scss/style.scss */
+/* line 300, ../scss/style.scss */
 .calendar table .events .events-time {
   font-weight: bold;
   font-size: 0.9rem;
   color: #d0d0d0;
 }
-/* line 265, ../scss/style.scss */
+/* line 307, ../scss/style.scss */
 .calendar table .events .events-content .events-title {
   position: relative;
   float: left;
@@ -442,23 +485,340 @@ html {
   font-weight: bold;
   margin: 5px 0 0 0;
 }
-/* line 273, ../scss/style.scss */
+/* line 315, ../scss/style.scss */
 .calendar table .events .events-content .ws-sport-icon {
   float: left;
   margin-right: 5px;
   margin-top: -5px;
 }
-/* line 277, ../scss/style.scss */
+/* line 319, ../scss/style.scss */
 .calendar table .events .events-content .ws-sport-icon span {
   font-size: 2rem;
   color: #000;
+}
+
+/* line 328, ../scss/style.scss */
+.white-sheet {
+  margin-top: 20px;
+  background-color: #FFF;
+  padding-bottom: 70px;
+}
+
+/* line 333, ../scss/style.scss */
+.head-sheet {
+  width: 100%;
+  background: #efefef;
+  border-bottom: 1px solid #d5d5d5;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* line 341, ../scss/style.scss */
+h1.title-sheet {
+  margin: 0;
+  padding: 0;
+  font-family: Verdana,sans-serif;
+  font-size: 1.5rem;
+  color: #1b3a43;
+  text-transform: uppercase;
+}
+
+/*
+======= ALERTS
+*/
+/* line 353, ../scss/style.scss */
+.alert {
+  margin: 0;
+  padding: 15px 0;
+  text-align: center;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+/* line 359, ../scss/style.scss */
+.alert p {
+  margin: 0;
+}
+
+/*
+======= CONNEXION
+*/
+/* line 365, ../scss/style.scss */
+.form-wp {
+  margin-top: 20px;
+}
+/* line 368, ../scss/style.scss */
+.form-wp p.intro {
+  text-align: center;
+  color: #888;
+  margin-bottom: 20px;
+}
+/* line 374, ../scss/style.scss */
+.form-wp .control-group {
+  margin-bottom: 20px;
+}
+/* line 377, ../scss/style.scss */
+.form-wp .control-group label {
+  color: #AAA;
+}
+/* line 378, ../scss/style.scss */
+.form-wp .control-group label.control-label {
+  display: none;
+}
+/* line 379, ../scss/style.scss */
+.form-wp .control-group .controls {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 380, ../scss/style.scss */
+.form-wp .control-group input[type=text], .form-wp .control-group input[type=password], .form-wp .control-group input[type=email], .form-wp .control-group select {
+  color: #888;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  line-height: 100%;
+  border: 1px solid #CCCCCC;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 0 5px #e2e2e2;
+  -moz-box-shadow: 0 0 0 5px #e2e2e2;
+  box-shadow: 0 0 0 5px #e2e2e2;
+}
+/* line 382, ../scss/style.scss */
+.form-wp .control-group .select2-container {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 0 5px #e2e2e2;
+  -moz-box-shadow: 0 0 0 5px #e2e2e2;
+  box-shadow: 0 0 0 5px #e2e2e2;
+  margin-bottom: 20px;
+}
+/* line 385, ../scss/style.scss */
+.form-wp .control-submit {
+  width: 50%;
+  margin: 0 25%;
+}
+/* line 389, ../scss/style.scss */
+.form-wp .control-submit input[type=submit], .form-wp .control-submit input[type=button] {
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+/* line 394, ../scss/style.scss */
+.form-wp .control-submit p.help {
+  float: left;
+  width: 100%;
+  margin: 10px 0;
+}
+/* line 399, ../scss/style.scss */
+.form-wp .control-submit p.help-center {
+  text-align: center;
+}
+
+/* line 407, ../scss/style.scss */
+.btn-ws {
+  padding: 5px 30px;
+  margin: 0;
+  color: #FFF;
+  border: 0px solid #000;
+  font-weight: bold;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea, 3px 3px 0 0 #a3caea, 4px 4px 0 0 #a3caea;
+  -moz-box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea, 3px 3px 0 0 #a3caea, 4px 4px 0 0 #a3caea;
+  box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea, 3px 3px 0 0 #a3caea, 4px 4px 0 0 #a3caea;
+  font-size: 1rem;
+  background-color: #1b3a43;
+}
+
+/* line 418, ../scss/style.scss */
+.btn-ws:hover {
+  color: #EFEFEF;
+}
+
+/* line 419, ../scss/style.scss */
+.btn-ws:active {
+  margin-top: 2px;
+  margin-left: 2px;
+  -webkit-box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea;
+  -moz-box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea;
+  box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea;
+}
+
+/* line 423, ../scss/style.scss */
+.register form {
+  border-right: 1px solid #DDD;
+}
+/* line 425, ../scss/style.scss */
+.register .form-facebook {
+  float: left;
+  width: 45%;
+  border: 0;
+  text-align: center;
+}
+
+/*======
+==== Event VIEW
+======*/
+/* line 439, ../scss/style.scss */
+.event-header {
+  width: 100%;
+  padding: 20px 2% 10px 2%;
+  background-color: #efefef;
+}
+/* line 444, ../scss/style.scss */
+.event-header div.event-sport-logo {
+  float: left;
+  width: 120px;
+  height: 100px;
+  padding-top: 5px;
+}
+/* line 449, ../scss/style.scss */
+.event-header div.event-sport-logo span {
+  z-index: 10;
+  font-size: 5rem;
+  color: black;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+}
+/* line 452, ../scss/style.scss */
+.event-header div.event-title {
+  float: left;
+  width: 520px;
+}
+/* line 456, ../scss/style.scss */
+.event-header div.event-title h1 {
+  margin-top: 20px;
+  margin-bottom: 3px;
+  font-family: 'Bubblegum',Helvetica,Arial;
+  color: #427b8b;
+  font-size: 1.8rem;
+}
+/* line 465, ../scss/style.scss */
+.event-header div.event-title div.event-action {
+  width: 100%;
+}
+/* line 472, ../scss/style.scss */
+.event-header div.event-orga {
+  float: right;
+  width: 260px;
+}
+/* line 476, ../scss/style.scss */
+.event-header div.event-orga div.orga-info {
+  float: right;
+  text-align: right;
+  margin-right: 10px;
+  padding-top: 10px;
+}
+/* line 482, ../scss/style.scss */
+.event-header div.event-orga div.orga-info span {
+  display: block;
+  width: 100%;
+  color: #AAA;
+}
+/* line 487, ../scss/style.scss */
+.event-header div.event-orga div.orga-info span.orga-name {
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: #427b8b;
+}
+/* line 495, ../scss/style.scss */
+.event-header div.event-orga div.orga-avatar {
+  float: right;
+}
+/* line 497, ../scss/style.scss */
+.event-header div.event-orga div.orga-avatar img {
+  height: 100px;
+}
+
+/* line 502, ../scss/style.scss */
+div.event-status {
+  width: 100%;
+  padding: 7px 5%;
+}
+/* line 506, ../scss/style.scss */
+div.event-status .label {
+  padding: 5px 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* line 508, ../scss/style.scss */
+.event-pending {
+  background-color: #e3e2e2;
+  color: #888888;
+  font-size: 0.8rem;
+}
+
+/* line 513, ../scss/style.scss */
+.event-confirmed {
+  background-color: #a3d2a3;
+  color: #5b894a;
+}
+
+/*
+============
+=== FOOTER ==
+============
+*/
+/* line 525, ../scss/style.scss */
+.footer {
+  width: 100%;
+  border-top: 15px solid #a3caea;
+  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  background-color: #1b3a43;
+  padding: 20px 5%;
+}
+/* line 532, ../scss/style.scss */
+.footer ul li {
+  display: inline-block;
+  margin: 0 40px;
+}
+/* line 533, ../scss/style.scss */
+.footer ul li a, .footer ul li a:link, .footer ul li a:visited {
+  font-family: Verdana,sans-serif;
+  font-size: 0.8rem;
+  color: #a3caea;
+  text-transform: uppercase;
+}
+/* line 539, ../scss/style.scss */
+.footer ul li a:hover, .footer ul li a:active {
+  text-decoration: underline;
+}
+/* line 543, ../scss/style.scss */
+.footer .copyright {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #427b8b;
 }
 
 /*
 ======================
 TYPEAHEAD CUSTOM STYLE
 =====================*/
-/* line 292, ../scss/style.scss */
+/* line 550, ../scss/style.scss */
 .tt-dropdown-menu {
   width: 100%;
   margin-top: 10px;
@@ -470,41 +830,49 @@ TYPEAHEAD CUSTOM STYLE
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* line 295, ../scss/style.scss */
+/* line 553, ../scss/style.scss */
 .tt-suggestion {
   padding: 8px 20px;
 }
 
-/* line 296, ../scss/style.scss */
+/* line 554, ../scss/style.scss */
 .tt-name {
   font-size: 16px;
   font-weight: bold;
   color: #888;
 }
 
-/* line 297, ../scss/style.scss */
+/* line 555, ../scss/style.scss */
 .tt-sub {
   font-size: 12px;
   font-style: italic;
   color: #999;
 }
 
-/* line 298, ../scss/style.scss */
+/* line 556, ../scss/style.scss */
 .tt-id {
   font-size: 8px;
   color: #AAA;
   display: none;
 }
 
-/* line 299, ../scss/style.scss */
+/* line 557, ../scss/style.scss */
 .tt-suggestion.tt-is-under-cursor {
   background-color: #0097cf;
 }
 
-/* line 300, ../scss/style.scss */
+/* line 558, ../scss/style.scss */
 .tt-suggestion.tt-is-under-cursor p {
   color: white;
 }
 
 /* ==============
 =====*/
+/* reset chrome style for select inputs */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* line 564, ../scss/style.scss */
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}

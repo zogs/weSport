@@ -869,6 +869,7 @@ class Event{
 		return $d[2];
 	}
 
+
 	public function getSportLogo(){
 		
 		if(file_exists(WEBROOT.'/img/sport_icons/30gif/'.$this->sport->slug.'.gif')) return Router::webroot('img/sport_icons/30gif/'.$this->sport->slug.'.gif');

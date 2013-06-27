@@ -25,7 +25,6 @@ a:active { text-decoration: none;  outline: 0; -webkit-box-shadow: none !importa
 /*=======================================================*/
 
 body { 
-font-family: Tahoma,verdana,arial,serif;
 height:100%;
 background: -moz-linear-gradient(top,  rgba(5,1,1,0.14) 0%, rgba(0,0,0,0.07) 38%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(5,1,1,0.14)), color-stop(38%,rgba(0,0,0,0.07))); /* Chrome,Safari4+ */
@@ -37,6 +36,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24050101', e
 }
 
 
+.w90 { width:90%;}
+.w80 { width:80%;}
+.w70 { width:70%;}
+.w60 { width:60%;}
+.w50 { width:50%;}
+.center {margin-left:auto; margin-right:auto;}
 
 
 /*=========
@@ -114,9 +119,7 @@ div.geo-select .select2-result { padding:5px 0; }
 /*
 User registration page
 */
-.register h1 { text-align:center; margin-bottom:10px;}
-.register p { overflow:hidden;width:100%;}
-.register .form { margin:10px auto 50px auto; padding:30px 30px; width:500px; border:1px solid #DDDDDD; border-radius:3px; background: #eee;}
+
 .form:after{ content: "."; display: block; height: 0; font-size:0; clear: both; visibility:hidden; }
 .form .control-group { float:left; margin-bottom:5px; width:100%;}
 .form .control-group .control-label { float:left; width:26%; margin:5px 2% 0 2%; min-height:20px; display:block; text-align:right; font-weight: normal ;font-size:95%; color:#AAA}
@@ -142,11 +145,6 @@ User registration page
 .form.no-label .control-group .control-label { display:none;}
 .form.no-label .control-group .controls { width:100%;}
 
-.register #click_me { float:left; display:block;  display:none; margin-top:10px; padding:5px 0; width:100%; color:#444; text-align:center; font-weight:bold; }
-.register #click_me:hover { color:rgb(153,0,0); text-decoration:none; cursor:pointer;}
-.register #show_me { display:none; }
-.register .actions { float:left; margin:10px 0; width:100%; text-align:right;}
-.register .actions p { margin:10px 0; color:#AAA; text-align:right; font-weight:bold; font-size:10px;}
 
 /*
     Autocompletion

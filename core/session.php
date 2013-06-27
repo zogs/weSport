@@ -68,7 +68,7 @@ class Session {
 			foreach($_SESSION['flash'] as $v){
 
 				if(isset($v['message'])){
-					$html .= '<div class="alert alert-'.$v['type'].' alert-hide-'.$v['duration'].'s">
+					$html .= '<div class="alert alert-'.$v['type'].' CANCELalert-hide-'.$v['duration'].'s">
 								<button class="close" data-dismiss="alert">×</button>
 								<p>'.$v['message'].'</p>
 								<div class="alert-progress alert-progress-'.$v['duration'].'s"></div>

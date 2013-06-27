@@ -64,9 +64,7 @@
 			<div class="calendar-content">
 					<?php $this->request('events','calendar',array($params)); ?>							
 			</div>
-
-			
-
+			<div class="calendar-footer"></div>
 		</div>
 	</div>
 </div>

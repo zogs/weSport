@@ -10,6 +10,8 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 <head <?php if(isset($openGraph['head'])) echo $openGraph['head'];?>>
 	<?php if(isset($openGraph['metas'])) echo $openGraph['metas']; ?>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="icon" type="image/png" href="<?php echo Router::webroot('img/LOGO.gif');?>">
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo Router::webroot('img/wesport.ico');?>">
 	<?php $this->loadCSS();?>
 	<?php $this->loadJS();?>	
 	<title><?php echo isset($title_for_layout)?$title_for_layout : Conf::$website;?></title>
@@ -66,14 +68,13 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 						<input type="hidden" name="token" value="<?php echo $this->session->token();?>" />
 						<input type="submit" value="OK" />
 					</form>
-					<li><a href="<?php echo Router::url('users/login');?>">Login</a></li>	
+					<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
 					<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
 				<?php endif ?>
 			</ul>	
 	</div>
 
 	<div class="container-fluid mainContainer">	
-
 		<?php echo $content_for_layout;?>
 	</div>
 
@@ -89,6 +90,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 				<?php endforeach;?>
 				 			
 			</ul>
+			<div class="copyright">2013 © weSport</div>
 		</div>
 	</div>
 
