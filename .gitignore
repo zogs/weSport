@@ -2,6 +2,7 @@
 webroot/cache/autoloader/*
 webroot/cache/location/*
 webroot/media/users/avatar/*
+.sass-cache/*
 
 
 #################
