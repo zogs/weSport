@@ -442,7 +442,8 @@ class EventsController extends Controller{
 						
 					
 						//email the changes 
-						if(!empty($changes)){
+						//if there are changes and event is not finished
+						if(!empty($changes)&&$evt->timingSituation()!='past'){
 							
 							if($this->sendEventChanges($new,$changes)){
 
