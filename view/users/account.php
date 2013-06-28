@@ -1,46 +1,57 @@
-<div class="container">
-	<div id="account">
+<?php echo $this->session->flash();?>
+<div id="account">
+	<div class="top-banner">
+		<div class="void"></div>
+		<div class="fresque"></div>
+	</div>
+	<div class="container white-sheet">
+
+		<div class="col_small">
 		
-		<?php echo $this->session->flash();?>
-
-		<div class="span3">		
-			<div class="dashboard">		
-				<div class="module module-rounded">		
-					<a class="" href="<?php echo Router::url('users/view/'.$user->getID());?>">
-					<div class="fleft"><img src="<?php echo $this->session->user()->getAvatar();?>" class="avatar size32" alt="<?php echo $user->login;?>"></div>
-					<div class="fleft"><b><?php echo $user->login;?></b></div>
-					</a>
-				</div>
-				<div class="module module-rounded ">
-					<ul class="dashboard-links">
-						<?php
-							$links = array(										
-											'account'=>'Compte',
-											'profil'=>'Profil',
-											'avatar'=>'Avatar',									
-											'password'=>'Mot de passe',
-											'delete'=>'Suppression'
-										);
-
-							foreach ($links as $key => $value) {
-								
-								if($key==$action)
-									echo '<li class="active">';
-								else
-									echo '<li class="">';
-								echo '<a class="" href="'.Router::url('users/account/'.$key).'">'.$value.'</a>';
-								echo '</li>';
-							}
-						?>
-					</ul>
-				</div>
+			<div class="module module-rounded profil">		
+				<a class="" href="<?php echo Router::url('users/view/'.$user->getID());?>">
+				<div class="fleft useravatar"><img src="<?php echo $this->session->user()->getAvatar();?>" class="avatar size32" alt="<?php echo $user->login;?>"></div>
+				<div class="flef username"><b><?php echo $user->login;?></b></div>
+				</a>
+				<div class="clearfix"></div>
 			</div>
+			<div class="module module-rounded menu">
+				<ul class="dashboard-links">
+					<?php
+						$links = array(										
+										'account'=>'Compte',
+										'profil'=>'Profil',
+										'avatar'=>'Avatar',									
+										'password'=>'Mot de passe',
+										'delete'=>'Suppression'
+									);
+						$icons = array(
+							'account'=>'icon-user',
+							'profil'=>'icon-star',
+							'avatar'=>'icon-picture',
+							'password'=>'icon-lock',
+							'delete'=>'icon-fire');
+
+						foreach ($links as $key => $value) {
+							
+							if($key==$action)
+								echo '<li class="active">';
+							else
+								echo '<li class="">';
+							echo '<i class="icon '.$icons[$key].'"></i>';
+							echo '<a class="" href="'.Router::url('users/account/'.$key).'">'.$value.'</a>';
+							echo '</li>';
+						}
+					?>
+				</ul>
+			</div>
+			
 		</div>
 
 		
-		<div class="span8">
+		<div class="col_large">
 			<div class="module module-rounded account-form">
-				<form class="form" id="account-form" autocomplete="off" action="<?php echo Router::url('users/account/'.$action); ?>" method="post" enctype="multipart/form-data">
+				<form class="form form-ws" id="account-form" autocomplete="off" action="<?php echo Router::url('users/account/'.$action); ?>" method="post" enctype="multipart/form-data">
 					<?php echo $this->Form->_input('action','hidden',array('value'=>$action)); ?>
 					<?php echo $this->Form->_input('token','hidden',array('value'=>$this->session->token())) ;?>
 					<?php echo $this->Form->_input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
@@ -59,9 +70,9 @@
 						<div class="control-group" id="control-birthday">
 							<label for="birthday" class="control-label">Anniversaire</label>
 							<div class="controls">
-								<?php echo $this->Form->_select('day',Form::MonthDays(),array('default'=>$user->getBirthDay(),'style'=>'width:30%;float:left','icon'=>'icon-gift')); ?>
-								<?php echo $this->Form->_select('month',Form::Months(),array('default'=>$user->getBirthMonth(),'style'=>'width:30%;float:left')); ?>
-								<?php echo $this->Form->_selectNumber('year',2003,1940,array('default'=>$user->getBirthYear(),'style'=>'width:30%;float:left')) ?>
+								<?php echo $this->Form->_select('day',Form::MonthDays(),array('default'=>$user->getBirthDay(),'style'=>'width:26%;','class'=>'inline','icon'=>'icon-gift')); ?>
+								<?php echo $this->Form->_select('month',Form::Months(),array('default'=>$user->getBirthMonth(),'style'=>'width:30%;','class'=>'inline')); ?>
+								<?php echo $this->Form->_selectNumber('year',2003,1940,array('default'=>$user->getBirthYear(),'style'=>'width:30%;','class'=>'inline')) ?>
 							</div>
 						</div>						
 
@@ -155,7 +166,8 @@
 				</form>
 			</div>
 		</div>
-		
+		<div class="clearfix"></div>
+		<div class="fresque"></div>
 	</div>
 	
 </div>

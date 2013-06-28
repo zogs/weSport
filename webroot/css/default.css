@@ -160,7 +160,7 @@ User registration page
 /*
 Account
 */
-#account { margin-top:20px;}
+#account {}
 .account-form {width:550px; float:left; }
 #account-form { padding-left: 50px; padding-right: 50px;}
 #changeavatar { float:left; width:230px; }

@@ -11,12 +11,12 @@
 }
 
 @font-face {
-    font-family: 'albaregular';
-    src: url('fonts/alba___-webfont.eot');
-    src: url('fonts/alba___-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/alba___-webfont.woff') format('woff'),
-         url('fonts/alba___-webfont.ttf') format('truetype'),
-         url('fonts/alba___-webfont.svg#albaregular') format('svg');
+    font-family: 'Alba';
+    src: url('fonts/Alba/alba___-webfont.eot');
+    src: url('fonts/Alba/alba___-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Alba/alba___-webfont.woff') format('woff'),
+         url('fonts/Alba/alba___-webfont.ttf') format('truetype'),
+         url('fonts/Alba/alba___-webfont.svg#albaregular') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -100,6 +100,23 @@ html {
 			li.divider { margin:0; border-bottom: 1px solid #DDD;}
 			a.dropdown-toggle { padding:0;}
 			b.caret { vertical-align: middle; border-top:10px solid $darkblue; border-right:10px solid transparent; border-left:10px solid transparent;}
+		}
+	}
+
+	.phoneMenu{
+		display:none;
+		li.dropdown{
+			a.dropdown-toggle{				
+				.caret { margin-top:18px;}
+			}
+		}
+		li{
+			ul{
+				li a{ 
+					font-size:1rem;
+
+				}
+			}		
 		}
 	}
 }
@@ -464,8 +481,16 @@ h1.title-sheet {
 	}
 }
 
+
 /*======
-==== Event VIEW
+==== Event Create
+======*/
+.createEvent {
+	.twitter-typeahead { width:100%;}
+}
+
+/*======
+==== Event View
 ======*/
 
 .eventview{}
@@ -573,7 +598,7 @@ div.col_small{
 	float:left;
 	width:340px;
 	min-height: 300px;
-	padding:20px 20px 0 20px;
+	padding:10px 20px 0 20px;
 }
 
 .block{
@@ -720,6 +745,61 @@ div.col_small{
 		
 	}
 }
+
+
+/*=======
+== ACCOUNT
+=======*/
+#account{
+	.white-sheet { padding-top:40px;}
+	.col_small{ 
+		.module { padding:10px 5%;}
+		.profil {
+			.useravatar { margin-right:5px;}
+			.username { font-weight:bold; text-transform: capitalize;}
+		}	
+		.menu{
+			padding:0;
+			ul{
+				list-style:none;
+				margin:0;
+				padding:0;
+				li{
+					font-size: 1rem;
+					padding:10px 0 10px 5%;
+					border-bottom:1px solid #CCC;
+
+					i.icon { margin-right:5px;}
+					a{ color:$deepblue;}
+				}
+				li:last-child { border-bottom:0;}
+				li:hover { background-color: #FFF; 
+					a{color:$darkblue;}
+				}
+			}
+		}	
+	}
+	.col_large{ 
+		padding:10px;
+		.module { padding:10px 1%;}
+		#account-form {
+			padding-left:20px;
+			padding-right:20px;
+			label {
+				width:20%;
+			}
+		}	
+	}
+	
+	.module {
+		background-color:$lightgrey;
+		@include border-radius(4px);
+		@include box-shadow(0 0 0 #000);
+	}
+	
+}
+
+
 
 /*
 ===========

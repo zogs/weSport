@@ -5,14 +5,13 @@
 		<?php echo $this->session->flash() ;?>
 		<?php //debug($this->cookieEventSearch->arr());
 		
-		?>
-				
+		?>	
 		<form id="formSearch" method="GET" action="<?php echo Router::url('date/'.$params['date']);?>" >
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
 			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
 
 			<div class="cityRounded">
-					
+				
 				<div class="cityInputs">
 					<div class="containerCityName">
 						<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo ($this->cookieEventSearch->read('cityID'))? $this->cookieEventSearch->read('cityName') : 'Votre ville ?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						

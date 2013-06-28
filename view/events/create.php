@@ -34,7 +34,7 @@
 					<?php echo $this->Form->select('sport','Sport',$sports_available,array('default'=>$event->sport->slug,'placeholder'=>"Choisir un sport",'style'=>'width:100%;')); ?>
 					<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
-					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
+					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","style"=>"width:100%;","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 					<?php echo $this->Form->input('address','Adresse',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
 					<?php echo $this->Form->input('date',"Date",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
 					<div class="control-group " id="control-time">
@@ -80,8 +80,11 @@
 						<ul>
 							<?php foreach ($user_events_in_futur as $e):?>							
 								<li>
-									<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
-									<a href="<?php echo Router::url('events/create/'.$e->getID());?>"><?php echo $e->getTitle();?></a>
+									
+									<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
+										<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
+										<?php echo $e->getTitle();?>
+									</a>
 								</li>
 							<?php endforeach; ?>
 						</ul>
@@ -94,10 +97,13 @@
 					<h3>Activités terminés</h3>
 					<div class="block-content">
 						<ul>
-						<?php foreach ($user_events_in_past as $e): ?>
+						<?php foreach ($user_events_in_past as $e): ?>					
 							<li>
-								<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
-								<a href="<?php echo Router::url('events/create/'.$e->getID());?>"><?php echo $e->getTitle();?></a>
+								
+								<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
+									<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
+									<?php echo $e->getTitle();?>
+								</a>
 							</li>
 						<?php endforeach;?>
 						</ul>

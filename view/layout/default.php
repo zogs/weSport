@@ -21,17 +21,36 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 
 
 	<div class="navbar navbar-fixed-top">
-      		<a class="weSport" href="<?php echo Router::url('/');?>">
-      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
-	      	  	<i>we</i>Sport
+	      		<a class="weSport" href="<?php echo Router::url('/');?>">
+	      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
+		      	  	<i>we</i>Sport
 			</a>
-			<ul class="nav">
-				<?php 
-								
-				$menu = $this->request('pages','getMenu',array('top'));
-				foreach ($menu as $page):
 
-				?>
+			<?php 
+							
+			$menu = $this->request('pages','getMenu',array('top'));				
+
+			?>
+			<ul class="nav phoneMenu">
+				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						Menu
+						<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<?php foreach($menu as $page): ?>
+						<li><a href="<?php echo Router::url($page->slug);?>" ><?php echo $page->title;?></a></li>
+						<?php endforeach; ?>
+					</ul>
+				</li>
+			</ul>
+
+			<ul class="nav desktopMenu">
+				<?php 
+					reset($menu);
+					foreach ($menu as $page):
+				 ?>
 				 <li><a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage())? 'currentPage':'';?>"><?php echo $page->title;?></a></li>
 
 				<?php endforeach;?>				
