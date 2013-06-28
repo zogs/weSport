@@ -601,14 +601,14 @@ $(document).ready(function(){
 		  success: function( data ) 
 	          {	   
 
-	          	//console.log(data);
+	          	console.log(data);
 	    		//Si pas de commentaires return false
 	    		if(data.commentsNumber==0 && data.commentsTotal==0) {
-
+	    			
 	    			$("#noCommentYet").show();
 	    			$("#loadingComments").hide();
 	    			$("#ajaxLoader").hide();
-	    			return false;
+	    			return false;    			
 	    		}
 
 	    		

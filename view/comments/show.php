@@ -31,13 +31,7 @@
                             <input type="hidden" name="media" id="media" value='' /> 
                             <input type="hidden" name="media_url" id="media_url" value='' /> 
                             <div class="btn-group" id="commentTextareaButtons">
-                                <input type="submit" id="submitComment" class="btn btn-small" value="Envoyer">
-                                <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">              
-                                <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">                           
-                                <li><a href="">Créer une nouvelle discussion</a></li>                
-                                </ul>
+                                <input type="submit" id="submitComment" class="btn btn-small" value="Envoyer">                                
                             </div>                              
                             <div id="commentPreview"></div>
                         </div>
@@ -45,13 +39,14 @@
                         <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
                         <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->noLoggedPlaceholder;?>"></textarea>
                         <?php endif; ?>
+                        <div class="clearfix"></div>
                     </form>                                   
                     <?php endif; ?>
                     
                     <div style="float:left;width:100%; height:0px;"></div>  
 
                 <?php if($this->displayRenderButtons): ?>
-                    <div id="tri" class="btn-toolbar">
+                    <div id="tri" class="commentFilter btn-toolbar">
 
                         <div class="btn-group pull-right">
                             <a class="btn  btn-mini dropdown-toggle bubble-bottom" title="Type of comments" data-toggle="dropdown" href="#">
@@ -131,3 +126,4 @@
                     </div>
                     <?php endif; ?>
                    
+                <div class="clearfix"></div>

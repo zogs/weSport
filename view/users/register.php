@@ -8,7 +8,7 @@
 		<div class="white-sheet">
 			<div class="head-sheet"><h1 class="title-sheet">INSCRIPTION</h1></div>
 
-			<form class="form form-wp w50 fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
+			<form class="form form-ws label-hidden w50 fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
 				<p class="intro">En 2min via le formulaire suivant:</p>
 				<?php echo $this->Form->input('login','Pseudo',array('icon'=>'icon-user','required'=>'required','placeholder'=>"Pseudo",'data-url'=>Router::url('users/check'))) ?>
 				<?php echo $this->Form->input('email',"Email",array('type'=>'email', 'icon'=>"icon-envelope","required"=>"required","placeholder"=>"Email",'data-url'=>Router::url('users/check'))) ?>
@@ -61,8 +61,8 @@
 			</form>
 			
 			<div class="clearfix"></div>
+			<div class="fresque"></div>
 		</div>
-		<div class="fresque"></div>
 	</div>
 </div>	
 

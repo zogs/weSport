@@ -8,7 +8,7 @@
 		<div class="white-sheet">
 			<div class="head-sheet"><h1 class="title-sheet">CONNEXION</h1></div>		
 			<?php echo $this->session->flash(); ?>
-			<form class="form form-wp w60 center" action="<?php echo Router::url('users/login'); ?>" method='post'>
+			<form class="form form-ws label-hidden w60 center" action="<?php echo Router::url('users/login'); ?>" method='post'>
 			
 					
 					<?php echo $this->Form->input('login','Pseudo ou email',array('required'=>'required','placeholder'=>'Pseudo ou E-mail','icon'=>'icon-user')); ?>
@@ -27,7 +27,7 @@
 					</div>
 			</form>	
 
-		</div>	
 		<div class="fresque"></div>
+		</div>	
 	</div>	
 </div>

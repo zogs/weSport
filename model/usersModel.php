@@ -310,7 +310,7 @@ class User {
 	public $user_id = 0;
 	public $login = '';
 	public $email = '';
-	public $avatar  = 'img/logo_yp.png';
+	public $avatar  = 'img/LOGO.gif';
 	public $account = 'visitor';
 	public $role = 'visitor';
 

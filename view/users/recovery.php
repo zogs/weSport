@@ -12,7 +12,7 @@
 			
 		<?php if($action=='' || $action=='show_form_email'): ?>
 		<div class="head-sheet"><h1 class="title-sheet">Mot de passe perdu </h1></div>	
-		<form class="form form-wp w60 center" action="<?php echo Router::url('users/recovery'); ?>" method="POST">
+		<form class="form form-ws label-hidden w60 center" action="<?php echo Router::url('users/recovery'); ?>" method="POST">
 			<?php echo $this->Form->input('email','Entrer votre adresse email',array('required'=>'required','icon'=>'icon-envelope','placeholder'=>'Entre ton email')) ;?>
 			<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 			<div class="control-group control-submit">
@@ -25,7 +25,7 @@
 
 		<?php if($action=='show_form_password') : ?>
 		<div class="head-sheet"><h1 class="title-sheet">Réinitialisation</h1></div>	
-		<form class="form form-wp w60 center" action="<?php echo Router::url('users/recovery'); ?>" method="POST">
+		<form class="form form-ws label-hidden w60 center" action="<?php echo Router::url('users/recovery'); ?>" method="POST">
 				
 			<?php echo $this->Form->input('code','hidden',array('value'=>$code)) ;?>
 			<?php echo $this->Form->input('user','hidden',array('value'=>$user_id)) ;?>	
@@ -40,8 +40,8 @@
 		</form>
 
 		<?php endif ;?>
+		<div class="fresque"></div>
 		</div>
 		
-		<div class="fresque"></div>
 	</div>
 </div>

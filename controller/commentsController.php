@@ -29,7 +29,7 @@
  	//Default text value
  	public $titlePlaceholder = "Write here to add a title";
  	public $textareaPlaceholder = "Poser votre question";
- 	public $noLoggedPlaceholder = "Veuillez vous connecter";
+ 	public $noLoggedPlaceholder = "Veuillez vous connecter pour commenter";
 
 
  	/*=======================================
@@ -125,6 +125,7 @@
 			$d['context_id'] = $com[0]->context_id;
 			$d['coms']       = $com;
 
+
 		}
 		elseif($context=='user'){
 
@@ -132,7 +133,7 @@
 
 		}
 
-
+		$d['total'] = $this->Comments->totalComments($context,$context_id);
 
 		$this->set($d);
 
