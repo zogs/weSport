@@ -129,7 +129,9 @@
 		}
 		elseif($context=='user'){
 
-			$d['coms'] = $this->Comments->threadUser($params);
+			//$d['coms'] = $this->Comments->threadUser($params);
+						
+			$d['coms']       = $this->Comments->findCommentsWithoutJOIN($params);	
 
 		}
 

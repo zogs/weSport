@@ -1,11 +1,14 @@
 <div class="register">
 	<div class="top-banner">
 		<div class="void"></div>
-		<div class="fresque"></div>
+		<div class="flash">
+			<?php echo $this->session->flash() ;?>			
+		</div>		
 	</div>
-	<?php echo $this->session->flash(); ?>
+	
 	<div class="container">
 		<div class="white-sheet">
+			<div class="fresque fresque-mini"></div>
 			<div class="head-sheet"><h1 class="title-sheet">INSCRIPTION</h1></div>
 
 			<form class="form form-ws label-hidden w50 fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>

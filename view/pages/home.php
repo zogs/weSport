@@ -1,8 +1,9 @@
 <div class="homepage">
 	<div class="row-fluid">
 
-	
-		<?php echo $this->session->flash() ;?>
+		<div class="flash">
+			<?php echo $this->session->flash() ;?>			
+		</div>
 		<?php //debug($this->cookieEventSearch->arr());
 		
 		?>	
@@ -24,7 +25,7 @@
 				<button class="citySubmit"><span class="ws-icon-loupe"></span></button>
 				
 				<div class="cityAriane">
-					
+					<span class="ws-icon ws-icon-location" style="color:white"></span>
 					<?php if($location = $this->cookieEventSearch->read('location')): ?>
 						<?php if(!empty($location['CC1'])) echo $location['CC1'].', ';?>
 						<?php if(!empty($location['ADM1'])) echo $location['ADM1'].', ';?>
@@ -39,23 +40,27 @@
 			</div>
 
 			<div class="sportCheckboxs">
-				<?php 
-					
+				<?php 					
 					$sports_selected = $this->cookieEventSearch->read('sports');									
-					foreach ($sports_available as $sport):
-				
-				?>
+					foreach ($sports_available as $sport):?>
 						<div class="sportChoice">
 							<input type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
-							<label for="label-<?php echo $sport->slug;?>"><span class="ws-icon-<?php echo $sport->slug;?>"></span></label>
-						</div>
-						
-						
-													
+							<label for="label-<?php echo $sport->slug;?>" class="tooltiptop" data-toggle="tooltip" title="<?php echo $sport->name;?>">
+								<span class="ws-icon-small ws-icon-<?php echo $sport->slug;?>"></span>
+							</label>
+						</div>						
 				 	<?php endforeach; ?>					
-				<?php ?>
-				<div class="clearfix"></div>
+				<?php ?>				
 			</div>	
+			<?php 
+				reset($sports_available);
+				$sport_list = array();
+				foreach ($sports_available as $key => $sport) {
+				 	$sports_list[$sport->slug] = $sport->name;
+				 } ?>
+			<div class="sportSelect">
+				<?php echo $this->Form->select('sport','Seulement le sport suivant',$sports_list,array('default'=>$sports_selected,'placeholder'=>"Choisir un sport",'style'=>'width:100%;')); ?>
+			</div>
 		</form>
 
 		<div class="calendar">

@@ -953,6 +953,7 @@ class UsersController extends Controller{
 
     	$this->loadModel('Users');
     	$this->loadModel('Events');
+    	$this->loadModel('Worlds');
 
     	//find user
     	$user = $this->Users->findUsers(array('conditions'=>array('user_id'=>$uid)));
@@ -960,13 +961,24 @@ class UsersController extends Controller{
     	//404 is not exist
     	if(!$user->exist()) $this->e404('User does not exist');
 
+    	//Locate user
+    	$user->location =  $this->Worlds->findStatesNames($user);
+    	if(!empty($user->city)){
+	    	$city = $this->Worlds->findCityById($user->city,' FULLNAMEND as name');
+	    	$user->city = $city->name;
+	    }
+
     	//find events
     	$d['futurParticipation'] = $this->Events->findUserFuturParticipations($uid);
     	$d['pastParticipation'] = $this->Events->findUserPastParticipations($uid);
     	
     	$d['organiseEvents'] = $this->Events->findEventsUserOrganize($uid);
     	$d['hasOrganized'] = $this->Events->findEventsUserHasOrganized($uid);
+    	
+    	foreach ($d as $key => $events) {
 
+    		$d[$key] = $this->Events->joinSports($events,$this->getLang());
+    	}
     	//find reviewed events
     	$d['eventsReviewed'] = $this->Events->findReviewByOrga($uid); 
     	$d['eventsReviewed'] = $this->Events->joinUser($d['eventsReviewed']); 

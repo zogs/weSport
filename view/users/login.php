@@ -1,11 +1,14 @@
 <div class="connexion">
 	<div class="top-banner">
 		<div class="void"></div>
-		<div class="fresque"></div>
+		<div class="flash">
+			<?php echo $this->session->flash() ;?>			
+		</div>		
 	</div>
-	<?php echo $this->session->flash(); ?>
+	
 	<div class="container">
 		<div class="white-sheet">
+			<div class="fresque fresque-mini"></div>
 			<div class="head-sheet"><h1 class="title-sheet">CONNEXION</h1></div>		
 			<?php echo $this->session->flash(); ?>
 			<form class="form form-ws label-hidden w60 center" action="<?php echo Router::url('users/login'); ?>" method='post'>
@@ -19,7 +22,10 @@
 					
 					<div class="control-group control-submit">
 						<label for="" class="control-label"></label>
-						<input type="submit" class="btn-ws" value="Se connecter"/>	
+						<input type="submit" class="btn-ws" value="Se connecter"/>
+						<p class="help help-center">
+							<a href="<?php echo Router::url('users/register');?>">Pas encore inscrit ?</a>	    			
+						</p>	
 						<p class="help help-center">
 							<a href="<?php echo Router::url('users/recovery');?>">Mot de passe oublié ?</a>	    			
 						</p>

@@ -66,6 +66,7 @@ class Conf {
 									'js/jquery/hogan.mustache.js',
 									'js/phpfunctions.js',
 									'js/jquery/select2-2.1/select2.min.js',
+									'js/jquery/jquery.timeago.js',
 									'js/jquery/jquery.expander.min.js',
 									'js/jquery/datepicker/js/bootstrap-datepicker.js',
 									'js/jquery/datepicker/js/locales/bootstrap-datepicker.fr.js',

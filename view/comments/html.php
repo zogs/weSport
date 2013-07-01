@@ -109,9 +109,9 @@
                     <div class="title"><?php echo $com->title; ?></div>                                
                     <?php endif; ?>
                     <div class="user"><?php echo $com->user->getLogin();?></div>
-                    <abbr class="date" title="<?php echo $com->date;?>"><?php echo $com->date;?></abbr>
+                    <abbr class="date timeago" title="<?php echo $com->date;?>"><?php echo $com->date;?></abbr>
                     
-                    <div class="content comment_<?php echo $com->type;?>">    
+                    <div class="content_txt comment_<?php echo $com->type;?>">    
                                             
                         <?php if($com->isModerate() ): ?>
                         <span class="commentIsModerate"><?php echo $com->isModerate('msg'); ?> <a href="#"> Afficher quand même </a></span>

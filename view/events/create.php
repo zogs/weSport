@@ -1,14 +1,15 @@
 <div class="createEvent">
 	<div class="top-banner">
 		<div class="void"></div>
-		<div class="fresque"></div>
+		<div class="flash">
+			<?php echo $this->session->flash(); ?>			
+		</div>	
 	</div>
 
-	<?php echo $this->session->flash(); ?>
-
-	
 	<div class="container">
-		<div class="white-sheet">
+		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" href="<?php echo Router::url('/date/'.$this->cookieEventSearch->read('date'));?>"></a></div>	
+		<div class="fresque fresque-mini"></div>
+		<div class="white-sheet">			
 			<div class="head-sheet">							
 				<?php if($event->exist()): ?>
 				
@@ -23,8 +24,7 @@
 				<?php endif; ?>
 			</div>
 
-			<div class="col_large">
-				<a href="<?php echo Router::url('events/view/'.$event->getID());?>"><<</a>
+			<div class="col_large">				
 				<form class="form form-ws form-create" action="<?php echo Router::url('events/create/'.$event->id);?>" method="POST">
 
 					<?php echo $this->Form->input("id","hidden",array("value"=>$event->id)) ;?>
@@ -74,7 +74,7 @@
 				</div>					
 
 				<?php if(!empty($user_events_in_futur)):?>
-				<div class="block event-to-come">
+				<div class="block block-orange event-to-come">
 					<h3>Mes activités à venir</h3>
 					<div class="block-content">
 						<ul>
@@ -82,7 +82,7 @@
 								<li>
 									
 									<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
-										<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
+										<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
 										<?php echo $e->getTitle();?>
 									</a>
 								</li>
@@ -93,7 +93,7 @@
 				<?php endif; ?>		
 
 				<?php if(!empty($user_events_in_past)): ?>
-				<div class="block event-finished">
+				<div class="block block-green event-finished">
 					<h3>Activités terminés</h3>
 					<div class="block-content">
 						<ul>

@@ -9,19 +9,19 @@ class PagesController extends Controller {
 			$this->loadModel('Worlds');
 			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
 			$this->view = 'pages/home';
-		
+			
 			//date
 			if($day === null ){
 
+					$params = $this->cookieEventSearch->arr();
 					$params['date'] = date('Y-m-d');				
 
 			}
 			else {
 				$params['date'] = $day;
-				$cookie = $this->cookieEventSearch->arr();
+				$cookie = $this->cookieEventSearch->arr();			
 				$cookie['date'] = $day;						
-				$this->cookieEventSearch->write($cookie);
-				
+				$this->cookieEventSearch->write($cookie);				
 			}
 
 			//si une requete est passée
@@ -58,14 +58,7 @@ class PagesController extends Controller {
 				$params['cityID'] = $this->cookieEventSearch->read('cityID');
 				$params['cityName'] = $this->cookieEventSearch->read('cityName');
 				$params['extend'] = $this->cookieEventSearch->read('extend');
-				$params['location'] = array(
-										'city' => $this->cookieEventSearch->read('city'),
-										'CC1'=> $this->cookieEventSearch->read('CC1'),
-										'ADM1'=> $this->cookieEventSearch->read('ADM1'),
-										'ADM2'=> $this->cookieEventSearch->read('ADM2'),
-										'ADM3'=> $this->cookieEventSearch->read('ADM3'),
-										'ADM4'=> $this->cookieEventSearch->read('ADM4')
-										);
+				$params['location'] = $this->cookieEventSearch->read('location');
 
 			}
 		

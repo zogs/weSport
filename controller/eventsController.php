@@ -20,7 +20,7 @@ class EventsController extends Controller{
 			if(is_array($params)){ 
 
 				$day = $params['date'];
-				$cookie = $this->cookieEventSearch->arr();	
+				$cookie = $this->cookieEventSearch->arr();					
 				$cookie['date'] = $day;			
 				$this->cookieEventSearch->write($cookie);
 							
@@ -33,6 +33,7 @@ class EventsController extends Controller{
 				$day = $params;				
 				//rewrite cookie parameters
 				$params = $this->cookieEventSearch->arr();
+
 				$params['date'] = $day;			
 				$this->cookieEventSearch->write($params);
 						
@@ -198,7 +199,7 @@ class EventsController extends Controller{
 			if($this->Events->saveParticipants($user, $event, $proba)){
 				
 				//Set flash
-				$this->session->setFlash("C'est cool on va bien s'éclater :) !!!","success",4);
+				$this->session->setFlash("C'est cool on va bien s'éclater :) ","success",5);
 
 				//On préviens l'organisateur
 				if($this->sendNewParticipant($event,$user)){
@@ -260,7 +261,7 @@ class EventsController extends Controller{
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
 					//On previens
-					$this->session->setFlash("Tanpis, à une prochaine fois!","warning",1);					
+					$this->session->setFlash("Tanpis, à une prochaine fois!","success",3);					
 					//On vérifie si le nombre min nest pas atteint
 					//nombre actuel de participants
 					$nbparticip = $this->Events->countParticipants($event->id);
@@ -269,11 +270,11 @@ class EventsController extends Controller{
 						//on annule l'événement
 						if($this->Events->cancelEvent($event->id)){
 							//on previens
-							$this->session->setFlash("L'événement est suspendu...","warning",2);
+							$this->session->setFlash("L'événement est suspendu...","warning",5);
 							//on envoi un mailing  aux participants
 							if($this->sendEventCanceled($event)) {
 
-								$this->session->setFlash("Les participants ont été prévenues","warning",3);	
+								$this->session->setFlash("Les participants ont été prévenues","info",7);	
 							}
 
 						} 
@@ -301,7 +302,7 @@ class EventsController extends Controller{
 			if($res = $this->Events->saveReview($data)){
 				
 				if($res==='already') {
-					$this->session->setFlash("Vous avez déjà donné votre avis","warning");
+					$this->session->setFlash("Désolé mais vous avez déjà donné votre avis","warning");
 				}
 				else {
 
@@ -362,7 +363,7 @@ class EventsController extends Controller{
 			
 			//if event is confirm , dont allow modification
 			if($evt->isConfirm()){				
-				$this->session->setFlash('Cette activité a été confirmé, vous ne pouvez le modifier...','danger');
+				$this->session->setFlash('Cette activité a été confirmé, vous ne pouvez la modifier !','danger');
 				$this->request->data = null;
 			}		
 			

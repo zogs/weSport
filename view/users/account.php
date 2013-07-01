@@ -1,11 +1,12 @@
-<?php echo $this->session->flash();?>
 <div id="account">
 	<div class="top-banner">
 		<div class="void"></div>
-		<div class="fresque"></div>
+		<div class="flash">
+			<?php echo $this->session->flash() ;?>			
+		</div>		
 	</div>
 	<div class="container white-sheet">
-
+		<div class="fresque fresque-mini"></div>
 		<div class="col_small">
 		
 			<div class="module module-rounded profil">		

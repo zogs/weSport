@@ -421,7 +421,7 @@ class EventsModel extends Model{
 	}
 
 	public function joinSport($event,$lang = 'fr'){
-
+		
 		$sport = $this->findFirst(array('table'=>'sports','fields'=>'id,sport_id,slug,'.$lang.' as name','conditions'=>array('slug'=>$event->sport)));
 		if(empty($sport)) $sport = $this->findFirst(array('table'=>'sports','fields'=>'id,sport_id,slug,fr as name','conditions'=>array('slug'=>$event->sport)));
 		$event->sport = $sport;
@@ -807,13 +807,19 @@ class Event{
 	public $hours   = 12;
 	public $minutes = 00;
 	public $time    = '12:00:00';
+	public $timing  = '';
 
 	public function __construct( $fields = array() ){
+		
+		if(empty($fields)) return;
 
 		foreach ($fields as $field => $value) {
 			
 			$this->$field = $value;
 		}
+
+		//set timing once for all (perf)
+		$this->timing = $this->timingSituation();
 	}
 
 	public function exist(){
@@ -952,7 +958,7 @@ class Event{
 	}
 
 	public function timingSituation(){
-
+	
 		if($this->date < date('Y-m-d') ) return 'past';
 		if($this->date > date('Y-m-d') ) return 'tocome';
 		if($this->date == date('Y-m-d') && $this->time >= date('H:i:s')) return 'tocome';

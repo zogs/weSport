@@ -10,6 +10,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 <head <?php if(isset($openGraph['head'])) echo $openGraph['head'];?>>
 	<?php if(isset($openGraph['metas'])) echo $openGraph['metas']; ?>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="<?php echo Router::webroot('img/LOGO.gif');?>">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo Router::webroot('img/wesport.ico');?>">
 	<?php $this->loadCSS();?>
@@ -31,19 +32,25 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 			$menu = $this->request('pages','getMenu',array('top'));				
 
 			?>
-			<ul class="nav phoneMenu">
-				
+			<ul class="nav mobileMenu">				
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						Menu
-						<b class="caret"></b>
-					</a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<?php foreach($menu as $page): ?>
-						<li><a href="<?php echo Router::url($page->slug);?>" ><?php echo $page->title;?></a></li>
+							<li><a href="<?php echo Router::url($page->slug);?>" ><?php echo $page->title;?></a></li>
 						<?php endforeach; ?>
+						<?php if($this->session->user()->isLog()):?>
+							<li><a href="<?php echo Router::url('users/account');?>">Mon Compte</a></li>
+							<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
+						<?php else: ?>
+							<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
+							<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
+						<?php endif; ?>						
 					</ul>
 				</li>
+				<?php if($this->session->user()->isLog()): ?>
+				<li><img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar();?>"/></li>
+				<?php endif; ?>
 			</ul>
 
 			<ul class="nav desktopMenu">
@@ -51,20 +58,22 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 					reset($menu);
 					foreach ($menu as $page):
 				 ?>
-				 <li><a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage())? 'currentPage':'';?>"><?php echo $page->title;?></a></li>
+				 <li>
+				 	<a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage())? 'currentPage':'';?>"><?php echo $page->title;?></a>
+				 </li>
+				<?php endforeach;
 
-				<?php endforeach;?>				
-				
-				<?php
 				//Admin section button
 				if($this->session->user()->getRole()=='admin'):?>
-				<li><a href="<?php echo Router::url('admin/pages/index');?>">Admin.</a></li>
+				<li>
+					<a href="<?php echo Router::url('admin/pages/index');?>">Admin.</a>
+				</li>
 				<?php endif;
 				
 				?>			
 			</ul>
 
-			<ul class="nav pull-right">
+			<ul class="nav pull-right desktopMenu">
 				<?php if ($this->session->user()->isLog()): ?>
 					<li><a href="<?php echo Router::url('users/account');?>">
 							<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	

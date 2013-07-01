@@ -101,6 +101,34 @@ $(document).ready(function(){
 	});
 	
 
+
+	/*===========================================================
+		Time Ago
+	============================================================*/
+	// French translation
+	jQuery.timeago.settings.strings = {
+	   prefixAgo: "il y a",
+	   prefixFromNow: "d'ici",
+	   seconds: "moins d'une minute",
+	   minute: "une minute",
+	   minutes: "%d minutes",
+	   hour: "une heure",
+	   hours: "%d heures",
+	   day: "un jour",
+	   days: "%d jours",
+	   month: "un mois",
+	   months: "%d mois",
+	   year: "un an",
+	   years: "%d ans"
+	};
+		
+	$('abbr.timeago').livequery(function(){
+
+		$(this).timeago();
+	});	
+
+
+
 	/*===========================================================
 		EXPANDABLE
 		@param data-maxlenght
@@ -973,7 +1001,7 @@ function addCountryFlagToSelectState(state) {
 function addSportIcon(sport){
 
 	if(trim(sport.id)!='')
-		return "<img src='http://wesport.zogs.org/img/sport_icons/30gif/"+sport.id+".gif' /> "+sport.text;
+		return '<span class="ws-icon ws-icon-small ws-icon-'+sport.id+'"></span> '+sport.text;		
 	else 
 		return sport.text;
 }
