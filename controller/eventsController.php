@@ -29,8 +29,9 @@ class EventsController extends Controller{
 			//get params from get ajax request
 			if(is_string($params)) {
 
-				//day param
-				$day = $params;				
+				//day param			
+				if($params=='now') $day = date('Y-m-d');
+				else $day = $params;
 				//rewrite cookie parameters
 				$params = $this->cookieEventSearch->arr();
 
@@ -65,9 +66,9 @@ class EventsController extends Controller{
 
 		//initialize variable for days loop
 		$numDaysPerWeek = 7; //number of days showed
-		//find the first day of the week
+		//first day of the week
+		// if not set , find the cookie date , else set the current date
 		$firstday = (isset($day))? $day : $this->cookieEventSearch->read('date');
-		
 		//loop init
 		$weekday = $firstday;		
 		$events = array();

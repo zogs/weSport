@@ -1,12 +1,7 @@
 <div class="homepage">
 	<div class="row-fluid">
-
-		<div class="flash">
-			<?php echo $this->session->flash() ;?>			
-		</div>
-		<?php //debug($this->cookieEventSearch->arr());
+		<div class="flash"><?php echo $this->session->flash() ;?></div>
 		
-		?>	
 		<form id="formSearch" method="GET" action="<?php echo Router::url('date/'.$params['date']);?>" >
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
 			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
@@ -65,7 +60,7 @@
 
 		<div class="calendar">
 			<div class="calendar-header"></div>
-			<div class="calendar-content">
+			<div class="calendar-content" id="calendar-content">
 					<?php $this->request('events','calendar',array($params)); ?>							
 			</div>
 			<div class="calendar-footer"></div>
@@ -117,54 +112,87 @@ $(document).ready(function(){
 	});
 
 
-	$('a.calendar-nav.with-ajax').livequery(function(){
+	function slideCalendar(direction,width){
 
-		$("a.calendar-nav.with-ajax").bind('click',function(e){
-			
-	  		var url = $(this).attr('href');
-	  		var form = $("#formSearch");
-	  		var datas = form.serialize();
-	  		var direction;
-	  		if($(this).hasClass("calendar-next")) direction = 'next';
-	  		if($(this).hasClass("calendar-prev")) direction = 'prev';
+		if(direction == 'next') {
+			contentPosition = width;
+			contentSliding = '-='+width;
+		}
+		if(direction == 'prev') {
+			contentPosition = -width;
+			contentSliding = '+='+width;
+		}
 
-	  		var screenWidth = $(window).width();
-	  		
-	  		$.ajax({
-	  				type:'GET',
-	  				url: url,
-	  				data : datas,
-	  				success: function( data ){
+		$(".events-week").last().css({'left':contentPosition+'px'});
+		$(".events-week").last().addClass('new-week');
 
-	  					$(".calendar-content").append( data );
+		$('.events-week').animate({
+			left:contentSliding,
+			},500,function(){ ;
+				if(!$(this).hasClass('new-week')) $(this).remove();
+				$(this).removeClass('new-week');				
+				return;
+		});
+	}
 
-	  					if(direction == 'next') {
-	  						contentPosition = screenWidth;
-	  						contentSliding = '-='+screenWidth;
-	  					}
-	  					if(direction == 'prev') {
-	  						contentPosition = -screenWidth;
-	  						contentSliding = '+='+screenWidth;
-	  					}
+	function setHeightCalendar(){
 
-	  					$(".events-week").last().css({'left':contentPosition+'px'});
-	  					$(".events-week").last().addClass('new-week');
+		var heightCalendar = $(".events-week").last().height();
+		$("#calendar-content").css('height',heightCalendar);
+	}
 
-	  					$('.events-week').animate({
-	  						left:contentSliding,
-	  						},500,function(){ ;
-	  							if(!$(this).hasClass('new-week')) $(this).remove();
-	  							$(this).removeClass('new-week');
-	  					});
-	  					
-	  				},
-	  				dataType:'html'
-	  		});
+	function callWeek(url,form,direction){
 
+		var screenWidth = $(window).width();
 
-	  		return false;
-	  	});
+		$.ajax({
+			type:'GET',
+			url: url,
+			data : form,
+			success: function( data ){
+				
+				$("#calendar-content").append( data );
 
+				setHeightCalendar();
+
+				slideCalendar(direction,screenWidth);	  				
+				
+			},
+			dataType:'html'
+		});
+		return false;
+	}
+	function callNextWeek(url,form){
+		callWeek(url,form,'next');
+	}
+
+	function callPreviousWeek(url,form){
+		callWeek(url,form,'prev');
+	}
+
+	function callCurrentWeek(){
+		callWeek($('.calendar-nav-now').attr('href'),$('#formSearch').serialize(),'prev');
+	}
+
+	$('.calendar-nav-prev').livequery(function(){
+		$(this).click(function(){
+			callPrevWeek($(this).attr('href'),$('#formSearch').serialize());
+			return false;
+		});
+	});
+
+	$('.calendar-nav-next').livequery(function(){
+		$(this).click(function(){
+			callNextWeek($(this).attr('href'),$('#formSearch').serialize());
+			return false;
+		});
+	});
+
+	$('.calendar-nav-now').livequery(function(){
+		$(this).click(function(){
+			callCurrentWeek();
+			return false;
+		});
 	});
 
 

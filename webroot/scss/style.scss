@@ -375,12 +375,19 @@ body{
 
 }
 
-.calendar {
-
+.calendar {	
+	@extend %clearfix;
 	.calendar-header {
 		background-color:$darkblue;
 		width:100%;
 		height:25px;
+	}
+
+	.calendar-content{
+		position:relative;
+		
+		@extend %clearfix;
+		 .events-week { position: absolute; top:0; left:0; width:100%;}
 	}
 
 	.calendar-footer {
