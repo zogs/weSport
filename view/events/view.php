@@ -14,26 +14,28 @@
 			
 			<section>
 				<div class="event-header">
-					<div class="event-sport-logo"><span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?>"></span></div>
+					
 					<div class="event-title">
-						<h1><?php echo $event->getTitle();?></h1>
+						<h1>
+							<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>
+							<?php echo $event->getTitle();?>
+						</h1>
 						
 					</div>
 					
 					<div class="event-orga">
 						<div class="orga-avatar"><img src="<?php echo $event->author->getAvatar();?>"/></div>
 						<div class="orga-info">
+							<span><small>Organisateur</small></span>
 							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>"><?php echo $event->author->login;?></a></span>
-							<span><strong><small>Organisateur</small></strong></span>
-							<span><?php echo $event->author->getAge();?> ans</span>
+							<span class="orga-age"><?php echo $event->author->getAge();?> ans</span>
 						</div>
 
-					</div>
-					<div class="clearfix"></div>				
+					</div>				
 				</div>
 			</section>
 
-			<div class="event-status <?php echo ($event->confirmed==1)? 'event-confirmed' : 'event-pending';?> <?php echo ($event->timing=='past')? 'event-finished':'';?>">
+			<div class="event-action-bar <?php echo ($event->confirmed==1)? 'event-confirmed' : 'event-pending';?> <?php echo ($event->timing=='past')? 'event-finished':'';?>">
 				<div class="event-action">
 					<?php if($event->timing=='tocome'): ?>
 						<?php if($this->session->user()->online()): ?>
@@ -64,17 +66,19 @@
 					<?php endif; ?>
 
 					</div>
-
+				
+				<div class="event-status">
 				<?php if($event->timing=='tocome'): ?>
 					<?php if($event->confirmed==1): ?>
-							<span class="label label-success">Confirmé</span> <?php echo count($event->participants);?> participants						
+							<span class="label label-success">Confirmé</span> <span class="nb-participant"> <?php echo count($event->participants);?> participants</span>
 					<?php endif ?>
 					<?php if($event->confirmed==0): ?>
-							<span class="label">En attente</span> de <?php echo ($event->nbmin-count($event->participants));?> participants						
+							<span class="label">En attente</span> <span class="nb-participant">de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
 					<?php endif;?>	
 				<?php elseif($event->timing=='past'): ?>			
-							<span class="label">Terminé</span> <abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->date;?></abbr>
+							<span class="label">Terminé</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->date;?></abbr></span>
 				<?php endif; ?>
+				</div>
 			</div>
 
 			<?php 
@@ -238,6 +242,7 @@
 				</div>
 			</aside>		
 		</div>
+		<div class="fresque"></div>
 	</div>
 </div>
 

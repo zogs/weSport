@@ -56,7 +56,7 @@
 
 			<div class="col_small">
 
-				<div class="block">
+				<div class="block form-submit">
 					<?php if($event->exist()): ?>
 						<?php echo $this->Form->input("Mettre à jour l'annonce",'submit',array('class'=>'btn-ws')) ;?>					
 						<ul>

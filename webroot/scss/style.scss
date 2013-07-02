@@ -269,7 +269,10 @@ body{
 	border-bottom-color: $deepred;
 }
 
-
+/* Tooltip */
+.tooltip{
+	@include rem(12);
+}
 
 
 #formSearch{
@@ -332,11 +335,21 @@ body{
 			float:right ; 					
 			background-color:$lightblue;
 			border:12px solid $deepblue; 
-			border-radius: 60px;
+			border-radius: 100px;
 			padding:15px;
+			@include transition(0.2s ease);
 
-			.ws-icon-loupe { color:#FFF; @include rem(55);}
+			.ws-icon-loupe { 
+				color:#FFF; 
+				@include rem(55);
+			}
+			.ws-icon-loupe:hover{
+										
+			}
 
+			&:hover {
+				@include rotate(360deg);
+			}
 		}
 		
 	}
@@ -350,12 +363,31 @@ body{
 			float: left;
 			position:relative;
 			margin:0 6px 2px 6px;
-			input { z-index:2; position:absolute; left:30%; top:30%; visibility: hidden; }
-			label { z-index:1; position:relative; left:0; top:0; background-color: #FFF; border:10px solid #FFF; @include border-radius(30px);}
-			label span {@include rem(35); margin:2px;}
+			input { 
+				z-index:2; 
+				position:absolute; 
+				left:30%; 
+				top:30%; 
+				visibility: hidden;
+			 }
+			label { 
+				z-index:1; 
+				position:relative; 
+				left:0; 
+				top:0; 
+				background-color: #FFF; 
+				border:10px solid #FFF; 
+				@include border-radius(30px);
+				@include transition(0.2s ease);
+			}
+			label span {
+				@include rem(35); 
+				margin:2px;
+			}
 
 			label:hover {
 				border-color:$lightblue;
+				@include rotate(360deg);
 			}
 			input:checked ~ label {
 				border-color:$darkblue;
@@ -381,14 +413,85 @@ body{
 		background-color:$darkblue;
 		width:100%;
 		height:25px;
+		position:relative;
+
+		.fresque{
+			position:absolute;
+			bottom:0px;
+			height:10px;
+			width:100%;
+			display: none;
+		}
 	}
 
-	.calendar-content{
-		position:relative;
-		
-		@extend %clearfix;
-		 .events-week { position: absolute; top:0; left:0; width:100%;}
+	.calendar-nav{
+
+		.colomn-nav {
+			width:5%;
+		}
+		.colomn-prev{
+			background-color: $deepred;
+			a.calendar-nav-prev{
+				float:right;
+				img{
+					
+				}
+			}			
+		}
+		.colomn-next{
+			background-color: $deepgreen;
+			a.calendar-nav-next{
+				float:left;
+				margin-left:-2px;
+				img{
+
+				}
+			}
+		}
+
+		.calendar-content{			
+			width:90%;
+			position:relative;
+			overflow:hidden;
+			@extend %clearfix;
+			 .events-week { 
+			 	position: absolute; 
+			 	top:0; 
+			 	left:0; 
+			 	width:100%;
+			 	border:0;
+
+			 	.colomn-past{
+			 		background-color:#AAA;
+			 		@include box-shadow(inset 0 0 0 30px #999);
+			 		color:#888;
+
+			 		.colomn-date{
+			 			position:relative;
+			 			background-color: #999;
+
+			 			&:after{
+			 				content:'PAST';
+			 				background-color: #999;
+			 				color:#AAA;
+			 				font-family: 'Arial black',Arial;
+			 				@include rem(60);
+			 				position:absolute;
+			 				top:120%;
+			 				width:100%;
+			 				height:100%;
+			 				padding-top:30px;
+			 				display: block;
+			 				font-weight: bold;
+			 				@include text-shadow(0 0 0 #000);
+			 			}
+			 		}
+
+			 	}
+			 }
+		}
 	}
+
 
 	.calendar-footer {
 		background:$darkblue;
@@ -421,31 +524,26 @@ body{
 		$perCent:3%;		
 		table-layout: fixed;
 		width:100%;
-
+		min-height:1000px;
 
 		tr {height:100%; min-height:1000px;}
 
 		td { vertical-align: top;  }
-		td.colomn-first { background-color: $deepred;}
 		td.colomn-1 { background-color: $red; @include box-shadow(inset 0 0 0 30px darken($red,$perCent));}
 		td.colomn-2 { background-color: $softred; @include box-shadow(inset 0 0 0 30px darken($softred,$perCent));}
 		td.colomn-3 { background-color: $lightred; @include box-shadow(inset 0 0 0 30px darken($lightred,$perCent));}
 		td.colomn-4 { background-color: $softyellow; @include box-shadow(inset 0 0 0 30px darken($softyellow,$perCent));}
 		td.colomn-5 { background-color: $lightgreen; @include box-shadow(inset 0 0 0 30px darken($lightgreen,$perCent));}
 		td.colomn-6 { background-color: $softgreen; @include box-shadow(inset 0 0 0 30px darken($softgreen,$perCent));}
-		td.colomn-7 { background-color: $green; @include box-shadow(inset 0 0 0 30px darken($green,$perCent));}
-		td.colomn-last { background-color: $deepgreen; }
+		td.colomn-7 { background-color: $green; @include box-shadow(inset 0 0 0 30px darken($green,$perCent));}		
 
-		
-		td.colomn-first .colomn-date { background-color: darken($deepred,$perCent);}
 		td.colomn-1 .colomn-date { background-color: darken($red,$perCent);}
 		td.colomn-2 .colomn-date { background-color: darken($softred,$perCent);}
 		td.colomn-3 .colomn-date { background-color: darken($lightred,$perCent);}
 		td.colomn-4 .colomn-date { background-color: darken($softyellow,$perCent);}
 		td.colomn-5 .colomn-date { background-color: darken($lightgreen,$perCent);}
 		td.colomn-6 .colomn-date { background-color: darken($softgreen,$perCent);}
-		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}
-		td.colomn-last .colomn-date { background-color: darken($deepgreen,$perCent);}
+		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}		
 
 		td.colomn-last {		
 			a img {margin-left:-5px;}
@@ -461,7 +559,17 @@ body{
 			padding:10px;
 			min-height:100px;
 			background-color:#FFF;
+			border:2px solid rgba(0,0,0,0.1);
+			border-bottom:4px solid rgba(0,0,0,0.3);
 			@include border-radius(20px);
+
+			.events-link:hover{
+				.events-content{
+					.events-title{
+						color:$darkblue;
+					}
+				}
+			}
 
 			.events-time {
 				font-weight:bold;
@@ -570,16 +678,17 @@ h1.title-sheet {
 	}
 
 	.control-submit{ 
-			width:50%; 
-			margin:0 25%;
+			text-align: center;
+			width:100%;
+			margin:0;
 
 			input[type=submit],input[type=button] { 
-				width:100%;
-				padding-top:10px;
-				padding-bottom:10px; 				
+				display: inline-block;
+				float:none;
+				padding:10px 12%;	
+				margin: 20px 0 20px 0;			 				
 			}
 			p.help {
-				float:left;
 				width:100%;
 				margin:10px 0;
 			}
@@ -596,8 +705,8 @@ h1.title-sheet {
 		label.control-label { display:none;}
 	}
 	.control-submit{
-		width:50%;
-		margin:0 25%;
+		width:100%;
+		margin:0;		
 	}
 }
 
@@ -627,12 +736,17 @@ h1.title-sheet {
 
 .register {
 
-	form{ border-right:1px solid #DDD;}
-	.form-ws { margin:0;}
+	.form-register{
+		margin:0;
+		padding:0;
+		padding-bottom:50px;
+		border-right:1px solid #DDD;
+	}
 	.form-facebook {
 		float:left;
 		width:45%;
 		border:0;
+		padding-bottom:50px;
 		text-align: center;
 	}
 
@@ -649,6 +763,17 @@ h1.title-sheet {
 ======*/
 .createEvent {
 	.twitter-typeahead { width:100%;}
+	.col_small{
+		padding:0;
+		padding-top:30px;
+		.form-submit{
+			text-align: center;
+			input[type=submit]{
+				display: inline;
+				padding:10px 10%;
+			}
+		}
+	}
 }
 
 /*======
@@ -660,22 +785,16 @@ h1.title-sheet {
 .event-header{
 	width:100%;
 	padding:20px 2% 10px 2%;
-	background-color:$lightgrey;	
-
-	div.event-sport-logo { 
-		float:left; 
-		width:120px;			
-		height:100px;
-		padding-top:5px;		
-	}
+	background-color:$lightgrey;
+	@extend %clearfix;	
 
 	div.event-title{		
 		float:left;
-		width:520px;
+		width:70%;
 
 		h1{
-			margin-top:20px;
-			margin-bottom: 3px;
+			margin-top:0px;
+			margin-bottom: 0;
 			font-family: 'Bubblegum',Helvetica,Arial;
 			color:$deepblue;
 			@include rem(35);
@@ -687,7 +806,7 @@ h1.title-sheet {
 
 	div.event-orga{
 		float:right;
-		width:260px;
+		width:30%;
 
 		div.orga-info{
 			float:right;
@@ -702,9 +821,12 @@ h1.title-sheet {
 			}
 			span.orga-name{
 				font-weight: bold;
-				@include rem(18);
+				@include rem(16);
 				text-transform: capitalize;
 				a {color:$deepblue;}
+			}
+			small{				
+				border-bottom:1px solid #CCC;				
 			}
 		}
 
@@ -715,30 +837,38 @@ h1.title-sheet {
 	}
 }
 
-.event-status {
+.event-action-bar {
 	width:100%;
 	padding:7px 5% 10px 5%;
 	text-align: right;
 	border-top:4px solid #D0D0D0;
+	@extend %clearfix;
 
-	.label { padding:5px 10px; @include border-radius(10px)}
-}
-.event-action{
-		float:left;			
-		margin-top:-2px;
-		a.btn-ws{
-			padding:5px 10px;
+	.event-status{
+		float:right;
+		.label { padding:5px 10px; @include border-radius(10px)}
+		span.nb-participant{
 			@include rem(12);
-			font-weight: normal;
-			background-color: $deepblue;
-			@include border-radius(2px);
-			@include box-shadow(0 0 0 #000);				
-		}	
-		a.btn-ws-success{
-			background-color: $green;
-		}				
-		
+			margin-left:5px;
+		}		
+	}
+	.event-action{
+			float:left;			
+			margin-top:3px;
+			a.btn-ws{
+				padding:5px 10px;
+				@include rem(12);
+				font-weight: normal;
+				background-color: $deepblue;
+				@include border-radius(2px);
+				@include box-shadow(0 0 0 #000);				
+			}	
+			a.btn-ws-success{
+				background-color: $green;
+			}				
+			
 
+	}
 }
 .event-pending{
 	background-color:$softgrey;
@@ -936,6 +1066,9 @@ div.col_small{
 .event-map{
 	.block-content{
 		padding:0;
+	}
+	#eventmap{
+		width:300px;
 	}
 }
 .block-action{
@@ -1296,18 +1429,145 @@ TYPEAHEAD CUSTOM STYLE
   	}
   }
 
-  .footer {
-  	.container{
-  		width:100%;
-  		ul{
-  			margin-left:0;
-  			li{
-  				display:block;
-  				width:100%;
-  			}
-  		}
-  	}
-  }
+	.connexion{
+		.container{
+			width:100%;
+			.form-ws{
+				width:100%;
+				.control-submit{
+					width: 100%;				
+				}
+			}
+		}
+	}
+
+	.register{
+		.container{
+			width: 100%;
+			.form-ws{
+				width: 100%;
+				float:right;
+			}
+			.form-facebook{
+				width: 100%;
+				float:left;
+			}
+		}
+	}
+
+	.createEvent{
+		.container{
+			width:100%;
+			.col_large{
+				width:100%;
+				padding:0;
+				.control-group{
+					.control-label{
+						width:25%;
+					}
+					.controls{						
+					}
+				}
+			}
+			.col_small{
+				width: 100%;
+				padding:0;
+			}
+		}
+	}
+
+	.viewevent{
+		.container{
+			width:100%;
+			.event-header{
+				.event-title{					
+					width:auto;
+					h1{
+						@include rem(26);
+						.event-sport-logo{
+							padding:0;
+							@include rem(40);
+						}
+					}
+				}
+				.event-orga{
+					float:left;
+					width:100%;
+					.orga-avatar{
+						display:none;
+					}
+					.orga-info{
+						float:left;
+						text-align: left;
+						span {
+							display: inline-block;
+							width: auto;							
+						}
+						span.orga-name{
+							@include rem(12);
+						}
+						span.orga-age{
+							@include rem(10);
+						}
+						small{
+							@include rem(12);
+						}
+
+					}
+				}
+			}
+			.event-action-bar{
+				.event-action{
+					@extend %clearfix;
+					margin-bottom:10px;
+					margin-top:10px;
+					margin-right:5px;
+					.btn-ws{
+						padding:10px 20px;
+					}
+				}
+				.event-status{
+					float:left;
+					margin-top:2px;
+				}
+			}
+
+			.col_large{
+				width:100%;
+				padding:10px 1%;
+				.event-info{
+					margin-bottom:0;
+					line-height:150%;
+					@include rem(20);
+				}
+			}
+
+			.col_small{
+				width:100%;
+				padding:0;
+				margin-top:50px;
+				#eventmap{
+					width:100%;
+				}
+			}
+		}
+	}
+
+	.footer {
+		.container{
+			width:100%;
+			ul{
+				margin-left:0;
+				li{
+					display:block;
+					width:100%;
+					a{
+						@include rem(12);
+					}
+				}
+			}
+		}
+	}
 } 
 
 
@@ -1333,6 +1593,103 @@ TYPEAHEAD CUSTOM STYLE
 			}
 		}
 	}
+	
+	.connexion{
+		.container{
+			width:90%;
+			margin:0 5%;
+			.form-ws{
+				width:70%;
+				margin-left:15%; margin-right:15%;
+				.control-submit{
+					width: 100%;				
+				}
+			}
+		}
+	}
+
+	.register{
+		.container{
+			width: 90%;
+			margin:0 5%;
+		}
+	}
+
+	.createEvent{
+		.container{
+			width:90%;
+			margin:0 5%;
+			.col_large{
+				width:100%;
+				padding:0;
+				.control-group{
+					.control-label{
+						width:15%;
+					}
+					.controls{						
+					}
+				}
+			}
+			.col_small{
+				width: 60%;
+				margin:0 20%;
+				padding:0;
+			}
+		}
+	}
+	.viewevent{
+		.container{
+			width:90%;
+			margin:0 3%;
+			.event-header{
+				.event-orga{
+					.orga-avatar{
+						img{ height:70px;}
+					}
+				}
+			}
+
+			.col_small{				
+				width:100%;
+				padding:50px 10% 50px 10%;
+
+				.block{
+					.block-content{
+						padding:15px;
+					}					
+				}
+				.event-participants{
+					.event-participant-avatar{
+							width:70px;
+							height:70px;
+						}
+						strong{
+							@include rem(17);
+						}
+						small{
+							@include rem(14);
+						}
+					}
+					.event-reviews{
+						ul{
+							li{
+								@include rem(18);
+								img{
+									width:60px;
+									height:60px;
+									
+								}
+							}
+						}
+						a{
+							@include rem(16);
+						}
+					}
+
+			}
+		}
+	}
+
 
 	.footer {
   	.container{
@@ -1371,5 +1728,11 @@ TYPEAHEAD CUSTOM STYLE
 			}
 		}
    }
+	.connexion{
+		.container{
+			width:100%;
+			
+		}
+	}
 
 }  

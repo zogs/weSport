@@ -4,39 +4,57 @@ class EventsController extends Controller{
 	public $primaryKey = 'id';
 
 
-	public function calendar($params = null){
+	public function calendar($action = 'now',$date = null){
 
 		$this->view = 'events/index';
 		$this->layout = 'none';
 		$this->loadModel('Events');
 		$this->loadModel('Worlds');
 		
+		//Parameter of the sql query
+		$query = array();
 
+		//GET Parameter
+		$params =(array) $this->request->get();
+
+		//check validity of the date
+		if(isset($date))
+			if(!Date::is_valid_date($date,'yyyy-mm-dd')) exit('date is not valid');
 		
-		if(!empty($params)){
+		//Number of day of the week
+		if(!isset($params['dayperweek']))
+			$numDaysPerWeek = 7;		
+		else
+			$numDaysPerWeek = $params['dayperweek'];
+		
+		
+		if(!empty($action)){
 
-			//if its the first week
-			//get params from pagesController home 
-			if(is_array($params)){ 
-
-				$day = $params['date'];
-				$cookie = $this->cookieEventSearch->arr();					
-				$cookie['date'] = $day;			
-				$this->cookieEventSearch->write($cookie);
-							
-			}
-			//if its the prev/next week
-			//get params from get ajax request
-			if(is_string($params)) {
+			if(is_string($action)) {
 
 				//day param			
-				if($params=='now') $day = date('Y-m-d');
-				else $day = $params;
-				//rewrite cookie parameters
-				$params = $this->cookieEventSearch->arr();
+				if($action=='now') $day = date('Y-m-d');
+				elseif($action=='date') $day = $date;
+				elseif($action=='prev'){
+					if(isset($date)) $day = date('Y-m-d',strtotime($date.' - '.$numDaysPerWeek.' days'));
+					elseif($this->cookieEventSearch->read('date')) $day = date('Y-m-d',strtotime($this->cookieEventSearch->read('date').' - '.$numDaysPerWeek.' days'));
+					else $day = date('Y-m-d',strtotime(date('Y-m-d').' - '.$numDaysPerWeek.' days'));					
+				}
+				elseif($action=='next'){
+					if(isset($date)) $day = date('Y-m-d',strtotime($date.' + '.$numDaysPerWeek.' days'));
+					elseif($this->cookieEventSearch->read('date')) $day = date('Y-m-d',strtotime($this->cookieEventSearch->read('date').' + '.$numDaysPerWeek.' days'));
+					else $day = date('Y-m-d',strtotime(date('Y-m-d').' + '.$numDaysPerWeek.' days'));	
+				}				
+				else $day = date('Y-m-d');
 
-				$params['date'] = $day;			
-				$this->cookieEventSearch->write($params);
+				if(!isset($day)) exit('no good url');
+
+				$query['date'] = $day;
+
+				//set cookie date
+				$arr = $this->cookieEventSearch->arr();
+				$arr['date'] = $day;
+				$this->cookieEventSearch->write($arr);			
 						
 			}
 		}			
@@ -44,7 +62,7 @@ class EventsController extends Controller{
 		//if city is entered
 		if(!empty($params['cityID'])){
 			//set location for the model
-			$params['location'] = array('cityID'=>$params['cityID']);
+			$query['location'] = array('cityID'=>$params['cityID']);
 		}
 
 		//if extend to city arroud
@@ -54,21 +72,19 @@ class EventsController extends Controller{
 				//find latitude longitude of the city
 				$city = $this->Worlds->findFirst(array('table'=>'world_cities','fields'=>array('LATITUDE','LONGITUDE'),'conditions'=>array('UNI'=>$params['cityID'])));
 				//and set params for the model
-				$params['cityLat'] = $city->LATITUDE;
-				$params['cityLon'] = $city->LONGITUDE;
+				$query['cityLat'] = $city->LATITUDE;
+				$query['cityLon'] = $city->LONGITUDE;
 			}			
 		}
-		else unset($params['extend']); //unset extend for the model
 
 		//
-		$params['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed';
+		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed';
 
 
 		//initialize variable for days loop
-		$numDaysPerWeek = 7; //number of days showed
 		//first day of the week
 		// if not set , find the cookie date , else set the current date
-		$firstday = (isset($day))? $day : $this->cookieEventSearch->read('date');
+		$firstday = $day;
 		//loop init
 		$weekday = $firstday;		
 		$events = array();
@@ -136,7 +152,7 @@ class EventsController extends Controller{
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
 		$gmap = new GoogleMapAPI();
 		$gmap->setDivId('eventmap');
-		$gmap->setSize('300px','250px');
+		$gmap->setSize('100%','250px');
 		$gmap->setLang('fr');
 		$gmap->setEnableWindowZoom(true);
 		$fullAddress = $event->address.' , '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
@@ -340,12 +356,12 @@ class EventsController extends Controller{
 		$this->loadModel('Worlds');
 
 		//if user is logged
-		if(!$this->session->user()->isLog()) {
+		// if(!$this->session->user()->isLog()) {
 
-			$this->session->setFlash("Vous devez vous connecter pour proposer un sport !","info");
-			$this->redirect('users/login');
-			exit();
-		}
+		// 	$this->session->setFlash("Vous devez vous connecter pour proposer un sport !","info");
+		// 	$this->redirect('users/login');
+		// 	exit();
+		// }
 
 		
 		//if an event is specifyed

@@ -97,4 +97,60 @@
  	// 	return $array[$this->session->getLang()][$num - 1];
 
  	// }
- } ?>
+
+	 	/**
+	 * Checks date if matches given format and validity of the date.
+	 * Examples:
+	 * <code>
+	 * is_date('22.22.2222', 'mm.dd.yyyy'); // returns false
+	 * is_date('11/30/2008', 'mm/dd/yyyy'); // returns true
+	 * is_date('30-01-2008', 'dd-mm-yyyy'); // returns true
+	 * is_date('2008 01 30', 'yyyy mm dd'); // returns true
+	 * </code>
+	 * @param string $value the variable being evaluated.
+	 * @param string $format Format of the date. Any combination of <i>mm<i>, <i>dd<i>, <i>yyyy<i>
+	 * with single character separator between.
+	 */
+	public static function is_valid_date($value, $format = 'dd.mm.yyyy'){
+	    if(strlen($value) >= 6 && strlen($format) == 10){
+	       
+	        // find separator. Remove all other characters from $format
+	        $separator_only = str_replace(array('m','d','y'),'', $format);
+	        $separator = $separator_only[0]; // separator is first character
+	       
+	        if($separator && strlen($separator_only) == 2){
+	            // make regex
+	            $regexp = str_replace($separator, "\\" . $separator, $format);
+	            $regexp = str_replace('mm', '(0?[1-9]|1[0-2])', $regexp);
+	            $regexp = str_replace('dd', '(0?[1-9]|[1-2][0-9]|3[0-1])', $regexp);
+	            $regexp = str_replace('yyyy', '(19|20)?[0-9][0-9]', $regexp);
+
+	            if($regexp != $value && preg_match('/'.$regexp.'\z/', $value)){
+
+	                return true;
+	            }
+	        }
+	    }	    
+	    return false;
+	} 
+
+	/**
+	 * 
+	 */
+	public static function dateDiff($start, $end) {
+
+		$start_ts = strtotime($start);
+		$end_ts = strtotime($end);
+		$diff = $end_ts - $start_ts;
+		return round($diff / 86400);
+	}
+
+	public static function dateStatus($date){
+
+		if($date==date('Y-m-d')) return 'now';
+		if(strtotime($date) > time())  return 'futur';
+		if(strtotime($date) < time())  return 'past';
+	}
+		
+ } 
+?>
