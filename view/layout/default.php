@@ -32,25 +32,25 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 			$menu = $this->request('pages','getMenu',array('top'));				
 
 			?>
-			<ul class="nav mobileMenu">				
+			<ul class="nav mobileMenu">								
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<?php foreach($menu as $page): ?>
 							<li><a href="<?php echo Router::url($page->slug);?>" ><?php echo $page->title;?></a></li>
+							<li class="divider"></li>
 						<?php endforeach; ?>
 						<?php if($this->session->user()->isLog()):?>
 							<li><a href="<?php echo Router::url('users/account');?>">Mon Compte</a></li>
+							<li class="divider"></li>
 							<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
 						<?php else: ?>
-							<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
+							<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>
+							<li class="divider"></li>	
 							<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
 						<?php endif; ?>						
 					</ul>
 				</li>
-				<?php if($this->session->user()->isLog()): ?>
-				<li><img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar();?>"/></li>
-				<?php endif; ?>
 			</ul>
 
 			<ul class="nav desktopMenu">

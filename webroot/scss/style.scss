@@ -1,14 +1,16 @@
 @font-face {
-    font-family: 'Bubblegum';
-    src: url('fonts/Bubblegum/BubblegumSans-Regular-webfont.eot');
-    src: url('fonts/Bubblegum/BubblegumSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Bubblegum/BubblegumSans-Regular-webfont.woff') format('woff'),
-         url('fonts/Bubblegum/BubblegumSans-Regular-webfont.ttf') format('truetype'),
-         url('fonts/Bubblegum/BubblegumSans-Regular-webfont.svg#BubblegumSansRegular') format('svg');
+    font-family: 'Boogaloo';
+    src: url('fonts/Boogaloo/Boogaloo-Regular-webfont.eot');
+    src: url('fonts/Boogaloo/Boogaloo-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Boogaloo/Boogaloo-Regular-webfont.woff') format('woff'),
+         url('fonts/Boogaloo/Boogaloo-Regular-webfont.ttf') format('truetype'),
+         url('fonts/Boogaloo/Boogaloo-Regular-webfont.svg#Boogaloo') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
+
+
 
 @font-face {
     font-family: 'Alba';
@@ -16,7 +18,7 @@
     src: url('fonts/Alba/alba___-webfont.eot?#iefix') format('embedded-opentype'),
          url('fonts/Alba/alba___-webfont.woff') format('woff'),
          url('fonts/Alba/alba___-webfont.ttf') format('truetype'),
-         url('fonts/Alba/alba___-webfont.svg#albaregular') format('svg');
+         url('fonts/Alba/alba___-webfont.svg#Alba') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -109,13 +111,13 @@ body{
 
 .navbar {
 	background-color:$lightblue;
-	font-family: 'Bubblegum';
+	font-family: 'Boogaloo';
 	padding:0 5%;
 	@include box-shadow(0 10px 15px rgba(0,0,0,0.1));
 
 	.weSport, .nav li a {
 
-		@include rem(25);
+		@include rem(28);
 		color:$deepblue;
 		line-height: 150%;
 		padding:0 30px;
@@ -163,10 +165,22 @@ body{
 		}
 		li{
 			ul{
-				li a{ 
-					@include rem(22);
+				li {
+					text-align: center;
+					a{ 
+						@include rem(26);
+						margin:0;
+						padding:10px 0;
 
+						&:hover{
+							color:#FFF;
+						}
+					}					
 				}
+				li.divider{
+					margin:0;
+					border-bottom:1px solid #DDD;
+				}				
 			}		
 		}
 
@@ -813,8 +827,9 @@ h1.title-sheet {
 		h1{
 			margin-top:0px;
 			margin-bottom: 0;
-			font-family: 'Bubblegum',Helvetica,Arial;
+			font-family: 'Boogaloo',Helvetica,Arial;
 			color:$deepblue;
+			font-weight: normal;
 			@include rem(35);
 
 		}
@@ -838,8 +853,9 @@ h1.title-sheet {
 				color:#AAA;
 			}
 			span.orga-name{
-				font-weight: bold;
-				@include rem(16);
+				font-weight: normal;
+				font-family: 'Boogaloo';
+				@include rem(22);
 				text-transform: capitalize;
 				a {color:$deepblue;}
 			}
@@ -1156,9 +1172,11 @@ div.col_small{
 			h1{
 				margin:0;
 				padding:0;
-				@include rem(35);
+				@include rem(40);
 				color:$deepblue;
 				text-transform: capitalize;
+				font-family: 'Boogaloo';
+				font-weight: normal;
 			}
 			span {
 				@include rem(12);
@@ -1570,7 +1588,48 @@ TYPEAHEAD CUSTOM STYLE
 			}
 		}
 	}
+	
 
+	.viewuser{
+		.container{
+			width:100%;
+			.user-header{
+				.user-avatar{
+					width: 100px;
+				}
+				.user-login{
+					h1{
+						@include rem(20);
+						margin-bottom:0;
+					}
+					span{
+						@include rem(10);
+					}
+				}
+			}
+			.user-status{
+				.count_activity{
+					float:left;	
+					width:auto;	
+					margin-right:10px;			
+				}
+				.which_activity{
+					float:left;
+					width:auto;
+				}
+			}
+			.col_large{
+				width:100%;	
+				margin-top:20px;
+				padding:0 2%;		
+			}
+			.col_small{
+				width: 100%;
+				margin-top:20px;
+				padding:0 2%;
+			}
+		}
+	}
 	.footer {
 		.container{
 			width:100%;
@@ -1657,7 +1716,7 @@ TYPEAHEAD CUSTOM STYLE
 	}
 	.viewevent{
 		.container{
-			width:90%;
+			width:94%;
 			margin:0 3%;
 			.event-header{
 				.event-orga{
@@ -1708,6 +1767,22 @@ TYPEAHEAD CUSTOM STYLE
 		}
 	}
 
+	.viewuser{
+		.container{
+			width: 94%;
+			padding:0 3%;
+
+		}
+
+		.col_large{
+			width: 100%;
+			padding:20px 10%;
+		}
+		.col_small{
+			width: 100%;
+			padding:20px 10%;
+		}
+	}
 
 	.footer {
   	.container{

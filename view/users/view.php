@@ -123,7 +123,7 @@
 					</div>
 				</div>
 			</section>
-		<div class="clearfix"></div>
 		</div>
+		<div class="fresque"></div>
 	</div>
 </div>
