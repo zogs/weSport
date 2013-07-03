@@ -60,9 +60,11 @@
 
 		<div class="calendar">
 			<div class="calendar-header">
+				<div class="calendar-loader" id="calendar-loader"><span class="text">Chargement ...</span></div>
 				<div class="fresque"></div>
 				<a style="display:none" class="with-ajax calendar-nav calendar-nav-now fleft" href="<?php echo Router::url('events/calendar/now');?>"><span>Now</span></a>
 			</div>
+
 			<table class="calendar-nav">
 				<tr>
 					<td class="colomn-nav colomn-prev">					
@@ -71,7 +73,12 @@
 						</a>
 					</td>
 
-					<td class="calendar-content" id="calendar-content" data-url-calendar="<?php echo Router::url('events/calendar/');?>">
+					<td class="calendar-content"
+						 id="calendar-content" 
+						 data-url-calendar="<?php echo Router::url('events/calendar/');?>"
+						  data-url-calendar-prev="<?php echo Router::url('events/calendar/prev');?>"
+						  data-url-calendar-next="<?php echo Router::url('events/calendar/next');?>"
+						  data-url-calendar-now="<?php echo Router::url('events/calendar/now');?>">
 					</td>
 				
 					<td class="colomn-nav colomn-next">		
@@ -129,24 +136,15 @@ $(document).ready(function(){
 
 	callCurrentWeek();
 
-
-	$('.events-avatar').tooltip({placement:'bottom'});
-
-	$('.events-bb').livequery(function(){
-
-		$(this).click(function(){ location.href=$(this).find('a.events-link').attr('href'); });
-	});
-
-
 	function slideCalendar(direction,width){
 
 		duration = 500;
 
-		if(direction == 'next') {
+		if(direction == 'right') {
 			contentPosition = width;
 			contentSliding = '-='+width;
 		}
-		if(direction == 'prev') {
+		if(direction == 'left') {
 			contentPosition = -width;
 			contentSliding = '+='+width;
 		}
@@ -189,11 +187,11 @@ $(document).ready(function(){
 		else $('.calendar-nav-prev').show();
 	}
 
-	function callWeek(url,form,direction){
+	function callWeek(url,direction){
 
+		$('#calendar-loader > .text').show();		
 		var screenWidth = $(window).width();
-
-
+		var form = $('#formSearch').serialize();
 		form += '&dayperweek='+findNumberDayPerWeek();
 
 		$.ajax({
@@ -209,33 +207,41 @@ $(document).ready(function(){
 				slideCalendar(direction,screenWidth);	  				
 				
 				checkCurrentWeek();
+
+				$('#calendar-loader > .text').hide();
 			},
 			dataType:'html'
-		});
+		});		
+
 		return false;
 	}
-	function callNextWeek(url,form){
-		callWeek(url,form,'next');
+	function callNextWeek(){
+		var url = $('#calendar-content').attr('data-url-calendar-next');
+		var direction = 'right';
+		callWeek(url,direction);
 	}
 
-	function callPreviousWeek(url,form){
-		callWeek(url,form,'prev');
+	function callPreviousWeek(){
+		var url = $('#calendar-content').attr('data-url-calendar-prev');
+		var direction = 'left';
+		callWeek(url,direction);
 	}
 
 	function callCurrentWeek(direction){
-		callWeek($('#calendar-content').attr('data-url-calendar')+'now',$('#formSearch').serialize(),direction);
+		var url = $('#calendar-content').attr('data-url-calendar-now');
+		callWeek(url,direction);
 	}
 
 	$('.calendar-nav-prev').livequery(function(){
 		$(this).click(function(){
-			callPreviousWeek($(this).attr('href'),$('#formSearch').serialize());
+			callPreviousWeek();
 			return false;
 		});
 	});
 
 	$('.calendar-nav-next').livequery(function(){
 		$(this).click(function(){
-			callNextWeek($(this).attr('href'),$('#formSearch').serialize());
+			callNextWeek();
 			return false;
 		});
 	});
@@ -246,6 +252,17 @@ $(document).ready(function(){
 			return false;
 		});
 	});
+
+	/* detect mobile swipe event */
+	$('#calendar-content').swipe({
+		swipeLeft:function(event,direction,distance,duration,fingerCount){
+			callNextWeek();
+		},
+		swipeRight:function(event,direction,distance,duration,fingerCount){
+			callPreviousWeek();
+		}
+	});
+
 
 
 });

@@ -7,7 +7,7 @@ class PagesController extends Controller {
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
-			$this->loadJS = 'js/jquery/jquery.autocomplete.js';
+			$this->loadJS = 'js/jquery/jquery.touchSwipe.min.js';
 			$this->view = 'pages/home';
 			
 			//date
