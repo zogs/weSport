@@ -292,8 +292,8 @@ class EventsModel extends Model{
 			$sql .= ' '.$end;
 		}
 
-		  debug($sql);
-		  debug($values);
+		  // debug($sql);
+		  // debug($values);
 		$results = $this->query($sql,$values);
 
 		$events = array();
