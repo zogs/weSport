@@ -429,9 +429,7 @@ body{
 
 	.sportSelect {
 		
-		position:absolute;
-		top:0;
-		right:80%;
+		width:100%;
 		label{
 			text-align:center;
 			color:$darkblue;
@@ -484,9 +482,10 @@ body{
 		.colomn-prev{
 			background-color: $deepred;
 			a.calendar-nav-prev{
+				width: 100%;
 				float:right;
 				img{
-					
+					width:100%;
 				}
 			}			
 		}
@@ -494,9 +493,10 @@ body{
 			background-color: $deepgreen;
 			a.calendar-nav-next{
 				float:left;
+				width: 100%;
 				margin-left:-2px;
 				img{
-
+					width: 100%;
 				}
 			}
 		}
@@ -1460,6 +1460,7 @@ TYPEAHEAD CUSTOM STYLE
   		margin:0;
   		padding:20px 10px;
   		@include border-radius(50px);
+  		@include box-shadow(0 0 0 #000);
 
   		.cityInputs{
   			padding:0;
