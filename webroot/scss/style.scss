@@ -316,6 +316,7 @@ body{
 
 		.cityInputs {
 
+			position:relative;
 			float:left;
 			width:80%;
 			margin:0;
@@ -1683,6 +1684,7 @@ TYPEAHEAD CUSTOM STYLE
 		margin:40px 0 0 0;
 		.cityRounded{
 			width:80%;
+			margin:0 10%;
 
 		}
 		.sportCheckboxs{
@@ -1836,6 +1838,10 @@ TYPEAHEAD CUSTOM STYLE
    }
    #formSearch{
    		width:100%;
+   		.cityRounded{
+   			width:70%;
+   			margin:0 15%;
+   		}
 		.sportCheckboxs{
 			.sportChoice{
 				label span { @include rem(20);}
