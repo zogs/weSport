@@ -2,7 +2,7 @@
 	<div class="row-fluid">
 		<div class="flash"><?php echo $this->session->flash() ;?></div>
 		
-		<form id="formSearch" method="GET" action="<?php echo Router::url('date/'.$params['date']);?>" >
+		<form id="formSearch" method="GET" action="<?php echo Router::url('home/'.$params['date']);?>" >
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
 			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
 
@@ -36,7 +36,7 @@
 				<div class="clearfix"></div>
 			</div>
 
-			<div class="sportCheckboxs">
+			<div class="sportCheckboxs" id="sportCheckboxs">
 				<?php 					
 					$sports_selected = $this->cookieEventSearch->read('sports');									
 					foreach ($sports_available as $sport):?>
@@ -75,12 +75,14 @@
 						</a>
 					</td>
 
-					<td class="calendar-content"
-						 id="calendar-content" 
-						 data-url-calendar="<?php echo Router::url('events/calendar/');?>"
-						  data-url-calendar-prev="<?php echo Router::url('events/calendar/prev');?>"
-						  data-url-calendar-next="<?php echo Router::url('events/calendar/next');?>"
-						  data-url-calendar-now="<?php echo Router::url('events/calendar/now');?>">
+					<td>
+						<div class="calendar-content"
+							 id="calendar-content" 
+							 data-url-calendar="<?php echo Router::url('events/calendar/');?>"
+							  data-url-calendar-prev="<?php echo Router::url('events/calendar/prev');?>"
+							  data-url-calendar-next="<?php echo Router::url('events/calendar/next');?>"
+							  data-url-calendar-now="<?php echo Router::url('events/calendar/now');?>">
+						</div>
 					</td>
 				
 					<td class="colomn-nav colomn-next">		
@@ -102,6 +104,9 @@
 var current_date = '<?php echo date("Y-m-d");?>';
 
 $(document).ready(function(){
+
+
+	$('#sportCheckboxs').FlowSlider();
 
 	// $('.colomn-date a').click(function(e){
 		
@@ -170,7 +175,7 @@ $(document).ready(function(){
 	function setHeightCalendar(){
 
 		var heightCalendar = $("#calendar-content .events-week").last().height();
-		$("#calendar-content").css('height',heightCalendar);
+		$("#calendar-content").css('height',heightCalendar).css('min-height','1000px');
 	}
 
 	function findNumberDayPerWeek(){

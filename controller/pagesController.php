@@ -13,7 +13,7 @@ class PagesController extends Controller {
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
-			$this->loadJS = 'js/jquery/jquery.touchSwipe.min.js';
+			$this->loadJS = array('js/jquery/jquery.touchSwipe.min.js','js/jquery/jquery.flowslider.js');
 			$this->view = 'pages/home';
 			
 			//date

@@ -10,7 +10,7 @@ class Routes {
 		Router::prefix(Conf::$adminPrefix,'admin');
 
 		//Connect
-		Router::connect('home','pages/home');
+		Router::connect('home/*','pages/home');
 		Router::connect('','pages/home'); //Racine du site ( à laisser en premiere regle !)
 		Router::connect('cockpit','cockpit/pages/index');
 		Router::connect('blog/*','pages/blog');
