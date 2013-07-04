@@ -94,9 +94,9 @@ class EventsController extends Controller{
 		for($i=1; $i<= $numDaysPerWeek; $i++){
  
 			//set date param
-			$params['date'] = array('day'=> $weekday) ;
+			$query['date'] = array('day'=> $weekday) ;
 			//find events in db
-			$dayevents = $this->Events->findEvents($params);			
+			$dayevents = $this->Events->findEvents($query);			
 			$dayevents = $this->Events->joinSports($dayevents);	
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
