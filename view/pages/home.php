@@ -43,7 +43,7 @@
 						<div class="sportChoice">
 							<input type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
 							<label for="label-<?php echo $sport->slug;?>" class="tooltiptop" data-toggle="tooltip" title="<?php echo $sport->name;?>">
-								<span class="ws-icon-small ws-icon-<?php echo $sport->slug;?>"></span>
+								<span class="ws-icon ws-icon-<?php echo $sport->slug;?>"></span>
 							</label>
 						</div>						
 				 	<?php endforeach; ?>					
@@ -107,6 +107,19 @@ $(document).ready(function(){
 
 
 	$('#sportCheckboxs').FlowSlider();
+	$('#sportCheckboxs').css('overflow','visible');
+
+	// On mouse over change widht of the items
+	
+	$(".www_FlowSlider_com-item").each(function(_, item) {
+		var $item = $(item).children('.ws-icon-small');
+		$item.mouseenter(function() {
+		$item.stop().animate({'margin': 300}, 150);
+		});
+		$item.mouseleave(function() {
+		$item.stop().animate({'margin': 150}, 150);
+		});
+	}); 
 
 	// $('.colomn-date a').click(function(e){
 		

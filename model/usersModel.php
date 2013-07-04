@@ -97,6 +97,9 @@ class UsersModel extends Model{
 				'message' => "Vos mots de passe ne sont pas identiques"
 				)
 		),
+		'account_mailing'=>array(
+
+		),
 		'account_delete' => array(
 			'password' => array(
 				'rule' => 'notEmpty',
@@ -149,6 +152,25 @@ class UsersModel extends Model{
 		else
 			return false;
 
+	}
+
+	public function saveUserSettingsMailing($user_id,$settings){
+
+		$settings_exist = $this->findFirst(array('table'=>'users_settings_mailing','fields'=>'id','conditions'=>array('user_id'=>$user_id)));
+
+		$settings = (object) $settings;
+		$settings->table = 'users_settings_mailing';
+		$settings->key = 'id';
+		$settings->user_id = $user_id;
+		if(!empty($settings_exist)){
+			$settings->id = $settings_exist->id;
+		}
+
+
+		if($this->save($settings))
+			return true;
+		else
+			return false;
 	}
 
 	public function saveUserStatistics($user_id,$array = array()){

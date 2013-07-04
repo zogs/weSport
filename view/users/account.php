@@ -54,7 +54,7 @@
 		
 		<div class="col_large">
 			<div class="module module-rounded account-form">
-				<form class="form form-ws" id="account-form" autocomplete="off" action="<?php echo Router::url('users/account/'.$action); ?>" method="post" enctype="multipart/form-data">
+				<form class="form form-ws <?php echo 'form-'.$action;?>" id="account-form" autocomplete="off" action="<?php echo Router::url('users/account/'.$action); ?>" method="post" enctype="multipart/form-data">
 					<?php echo $this->Form->_input('action','hidden',array('value'=>$action)); ?>
 					<?php echo $this->Form->_input('token','hidden',array('value'=>$this->session->token())) ;?>
 					<?php echo $this->Form->_input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
@@ -156,13 +156,16 @@
 					
 						</div>
 
-
-						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand l'activité est confirmé"),array('default'=>1)) ;?>
-						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand l'activité est annulé"),array('default'=>1)) ;?>
-						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand quelqu'un pose une question"),array('default'=>1)) ;?>
-						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand l'organisateur répond à votre question"),array('default'=>1)) ;?>
-						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand il y a un nouvel inscript à l'activité"),array('default'=>1)) ;?>
-						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail aprés l'événement pour donner votre avis"),array('default'=>1)) ;?>
+						<p><strong>Les sports où je participe</strong></p>
+						<?php echo $this->Form->checkbox('eventConfirmed','NULL',array(1=>"Recevoir un mail quand l'activité est confirmé"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventCanceled','NULL',array(1=>"Recevoir un mail quand l'activité est annulé"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventChanged','NULL',array(1=>"Recevoir un mail quand l'organisateur change l'événement"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventOpinion','NULL',array(1=>"Recevoir un mail aprés l'événement pour donner votre avis"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventOrgaReply','NULL',array(1=>"Recevoir un mail quand l'organisateur répond à votre question"),array('default'=>1)) ;?>
+						
+						<p><strong>Les sports que j'organise</strong></p>
+						<?php echo $this->Form->checkbox('eventUserQuestion','NULL',array(1=>"Recevoir un mail quand quelqu'un pose une question"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventNewParticipant','NULL',array(1=>"Recevoir un mail quand il y a un nouvel inscript à l'activité"),array('default'=>1)) ;?>
 						<input class="btn btn-large btn-inverse" type="submit" value="Sauvegarder" />	
 						
 					<?php endif ;?>

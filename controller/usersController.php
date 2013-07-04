@@ -582,6 +582,37 @@ class UsersController extends Controller{
 	    		}
 
 	    		/*====================
+					MODIFY MAILING SETTINGS
+	    		=====================*/
+	    		if($this->request->post('action') == 'mailing')
+	    		{
+	    			
+	    			if($data = $this->Users->validates($data,'account_mailing')){
+
+	    				$settings_available = array('eventConfirmed',
+	    									'eventCanceled',
+	    									'eventOpinion',
+	    									'eventChanged',
+	    									'eventUserQuestion',
+	    									'eventOrgaReply',
+	    									'eventNewParticipant');
+
+	    				$settings = array();
+	    				foreach ($data as $key => $value) {
+	    						
+	    						if(in_array($key, $settings_available))
+	    							$settings[$key] = $value;
+	    				}
+
+						if($this->Users->saveUserSettingsMailing($data->user_id,$settings)){
+							$this->session->setFlash('Les paramêtres ont été sauvegardés');
+						}
+		    		}
+		    		else 
+		    			$this->session->setFlash('Veuillez revoir vos données','error');
+	    		}
+
+	    		/*====================
 					MODIFY DELETE
 	    		=====================*/
 	    		if($this->request->post('action') == 'delete'){

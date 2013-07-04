@@ -310,7 +310,7 @@ body{
 		margin:0 25%;
 		padding:10px 15px 10px 40px;
 		background-color:$darkblue;
-		@include border-radius(100px);
+		@include border-radius(200px);
 		@include box-shadow(0 0 0 20px lighten($deepblue,3%));
 		border:1px solid #FFF;		
 
@@ -320,22 +320,21 @@ body{
 			float:left;
 			width:80%;
 			margin:0;
+			margin-top:5px;
 			padding:0 30px;
 
-			.containerExtend { 
-				float:left; 
+			.containerExtend {				
+				position:absolute;
+				top:50%;
+				left:80%;				
 				width:20%; 
-				overflow:hidden;
-				vertical-align: middle;
-				display: table-cell;
-
-				input { width:100%;}
-				#extend { height: 100%; margin-top:25px; width: 150%; @include rem(18); font-family:'Alba'; color:#FFF; line-height: 100%; border:0; vertical-align:middle;  background:transparent; -webkit-appearance: none; -moz-appearance: window; }
+				overflow:hidden;				
+				#extend { height: 100%; width: 150%; @include rem(18); font-family:'Alba'; color:#FFF; line-height: 100%; border:0; vertical-align:middle;  background:transparent; -webkit-appearance: none; -moz-appearance: window; }
 				#extend option { background-color:$darkblue; @include rem(14); padding:10px; font-weight: bold;}
 			}
 			.containerCityName { 
 				float:left; width:80%;
-				#cityName { width:100%; height:auto; margin:0; padding:0; @include rem(45); line-height:100%; border:0; background-color:transparent; }
+				#cityName { width:100%; height:60px; margin:0; padding:0; @include rem(45); line-height:100%; border:0; background-color:transparent; }
 				.twitter-typeahead {width:100%;}
 				.twitter-typeahead > input { height: 100%; width:100%;}
 				.twitter-typeahead > input { @include rem(45); background:transparent; font-family:'Alba',Helvetica,Arial,sans-serif; outline:0; }
@@ -348,7 +347,6 @@ body{
 			float:left;			
 			width:74%;
 			margin:0 3%;
-			margin-top:-10px;
 			padding-top:5px;
 			color:#FFF;					
 			border-top:2px solid #FFF;
@@ -379,7 +377,7 @@ body{
 
 	.sportCheckboxs {
 		width:100%;
-		margin:40px 0 20px 0;
+		margin:40px 0 10px 0;
 		@extend %clearfix;
 
 		.sportChoice {
@@ -398,28 +396,42 @@ body{
 				position:relative; 
 				left:0; 
 				top:0; 
+				margin-top:0;				
 				background-color: #FFF; 
 				border:10px solid #FFF; 
-				@include border-radius(30px);
-				@include transition(0.2s ease);
+				@include border-radius(100px);
+				@include transition(0.3s ease);
 			}
 			label span {
 				@include rem(35); 
 				margin:2px;
+				@include transition(0.3s ease);
 			}
 
 			label:hover {
+				margin-top:-15%;
 				border-color:$lightblue;
 				@include rotate(360deg);
+				span.ws-icon{
+					@include rem(60);
+				}
 			}
 			input:checked ~ label {
+				margin-top:-15%;
 				border-color:$darkblue;
+				@include rotate(360deg);
+				span.ws-icon{
+					@include rem(60);
+				}
 			}
 		}
 	}
 
 	.sportSelect {
-		display:none;
+		
+		position:absolute;
+		top:0;
+		right:80%;
 		label{
 			text-align:center;
 			color:$darkblue;
@@ -1294,7 +1306,10 @@ div.col_small{
 			label.checkbox{
 				width:auto;
 				float:none;
-			}
+			}			
+		}
+		#account-form.form-mailing{
+			.controls{ width:100%;}
 		}	
 	}
 	
@@ -1448,11 +1463,12 @@ TYPEAHEAD CUSTOM STYLE
 
   		.cityInputs{
   			padding:0;
-  			width:70%;
+  			width:67%;
   			.containerCityName{
-  				margin-top:10px;
+  				
   				width:75%; 	
   				#cityName{ 
+  					height:40px;
   					padding-left:15px;				
   					@include rem(28);
   				}
@@ -1462,15 +1478,15 @@ TYPEAHEAD CUSTOM STYLE
   			}
   			.containerExtend{
   				width:25%;
+  				top:30%;
   			}
   		}
   		.citySubmit{
-			width:30%;
-  			.ws-icon-loupe { @include rem(20);}
+			
+  			.ws-icon-loupe { @include rem(30);}
   		}
   		.cityAriane{
-  			width:65%;
-  			margin-top:-25px;
+  			width:65%;  			
   			@include rem(10);
   		}
   	}	
@@ -1652,6 +1668,29 @@ TYPEAHEAD CUSTOM STYLE
 			}
 		}
 	}
+
+	#account{
+		.container{
+			width:100%;
+			.col_small{
+				width:100%;
+				padding:10px 5px;
+			}
+			.col_large{
+				width: 100%;
+				padding:0 5px;
+				#account-form{
+					h2{
+						text-align: center;
+						@include rem(25);
+					}
+					padding:0 5px;
+					margin-top:0;
+				}
+			}
+		}
+
+	}
 	.footer {
 		.container{
 			width:100%;
@@ -1668,6 +1707,34 @@ TYPEAHEAD CUSTOM STYLE
 		}
 	}
 } 
+/* very small smartphone */
+@media only screen and (max-width : 240px) { 
+	#formSearch{
+		.cityRounded{
+			padding-right:0;
+			padding-left:0;
+			.cityInputs{
+				.containerCityName{
+					#cityName{
+						width:100%;
+						height:40px;
+	  					padding-left:10px;				
+	  					@include rem(25);
+					}					
+				}	
+				.containerExtend{
+					display: none;
+				}			
+			}
+			.citySubmit{
+				.ws-icon-loupe { @include rem(20);}
+			}
+			.cityAriane{
+				width:60%;
+			}
+		}
+	}
+}
 
 
 /* Smartphones landscape and Tablets portrait */  
@@ -1689,7 +1756,8 @@ TYPEAHEAD CUSTOM STYLE
 		}
 		.sportCheckboxs{
 			.sportChoice{
-				label span { @include rem(20);}
+				label span { @include rem(25);}
+				label span { @include rem(35);}
 			}
 		}
 	}
@@ -1807,6 +1875,21 @@ TYPEAHEAD CUSTOM STYLE
 		}
 	}
 
+	#account{
+		.container{
+			width:94%;
+			margin:0 3%;
+			.col_small{
+				width:100%;
+				padding:20px 15%;
+			}
+			.col_large{
+				width:100%;
+				padding:0 5%;
+			}
+		}
+	}
+
 	.footer {
   	.container{
   		width:100%;
@@ -1844,7 +1927,7 @@ TYPEAHEAD CUSTOM STYLE
    		}
 		.sportCheckboxs{
 			.sportChoice{
-				label span { @include rem(20);}
+				label span { @include rem(30);}
 			}
 		}
    }

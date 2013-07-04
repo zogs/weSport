@@ -95,9 +95,9 @@ $(document).ready(function(){
 
 		$(this).tooltip( { delay: { show: 500, hide: 100 }} );
 	});
-	$('.bubble-bottom').livequery(function(){
+	$('.tooltipbottom').livequery(function(){
 
-		$(this).tooltip( { placement : 'bottom', delay: { show: 2000, hide: 100 }} );
+		$(this).tooltip( { placement : 'bottom', delay: { show: 500, hide: 100 }} );
 	});
 	
 

@@ -37,7 +37,11 @@ class Form{
 
 		//Bootstrap html
 		$html = '<div class="control-group '.$classError.'" id="control-'.$id.'">';
-		$html .= '<label class="control-label">'.$label.'</label>';
+
+		//add label if different of NULL
+		if($label!='NULL')
+			$html .= '<label class="control-label">'.$label.'</label>';			
+		
 		$html .= '<div class="controls">';
 
 		//Icon
@@ -355,7 +359,7 @@ class Form{
 
 		(isset($params['class']))? $class = "class='".$params['class']."'" : $class = '' ;
 		(isset($params['default']))? $default = $params['default'] : $default = '';
-		(isset($arams['javascript']))? $javascript = $params['javascript'] : $javascript = '';
+		(isset($params['javascript']))? $javascript = $params['javascript'] : $javascript = '';
 
 		if(is_object($options)) $options = (array) $options;
 		
@@ -384,6 +388,7 @@ class Form{
 				}
 				
 				(isset($params['openwrap']))? $html .= $params['openwrap'] : $html .= '';
+				$html .= '<input type="hidden" name="'.$id.'" value="0">';
 				$html .= '<input type="checkbox" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" '.$checked.' '.$javascript.'>';
 				$html .= '<label class="checkbox" for="'.$value.'">'.$name.'</label>';
 				(isset($params['closewrap']))? $html .= $params['closewrap'] : $html .= '';

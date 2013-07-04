@@ -570,7 +570,7 @@ class EventsController extends Controller{
 	}
 
 
-	private function findEmailsParticipants($event,$withAuthor=false){
+	private function findEmailsParticipants($event,$mailingSetting=false,$withAuthor=false){
 
 		$emails = array();
 
@@ -587,6 +587,12 @@ class EventsController extends Controller{
 			
 			if($withAuthor===false && $user->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
 			
+			if($mailingSetting){
+				$setting = $this->Users->findFirst(array('table'=>'users_settings_mailing','fields'=>$mailingSetting,'conditions'=>array('user_id'=>$sporter->user_id)));
+				if(!empty($settings) && $setting->$mailingSetting != 1) continue; 				
+			}
+
+
 			if($user->exist()) $emails[] = $user->email;
 		}
 		
@@ -600,7 +606,7 @@ class EventsController extends Controller{
     	$subject = "L'activité à laquelle vous participez a été supprimée - ".Conf::$website;
 
     	//get emails participants
-    	$emails = $this->findEmailsParticipants($event);        	        
+    	$emails = $this->findEmailsParticipants($event,'eventCanceled');        	        
 
         //Récupère le template
         $body = file_get_contents('../view/email/eventDeleted.html');
@@ -626,7 +632,7 @@ class EventsController extends Controller{
     	$subject = "L'activité à laquelle vous participez a été modifiée - ".Conf::$website;    
 
     	//get emails participatns
-    	$emails = $this->findEmailsParticipants($event);
+    	$emails = $this->findEmailsParticipants($event,'eventChanged');
 
         //Récupère le template 
         $body = file_get_contents('../view/email/eventChanges.html');
@@ -674,6 +680,11 @@ class EventsController extends Controller{
     	$event = $this->Events->findEventById($event_id);
     	$email = $event->author->email;
 
+    	//user mailing setting
+    	$setting = $this->Events->findFirst(array('table'=>'users_settings_mailing','fields'=>'eventUserQuestion','conditions'=>array('user_id'=>$event->author->user_id)));
+    	if(!empty($setting) && $setting->eventUserQuestion==0) return false;
+
+
     	$com = $this->Comments->getComment($comment_id);
     	$content = $com->content;
 
@@ -700,6 +711,7 @@ class EventsController extends Controller{
 
     public function sendMailNewReply($comment_id,$reply_id){
 
+
     	if(!is_numeric($reply_id)) throw new zException("Error Processing Request", 1);
     	if(!is_numeric($comment_id)) throw new zException("Error Processing Request", 1);
     	
@@ -718,7 +730,11 @@ class EventsController extends Controller{
     	$event = $this->Events->findEventById($comment->context_id);
     	if(!$event->exist()) exit('event not exist');
 
-    	$email = $comment->user->email;    	
+    	$email = $comment->user->email; 
+
+    	//user mailing setting
+    	$setting = $this->Events->findFirst(array('table'=>'users_settings_mailing','fields'=>'eventOrgaReply','conditions'=>array('user_id'=>$comment->user->user_id)));
+    	if(!empty($setting) && $setting->eventOrgaReply==0) return false;   	
 
     	$content = $reply->content;
 
@@ -747,7 +763,7 @@ class EventsController extends Controller{
 
     	$subject = "L'activité ".$event->title." est confirmée !";
 
-    	$emails = $this->findEmailsParticipants($event,true);
+    	$emails = $this->findEmailsParticipants($event,'eventConfirmed',true);
 
     	$body = file_get_contents('../view/email/eventConfirmation.html');
 
@@ -770,7 +786,7 @@ class EventsController extends Controller{
 
     	$subject = "Un sportif s'est désisté, l'activité est suspendue...";
 
-    	$emails = $this->findEmailsParticipants($event,true);
+    	$emails = $this->findEmailsParticipants($event,'eventCanceled',true);
 
     	$body = file_get_contents('../view/email/eventAnnulation.html');
 
@@ -796,6 +812,10 @@ class EventsController extends Controller{
     	$this->loadModel('Users');
     	$author = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$event->user_id)));
     	$email = $author->email;
+
+    	//user mailing setting
+    	$setting = $this->Events->findFirst(array('table'=>'users_settings_mailing','fields'=>'eventNewParticipant','conditions'=>array('user_id'=>$author->user_id)));
+    	if(!empty($setting) && $setting->eventNewParticipant==0) return false;   
 
     	$body = file_get_contents('../view/email/eventNewParticipant.html');
 
@@ -848,7 +868,8 @@ class EventsController extends Controller{
     		if(!$sporter->event->exist()) continue;
     			
     		//jump out if the user dont want the mail
-    		if(empty($sporter->user->mailOpinion)) {
+    		$setting = $this->Users->findFirst(array('table'=>'users_settings_mailing','fields'=>'eventOpinion','conditions'=>array('user_id'=>$sporter->user->getID())));
+    		if(!empty($setting) && $setting->eventOpinion==0){
     			$nb_mail_silent++;
     			$this->Events->mailReminderSended($sporter->id); //set the mailing to done
     			continue;
