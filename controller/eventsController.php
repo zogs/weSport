@@ -80,13 +80,14 @@ class EventsController extends Controller{
 		//
 		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed';
 
-
+		//if some sport are selected
+		if(!empty($params['sports'])){
+			$query['sports'] = $params['sports'];
+		}
 		//initialize variable for days loop
 		//first day of the week
-		// if not set , find the cookie date , else set the current date
 		$firstday = $day;
-		//loop init
-		$weekday = $firstday;		
+		$weekday = $day;		
 		$events = array();
 		$dayevents = array();
 
