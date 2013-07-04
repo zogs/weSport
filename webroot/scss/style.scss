@@ -428,7 +428,7 @@ body{
 	}
 
 	.sportSelect {
-		
+		display: none;
 		width:100%;
 		label{
 			text-align:center;
@@ -1753,13 +1753,30 @@ TYPEAHEAD CUSTOM STYLE
 		.cityRounded{
 			width:80%;
 			margin:0 10%;
+			.cityInputs{
+				width: 70%;
+			}
+		.cityAriane{
+			width:69%;
+		}
 
 		}
 		.sportCheckboxs{
+			display: none;
 			.sportChoice{
 				label span { @include rem(25);}
 				label span { @include rem(35);}
 			}
+		}
+		.sportSelect{
+			display: block;
+			width:100%;
+			padding:0 30%;
+			margin-top:30px;
+			label.control-label {
+				@include rem(14);
+			}
+
 		}
 	}
 	
