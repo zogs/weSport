@@ -115,30 +115,39 @@ body{
 	padding:0 5%;
 	@include box-shadow(0 10px 15px rgba(0,0,0,0.1));
 
-	.weSport, .nav li a {
+	.weSport, 
+	.nav {
+		li {
+			a {
+			@include rem(28);
+			color:$deepblue;
+			line-height: 150%;
+			padding:0 30px;
+			margin:5px 0;
+			@include text-shadow(0 0 0 #fff);
+			}
 
-		@include rem(28);
-		color:$deepblue;
-		line-height: 150%;
-		padding:0 30px;
-		margin:5px 0;
-		@include text-shadow(0 0 0 #fff);	
+			a.currentPage, a.currentPage:link, a.currentPage:hover, a.currentPage:visited, a.currentPage:active {
+			background:$darkblue;
+			color:$lightblue;
+			@include border-radius(5px);			
+			}
+		}
+
 	}
 
 	.weSport{
 		float:left;
 		color:$darkblue;
-		margin-right:50px;
+		margin:5px 50px 0 0;
+		@include rem(28);
+		padding:0 30px;
+		line-height: 150%;
 		i{font-style: normal; color:#0d83af}
 		img{width:30px;}
 	}
 
-	a.currentPage, a.currentPage:link, a.currentPage:hover, a.currentPage:visited, a.currentPage:active {
-		background:$darkblue;
-		color:$lightblue;
-		@include border-radius(5px);
-		
-	}
+	
 
 	.nav.pull-right { 
 		
@@ -1381,7 +1390,7 @@ div.col_small{
 ======================
 TYPEAHEAD CUSTOM STYLE
 =====================*/
-.tt-dropdown-menu { width:100%; margin-top:10px; padding:8px 0; text-align: left; background-color: white; border:1px solid rgba(0,0,0,0.2); border-radius: 8px; box-shadow:0 5px 10px rgba(0,0,0,0.2);
+.tt-dropdown-menu { width:100%; padding:8px 0; text-align: left; background-color: white; border:1px solid rgba(0,0,0,0.2); border-radius: 8px; box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
 
 .tt-suggestion {  padding:8px 20px;}

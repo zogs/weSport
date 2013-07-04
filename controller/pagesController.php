@@ -2,8 +2,14 @@
 
 class PagesController extends Controller {
 
+		public function __construct($request = null){
 
-		public function accueil( $day = null ){					
+			parent::__construct($request);
+
+			if(isset($request)) $this->pagename = $request->action;
+		}
+
+		public function home( $day = null ){					
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
@@ -24,16 +30,23 @@ class PagesController extends Controller {
 				$this->cookieEventSearch->write($cookie);				
 			}
 
-			//si une requete est passée
+			//On utilise par default les données du cookie
+			$params['sports'] = $this->cookieEventSearch->read('sports');
+			$params['cityID'] = $this->cookieEventSearch->read('cityID');
+			$params['cityName'] = $this->cookieEventSearch->read('cityName');
+			$params['extend'] = $this->cookieEventSearch->read('extend');
+			$params['location'] = $this->cookieEventSearch->read('location');
+
+			//Ou on utilise les données de la requete
 			if($this->request->get()){
 				
 				//on recupere les parametres
-				foreach ($this->request->get() as $key => $value) {
-					
+				foreach ($this->request->get() as $key => $value) {					
 					$params[$key] = $value;
 				}	
+
 				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
-				if(!isset($params['cityID'])) {					
+				if(empty($params['cityID'])) {					
 					if(isset($params['cityName'])){
 						$cities = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$params['cityName'])); //on recupere les villes qui correspondent						
 						if(!empty($cities)){
@@ -41,27 +54,14 @@ class PagesController extends Controller {
 							$params['cityName'] = $cities[0]->name;
 						}
 					}
-				}
-				else {
-					$params['location'] = $this->Worlds->findCityById($params['cityID'],'CC1,ADM1,ADM2,ADM3,ADM4');
-					$params['location'] = $this->Worlds->findStatesNames($params['location']);
-					$params['location'] = (array) $params['location'];
-				}
+				}				
 			}
 
+			//On recupere le nom des regions
+			$params['location'] = $this->Worlds->findCityById($params['cityID'],'CC1,ADM1,ADM2,ADM3,ADM4');
+			$params['location'] = $this->Worlds->findStatesNames($params['location']);
+			$params['location'] = (array) $params['location'];
 
-			//Sinon on utilise les parametres du cookie
-			else {
-
-								
-				$params['sports'] = $this->cookieEventSearch->read('sports');
-				$params['cityID'] = $this->cookieEventSearch->read('cityID');
-				$params['cityName'] = $this->cookieEventSearch->read('cityName');
-				$params['extend'] = $this->cookieEventSearch->read('extend');
-				$params['location'] = $this->cookieEventSearch->read('location');
-
-			}
-		
 			//on réécrit le cookie avec les nouveaux parametres
 			$this->cookieEventSearch->write($params);		
 			
@@ -137,7 +137,7 @@ class PagesController extends Controller {
 			foreach ($pages as $k => $page) {				
 				if(!$page->isTraductionExist() || !$page->isTraductionValid() )  unset($pages[$k]);
 			}
-			
+
 			//return pages if exist
 			if(!empty($pages))
 				return  $pages;	

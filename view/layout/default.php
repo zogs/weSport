@@ -22,7 +22,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 
 
 	<div class="navbar navbar-fixed-top">
-	      		<a class="weSport" href="<?php echo Router::url('/');?>">
+	      		<a class="weSport" href="<?php echo Router::url('home');?>">
 	      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
 		      	  	<i>we</i>Sport
 			</a>
@@ -59,7 +59,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 					foreach ($menu as $page):
 				 ?>
 				 <li>
-				 	<a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage())? 'currentPage':'';?>"><?php echo $page->title;?></a>
+				 	<a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage($this))? 'currentPage':'';?>"><?php echo $page->title;?></a>
 				 </li>
 				<?php endforeach;
 

@@ -28,6 +28,8 @@
 						<?php if(!empty($location['ADM3'])) echo $location['ADM3'].', ';?>
 						<?php if(!empty($location['ADM4'])) echo $location['ADM4'].', ';?>
 						<?php if($this->cookieEventSearch->read('cityName')) echo $this->cookieEventSearch->read('cityName'); ?>
+					<?php else: ?>
+					<i>Taper une ville et sélectionner dans la liste déroulante</i>
 					<?php endif; ?>
 				</div>
 

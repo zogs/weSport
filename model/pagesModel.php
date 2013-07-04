@@ -268,11 +268,10 @@ class Page {
 		return false;
 	}
 
-	public function isCurrentPage(){			
-		$url = str_ireplace('/weSport/','',$_SERVER['REQUEST_URI']);
-		if(strpos($url,$this->slug)===0) return true;
-		if($this->slug=='/'&& $url=='/') return true;
-		if($this->slug=='/'&& $url=='') return true;
+	public function isCurrentPage($controller){
+		
+		if(isset($controller->request->action) && $controller->request->action==$this->slug) return true;
+		if(isset($controller->request->controller) && isset($controller->request->action) && $controller->request->controller.'/'.$controller->request->action==$this->slug) return true;		
 		return false;		
 	}
 }
