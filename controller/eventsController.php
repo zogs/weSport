@@ -880,11 +880,11 @@ class EventsController extends Controller{
 	        	$nb_mail_sended++;
 
 	        	//increment events particpants						
-				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->event->user_id,'field'=>'events_participants','number'=>$sporter->event->numParticipants));
-				//increment sporters encourter
-				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
-				//Set sport practiced for stat
-				$this->Events->setSportPracticed($sporter->user_id,$sporter->event->getSportSlug());
+		$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->event->user_id,'field'=>'events_participants','number'=>$sporter->event->numParticipants));
+		//increment sporters encourter
+		$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
+		//Set sport practiced for stat
+		$this->Events->setSportPracticed($sporter->user_id,$sporter->event->getSportSlug());
 
 	        }
 	        else $nb_mail_error++;

@@ -704,8 +704,15 @@ h1.title-sheet {
 		margin-bottom:10px;
 
 		label {color:#AAA}
-		label.control-label { float:left;  width:16%; color:$deepblue; @include rem(14); font-weight: bold; }		
-		.controls { float:left; width:70%; margin-left:auto; margin-right: auto;}
+		label.control-label { float:left;  width:16%; color:$deepblue; @include rem(14); font-weight: bold; }	
+		
+		.controls { 
+			float:left; 
+			width:70%; 
+			margin-left:auto; 
+			margin-right: auto;
+			label.checkbox { width:auto;}	
+		}
 		input[type=text],input[type=password],input[type=email],select { color:#888; padding-top:7px; padding-bottom:7px; line-height:100%; border:1px solid #CCCCCC; @include border-radius(4px); @include box-shadow(0 0 0 4px #E2E2E2);}
 		input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,select:focus{ @include box-shadow(0 0 0 3px $softred); }
 		
@@ -1281,6 +1288,10 @@ div.col_small{
 			padding-right:20px;
 			label {
 				width:20%;
+			}
+			label.checkbox{
+				width:auto;
+				float:none;
 			}
 		}	
 	}

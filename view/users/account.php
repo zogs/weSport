@@ -24,6 +24,7 @@
 										'profil'=>'Profil',
 										'avatar'=>'Avatar',									
 										'password'=>'Mot de passe',
+										'mailing'=>'Mailing',
 										'delete'=>'Suppression'
 									);
 						$icons = array(
@@ -31,6 +32,7 @@
 							'profil'=>'icon-star',
 							'avatar'=>'icon-picture',
 							'password'=>'icon-lock',
+							'mailing'=>'icon-envelope',
 							'delete'=>'icon-fire');
 
 						foreach ($links as $key => $value) {
@@ -145,6 +147,26 @@
 						<input class="btn btn-large btn-inverse" type="submit" value="Sauvegarder" />	
 						
 					<?php endif ;?>
+
+					<?php //=========MAILING============== ?>			
+					<?php if($action=='mailing'):?>
+
+						<div class="module-header">
+							<h2>Mailing</h2>
+					
+						</div>
+
+
+						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand l'activité est confirmé"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand l'activité est annulé"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand quelqu'un pose une question"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand l'organisateur répond à votre question"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail quand il y a un nouvel inscript à l'activité"),array('default'=>1)) ;?>
+						<?php echo $this->Form->checkbox('mail','',array(0=>"Recevoir un mail aprés l'événement pour donner votre avis"),array('default'=>1)) ;?>
+						<input class="btn btn-large btn-inverse" type="submit" value="Sauvegarder" />	
+						
+					<?php endif ;?>
+
 
 
 					<?php //=======DELETE================ ?>
