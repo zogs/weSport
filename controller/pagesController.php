@@ -45,6 +45,9 @@ class PagesController extends Controller {
 					$params[$key] = $value;
 				}	
 
+				//If sport not defined set sport to zero
+				if(!$this->request->get('sports')) $params['sports'] = '';
+
 				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
 				if(empty($params['cityID'])) {					
 					if(isset($params['cityName'])){
@@ -54,7 +57,12 @@ class PagesController extends Controller {
 							$params['cityName'] = $cities[0]->name;
 						}
 					}
-				}				
+				}
+
+				//if extend is not defined set it to zero
+				if(!$this->request->get('extend')) $params['extend'] = '';
+
+
 			}
 
 			//On recupere le nom des regions
