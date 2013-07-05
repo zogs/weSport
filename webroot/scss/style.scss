@@ -737,6 +737,7 @@ h1.title-sheet {
 		.select2-container .select2-focused:focus{ @include box-shadow(0 0 0 0px #000); }
 		.select2-container:focus .select2-choice { @include box-shadow(0 0 0 3px $softred);}
 		.select2-choice {height:auto; padding:5px 0 5px 10px; border:1px solid #CCC;}
+		.select2-choice span { display:inline; margin-right:0; text-transform: capitalize;}
 	}
 
 	.control-submit{ 

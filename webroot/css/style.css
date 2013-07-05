@@ -60,9 +60,9 @@ body {
   background-color: #a3caea;
   font-family: 'Boogaloo';
   padding: 0 5%;
-  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
 }
 /* line 121, ../scss/style.scss */
 .navbar .weSport li a,
@@ -265,7 +265,7 @@ body {
   -o-border-radius: 15px;
   border-radius: 15px;
   border-bottom: 5px solid #FFF;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0);
 }
 /* line 261, ../scss/style.scss */
 .alert p {
@@ -423,7 +423,7 @@ body {
   font-size: 45px;
   font-size: 4.5rem;
   color: #DDD;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0);
   margin-left: -6px;
   margin-bottom: 0;
 }
@@ -443,9 +443,9 @@ body {
   border: 12px solid #427b8b;
   border-radius: 100px;
   padding: 15px;
-  -webkit-transition: 0.2s ease;
-  -moz-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
+  -webkit-transition: 0s ease;
+  -moz-transition: 0s ease;
+  -o-transition: 0s ease;
   transition: 0.2s ease;
 }
 /* line 363, ../scss/style.scss */
@@ -495,9 +495,9 @@ body {
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
   border-radius: 100px;
-  -webkit-transition: 0.3s ease;
-  -moz-transition: 0.3s ease;
-  -o-transition: 0.3s ease;
+  -webkit-transition: 0s ease;
+  -moz-transition: 0s ease;
+  -o-transition: 0s ease;
   transition: 0.3s ease;
 }
 /* line 405, ../scss/style.scss */
@@ -505,9 +505,9 @@ body {
   font-size: 35px;
   font-size: 3.5rem;
   margin: 2px;
-  -webkit-transition: 0.3s ease;
-  -moz-transition: 0.3s ease;
-  -o-transition: 0.3s ease;
+  -webkit-transition: 0s ease;
+  -moz-transition: 0s ease;
+  -o-transition: 0s ease;
   transition: 0.3s ease;
 }
 /* line 411, ../scss/style.scss */
@@ -677,7 +677,7 @@ body {
   width: 100%;
   padding: 15px 0;
   text-align: center;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0);
 }
 /* line 564, ../scss/style.scss */
 .calendar .colomn-date a {
@@ -800,8 +800,8 @@ body {
   padding: 10px;
   min-height: 100px;
   background-color: #FFF;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-bottom: 4px solid rgba(0, 0, 0, 0);
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
@@ -877,9 +877,9 @@ body {
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0s ease-in-out;
+  -moz-transition: all 0s ease-in-out;
+  -o-transition: all 0s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 /* line 678, ../scss/style.scss */
@@ -1012,44 +1012,50 @@ h1.title-sheet {
   padding: 5px 0 5px 10px;
   border: 1px solid #CCC;
 }
-/* line 742, ../scss/style.scss */
+/* line 740, ../scss/style.scss */
+.form-ws .control-group .select2-choice span {
+  display: inline;
+  margin-right: 0;
+  text-transform: capitalize;
+}
+/* line 743, ../scss/style.scss */
 .form-ws .control-submit {
   text-align: center;
   width: 100%;
   margin: 0;
 }
-/* line 747, ../scss/style.scss */
+/* line 748, ../scss/style.scss */
 .form-ws .control-submit input[type=submit], .form-ws .control-submit input[type=button] {
   display: inline-block;
   float: none;
   padding: 10px 12%;
   margin: 20px 0 20px 0;
 }
-/* line 753, ../scss/style.scss */
+/* line 754, ../scss/style.scss */
 .form-ws .control-submit p.help {
   width: 100%;
   margin: 10px 0;
 }
-/* line 757, ../scss/style.scss */
+/* line 758, ../scss/style.scss */
 .form-ws .control-submit p.help-center {
   text-align: center;
 }
 
-/* line 765, ../scss/style.scss */
+/* line 766, ../scss/style.scss */
 .form.label-hidden .control-group {
   margin: 5px 15%;
 }
-/* line 767, ../scss/style.scss */
+/* line 768, ../scss/style.scss */
 .form.label-hidden .control-group label.control-label {
   display: none;
 }
-/* line 769, ../scss/style.scss */
+/* line 770, ../scss/style.scss */
 .form.label-hidden .control-submit {
   width: 100%;
   margin: 0;
 }
 
-/* line 776, ../scss/style.scss */
+/* line 777, ../scss/style.scss */
 .btn-ws {
   padding: 10px 30px;
   margin: 0;
@@ -1069,12 +1075,12 @@ h1.title-sheet {
   background-color: #427b8b;
 }
 
-/* line 787, ../scss/style.scss */
+/* line 788, ../scss/style.scss */
 .btn-ws:hover {
   color: #EFEFEF;
 }
 
-/* line 788, ../scss/style.scss */
+/* line 789, ../scss/style.scss */
 .btn-ws:active {
   margin-top: 2px;
   margin-left: 2px;
@@ -1083,27 +1089,27 @@ h1.title-sheet {
   box-shadow: 1px 1px 0 0 #a3caea, 2px 2px 0 0 #a3caea;
 }
 
-/* line 790, ../scss/style.scss */
+/* line 791, ../scss/style.scss */
 .btn-ws-small {
   padding: 5px 15px;
   font-size: 14px;
   font-size: 1.4rem;
 }
 
-/* line 794, ../scss/style.scss */
+/* line 795, ../scss/style.scss */
 .btn-ws-success {
   background-color: #66bd63;
   color: white;
 }
 
-/* line 801, ../scss/style.scss */
+/* line 802, ../scss/style.scss */
 .register .form-register {
   margin: 0;
   padding: 0;
   padding-bottom: 50px;
   border-right: 1px solid #DDD;
 }
-/* line 807, ../scss/style.scss */
+/* line 808, ../scss/style.scss */
 .register .form-facebook {
   float: left;
   width: 45%;
@@ -1111,7 +1117,7 @@ h1.title-sheet {
   padding-bottom: 50px;
   text-align: center;
 }
-/* line 815, ../scss/style.scss */
+/* line 816, ../scss/style.scss */
 .register p.intro {
   text-align: center;
   color: #888;
@@ -1121,20 +1127,20 @@ h1.title-sheet {
 /*======
 ==== Event Create
 ======*/
-/* line 827, ../scss/style.scss */
+/* line 828, ../scss/style.scss */
 .createEvent .twitter-typeahead {
   width: 100%;
 }
-/* line 828, ../scss/style.scss */
+/* line 829, ../scss/style.scss */
 .createEvent .col_small {
   padding: 0;
   padding-top: 30px;
 }
-/* line 831, ../scss/style.scss */
+/* line 832, ../scss/style.scss */
 .createEvent .col_small .form-submit {
   text-align: center;
 }
-/* line 833, ../scss/style.scss */
+/* line 834, ../scss/style.scss */
 .createEvent .col_small .form-submit input[type=submit] {
   display: inline;
   padding: 10px 10%;
@@ -1143,18 +1149,18 @@ h1.title-sheet {
 /*======
 ==== Event View
 ======*/
-/* line 847, ../scss/style.scss */
+/* line 848, ../scss/style.scss */
 .event-header {
   width: 100%;
   padding: 20px 2% 10px 2%;
   background-color: #efefef;
 }
-/* line 853, ../scss/style.scss */
+/* line 854, ../scss/style.scss */
 .event-header div.event-title {
   float: left;
   width: 70%;
 }
-/* line 857, ../scss/style.scss */
+/* line 858, ../scss/style.scss */
 .event-header div.event-title h1 {
   margin-top: 0px;
   margin-bottom: 0;
@@ -1164,25 +1170,25 @@ h1.title-sheet {
   font-size: 35px;
   font-size: 3.5rem;
 }
-/* line 870, ../scss/style.scss */
+/* line 871, ../scss/style.scss */
 .event-header div.event-orga {
   float: right;
   width: 30%;
 }
-/* line 874, ../scss/style.scss */
+/* line 875, ../scss/style.scss */
 .event-header div.event-orga div.orga-info {
   float: right;
   text-align: right;
   margin-right: 10px;
   padding-top: 10px;
 }
-/* line 880, ../scss/style.scss */
+/* line 881, ../scss/style.scss */
 .event-header div.event-orga div.orga-info span {
   display: block;
   width: 100%;
   color: #AAA;
 }
-/* line 885, ../scss/style.scss */
+/* line 886, ../scss/style.scss */
 .event-header div.event-orga div.orga-info span.orga-name {
   font-weight: normal;
   font-family: 'Boogaloo';
@@ -1190,37 +1196,37 @@ h1.title-sheet {
   font-size: 2.2rem;
   text-transform: capitalize;
 }
-/* line 890, ../scss/style.scss */
+/* line 891, ../scss/style.scss */
 .event-header div.event-orga div.orga-info span.orga-name a {
   color: #427b8b;
 }
-/* line 892, ../scss/style.scss */
+/* line 893, ../scss/style.scss */
 .event-header div.event-orga div.orga-info small {
   border-bottom: 1px solid #CCC;
 }
-/* line 897, ../scss/style.scss */
+/* line 898, ../scss/style.scss */
 .event-header div.event-orga div.orga-avatar {
   float: right;
 }
-/* line 899, ../scss/style.scss */
+/* line 900, ../scss/style.scss */
 .event-header div.event-orga div.orga-avatar img {
   height: 100px;
   padding: 2px;
   border: 1px solid #CCC;
 }
 
-/* line 904, ../scss/style.scss */
+/* line 905, ../scss/style.scss */
 .event-action-bar {
   width: 100%;
   padding: 7px 5% 10px 5%;
   text-align: right;
   border-top: 4px solid #D0D0D0;
 }
-/* line 911, ../scss/style.scss */
+/* line 912, ../scss/style.scss */
 .event-action-bar .event-status {
   float: right;
 }
-/* line 913, ../scss/style.scss */
+/* line 914, ../scss/style.scss */
 .event-action-bar .event-status .label {
   padding: 5px 10px;
   -webkit-border-radius: 10px;
@@ -1229,18 +1235,18 @@ h1.title-sheet {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 914, ../scss/style.scss */
+/* line 915, ../scss/style.scss */
 .event-action-bar .event-status span.nb-participant {
   font-size: 12px;
   font-size: 1.2rem;
   margin-left: 5px;
 }
-/* line 919, ../scss/style.scss */
+/* line 920, ../scss/style.scss */
 .event-action-bar .event-action {
   float: left;
   margin-top: 3px;
 }
-/* line 922, ../scss/style.scss */
+/* line 923, ../scss/style.scss */
 .event-action-bar .event-action a.btn-ws {
   padding: 5px 10px;
   font-size: 12px;
@@ -1256,12 +1262,12 @@ h1.title-sheet {
   -moz-box-shadow: 0 0 0 black;
   box-shadow: 0 0 0 black;
 }
-/* line 930, ../scss/style.scss */
+/* line 931, ../scss/style.scss */
 .event-action-bar .event-action a.btn-ws-success {
   background-color: #66bd63;
 }
 
-/* line 937, ../scss/style.scss */
+/* line 938, ../scss/style.scss */
 .event-pending {
   background-color: #e3e2e2;
   color: #888888;
@@ -1269,37 +1275,37 @@ h1.title-sheet {
   font-size: 1.4rem;
 }
 
-/* line 942, ../scss/style.scss */
+/* line 943, ../scss/style.scss */
 .event-confirmed {
   background-color: #a3d2a3;
   color: #5b894a;
 }
 
-/* line 946, ../scss/style.scss */
+/* line 947, ../scss/style.scss */
 .event-finished {
   background-color: #BBB;
   color: #FFF;
   text-align: left;
 }
-/* line 950, ../scss/style.scss */
+/* line 951, ../scss/style.scss */
 .event-finished span.label {
   background-color: #666;
 }
 
-/* line 955, ../scss/style.scss */
+/* line 956, ../scss/style.scss */
 div.col_large {
   float: left;
   width: 600px;
   min-height: 300px;
   padding: 10px 5px 0 40px;
 }
-/* line 961, ../scss/style.scss */
+/* line 962, ../scss/style.scss */
 div.col_large h2.event-info {
   font-size: 22px;
   font-size: 2.2rem;
   color: #1b3a43;
 }
-/* line 965, ../scss/style.scss */
+/* line 966, ../scss/style.scss */
 div.col_large h2.event-info span {
   padding: 8px;
   background-color: #FFF;
@@ -1309,13 +1315,13 @@ div.col_large h2.event-info span {
   -o-border-radius: 100px;
   border-radius: 100px;
 }
-/* line 970, ../scss/style.scss */
+/* line 971, ../scss/style.scss */
 div.col_large h2.event-info small {
   font-size: 16px;
   font-size: 1.6rem;
 }
 
-/* line 976, ../scss/style.scss */
+/* line 977, ../scss/style.scss */
 div.col_small {
   float: left;
   width: 340px;
@@ -1323,17 +1329,17 @@ div.col_small {
   padding: 10px 0px 0 40px;
 }
 
-/* line 983, ../scss/style.scss */
+/* line 984, ../scss/style.scss */
 .block {
   margin-bottom: 20px;
 }
-/* line 986, ../scss/style.scss */
+/* line 987, ../scss/style.scss */
 .block ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* line 991, ../scss/style.scss */
+/* line 992, ../scss/style.scss */
 .block h3 {
   padding: 8px 0 8px 30px;
   font-size: 14px;
@@ -1342,11 +1348,11 @@ div.col_small {
   line-height: 100%;
   margin: 0;
   background-color: #BBB;
-  -webkit-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
+  box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
 }
-/* line 1000, ../scss/style.scss */
+/* line 1001, ../scss/style.scss */
 .block .block-content {
   padding: 20px 5px 10px 30px;
   background-color: #CCC;
@@ -1354,12 +1360,12 @@ div.col_small {
   font-size: 1.4rem;
   color: #888;
 }
-/* line 1005, ../scss/style.scss */
+/* line 1006, ../scss/style.scss */
 .block .block-content a {
   padding: 5px;
   line-height: 14px;
 }
-/* line 1009, ../scss/style.scss */
+/* line 1010, ../scss/style.scss */
 .block .block-content a img {
   float: left;
   width: 30px;
@@ -1368,45 +1374,45 @@ div.col_small {
   padding: 1px;
   border: 1px solid #AAA;
 }
-/* line 1018, ../scss/style.scss */
+/* line 1019, ../scss/style.scss */
 .block .block-content a strong {
   float: left;
   font-size: 11px;
   font-size: 1.1rem;
   text-transform: capitalize;
 }
-/* line 1023, ../scss/style.scss */
+/* line 1024, ../scss/style.scss */
 .block .block-content a small {
   float: left;
   font-size: 9px;
   font-size: 0.9rem;
   color: #AAA;
 }
-/* line 1029, ../scss/style.scss */
+/* line 1030, ../scss/style.scss */
 .block .block-content ul {
   margin: 0;
   list-style: none;
 }
-/* line 1032, ../scss/style.scss */
+/* line 1033, ../scss/style.scss */
 .block .block-content ul li {
   font-size: 14px;
   font-size: 1.4rem;
   color: #AAA;
   margin: 0 0 5px 0;
 }
-/* line 1037, ../scss/style.scss */
+/* line 1038, ../scss/style.scss */
 .block .block-content ul li span {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 1041, ../scss/style.scss */
+/* line 1042, ../scss/style.scss */
 .block .block-content ul li img {
   width: 30px;
   height: 30px;
   padding: 1px;
   border: 1px solid #AAA;
 }
-/* line 1047, ../scss/style.scss */
+/* line 1048, ../scss/style.scss */
 .block .block-content ul li a {
   display: inline-block;
   vertical-align: middle;
@@ -1415,79 +1421,79 @@ div.col_small {
   font-weight: bold;
   color: #427b8b;
 }
-/* line 1056, ../scss/style.scss */
+/* line 1057, ../scss/style.scss */
 .block .block-content a {
   font-size: 10px;
   font-size: 1rem;
 }
-/* line 1059, ../scss/style.scss */
+/* line 1060, ../scss/style.scss */
 .block .block-content .bottom_link {
   font-size: 10px;
   font-size: 1rem;
 }
 
-/* line 1064, ../scss/style.scss */
+/* line 1065, ../scss/style.scss */
 .block-yellow h3 {
   background-color: #ffffbf;
   color: #9e9e34;
 }
-/* line 1068, ../scss/style.scss */
+/* line 1069, ../scss/style.scss */
 .block-yellow .block-content {
   background-color: #ffffeb;
 }
-/* line 1070, ../scss/style.scss */
+/* line 1071, ../scss/style.scss */
 .block-yellow .block-content .bottom_link {
   color: #9e9e34;
 }
 
-/* line 1074, ../scss/style.scss */
+/* line 1075, ../scss/style.scss */
 .block-red h3 {
   background-color: #fdae61;
   color: #bf4e48;
 }
-/* line 1078, ../scss/style.scss */
+/* line 1079, ../scss/style.scss */
 .block-red .block-content {
   background-color: #ffe3c7;
 }
-/* line 1080, ../scss/style.scss */
+/* line 1081, ../scss/style.scss */
 .block-red .block-content .bottom_link {
   color: #bf4e48;
 }
 
-/* line 1084, ../scss/style.scss */
+/* line 1085, ../scss/style.scss */
 .block-green h3 {
   background-color: #a6d96a;
   color: #1a9850;
 }
-/* line 1088, ../scss/style.scss */
+/* line 1089, ../scss/style.scss */
 .block-green .block-content {
   background-color: #d9ef8b;
 }
-/* line 1090, ../scss/style.scss */
+/* line 1091, ../scss/style.scss */
 .block-green .block-content .bottom_link {
   color: #1a9850;
 }
 
-/* line 1094, ../scss/style.scss */
+/* line 1095, ../scss/style.scss */
 .block-orange h3, .event-userreview h3 {
   background-color: #fee08b;
   color: #fc942f;
 }
-/* line 1098, ../scss/style.scss */
+/* line 1099, ../scss/style.scss */
 .block-orange .block-content, .event-userreview .block-content {
   background-color: #fff4d4;
 }
-/* line 1100, ../scss/style.scss */
+/* line 1101, ../scss/style.scss */
 .block-orange .block-content .bottom_link, .event-userreview .block-content .bottom_link {
   color: #fc942f;
 }
 
-/* line 1103, ../scss/style.scss */
+/* line 1104, ../scss/style.scss */
 .event-discussion, .event-description {
   margin-top: 30px;
   border-top: 2px solid #efefef;
 }
-/* line 1106, ../scss/style.scss */
+/* line 1107, ../scss/style.scss */
 .event-discussion h3, .event-description h3 {
   padding-left: 20px;
   margin-bottom: 0;
@@ -1497,64 +1503,64 @@ div.col_small {
   text-transform: uppercase;
   color: #AAA;
 }
-/* line 1114, ../scss/style.scss */
+/* line 1115, ../scss/style.scss */
 .event-discussion .block-content, .event-description .block-content {
   color: #888888;
   padding-left: 25px;
 }
 
-/* line 1120, ../scss/style.scss */
+/* line 1121, ../scss/style.scss */
 .event-participants .block-content {
   padding: 0;
 }
-/* line 1123, ../scss/style.scss */
+/* line 1124, ../scss/style.scss */
 .event-participants .block-content a {
   display: block;
   float: left;
   width: 50%;
 }
 
-/* line 1131, ../scss/style.scss */
+/* line 1132, ../scss/style.scss */
 .event-map .block-content {
   padding: 0;
 }
-/* line 1134, ../scss/style.scss */
+/* line 1135, ../scss/style.scss */
 .event-map #eventmap {
   width: 300px;
 }
 
-/* line 1138, ../scss/style.scss */
+/* line 1139, ../scss/style.scss */
 .block-action {
   text-align: center;
   padding: 50px;
 }
-/* line 1142, ../scss/style.scss */
+/* line 1143, ../scss/style.scss */
 .block-action a {
   background-color: #427b8b;
   padding: 15px 40px;
   font-size: 16px;
   font-size: 1.6rem;
 }
-/* line 1147, ../scss/style.scss */
+/* line 1148, ../scss/style.scss */
 .block-action a.btn-link {
   background-color: transparent;
 }
 
-/* line 1151, ../scss/style.scss */
+/* line 1152, ../scss/style.scss */
 .event-reviews .block-content {
   padding: 10px 20px;
 }
 
-/* line 1156, ../scss/style.scss */
+/* line 1157, ../scss/style.scss */
 .event-to-come .block-content {
   padding: 10px 20px;
 }
 
-/* line 1162, ../scss/style.scss */
+/* line 1163, ../scss/style.scss */
 .event-userreview label[for=review] {
   font-weight: bold;
 }
-/* line 1165, ../scss/style.scss */
+/* line 1166, ../scss/style.scss */
 .event-userreview input[name=review] {
   width: 400px;
   font-size: 14px;
@@ -1563,7 +1569,7 @@ div.col_small {
   padding: 5px 6px;
   margin: 0;
 }
-/* line 1172, ../scss/style.scss */
+/* line 1173, ../scss/style.scss */
 .event-userreview input[type=submit] {
   margin-top: -7px;
 }
@@ -1571,28 +1577,28 @@ div.col_small {
 /*======
 ==== User view
 ===*/
-/* line 1183, ../scss/style.scss */
+/* line 1184, ../scss/style.scss */
 .viewuser .user-header {
   width: 100%;
   padding: 20px 2% 20px 2%;
   background-color: #efefef;
   overflow: hidden;
 }
-/* line 1189, ../scss/style.scss */
+/* line 1190, ../scss/style.scss */
 .viewuser .user-header .user-avatar {
   float: left;
   width: 120px;
   height: 100px;
   padding-top: 5px;
 }
-/* line 1194, ../scss/style.scss */
+/* line 1195, ../scss/style.scss */
 .viewuser .user-header .user-avatar img {
   width: 90px;
   height: 90px;
   padding: 2px;
   border: 1px solid #AAA;
 }
-/* line 1202, ../scss/style.scss */
+/* line 1203, ../scss/style.scss */
 .viewuser .user-header .user-login h1 {
   margin: 0;
   padding: 0;
@@ -1603,26 +1609,26 @@ div.col_small {
   font-family: 'Boogaloo';
   font-weight: normal;
 }
-/* line 1211, ../scss/style.scss */
+/* line 1212, ../scss/style.scss */
 .viewuser .user-header .user-login span {
   font-size: 12px;
   font-size: 1.2rem;
   color: #888888;
 }
-/* line 1218, ../scss/style.scss */
+/* line 1219, ../scss/style.scss */
 .viewuser .user-status {
   width: 100%;
   padding: 5px 1% 5px 3%;
   overflow: hidden;
 }
-/* line 1223, ../scss/style.scss */
+/* line 1224, ../scss/style.scss */
 .viewuser .user-status .count_activity {
   float: left;
   width: 50%;
   text-align: left;
   line-height: 200%;
 }
-/* line 1229, ../scss/style.scss */
+/* line 1230, ../scss/style.scss */
 .viewuser .user-status .count_activity span.label {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -1630,26 +1636,26 @@ div.col_small {
   -o-border-radius: 20px;
   border-radius: 20px;
 }
-/* line 1231, ../scss/style.scss */
+/* line 1232, ../scss/style.scss */
 .viewuser .user-status .which_activity {
   float: right;
   width: 50%;
   text-align: right;
 }
-/* line 1238, ../scss/style.scss */
+/* line 1239, ../scss/style.scss */
 .viewuser .col_large {
   width: 550px;
 }
-/* line 1242, ../scss/style.scss */
+/* line 1243, ../scss/style.scss */
 .viewuser .col_small {
   width: 390px;
 }
-/* line 1248, ../scss/style.scss */
+/* line 1249, ../scss/style.scss */
 .viewuser .col_small .event-review ul li span {
   font-size: 16px;
   font-size: 1.6rem;
 }
-/* line 1250, ../scss/style.scss */
+/* line 1251, ../scss/style.scss */
 .viewuser .col_small .event-review ul li small a {
   font-weight: normal;
   font-style: italic;
@@ -1657,7 +1663,7 @@ div.col_small {
   font-size: 1.2rem;
   color: #888888;
 }
-/* line 1256, ../scss/style.scss */
+/* line 1257, ../scss/style.scss */
 .viewuser .col_small .event-review ul li small a:hover {
   text-decoration: underline;
 }
@@ -1665,83 +1671,83 @@ div.col_small {
 /*=======
 == ACCOUNT
 =======*/
-/* line 1271, ../scss/style.scss */
+/* line 1272, ../scss/style.scss */
 #account .col_small .module {
   padding: 10px 5%;
 }
-/* line 1273, ../scss/style.scss */
+/* line 1274, ../scss/style.scss */
 #account .col_small .profil .useravatar {
   margin-right: 5px;
 }
-/* line 1274, ../scss/style.scss */
+/* line 1275, ../scss/style.scss */
 #account .col_small .profil .username {
   font-weight: bold;
   text-transform: capitalize;
 }
-/* line 1276, ../scss/style.scss */
+/* line 1277, ../scss/style.scss */
 #account .col_small .menu {
   padding: 0;
 }
-/* line 1278, ../scss/style.scss */
+/* line 1279, ../scss/style.scss */
 #account .col_small .menu ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 1282, ../scss/style.scss */
+/* line 1283, ../scss/style.scss */
 #account .col_small .menu ul li {
   font-size: 16px;
   font-size: 1.6rem;
   padding: 10px 0 10px 5%;
   border-bottom: 1px solid #CCC;
 }
-/* line 1287, ../scss/style.scss */
+/* line 1288, ../scss/style.scss */
 #account .col_small .menu ul li i.icon {
   margin-right: 5px;
 }
-/* line 1288, ../scss/style.scss */
+/* line 1289, ../scss/style.scss */
 #account .col_small .menu ul li a {
   color: #427b8b;
 }
-/* line 1290, ../scss/style.scss */
+/* line 1291, ../scss/style.scss */
 #account .col_small .menu ul li:last-child {
   border-bottom: 0;
 }
-/* line 1291, ../scss/style.scss */
+/* line 1292, ../scss/style.scss */
 #account .col_small .menu ul li:hover {
   background-color: #FFF;
 }
-/* line 1292, ../scss/style.scss */
+/* line 1293, ../scss/style.scss */
 #account .col_small .menu ul li:hover a {
   color: #1b3a43;
 }
-/* line 1297, ../scss/style.scss */
+/* line 1298, ../scss/style.scss */
 #account .col_large {
   padding: 10px;
 }
-/* line 1299, ../scss/style.scss */
+/* line 1300, ../scss/style.scss */
 #account .col_large .module {
   padding: 10px 1%;
 }
-/* line 1300, ../scss/style.scss */
+/* line 1301, ../scss/style.scss */
 #account .col_large #account-form {
   padding-left: 20px;
   padding-right: 20px;
 }
-/* line 1303, ../scss/style.scss */
+/* line 1304, ../scss/style.scss */
 #account .col_large #account-form label {
   width: 20%;
 }
-/* line 1306, ../scss/style.scss */
+/* line 1307, ../scss/style.scss */
 #account .col_large #account-form label.checkbox {
   width: auto;
   float: none;
 }
-/* line 1312, ../scss/style.scss */
+/* line 1313, ../scss/style.scss */
 #account .col_large #account-form.form-mailing .controls {
   width: 100%;
 }
-/* line 1316, ../scss/style.scss */
+/* line 1317, ../scss/style.scss */
 #account .module {
   background-color: #efefef;
   -webkit-border-radius: 4px;
@@ -1753,7 +1759,7 @@ div.col_small {
   -moz-box-shadow: 0 0 0 black;
   box-shadow: 0 0 0 black;
 }
-/* line 1322, ../scss/style.scss */
+/* line 1323, ../scss/style.scss */
 #account .col_small, #account .col_large {
   padding-top: 40px;
 }
@@ -1763,27 +1769,27 @@ div.col_small {
 ==== COMMENTAIRE
 ===========
 */
-/* line 1333, ../scss/style.scss */
+/* line 1334, ../scss/style.scss */
 #commentForm {
   margin: 0;
 }
-/* line 1337, ../scss/style.scss */
+/* line 1338, ../scss/style.scss */
 #commentForm textarea[disabled=disabled] {
   width: 80%;
 }
-/* line 1340, ../scss/style.scss */
+/* line 1341, ../scss/style.scss */
 #commentForm .userAvatarCommentForm {
   float: left;
   width: 40px;
   height: 40px;
   margin-right: 5px;
 }
-/* line 1346, ../scss/style.scss */
+/* line 1347, ../scss/style.scss */
 #commentForm .commentFormFields {
   float: left;
   width: 90%;
 }
-/* line 1349, ../scss/style.scss */
+/* line 1350, ../scss/style.scss */
 #commentForm .commentFormFields textarea {
   width: 70%;
   -webkit-box-shadow: 0 0 10px #cccccc;
@@ -1791,23 +1797,23 @@ div.col_small {
   box-shadow: 0 0 10px #cccccc;
 }
 
-/* line 1355, ../scss/style.scss */
+/* line 1356, ../scss/style.scss */
 #tri {
   margin-bottom: 0;
 }
 
-/* line 1358, ../scss/style.scss */
+/* line 1359, ../scss/style.scss */
 .commentFilter {
   float: left;
   width: 100%;
 }
 
-/* line 1363, ../scss/style.scss */
+/* line 1364, ../scss/style.scss */
 #comments {
   float: left;
   width: 100%;
 }
-/* line 1367, ../scss/style.scss */
+/* line 1368, ../scss/style.scss */
 #comments .post {
   margin-bottom: 0;
   border: 0;
@@ -1817,12 +1823,12 @@ div.col_small {
   background-color: #F0F0F0;
 }
 
-/* line 1375, ../scss/style.scss */
+/* line 1376, ../scss/style.scss */
 #bottomComments {
   float: left;
   width: 100%;
 }
-/* line 1379, ../scss/style.scss */
+/* line 1380, ../scss/style.scss */
 #bottomComments div, #bottomComments a {
   width: 100%;
   display: block;
@@ -1832,7 +1838,7 @@ div.col_small {
   color: #888888;
 }
 
-/* line 1388, ../scss/style.scss */
+/* line 1389, ../scss/style.scss */
 #hiddenFormReply {
   display: none;
 }
@@ -1842,22 +1848,22 @@ div.col_small {
 === FOOTER ==
 ============
 */
-/* line 1396, ../scss/style.scss */
+/* line 1397, ../scss/style.scss */
 .footer {
   width: 100%;
   border-top: 15px solid #a3caea;
-  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
-  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
-  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
+  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
+  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
   background-color: #1b3a43;
   padding: 20px 5%;
 }
-/* line 1403, ../scss/style.scss */
+/* line 1404, ../scss/style.scss */
 .footer ul li {
   display: inline-block;
   margin: 0 40px;
 }
-/* line 1404, ../scss/style.scss */
+/* line 1405, ../scss/style.scss */
 .footer ul li a, .footer ul li a:link, .footer ul li a:visited {
   font-family: Verdana,sans-serif;
   font-size: 14px;
@@ -1865,11 +1871,11 @@ div.col_small {
   color: #a3caea;
   text-transform: uppercase;
 }
-/* line 1410, ../scss/style.scss */
+/* line 1411, ../scss/style.scss */
 .footer ul li a:hover, .footer ul li a:active {
   text-decoration: underline;
 }
-/* line 1414, ../scss/style.scss */
+/* line 1415, ../scss/style.scss */
 .footer .copyright {
   text-align: center;
   font-size: 10px;
@@ -1881,23 +1887,23 @@ div.col_small {
 ======================
 TYPEAHEAD CUSTOM STYLE
 =====================*/
-/* line 1421, ../scss/style.scss */
+/* line 1422, ../scss/style.scss */
 .tt-dropdown-menu {
   width: 100%;
   padding: 8px 0;
   text-align: left;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0);
 }
 
-/* line 1424, ../scss/style.scss */
+/* line 1425, ../scss/style.scss */
 .tt-suggestion {
   padding: 8px 20px;
 }
 
-/* line 1425, ../scss/style.scss */
+/* line 1426, ../scss/style.scss */
 .tt-name {
   font-size: 16px;
   font-size: 1.6rem;
@@ -1905,7 +1911,7 @@ TYPEAHEAD CUSTOM STYLE
   color: #888;
 }
 
-/* line 1426, ../scss/style.scss */
+/* line 1427, ../scss/style.scss */
 .tt-sub {
   font-size: 15px;
   font-size: 1.5rem;
@@ -1913,7 +1919,7 @@ TYPEAHEAD CUSTOM STYLE
   color: #999;
 }
 
-/* line 1427, ../scss/style.scss */
+/* line 1428, ../scss/style.scss */
 .tt-id {
   font-size: 8px;
   font-size: 0.8rem;
@@ -1921,12 +1927,12 @@ TYPEAHEAD CUSTOM STYLE
   display: none;
 }
 
-/* line 1428, ../scss/style.scss */
+/* line 1429, ../scss/style.scss */
 .tt-suggestion.tt-is-under-cursor {
   background-color: #0097cf;
 }
 
-/* line 1429, ../scss/style.scss */
+/* line 1430, ../scss/style.scss */
 .tt-suggestion.tt-is-under-cursor p {
   color: white;
 }
@@ -1935,7 +1941,7 @@ TYPEAHEAD CUSTOM STYLE
 =====*/
 /* reset chrome style for select inputs */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 1435, ../scss/style.scss */
+  /* line 1436, ../scss/style.scss */
   select {
     -webkit-appearance: none;
     appearance: none;
@@ -1943,38 +1949,38 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 480px) {
-  /* line 1441, ../scss/style.scss */
+  /* line 1442, ../scss/style.scss */
   .navbar {
     padding: 0 1%;
   }
 
-  /* line 1442, ../scss/style.scss */
+  /* line 1443, ../scss/style.scss */
   .navbar .weSport {
     margin: 5px 5px 0 5px;
     padding: 0;
   }
 
-  /* line 1443, ../scss/style.scss */
+  /* line 1444, ../scss/style.scss */
   .navbar .desktopMenu {
     display: none;
   }
 
-  /* line 1444, ../scss/style.scss */
+  /* line 1445, ../scss/style.scss */
   .navbar .mobileMenu {
     display: block;
   }
-  /* line 1447, ../scss/style.scss */
+  /* line 1448, ../scss/style.scss */
   .navbar .mobileMenu li a {
     padding: 0;
     margin-left: 10px;
   }
 
-  /* line 1454, ../scss/style.scss */
+  /* line 1455, ../scss/style.scss */
   #formSearch {
     width: 100%;
     margin: 20px 0 0 0;
   }
-  /* line 1458, ../scss/style.scss */
+  /* line 1459, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 100%;
     margin: 0;
@@ -1988,281 +1994,281 @@ TYPEAHEAD CUSTOM STYLE
     -moz-box-shadow: 0 0 0 black;
     box-shadow: 0 0 0 black;
   }
-  /* line 1465, ../scss/style.scss */
+  /* line 1466, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs {
     padding: 0;
     width: 67%;
   }
-  /* line 1468, ../scss/style.scss */
+  /* line 1469, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName {
     width: 75%;
   }
-  /* line 1471, ../scss/style.scss */
+  /* line 1472, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName #cityName {
     height: 40px;
     padding-left: 15px;
     font-size: 28px;
     font-size: 2.8rem;
   }
-  /* line 1476, ../scss/style.scss */
+  /* line 1477, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead .tt-hint {
     font-size: 28px;
     font-size: 2.8rem;
   }
-  /* line 1480, ../scss/style.scss */
+  /* line 1481, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerExtend {
     width: 25%;
     top: 30%;
   }
-  /* line 1487, ../scss/style.scss */
+  /* line 1488, ../scss/style.scss */
   #formSearch .cityRounded .citySubmit .ws-icon-loupe {
     font-size: 30px;
     font-size: 3rem;
   }
-  /* line 1489, ../scss/style.scss */
+  /* line 1490, ../scss/style.scss */
   #formSearch .cityRounded .cityAriane {
     width: 65%;
     font-size: 10px;
     font-size: 1rem;
   }
-  /* line 1494, ../scss/style.scss */
+  /* line 1495, ../scss/style.scss */
   #formSearch .sportCheckboxs {
     display: none;
   }
-  /* line 1495, ../scss/style.scss */
+  /* line 1496, ../scss/style.scss */
   #formSearch .sportSelect {
     display: block;
     width: 100%;
     padding: 0 10%;
     margin: 30px 0 0 0;
   }
-  /* line 1501, ../scss/style.scss */
+  /* line 1502, ../scss/style.scss */
   #formSearch .sportSelect label {
     font-size: 14px;
     font-size: 1.4rem;
   }
 
-  /* line 1508, ../scss/style.scss */
+  /* line 1509, ../scss/style.scss */
   .connexion .container {
     width: 100%;
   }
-  /* line 1510, ../scss/style.scss */
+  /* line 1511, ../scss/style.scss */
   .connexion .container .form-ws {
     width: 100%;
   }
-  /* line 1512, ../scss/style.scss */
+  /* line 1513, ../scss/style.scss */
   .connexion .container .form-ws .control-submit {
     width: 100%;
   }
 
-  /* line 1520, ../scss/style.scss */
+  /* line 1521, ../scss/style.scss */
   .register .container {
     width: 100%;
   }
-  /* line 1522, ../scss/style.scss */
+  /* line 1523, ../scss/style.scss */
   .register .container .form-ws {
     width: 100%;
     float: right;
   }
-  /* line 1526, ../scss/style.scss */
+  /* line 1527, ../scss/style.scss */
   .register .container .form-facebook {
     width: 100%;
     float: left;
   }
 
-  /* line 1534, ../scss/style.scss */
+  /* line 1535, ../scss/style.scss */
   .createEvent .container {
     width: 100%;
   }
-  /* line 1536, ../scss/style.scss */
+  /* line 1537, ../scss/style.scss */
   .createEvent .container .col_large {
     width: 100%;
     padding: 0;
   }
-  /* line 1540, ../scss/style.scss */
+  /* line 1541, ../scss/style.scss */
   .createEvent .container .col_large .control-group .control-label {
     width: 25%;
   }
-  /* line 1547, ../scss/style.scss */
+  /* line 1548, ../scss/style.scss */
   .createEvent .container .col_small {
     width: 100%;
     padding: 0;
   }
 
-  /* line 1555, ../scss/style.scss */
+  /* line 1556, ../scss/style.scss */
   .viewevent .container {
     width: 100%;
   }
-  /* line 1558, ../scss/style.scss */
+  /* line 1559, ../scss/style.scss */
   .viewevent .container .event-header .event-title {
     width: auto;
   }
-  /* line 1560, ../scss/style.scss */
+  /* line 1561, ../scss/style.scss */
   .viewevent .container .event-header .event-title h1 {
     font-size: 26px;
     font-size: 2.6rem;
   }
-  /* line 1562, ../scss/style.scss */
+  /* line 1563, ../scss/style.scss */
   .viewevent .container .event-header .event-title h1 .event-sport-logo {
     padding: 0;
     font-size: 40px;
     font-size: 4rem;
   }
-  /* line 1568, ../scss/style.scss */
+  /* line 1569, ../scss/style.scss */
   .viewevent .container .event-header .event-orga {
     float: left;
     width: 100%;
   }
-  /* line 1571, ../scss/style.scss */
+  /* line 1572, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-avatar {
     display: none;
   }
-  /* line 1574, ../scss/style.scss */
+  /* line 1575, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info {
     float: left;
     text-align: left;
   }
-  /* line 1577, ../scss/style.scss */
+  /* line 1578, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info span {
     display: inline-block;
     width: auto;
   }
-  /* line 1581, ../scss/style.scss */
+  /* line 1582, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info span.orga-name {
     font-size: 12px;
     font-size: 1.2rem;
   }
-  /* line 1584, ../scss/style.scss */
+  /* line 1585, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info span.orga-age {
     font-size: 10px;
     font-size: 1rem;
   }
-  /* line 1587, ../scss/style.scss */
+  /* line 1588, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info small {
     font-size: 12px;
     font-size: 1.2rem;
   }
-  /* line 1595, ../scss/style.scss */
+  /* line 1596, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-action {
     margin-bottom: 10px;
     margin-top: 10px;
     margin-right: 5px;
   }
-  /* line 1600, ../scss/style.scss */
+  /* line 1601, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-action .btn-ws {
     padding: 10px 20px;
   }
-  /* line 1604, ../scss/style.scss */
+  /* line 1605, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-status {
     float: left;
     margin-top: 2px;
   }
-  /* line 1610, ../scss/style.scss */
+  /* line 1611, ../scss/style.scss */
   .viewevent .container .col_large {
     width: 100%;
     padding: 10px 1%;
   }
-  /* line 1613, ../scss/style.scss */
+  /* line 1614, ../scss/style.scss */
   .viewevent .container .col_large .event-info {
     margin-bottom: 0;
     line-height: 150%;
     font-size: 20px;
     font-size: 2rem;
   }
-  /* line 1620, ../scss/style.scss */
+  /* line 1621, ../scss/style.scss */
   .viewevent .container .col_small {
     width: 100%;
     padding: 0;
     margin-top: 50px;
   }
-  /* line 1624, ../scss/style.scss */
+  /* line 1625, ../scss/style.scss */
   .viewevent .container .col_small #eventmap {
     width: 100%;
   }
 
-  /* line 1633, ../scss/style.scss */
+  /* line 1634, ../scss/style.scss */
   .viewuser .container {
     width: 100%;
   }
-  /* line 1636, ../scss/style.scss */
+  /* line 1637, ../scss/style.scss */
   .viewuser .container .user-header .user-avatar {
     width: 100px;
   }
-  /* line 1640, ../scss/style.scss */
+  /* line 1641, ../scss/style.scss */
   .viewuser .container .user-header .user-login h1 {
     font-size: 20px;
     font-size: 2rem;
     margin-bottom: 0;
   }
-  /* line 1644, ../scss/style.scss */
+  /* line 1645, ../scss/style.scss */
   .viewuser .container .user-header .user-login span {
     font-size: 10px;
     font-size: 1rem;
   }
-  /* line 1650, ../scss/style.scss */
+  /* line 1651, ../scss/style.scss */
   .viewuser .container .user-status .count_activity {
     float: left;
     width: auto;
     margin-right: 10px;
   }
-  /* line 1655, ../scss/style.scss */
+  /* line 1656, ../scss/style.scss */
   .viewuser .container .user-status .which_activity {
     float: left;
     width: auto;
   }
-  /* line 1660, ../scss/style.scss */
+  /* line 1661, ../scss/style.scss */
   .viewuser .container .col_large {
     width: 100%;
     margin-top: 20px;
     padding: 0 2%;
   }
-  /* line 1665, ../scss/style.scss */
+  /* line 1666, ../scss/style.scss */
   .viewuser .container .col_small {
     width: 100%;
     margin-top: 20px;
     padding: 0 2%;
   }
 
-  /* line 1674, ../scss/style.scss */
+  /* line 1675, ../scss/style.scss */
   #account .container {
     width: 100%;
   }
-  /* line 1676, ../scss/style.scss */
+  /* line 1677, ../scss/style.scss */
   #account .container .col_small {
     width: 100%;
     padding: 10px 5px;
   }
-  /* line 1680, ../scss/style.scss */
+  /* line 1681, ../scss/style.scss */
   #account .container .col_large {
     width: 100%;
     padding: 0 5px;
   }
-  /* line 1683, ../scss/style.scss */
+  /* line 1684, ../scss/style.scss */
   #account .container .col_large #account-form {
     padding: 0 5px;
     margin-top: 0;
   }
-  /* line 1684, ../scss/style.scss */
+  /* line 1685, ../scss/style.scss */
   #account .container .col_large #account-form h2 {
     text-align: center;
     font-size: 25px;
     font-size: 2.5rem;
   }
 
-  /* line 1696, ../scss/style.scss */
+  /* line 1697, ../scss/style.scss */
   .footer .container {
     width: 100%;
   }
-  /* line 1698, ../scss/style.scss */
+  /* line 1699, ../scss/style.scss */
   .footer .container ul {
     margin-left: 0;
   }
-  /* line 1700, ../scss/style.scss */
+  /* line 1701, ../scss/style.scss */
   .footer .container ul li {
     display: block;
     width: 100%;
   }
-  /* line 1703, ../scss/style.scss */
+  /* line 1704, ../scss/style.scss */
   .footer .container ul li a {
     font-size: 12px;
     font-size: 1.2rem;
@@ -2270,12 +2276,12 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* very small smartphone */
 @media only screen and (max-width: 240px) {
-  /* line 1714, ../scss/style.scss */
+  /* line 1715, ../scss/style.scss */
   #formSearch .cityRounded {
     padding-right: 0;
     padding-left: 0;
   }
-  /* line 1719, ../scss/style.scss */
+  /* line 1720, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName #cityName {
     width: 100%;
     height: 40px;
@@ -2283,218 +2289,218 @@ TYPEAHEAD CUSTOM STYLE
     font-size: 25px;
     font-size: 2.5rem;
   }
-  /* line 1726, ../scss/style.scss */
+  /* line 1727, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerExtend {
     display: none;
   }
-  /* line 1731, ../scss/style.scss */
+  /* line 1732, ../scss/style.scss */
   #formSearch .cityRounded .citySubmit .ws-icon-loupe {
     font-size: 20px;
     font-size: 2rem;
   }
-  /* line 1733, ../scss/style.scss */
+  /* line 1734, ../scss/style.scss */
   #formSearch .cityRounded .cityAriane {
     width: 60%;
   }
 }
 /* Smartphones landscape and Tablets portrait */
 @media only screen and (min-width: 480px) and (max-width: 768px) {
-  /* line 1744, ../scss/style.scss */
+  /* line 1745, ../scss/style.scss */
   .navbar {
     padding: 0 1%;
   }
-  /* line 1746, ../scss/style.scss */
+  /* line 1747, ../scss/style.scss */
   .navbar .weSport {
     padding: 0;
     margin-right: 20px;
   }
-  /* line 1747, ../scss/style.scss */
+  /* line 1748, ../scss/style.scss */
   .navbar .desktopMenu {
     display: none;
   }
-  /* line 1748, ../scss/style.scss */
+  /* line 1749, ../scss/style.scss */
   .navbar .mobileMenu {
     display: block;
   }
 
-  /* line 1750, ../scss/style.scss */
+  /* line 1751, ../scss/style.scss */
   #formSearch {
     width: 100%;
     margin: 40px 0 0 0;
   }
-  /* line 1753, ../scss/style.scss */
+  /* line 1754, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 80%;
     margin: 0 10%;
   }
-  /* line 1756, ../scss/style.scss */
+  /* line 1757, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs {
     width: 70%;
   }
-  /* line 1759, ../scss/style.scss */
+  /* line 1760, ../scss/style.scss */
   #formSearch .cityRounded .cityAriane {
     width: 69%;
   }
-  /* line 1764, ../scss/style.scss */
+  /* line 1765, ../scss/style.scss */
   #formSearch .sportCheckboxs {
     display: none;
   }
-  /* line 1767, ../scss/style.scss */
+  /* line 1768, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 25px;
     font-size: 2.5rem;
   }
-  /* line 1768, ../scss/style.scss */
+  /* line 1769, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 35px;
     font-size: 3.5rem;
   }
-  /* line 1771, ../scss/style.scss */
+  /* line 1772, ../scss/style.scss */
   #formSearch .sportSelect {
     display: block;
     width: 100%;
     padding: 0 30%;
     margin-top: 30px;
   }
-  /* line 1776, ../scss/style.scss */
+  /* line 1777, ../scss/style.scss */
   #formSearch .sportSelect label.control-label {
     font-size: 14px;
     font-size: 1.4rem;
   }
 
-  /* line 1784, ../scss/style.scss */
+  /* line 1785, ../scss/style.scss */
   .connexion .container {
     width: 90%;
     margin: 0 5%;
   }
-  /* line 1787, ../scss/style.scss */
+  /* line 1788, ../scss/style.scss */
   .connexion .container .form-ws {
     width: 70%;
     margin-left: 15%;
     margin-right: 15%;
   }
-  /* line 1790, ../scss/style.scss */
+  /* line 1791, ../scss/style.scss */
   .connexion .container .form-ws .control-submit {
     width: 100%;
   }
 
-  /* line 1798, ../scss/style.scss */
+  /* line 1799, ../scss/style.scss */
   .register .container {
     width: 90%;
     margin: 0 5%;
   }
 
-  /* line 1805, ../scss/style.scss */
+  /* line 1806, ../scss/style.scss */
   .createEvent .container {
     width: 90%;
     margin: 0 5%;
   }
-  /* line 1808, ../scss/style.scss */
+  /* line 1809, ../scss/style.scss */
   .createEvent .container .col_large {
     width: 100%;
     padding: 0;
   }
-  /* line 1812, ../scss/style.scss */
+  /* line 1813, ../scss/style.scss */
   .createEvent .container .col_large .control-group .control-label {
     width: 15%;
   }
-  /* line 1819, ../scss/style.scss */
+  /* line 1820, ../scss/style.scss */
   .createEvent .container .col_small {
     width: 60%;
     margin: 0 20%;
     padding: 0;
   }
 
-  /* line 1827, ../scss/style.scss */
+  /* line 1828, ../scss/style.scss */
   .viewevent .container {
     width: 94%;
     margin: 0 3%;
   }
-  /* line 1833, ../scss/style.scss */
+  /* line 1834, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-avatar img {
     height: 70px;
   }
-  /* line 1838, ../scss/style.scss */
+  /* line 1839, ../scss/style.scss */
   .viewevent .container .col_small {
     width: 100%;
     padding: 50px 10% 50px 10%;
   }
-  /* line 1843, ../scss/style.scss */
+  /* line 1844, ../scss/style.scss */
   .viewevent .container .col_small .block .block-content {
     padding: 15px;
   }
-  /* line 1848, ../scss/style.scss */
+  /* line 1849, ../scss/style.scss */
   .viewevent .container .col_small .event-participants .event-participant-avatar {
     width: 70px;
     height: 70px;
   }
-  /* line 1852, ../scss/style.scss */
+  /* line 1853, ../scss/style.scss */
   .viewevent .container .col_small .event-participants strong {
     font-size: 17px;
     font-size: 1.7rem;
   }
-  /* line 1855, ../scss/style.scss */
+  /* line 1856, ../scss/style.scss */
   .viewevent .container .col_small .event-participants small {
     font-size: 14px;
     font-size: 1.4rem;
   }
-  /* line 1861, ../scss/style.scss */
+  /* line 1862, ../scss/style.scss */
   .viewevent .container .col_small .event-reviews ul li {
     font-size: 18px;
     font-size: 1.8rem;
   }
-  /* line 1863, ../scss/style.scss */
+  /* line 1864, ../scss/style.scss */
   .viewevent .container .col_small .event-reviews ul li img {
     width: 60px;
     height: 60px;
   }
-  /* line 1870, ../scss/style.scss */
+  /* line 1871, ../scss/style.scss */
   .viewevent .container .col_small .event-reviews a {
     font-size: 16px;
     font-size: 1.6rem;
   }
 
-  /* line 1880, ../scss/style.scss */
+  /* line 1881, ../scss/style.scss */
   .viewuser .container {
     width: 94%;
     padding: 0 3%;
   }
-  /* line 1886, ../scss/style.scss */
+  /* line 1887, ../scss/style.scss */
   .viewuser .col_large {
     width: 100%;
     padding: 20px 10%;
   }
-  /* line 1890, ../scss/style.scss */
+  /* line 1891, ../scss/style.scss */
   .viewuser .col_small {
     width: 100%;
     padding: 20px 10%;
   }
 
-  /* line 1897, ../scss/style.scss */
+  /* line 1898, ../scss/style.scss */
   #account .container {
     width: 94%;
     margin: 0 3%;
   }
-  /* line 1900, ../scss/style.scss */
+  /* line 1901, ../scss/style.scss */
   #account .container .col_small {
     width: 100%;
     padding: 20px 15%;
   }
-  /* line 1904, ../scss/style.scss */
+  /* line 1905, ../scss/style.scss */
   #account .container .col_large {
     width: 100%;
     padding: 0 5%;
   }
 
-  /* line 1912, ../scss/style.scss */
+  /* line 1913, ../scss/style.scss */
   .footer .container {
     width: 100%;
   }
-  /* line 1914, ../scss/style.scss */
+  /* line 1915, ../scss/style.scss */
   .footer .container ul {
     margin-left: 0;
   }
-  /* line 1916, ../scss/style.scss */
+  /* line 1917, ../scss/style.scss */
   .footer .container ul li {
     display: inline-block;
     width: auto;
@@ -2503,37 +2509,37 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* Tablets landscape and Small computer----------- */
 @media only screen and (min-width: 768px) and (max-width: 1025px) {
-  /* line 1930, ../scss/style.scss */
+  /* line 1931, ../scss/style.scss */
   .navbar {
     padding: 0 1%;
   }
-  /* line 1932, ../scss/style.scss */
+  /* line 1933, ../scss/style.scss */
   .navbar .weSport {
     padding: 0;
     padding-left: 10px;
     margin-right: 20px;
   }
-  /* line 1936, ../scss/style.scss */
+  /* line 1937, ../scss/style.scss */
   .navbar .nav li a {
     padding: 0 15px;
   }
 
-  /* line 1940, ../scss/style.scss */
+  /* line 1941, ../scss/style.scss */
   #formSearch {
     width: 100%;
   }
-  /* line 1942, ../scss/style.scss */
+  /* line 1943, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 70%;
     margin: 0 15%;
   }
-  /* line 1948, ../scss/style.scss */
+  /* line 1949, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 30px;
     font-size: 3rem;
   }
 
-  /* line 1953, ../scss/style.scss */
+  /* line 1954, ../scss/style.scss */
   .connexion .container {
     width: 100%;
   }
