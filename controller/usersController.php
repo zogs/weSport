@@ -349,9 +349,7 @@ class UsersController extends Controller{
 			}
 
 			//Save
-			if($this->Users->saveUser($user)) {
-
-				$user_id = $this->Users->id;
+			if($user_id = $this->Users->saveUser($user)) {
 
 					if(isset($user->status) && $user->status!='group')
 						$this->session->setFlash("<strong>Welcome</strong>","success");
