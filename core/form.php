@@ -93,7 +93,7 @@ class Form{
 		}
 
 		
-		if(isset($options['value'])){
+		if(!empty($options['value'])){
 			$value = $options['value'];
 		}
 		elseif(!isset($this->controller->request->data->$id)){ //Si le champ n'a pas de valeur pré-rempli

@@ -588,21 +588,31 @@ class EventsController extends Controller{
 			
 			if($withAuthor===false && $user->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
 			
+			//on recupere les preferences mailing de l'utilisateur
 			if($mailingSetting){
-				$setting = $this->Users->findFirst(array('table'=>'users_settings_mailing','fields'=>$mailingSetting,'conditions'=>array('user_id'=>$sporter->user_id)));
-				if(!empty($settings) && $setting->$mailingSetting != 1) continue; 				
+				$setting = $this->Users->findFirst(array('table'=>'users_settings_mailing','fields'=>$mailingSetting,'conditions'=>array('user_id'=>$sporter->user_id)));				
 			}
 
-
-			if($user->exist()) $emails[] = $user->email;
+			if( //si l'utilisateur existe
+				$user->exist()
+				&& //et si la preference mailing n'est pas desactivé 
+				!empty($setting) && $setting->$mailingSetting !=0
+				)
+			{
+				$emails[] = $user->email;
+			} 
+				
 		}
 		
 		return $emails;
 	}
 	
 
-	private function sendEventDeleting($event)
+	public function sendEventDeleting($event = null)
     {
+
+    	$this->loadModel('Events');
+    	$event = $this->Events->findEventById(45);
 
     	$subject = "L'activité à laquelle vous participez a été supprimée - ".Conf::$website;
 
@@ -667,7 +677,7 @@ class EventsController extends Controller{
         else return false;
     }
 
-    public function sendMailNewComment($event_id,$comment_id){
+    public function sendMailNewComment($event_id,$comment_id){    	
 
     	if(!is_numeric($event_id)) throw new zException("Error Processing Request", 1);
     	if(!is_numeric($comment_id)) throw new zException("Error Processing Request", 1);
@@ -680,12 +690,11 @@ class EventsController extends Controller{
 
     	$event = $this->Events->findEventById($event_id);
     	$email = $event->author->email;
-
+    	
     	//user mailing setting
     	$setting = $this->Events->findFirst(array('table'=>'users_settings_mailing','fields'=>'eventUserQuestion','conditions'=>array('user_id'=>$event->author->user_id)));
     	if(!empty($setting) && $setting->eventUserQuestion==0) return false;
-
-
+    
     	$com = $this->Comments->getComment($comment_id);
     	$content = $com->content;
 

@@ -1291,6 +1291,50 @@ div.col_small{
 }
 
 
+.indexuser{
+
+	.col_large{
+		.userlist{
+			width: 100%;
+			background-color:#EEE;
+			@extend %clearfix;
+			.user{
+				display: block;				
+				float:left;
+				width: 33%;
+				margin:5px 0;
+				img{ 
+					float:left;
+					width:50px;
+				 	height:50px;
+				 	margin-right:5px;
+				 }
+				 span{
+				 	display: block;
+				 	float:left;
+				 }
+				 strong{
+				 	display: block;
+				 	float:left;
+				 	
+				 }
+				 small{
+				 	display: block;
+				 	float:left;				 	
+				 	clear:left;
+				 }
+
+				 .pagination{
+				 	display: block;
+				 	float:left;
+				 	width: 100%;
+				 }
+
+			}
+		}
+	}
+}
+
 
 /*=======
 == ACCOUNT

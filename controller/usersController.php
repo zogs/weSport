@@ -111,21 +111,54 @@ class UsersController extends Controller{
 	public function index(){
 
 		$this->loadModel('Worlds');
+		$this->loadModel('Users');
 
-		if($this->request->get('city')){
+		$perPage = 3;		
+		if($this->request->get() && !$this->request->get('page')){
+			$dpt = array('CC1','ADM1','ADM2','ADM3','ADM5','city');
+			$codes = new stdClass();
+			foreach ($this->request->get() as $key => $value) {
+				if(in_array($key,$dpt) && trim($value)!='') $codes->$key = $value;
+			}
+			
+			$this->session->write('userSearch',(array) $codes);		
+			$location = $this->Worlds->findStatesNames($codes);
+		}
+		elseif(is_array($this->session->read('userSearch'))){
 
+			$codes = $this->session->read('userSearch');			
+			$location = $this->Worlds->findStatesNames($codes);
 		}
 		elseif($city_id = $this->cookieEventSearch->read('cityID')){
 			
-			$code = $this->Worlds->findCityById($city_id,'CC1,ADM1,ADM2,ADM3,ADM4,UNI as city');					
-		
-			$location = $this->Worlds->findStatesNames($code);
+			$codes = $this->Worlds->findCityById($city_id,'CC1,ADM1,ADM2,ADM3,ADM4,UNI as city');							
+			$location = $this->Worlds->findStatesNames($codes);
 		}
-		
-		$d['location_code'] = $code;
+
+		//query params
+		$params = array();		
+		$params['conditions'] = (array) $codes;
+		$params['fields'] = 'user_id,login,avatar,role,prenom,nom,birthdate,sexe,facebook_id,date_signin';
+		$params['limit'] = (($this->request->page-1)*$perPage).','.$perPage;
+		//query users
+		$users = $this->Users->findUsers($params);
+
+		//total
+		unset($params['limit']);
+		$params['fields'] = 'count(user_id) as count';
+		$d['total'] = $this->Users->findFirst($params);		
+		$d['total'] = $d['total']->count; 
+		$d['nbpage'] = ceil($d['total']/$perPage);
+
+		//location
+		$d['location_codes'] = $codes;
 		$d['location'] = $location;
 
+		//users
+		$d['users'] = $users;
+
 		$this->set($d);
+
 	}
 
 	/**
