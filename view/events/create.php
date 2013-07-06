@@ -36,7 +36,7 @@
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","style"=>"width:100%;","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 					<?php echo $this->Form->input('address','Adresse',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
-					<?php echo $this->Form->input('date',"Date",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ')) ;?>
+					<?php echo $this->Form->input('date',"Date",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ','value'=>(($this->request->get('date'))? $this->request->get('date'):''))) ;?>
 					<div class="control-group " id="control-time">
 						<label class="control-label">Heure</label>
 						<div class="controls">

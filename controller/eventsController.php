@@ -356,13 +356,13 @@ class EventsController extends Controller{
 		$this->loadModel('Users');
 		$this->loadModel('Worlds');
 
-		//if user is logged
-		// if(!$this->session->user()->isLog()) {
+		// if user is logged
+		if(!$this->session->user()->isLog()) {
 
-		// 	$this->session->setFlash("Vous devez vous connecter pour proposer un sport !","info");
-		// 	$this->redirect('users/login');
-		// 	exit();
-		// }
+			$this->session->setFlash("Vous devez vous connecter pour proposer un sport !","info");
+			$this->redirect('users/login');
+			exit();
+		}
 
 		
 		//if an event is specifyed

@@ -105,6 +105,29 @@ class UsersController extends Controller{
 	}		
 
 
+	/*/**
+	 * 
+	 */
+	public function index(){
+
+		$this->loadModel('Worlds');
+
+		if($this->request->get('city')){
+
+		}
+		elseif($city_id = $this->cookieEventSearch->read('cityID')){
+			
+			$code = $this->Worlds->findCityById($city_id,'CC1,ADM1,ADM2,ADM3,ADM4,UNI as city');					
+		
+			$location = $this->Worlds->findStatesNames($code);
+		}
+		
+		$d['location_code'] = $code;
+		$d['location'] = $location;
+
+		$this->set($d);
+	}
+
 	/**
 	* auto_connect
 	* search for cookie, auto connect and extend cookie if exist, delete cookie if not
@@ -645,7 +668,10 @@ class UsersController extends Controller{
 		    //get account info
 	    	$user = $this->Users->findFirstUser(array(
 					'conditions' => array('user_id'=>$user_id))
-				);	    	    	
+				);	 
+
+	    	$user = $this->Users->JOIN('users_settings_mailing',' * ',array('user_id'=>':user_id'),$user);
+		   		
 	    	// /!\ request->data used by Form class
 	    	$this->request->data = $user;
 

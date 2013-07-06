@@ -360,6 +360,13 @@ class Form{
 		(isset($params['class']))? $class = "class='".$params['class']."'" : $class = '' ;
 		(isset($params['default']))? $default = $params['default'] : $default = '';
 		(isset($params['javascript']))? $javascript = $params['javascript'] : $javascript = '';
+		if(isset($options['value'])){
+			$default = $params['value'];
+		}
+		elseif(isset($this->controller->request->data->$id)){ //Si le champ n'a pas de valeur pré-rempli
+			$default = $this->controller->request->data->$id;
+		}
+
 
 		if(is_object($options)) $options = (array) $options;
 		

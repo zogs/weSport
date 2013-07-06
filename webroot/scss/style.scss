@@ -400,12 +400,12 @@ body{
 				background-color: #FFF; 
 				border:10px solid #FFF; 
 				@include border-radius(100px);
-				@include transition(0.3s ease);
+				@include transition(0.2s ease);
 			}
 			label span {
 				@include rem(35); 
 				margin:2px;
-				@include transition(0.3s ease);
+				@include transition(0.2s ease);
 			}
 
 			label:hover {
@@ -543,6 +543,18 @@ body{
 			 		}
 
 			 	}
+
+			 	.addEvent{
+			 		display: block;
+			 		width:70%;
+			 		margin:10px 15%;
+			 		padding:20px;
+			 		text-align: center;
+			 		@include rem(70);
+			 		span.ws-icon{
+			 			color:inherit;			
+			 		}
+			 	}			 
 			 }
 		}
 	}
@@ -598,7 +610,23 @@ body{
 		td.colomn-4 .colomn-date { background-color: darken($softyellow,$perCent);}
 		td.colomn-5 .colomn-date { background-color: darken($lightgreen,$perCent);}
 		td.colomn-6 .colomn-date { background-color: darken($softgreen,$perCent);}
-		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}		
+		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}
+
+		td.colomn-1 .addEvent { color: darken($red,$perCent);}
+		td.colomn-2 .addEvent { color: darken($softred,$perCent);}
+		td.colomn-3 .addEvent { color: darken($lightred,$perCent);}
+		td.colomn-4 .addEvent { color: darken($softyellow,$perCent);}
+		td.colomn-5 .addEvent { color: darken($lightgreen,$perCent);}
+		td.colomn-6 .addEvent { color: darken($softgreen,$perCent);}
+		td.colomn-7 .addEvent { color: darken($green,$perCent);}
+
+		td.colomn-1 .addEvent:hover { color: darken($red,10%);}
+		td.colomn-2 .addEvent:hover { color: darken($softred,10%);}
+		td.colomn-3 .addEvent:hover { color: darken($lightred,10%);}
+		td.colomn-4 .addEvent:hover { color: darken($softyellow,10%);}
+		td.colomn-5 .addEvent:hover { color: darken($lightgreen,10%);}
+		td.colomn-6 .addEvent:hover { color: darken($softgreen,10%);}
+		td.colomn-7 .addEvent:hover { color: darken($green,10%);}	
 
 		td.colomn-last {		
 			a img {margin-left:-5px;}

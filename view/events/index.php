@@ -53,6 +53,8 @@
 					endforeach;
 
 				?>
+
+				<a class="addEvent" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
 			</td>
 		<?php
 			$cdate = $date;
