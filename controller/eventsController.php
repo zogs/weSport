@@ -611,9 +611,6 @@ class EventsController extends Controller{
 	public function sendEventDeleting($event = null)
     {
 
-    	$this->loadModel('Events');
-    	$event = $this->Events->findEventById(45);
-
     	$subject = "L'activité à laquelle vous participez a été supprimée - ".Conf::$website;
 
     	//get emails participants

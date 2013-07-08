@@ -3,7 +3,7 @@
 */
 class WorldsModel extends Model
 {
-	private $cacheSystem = false;
+	private $cacheSystem = true;
 
 	public function __construct(){
 
@@ -93,28 +93,25 @@ class WorldsModel extends Model
  	}
 
 
- 	private function writeCacheVersion($location, $content){
+ 	private function writeCacheVersion($path, $content){
 
  		//If cache system is off 
  		if($this->cacheSystem == false) return false;
 
- 		//Serialize array into string
- 		$content = serialize($content);
-
  		//Write file into cache location
- 		$this->cacheLocation->write($location,$content);
+ 		$this->cacheLocation->write($path,$content);
 
  	}
 
- 	private function findCacheVersion($location){
+ 	private function findCacheVersion($path){
 
  		//If cache system is off 
  		if($this->cacheSystem == false) return false;
 
  		//If cache location existe return cache version
- 		if($content = $this->cacheLocation->read($location)){
+ 		if($content = $this->cacheLocation->read($path)){
 
- 			return unserialize($content);
+ 			return $content;
  		}
  		else //else return false;
  			return false;
@@ -130,6 +127,8 @@ class WorldsModel extends Model
 		$location = 'location/CC1/country_list';
 
 		if($cache = $this->findCacheVersion($location)){
+
+			$cache = unserialize($cache);
 			return $cache;
 		}
 
@@ -148,7 +147,7 @@ class WorldsModel extends Model
  			'list'=>$countries
  			);
 
- 		$this->writeCacheVersion($location,$result);
+ 		$this->writeCacheVersion($location,serialize($result));
 
  		return $result;
 
@@ -167,7 +166,7 @@ class WorldsModel extends Model
 
  		//find cache version
  		if($cache = $this->findCacheVersion($location)){
- 			return $cache; //if exist return cache version
+ 			return unserialize($cache); //if exist return cache version
  		}
  
 
@@ -200,7 +199,7 @@ class WorldsModel extends Model
  			);
 
  		//write cache version
- 		$this->writeCacheVersion($location,$result);
+ 		$this->writeCacheVersion($location,serialize($result));
 
  		return $result;
 
@@ -245,7 +244,7 @@ class WorldsModel extends Model
 	 	//if cache file exist
 	 	if($cache = $this->findCacheVersion($location)){
 
-	 		return $cache; //return cache version
+	 		return unserialize($cache); //return cache version
 	 	}
 
 	 	//the values for sql pdo
@@ -284,12 +283,46 @@ class WorldsModel extends Model
 			);
 
 		//write cache version
-		$this->writeCacheVersion($location,$result);
+		$this->writeCacheVersion($location,serialize($result));
 
 		return $result;
  	}
 
 
+ 	public function makeClusterKMLofCities($location,$cities){
+
+ 		$xml = "<?xml version='1.0' encoding='UTF-8'?>
+				<kml xmlns='http://earth.google.com/kml/2.2'>
+				<Document>
+				<Description>Test du cluster</Description>
+				<name>Cluster des sportifs</name>
+				<Folder>
+				<name>Cluster des sportifs</name>				
+ 		";
+
+ 		foreach ($cities as $city) {
+ 		
+ 			$xml .= '<Placemark>
+					<name>'.$city['login'].'</name>
+					<Point>
+					<coordinates>'.$city['lon'].','.$city['lat'].'</coordinates>
+					</Point>
+					</Placemark>
+					';
+ 		}
+
+ 		$xml .= "</Folder>
+				</Document>
+				</kml>
+				";
+
+		$this->writeCacheVersion($location.'.kml',$xml);
+ 	}
+
+ 	public function path_location($location){
+
+ 		//$location = 'location/'.$level.'/'.$CC1.'/'.$level.'_parent_'.$parent;
+ 	}
  	/**
  	* SuggestCities
  	* Find city from the autocompletion

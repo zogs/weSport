@@ -138,7 +138,7 @@ class UsersController extends Controller{
 		//query params
 		$params = array();		
 		$params['conditions'] = (array) $codes;
-		$params['fields'] = 'user_id,login,avatar,role,prenom,nom,birthdate,sexe,facebook_id,date_signin';
+		$params['fields'] = 'user_id,login,avatar,role,prenom,nom,birthdate,sexe,facebook_id,date_signin,city';
 		$params['limit'] = (($this->request->page-1)*$perPage).','.$perPage;
 		//query users
 		$users = $this->Users->findUsers($params);
@@ -153,6 +153,28 @@ class UsersController extends Controller{
 		//location
 		$d['location_codes'] = $codes;
 		$d['location'] = $location;
+
+		//maps
+		$cities = array();
+		foreach ($users as $user) {
+			if(isset($user->city))
+				$c = $this->Worlds->findCityById($user->city,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
+				$cities[] = array('user_id'=>$user->user_id,'login'=>$user->login,'city'=>$c->name,'lat'=>$c->lat,'lon'=>$c->lon);
+		}
+		$this->Worlds->makeClusterKMLofCities($codes,$cities);
+
+		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
+		$gmap = new GoogleMapAPI();
+		$gmap->setDivId('map');
+		$gmap->setCenter('paris France');
+		$gmap->setDisplayDirectionFields(true);
+		$gmap->setClusterer(true);
+		$gmap->setSize('100%','100%');
+		$gmap->setZoom(5);
+		//$gmap->addKML('../googlemap/kml/Locator3RF.kml','radars_fixes','../googlemap/Locator3RF.png');
+		$gmap->addKML('../webroot/cache/Array.kml','Sportifs','../webroot/img/LOGO.gif');
+		$gmap->generate();
+		 $d['gmap'] = $gmap;
 
 		//users
 		$d['users'] = $users;

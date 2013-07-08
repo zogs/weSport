@@ -60,6 +60,11 @@
 
 				<div class="col_small">					
 				</div>
+
+				<div id="map" style="width:100%; height:300px">
+					<?php echo $gmap->getGoogleMap(); ?>
+
+				</div>
 			</section>
 		</div>
 		<div class="fresque"></div>
