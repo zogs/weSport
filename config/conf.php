@@ -43,7 +43,10 @@ class Conf {
 	static $languageDefault = 'fr';	
 
 	//Cache
-	static $cachePath = 'D:/wamp/www/wesport/webroot/cache';
+	static $cachePath = array(
+		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
+		'wesport.zogs.org' => WEBROOT.'/cache'
+		);
 
 
 	//Css to load
@@ -116,16 +119,18 @@ class Conf {
 
 	    public static function getHost(){
 
-	    	if(isset($_SERVER['HTTP_HOST'])) return $_SERVER['HTTP_HOST'];
-	    	
+	    	if(isset($_SERVER['HTTP_HOST'])) return $_SERVER['HTTP_HOST'];	    	
 	    	return self::$websiteURL;
 	    }
 
-	    public static function getSiteUrl(){
-	    	
-	    	$host = self::getHost();
-	    	
+	    public static function getSiteUrl(){	    	
+	    	$host = self::getHost();	    	
 	    	return self::$websiteURLs[$host];
+	    }
+
+	    public static function getCachePath(){
+	    	$host = self::getHost();
+	    	return self::$cachePath[$host];
 	    }
 
 }

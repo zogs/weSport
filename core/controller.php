@@ -14,7 +14,7 @@ class Controller {
 
 		$this->Form = new Form($this);
 		$this->Date = new Date($this->session);
-		$this->cache = new Cache('D:/wamp/www/weSport/webroot/cache',60);
+		$this->cache = new Cache(Conf::getCachePath(),60);
 		
 
 		//Si la request nest pas une requete cron on instancie le cookie recherche
