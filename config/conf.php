@@ -45,7 +45,7 @@ class Conf {
 	//Cache
 	static $cachePath = array(
 		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
-		'wesport.zogs.org' => WEBROOT.'/cache'
+		'wesport.zogs.org' => '../webroot/cache',
 		);
 
 

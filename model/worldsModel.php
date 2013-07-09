@@ -299,7 +299,7 @@ class WorldsModel extends Model
 
  		if($this->cacheWesporterLocation->read($path)){
  				
- 				return Conf::$cachePath.'/users_location/'.$path;
+ 				return Conf::getCachePath().'/users_location/'.$path;
  		}
 
  		$cities = array();
@@ -338,7 +338,7 @@ class WorldsModel extends Model
 
 		$this->cacheWesporterLocation->write($path,$xml);
 
-		return Conf::$cachePath.'/users_location/'.$path;		
+		return Conf::getCachePath().'/users_location/'.$path;		
  	}
 
  	public function path_location($location,$ext='.list'){

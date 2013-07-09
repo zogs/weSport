@@ -115,7 +115,8 @@ class UsersController extends Controller{
 
 		$perPage = 3;	
 		$codes = array();
-			
+
+
 		if($this->request->get() && !$this->request->get('page')){
 			$dpt = array('CC1','ADM1','ADM2','ADM3','ADM5','city');
 			$codes = new stdClass();
