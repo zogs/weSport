@@ -88,7 +88,7 @@ class WorldsModel extends Model
 			$states->ADM4 = $states->ADM4->name;
 		}
 		if(!empty($arr['city']) && trim($arr['city'])!='') {
-			$city = $this->findCityById($arr->city,'FULLNAMEND as name');
+			$city = $this->findCityById($arr['city'],'FULLNAMEND as name');
 			$states->city = $city->name;
 		}
  		
