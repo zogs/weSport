@@ -42,7 +42,7 @@
 					foreach ($sports_available as $sport):?>
 						<div class="sportChoice">
 							<input type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
-							<label for="label-<?php echo $sport->slug;?>" class="tooltiptop" data-toggle="tooltip" title="<?php echo $sport->name;?>">
+							<label for="label-<?php echo $sport->slug;?>" class="tooltiptop" data-toggle="tooltip" title="<?php echo utf8_decode($sport->name);?>">
 								<span class="ws-icon ws-icon-<?php echo $sport->slug;?>"></span>
 							</label>
 						</div>						

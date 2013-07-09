@@ -11,6 +11,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 	<?php if(isset($openGraph['metas'])) echo $openGraph['metas']; ?>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equip="cache-control" content="no-cache">
 	<link rel="icon" type="image/png" href="<?php echo Router::webroot('img/LOGO.gif');?>">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo Router::webroot('img/wesport.ico');?>">
 	<?php $this->loadCSS();?>

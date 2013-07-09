@@ -52,7 +52,8 @@ $(document).ready(function(){
 	/*===========================================================
 		Security token send with AJAX /!\
 	============================================================*/
-
+	jQuery.support.cors = true; // important for IE8
+	
 	$(document)	
 		//Add token in POST data	
 		.ajaxSend(function(elm,xhr,settings){
@@ -81,7 +82,7 @@ $(document).ready(function(){
 				cache: false,
 				data : null,
 				// async: false, //fait planter firefox
-				crossDomain: true,
+				crossDomain: true,				
 				xhrFields: {
 				    withCredentials: true,
 				 }

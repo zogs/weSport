@@ -43,8 +43,8 @@ class Conf {
 	static $languageDefault = 'fr';	
 
 	//Cache
-	static $cacheLocation = 'D:/wamp/www/wesport/webroot/cache';
-	static $cacheLocationDuration = 10080; //(60*24*7);
+	static $cachePath = 'D:/wamp/www/wesport/webroot/cache';
+
 
 	//Css to load
 	static $css = array(	

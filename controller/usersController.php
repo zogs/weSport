@@ -154,25 +154,20 @@ class UsersController extends Controller{
 		$d['location_codes'] = $codes;
 		$d['location'] = $location;
 
-		//maps
-		$cities = array();
-		foreach ($users as $user) {
-			if(isset($user->city))
-				$c = $this->Worlds->findCityById($user->city,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
-				$cities[] = array('user_id'=>$user->user_id,'login'=>$user->login,'city'=>$c->name,'lat'=>$c->lat,'lon'=>$c->lon);
-		}
-		$this->Worlds->makeClusterKMLofCities($codes,$cities);
-
+		//maps					
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
 		$gmap = new GoogleMapAPI();
 		$gmap->setDivId('map');
-		$gmap->setCenter('paris France');
+		$gmap->setCenter(implode(' ',(array)$location));
 		$gmap->setDisplayDirectionFields(true);
 		$gmap->setClusterer(true);
 		$gmap->setSize('100%','100%');
-		$gmap->setZoom(5);
+		$gmap->setZoom(7);
 		//$gmap->addKML('../googlemap/kml/Locator3RF.kml','radars_fixes','../googlemap/Locator3RF.png');
-		$gmap->addKML('../webroot/cache/Array.kml','Sportifs','../webroot/img/LOGO.gif');
+		if(!empty($users)){
+			$path_to_kml = $this->Worlds->clusterOfWesportersCities('Wesporters Cities',$codes,$users);
+			$gmap->addKML($path_to_kml,'Sportifs','../webroot/img/LOGO.gif');
+		}
 		$gmap->generate();
 		 $d['gmap'] = $gmap;
 

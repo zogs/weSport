@@ -10,7 +10,10 @@ class WorldsModel extends Model
 		parent::__construct();
 
 		//Cache for location system
- 		$this->cacheLocation = new Cache(Conf::$cacheLocation,Conf::$cacheLocationDuration);
+ 		$this->cacheLocation = new Cache(Conf::$cachePath.'/location',10080); //(60*24*7));
+		//cache for cluster of wesporter location
+		$this->cacheWesporterLocation = new Cache(Conf::$cachePath.'/users_location',1440); //one day
+
 
 
 	}
@@ -99,7 +102,7 @@ class WorldsModel extends Model
  		if($this->cacheSystem == false) return false;
 
  		//Write file into cache location
- 		$this->cacheLocation->write($path,$content);
+ 		$this->cacheLocation->write($path,base64_encode($content));
 
  	}
 
@@ -111,7 +114,8 @@ class WorldsModel extends Model
  		//If cache location existe return cache version
  		if($content = $this->cacheLocation->read($path)){
 
- 			return $content;
+ 			
+ 			return base64_decode($content);
  		}
  		else //else return false;
  			return false;
@@ -124,9 +128,9 @@ class WorldsModel extends Model
  	*/
 	public function findCountry($CC1 = ''){
 
-		$location = 'location/CC1/country_list';
+		$path = $this->path_location(array('CC1'=>$CC1));
 
-		if($cache = $this->findCacheVersion($location)){
+		if($cache = $this->findCacheVersion($path)){
 
 			$cache = unserialize($cache);
 			return $cache;
@@ -147,7 +151,7 @@ class WorldsModel extends Model
  			'list'=>$countries
  			);
 
- 		$this->writeCacheVersion($location,serialize($result));
+ 		$this->writeCacheVersion($path,serialize($result));
 
  		return $result;
 
@@ -162,10 +166,10 @@ class WorldsModel extends Model
  		extract($data);
 
  		//cache location
- 		$location = 'location/'.$level.'/'.$CC1.'/'.$level.'_parent_'.$parent;
+ 		$path = $this->path_location($data);
 
  		//find cache version
- 		if($cache = $this->findCacheVersion($location)){
+ 		if($cache = $this->findCacheVersion($path)){
  			return unserialize($cache); //if exist return cache version
  		}
  
@@ -199,7 +203,7 @@ class WorldsModel extends Model
  			);
 
  		//write cache version
- 		$this->writeCacheVersion($location,serialize($result));
+ 		$this->writeCacheVersion($path,serialize($result));
 
  		return $result;
 
@@ -235,14 +239,12 @@ class WorldsModel extends Model
 	 	$ADM = $this->formatADMArray($ADM);
 
 	 	//set location of cache file
-	 	$location = 'location/city/'.$CC1.'/city_';
-	 	foreach ($ADM as $k => $v) {
-	 		$location .= $k.'_'.$v.'_';
-	 	}
-	 	$location = substr($location, 0, -1);
+	 	$a = array('CC1'=>$CC1,'city'=>'yes');
+	 	$a = array_merge($a,$ADM);
+	 	$path = $this->path_location($a);
 
 	 	//if cache file exist
-	 	if($cache = $this->findCacheVersion($location)){
+	 	if($cache = $this->findCacheVersion($path)){
 
 	 		return unserialize($cache); //return cache version
 	 	}
@@ -282,14 +284,32 @@ class WorldsModel extends Model
 			'list'=>$cities
 			);
 
+		// debug(mb_detect_encoding($result['list'][47]->name));
+		// debug($result);
 		//write cache version
-		$this->writeCacheVersion($location,serialize($result));
+		$this->writeCacheVersion($path,serialize($result));
 
 		return $result;
  	}
 
 
- 	public function makeClusterKMLofCities($location,$cities){
+ 	public function clusterOfWesportersCities($title,$location,$users){
+
+ 		$path = $this->path_location($location,'.kml');
+
+ 		if($this->cacheWesporterLocation->read($path)){
+ 				
+ 				return Conf::$cachePath.'/users_location/'.$path;
+ 		}
+
+ 		$cities = array();
+		foreach ($users as $user) {			
+			if($user->exist()==true && isset($user->city))				
+				$c = $this->findCityById($user->city,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
+				$cities[] = array('user_id'=>$user->user_id,'login'=>$user->login,'city'=>$c->name,'lat'=>$c->lat,'lon'=>$c->lon);
+		}
+
+		if(empty($cities)) return;
 
  		$xml = "<?xml version='1.0' encoding='UTF-8'?>
 				<kml xmlns='http://earth.google.com/kml/2.2'>
@@ -316,12 +336,52 @@ class WorldsModel extends Model
 				</kml>
 				";
 
-		$this->writeCacheVersion($location.'.kml',$xml);
+		$this->cacheWesporterLocation->write($path,$xml);
+
+		return Conf::$cachePath.'/users_location/'.$path;		
  	}
 
- 	public function path_location($location){
+ 	public function path_location($location,$ext='.list'){
 
- 		//$location = 'location/'.$level.'/'.$CC1.'/'.$level.'_parent_'.$parent;
+ 		$a = array();
+ 		$path = '';
+ 		$order = array('CC1','ADM1','ADM2','ADM3','ADM4','city');
+ 		if(is_object($location)) $location = (array) $location;
+ 		foreach ($order as $v) {
+ 			if(!empty($location[$v])) $a[$v] = $location[$v];
+ 		}
+
+
+ 		if(empty($a['CC1'])){
+ 			return 'CC1'.$ext;
+ 		}
+
+		if(!empty($a['city'])){		
+			$path .= $a['CC1'];
+			$path .= '/city/';
+			unset($a['city']);
+			unset($a['CC1']);
+			foreach ($a as $key => $value) {
+				$path .= $value.'/';
+			}
+			$path .= 'city'.$ext;
+
+			return $path;
+		}
+			
+		if(!empty($location['level'])) {
+			if($location['level']=='ADM1') $path = $a['CC1'].'/ADM1/'.$a['CC1'].$ext;
+			if($location['level']=='ADM2') $path = $a['CC1'].'/ADM2/'.$location['parent'].$ext;
+			if($location['level']=='ADM3') $path = $a['CC1'].'/ADM3/'.$location['parent'].$ext;
+			if($location['level']=='ADM4') $path = $a['CC1'].'/ADM4/'.$location['parent'].$ext;			
+ 		
+ 			return $path;
+		}
+
+		//else
+		$path = implode('/',$a);
+		return $path;
+
  	}
  	/**
  	* SuggestCities
@@ -396,8 +456,6 @@ class WorldsModel extends Model
 
  		extract($params);
 
- 		debug($params);
-
  		//If extend arround a point
 		// set params to modified the query
 		if(!empty($arround)){
@@ -461,7 +519,7 @@ class WorldsModel extends Model
 
 		$sql .= 'having distance < '.$distance;
 		
-		debug($sql);
+		
 		$pre = $this->db->prepare($sql);
 		$pre->execute();
 		$cities = $pre->fetchAll(PDO::FETCH_OBJ);

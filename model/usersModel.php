@@ -261,7 +261,7 @@ class UsersModel extends Model{
  		$results = $this->query($sql);
  		
 
- 		if(empty($results)) return array( new User() );
+ 		if(empty($results)) return array();
 
  		$users = array();
  		foreach ($results as $user) {
@@ -335,6 +335,7 @@ class User {
 	public $avatar  = 'img/LOGO.gif';
 	public $account = 'visitor';
 	public $role = 'visitor';
+	public $city = 0;
 
 	public function __construct( $fields = array() ){
 
@@ -351,7 +352,7 @@ class User {
 
 	public function exist(){
 
-		if($this->user_id===0) return false;
+		if($this->user_id==0) return false;
 		return true;
 	}
 
