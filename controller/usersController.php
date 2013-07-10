@@ -113,10 +113,11 @@ class UsersController extends Controller{
 		$this->loadModel('Worlds');
 		$this->loadModel('Users');
 
+		//default values
 		$perPage = 3;	
-		$codes = array();
+		$codes = array('CC1'=>$this->getCountryCode());
 
-
+		//if GET request (except page)
 		if($this->request->get() && !$this->request->get('page')){
 			$dpt = array('CC1','ADM1','ADM2','ADM3','ADM5','city');
 			$codes = new stdClass();
