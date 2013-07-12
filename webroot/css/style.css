@@ -1739,41 +1739,54 @@ div.col_small {
 }
 
 /* line 1297, ../scss/style.scss */
+.indexuser .form-locate #control-submit {
+  display: inline;
+}
+/* line 1302, ../scss/style.scss */
+.indexuser .col_large {
+  padding-left: 1%;
+}
+/* line 1304, ../scss/style.scss */
 .indexuser .col_large .userlist {
   width: 100%;
-  background-color: #EEE;
 }
-/* line 1301, ../scss/style.scss */
+/* line 1307, ../scss/style.scss */
 .indexuser .col_large .userlist .user {
   display: block;
   float: left;
-  width: 33%;
-  margin: 5px 0;
+  width: 30%;
+  margin: 5px 1%;
+  background-color: rgba(0, 0, 0, 0.08);
 }
-/* line 1306, ../scss/style.scss */
+/* line 1313, ../scss/style.scss */
 .indexuser .col_large .userlist .user img {
   float: left;
-  width: 50px;
-  height: 50px;
-  margin-right: 5px;
+  width: 40px;
+  height: 40px;
+  margin-right: 3px;
 }
-/* line 1312, ../scss/style.scss */
+/* line 1319, ../scss/style.scss */
 .indexuser .col_large .userlist .user span {
   display: block;
   float: left;
 }
-/* line 1316, ../scss/style.scss */
+/* line 1323, ../scss/style.scss */
 .indexuser .col_large .userlist .user strong {
   display: block;
   float: left;
+  font-size: 12px;
+  font-size: 1.2rem;
 }
-/* line 1321, ../scss/style.scss */
+/* line 1329, ../scss/style.scss */
 .indexuser .col_large .userlist .user small {
   display: block;
   float: left;
   clear: left;
+  font-size: 9px;
+  font-size: 0.9rem;
+  color: #888888;
 }
-/* line 1327, ../scss/style.scss */
+/* line 1337, ../scss/style.scss */
 .indexuser .col_large .userlist .user .pagination {
   display: block;
   float: left;
@@ -1783,83 +1796,83 @@ div.col_small {
 /*=======
 == ACCOUNT
 =======*/
-/* line 1344, ../scss/style.scss */
+/* line 1354, ../scss/style.scss */
 #account .col_small .module {
   padding: 10px 5%;
 }
-/* line 1346, ../scss/style.scss */
+/* line 1356, ../scss/style.scss */
 #account .col_small .profil .useravatar {
   margin-right: 5px;
 }
-/* line 1347, ../scss/style.scss */
+/* line 1357, ../scss/style.scss */
 #account .col_small .profil .username {
   font-weight: bold;
   text-transform: capitalize;
 }
-/* line 1349, ../scss/style.scss */
+/* line 1359, ../scss/style.scss */
 #account .col_small .menu {
   padding: 0;
 }
-/* line 1351, ../scss/style.scss */
+/* line 1361, ../scss/style.scss */
 #account .col_small .menu ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-/* line 1355, ../scss/style.scss */
+/* line 1365, ../scss/style.scss */
 #account .col_small .menu ul li {
   font-size: 16px;
   font-size: 1.6rem;
   padding: 10px 0 10px 5%;
   border-bottom: 1px solid #CCC;
 }
-/* line 1360, ../scss/style.scss */
+/* line 1370, ../scss/style.scss */
 #account .col_small .menu ul li i.icon {
   margin-right: 5px;
 }
-/* line 1361, ../scss/style.scss */
+/* line 1371, ../scss/style.scss */
 #account .col_small .menu ul li a {
   color: #427b8b;
 }
-/* line 1363, ../scss/style.scss */
+/* line 1373, ../scss/style.scss */
 #account .col_small .menu ul li:last-child {
   border-bottom: 0;
 }
-/* line 1364, ../scss/style.scss */
+/* line 1374, ../scss/style.scss */
 #account .col_small .menu ul li:hover {
   background-color: #FFF;
 }
-/* line 1365, ../scss/style.scss */
+/* line 1375, ../scss/style.scss */
 #account .col_small .menu ul li:hover a {
   color: #1b3a43;
 }
-/* line 1370, ../scss/style.scss */
+/* line 1380, ../scss/style.scss */
 #account .col_large {
   padding: 10px;
 }
-/* line 1372, ../scss/style.scss */
+/* line 1382, ../scss/style.scss */
 #account .col_large .module {
   padding: 10px 1%;
 }
-/* line 1373, ../scss/style.scss */
+/* line 1383, ../scss/style.scss */
 #account .col_large #account-form {
   padding-left: 20px;
   padding-right: 20px;
 }
-/* line 1376, ../scss/style.scss */
+/* line 1386, ../scss/style.scss */
 #account .col_large #account-form label {
   width: 20%;
 }
-/* line 1379, ../scss/style.scss */
+/* line 1389, ../scss/style.scss */
 #account .col_large #account-form label.checkbox {
   width: auto;
   float: none;
 }
-/* line 1385, ../scss/style.scss */
+/* line 1395, ../scss/style.scss */
 #account .col_large #account-form.form-mailing .controls {
   width: 100%;
 }
-/* line 1389, ../scss/style.scss */
+/* line 1399, ../scss/style.scss */
 #account .module {
   background-color: #efefef;
   -webkit-border-radius: 4px;
@@ -1871,7 +1884,7 @@ div.col_small {
   -moz-box-shadow: 0 0 0 black;
   box-shadow: 0 0 0 black;
 }
-/* line 1395, ../scss/style.scss */
+/* line 1405, ../scss/style.scss */
 #account .col_small, #account .col_large {
   padding-top: 40px;
 }
@@ -1881,27 +1894,27 @@ div.col_small {
 ==== COMMENTAIRE
 ===========
 */
-/* line 1406, ../scss/style.scss */
+/* line 1416, ../scss/style.scss */
 #commentForm {
   margin: 0;
 }
-/* line 1410, ../scss/style.scss */
+/* line 1420, ../scss/style.scss */
 #commentForm textarea[disabled=disabled] {
   width: 80%;
 }
-/* line 1413, ../scss/style.scss */
+/* line 1423, ../scss/style.scss */
 #commentForm .userAvatarCommentForm {
   float: left;
   width: 40px;
   height: 40px;
   margin-right: 5px;
 }
-/* line 1419, ../scss/style.scss */
+/* line 1429, ../scss/style.scss */
 #commentForm .commentFormFields {
   float: left;
   width: 90%;
 }
-/* line 1422, ../scss/style.scss */
+/* line 1432, ../scss/style.scss */
 #commentForm .commentFormFields textarea {
   width: 70%;
   -webkit-box-shadow: 0 0 10px #cccccc;
@@ -1909,23 +1922,23 @@ div.col_small {
   box-shadow: 0 0 10px #cccccc;
 }
 
-/* line 1428, ../scss/style.scss */
+/* line 1438, ../scss/style.scss */
 #tri {
   margin-bottom: 0;
 }
 
-/* line 1431, ../scss/style.scss */
+/* line 1441, ../scss/style.scss */
 .commentFilter {
   float: left;
   width: 100%;
 }
 
-/* line 1436, ../scss/style.scss */
+/* line 1446, ../scss/style.scss */
 #comments {
   float: left;
   width: 100%;
 }
-/* line 1440, ../scss/style.scss */
+/* line 1450, ../scss/style.scss */
 #comments .post {
   margin-bottom: 0;
   border: 0;
@@ -1935,12 +1948,12 @@ div.col_small {
   background-color: #F0F0F0;
 }
 
-/* line 1448, ../scss/style.scss */
+/* line 1458, ../scss/style.scss */
 #bottomComments {
   float: left;
   width: 100%;
 }
-/* line 1452, ../scss/style.scss */
+/* line 1462, ../scss/style.scss */
 #bottomComments div, #bottomComments a {
   width: 100%;
   display: block;
@@ -1950,7 +1963,7 @@ div.col_small {
   color: #888888;
 }
 
-/* line 1461, ../scss/style.scss */
+/* line 1471, ../scss/style.scss */
 #hiddenFormReply {
   display: none;
 }
@@ -1960,7 +1973,7 @@ div.col_small {
 === FOOTER ==
 ============
 */
-/* line 1469, ../scss/style.scss */
+/* line 1479, ../scss/style.scss */
 .footer {
   width: 100%;
   border-top: 15px solid #a3caea;
@@ -1970,12 +1983,12 @@ div.col_small {
   background-color: #1b3a43;
   padding: 20px 5%;
 }
-/* line 1476, ../scss/style.scss */
+/* line 1486, ../scss/style.scss */
 .footer ul li {
   display: inline-block;
   margin: 0 40px;
 }
-/* line 1477, ../scss/style.scss */
+/* line 1487, ../scss/style.scss */
 .footer ul li a, .footer ul li a:link, .footer ul li a:visited {
   font-family: Verdana,sans-serif;
   font-size: 14px;
@@ -1983,11 +1996,11 @@ div.col_small {
   color: #a3caea;
   text-transform: uppercase;
 }
-/* line 1483, ../scss/style.scss */
+/* line 1493, ../scss/style.scss */
 .footer ul li a:hover, .footer ul li a:active {
   text-decoration: underline;
 }
-/* line 1487, ../scss/style.scss */
+/* line 1497, ../scss/style.scss */
 .footer .copyright {
   text-align: center;
   font-size: 10px;
@@ -1999,7 +2012,7 @@ div.col_small {
 ======================
 TYPEAHEAD CUSTOM STYLE
 =====================*/
-/* line 1494, ../scss/style.scss */
+/* line 1504, ../scss/style.scss */
 .tt-dropdown-menu {
   width: 100%;
   padding: 8px 0;
@@ -2010,12 +2023,12 @@ TYPEAHEAD CUSTOM STYLE
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* line 1497, ../scss/style.scss */
+/* line 1507, ../scss/style.scss */
 .tt-suggestion {
   padding: 8px 20px;
 }
 
-/* line 1498, ../scss/style.scss */
+/* line 1508, ../scss/style.scss */
 .tt-name {
   font-size: 16px;
   font-size: 1.6rem;
@@ -2023,7 +2036,7 @@ TYPEAHEAD CUSTOM STYLE
   color: #888;
 }
 
-/* line 1499, ../scss/style.scss */
+/* line 1509, ../scss/style.scss */
 .tt-sub {
   font-size: 15px;
   font-size: 1.5rem;
@@ -2031,7 +2044,7 @@ TYPEAHEAD CUSTOM STYLE
   color: #999;
 }
 
-/* line 1500, ../scss/style.scss */
+/* line 1510, ../scss/style.scss */
 .tt-id {
   font-size: 8px;
   font-size: 0.8rem;
@@ -2039,12 +2052,12 @@ TYPEAHEAD CUSTOM STYLE
   display: none;
 }
 
-/* line 1501, ../scss/style.scss */
+/* line 1511, ../scss/style.scss */
 .tt-suggestion.tt-is-under-cursor {
   background-color: #0097cf;
 }
 
-/* line 1502, ../scss/style.scss */
+/* line 1512, ../scss/style.scss */
 .tt-suggestion.tt-is-under-cursor p {
   color: white;
 }
@@ -2053,7 +2066,7 @@ TYPEAHEAD CUSTOM STYLE
 =====*/
 /* reset chrome style for select inputs */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 1508, ../scss/style.scss */
+  /* line 1518, ../scss/style.scss */
   select {
     -webkit-appearance: none;
     appearance: none;
@@ -2061,38 +2074,38 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 480px) {
-  /* line 1514, ../scss/style.scss */
+  /* line 1524, ../scss/style.scss */
   .navbar {
     padding: 0 1%;
   }
 
-  /* line 1515, ../scss/style.scss */
+  /* line 1525, ../scss/style.scss */
   .navbar .weSport {
     margin: 5px 5px 0 5px;
     padding: 0;
   }
 
-  /* line 1516, ../scss/style.scss */
+  /* line 1526, ../scss/style.scss */
   .navbar .desktopMenu {
     display: none;
   }
 
-  /* line 1517, ../scss/style.scss */
+  /* line 1527, ../scss/style.scss */
   .navbar .mobileMenu {
     display: block;
   }
-  /* line 1520, ../scss/style.scss */
+  /* line 1530, ../scss/style.scss */
   .navbar .mobileMenu li a {
     padding: 0;
     margin-left: 10px;
   }
 
-  /* line 1527, ../scss/style.scss */
+  /* line 1537, ../scss/style.scss */
   #formSearch {
     width: 100%;
     margin: 20px 0 0 0;
   }
-  /* line 1531, ../scss/style.scss */
+  /* line 1541, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 100%;
     margin: 0;
@@ -2106,281 +2119,281 @@ TYPEAHEAD CUSTOM STYLE
     -moz-box-shadow: 0 0 0 black;
     box-shadow: 0 0 0 black;
   }
-  /* line 1538, ../scss/style.scss */
+  /* line 1548, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs {
     padding: 0;
     width: 67%;
   }
-  /* line 1541, ../scss/style.scss */
+  /* line 1551, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName {
     width: 75%;
   }
-  /* line 1544, ../scss/style.scss */
+  /* line 1554, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName #cityName {
     height: 40px;
     padding-left: 15px;
     font-size: 28px;
     font-size: 2.8rem;
   }
-  /* line 1549, ../scss/style.scss */
+  /* line 1559, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName .twitter-typeahead .tt-hint {
     font-size: 28px;
     font-size: 2.8rem;
   }
-  /* line 1553, ../scss/style.scss */
+  /* line 1563, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerExtend {
     width: 25%;
     top: 30%;
   }
-  /* line 1560, ../scss/style.scss */
+  /* line 1570, ../scss/style.scss */
   #formSearch .cityRounded .citySubmit .ws-icon-loupe {
     font-size: 30px;
     font-size: 3rem;
   }
-  /* line 1562, ../scss/style.scss */
+  /* line 1572, ../scss/style.scss */
   #formSearch .cityRounded .cityAriane {
     width: 65%;
     font-size: 10px;
     font-size: 1rem;
   }
-  /* line 1567, ../scss/style.scss */
+  /* line 1577, ../scss/style.scss */
   #formSearch .sportCheckboxs {
     display: none;
   }
-  /* line 1568, ../scss/style.scss */
+  /* line 1578, ../scss/style.scss */
   #formSearch .sportSelect {
     display: block;
     width: 100%;
     padding: 0 10%;
     margin: 30px 0 0 0;
   }
-  /* line 1574, ../scss/style.scss */
+  /* line 1584, ../scss/style.scss */
   #formSearch .sportSelect label {
     font-size: 14px;
     font-size: 1.4rem;
   }
 
-  /* line 1581, ../scss/style.scss */
+  /* line 1591, ../scss/style.scss */
   .connexion .container {
     width: 100%;
   }
-  /* line 1583, ../scss/style.scss */
+  /* line 1593, ../scss/style.scss */
   .connexion .container .form-ws {
     width: 100%;
   }
-  /* line 1585, ../scss/style.scss */
+  /* line 1595, ../scss/style.scss */
   .connexion .container .form-ws .control-submit {
     width: 100%;
   }
 
-  /* line 1593, ../scss/style.scss */
+  /* line 1603, ../scss/style.scss */
   .register .container {
     width: 100%;
   }
-  /* line 1595, ../scss/style.scss */
+  /* line 1605, ../scss/style.scss */
   .register .container .form-ws {
     width: 100%;
     float: right;
   }
-  /* line 1599, ../scss/style.scss */
+  /* line 1609, ../scss/style.scss */
   .register .container .form-facebook {
     width: 100%;
     float: left;
   }
 
-  /* line 1607, ../scss/style.scss */
+  /* line 1617, ../scss/style.scss */
   .createEvent .container {
     width: 100%;
   }
-  /* line 1609, ../scss/style.scss */
+  /* line 1619, ../scss/style.scss */
   .createEvent .container .col_large {
     width: 100%;
     padding: 0;
   }
-  /* line 1613, ../scss/style.scss */
+  /* line 1623, ../scss/style.scss */
   .createEvent .container .col_large .control-group .control-label {
     width: 25%;
   }
-  /* line 1620, ../scss/style.scss */
+  /* line 1630, ../scss/style.scss */
   .createEvent .container .col_small {
     width: 100%;
     padding: 0;
   }
 
-  /* line 1628, ../scss/style.scss */
+  /* line 1638, ../scss/style.scss */
   .viewevent .container {
     width: 100%;
   }
-  /* line 1631, ../scss/style.scss */
+  /* line 1641, ../scss/style.scss */
   .viewevent .container .event-header .event-title {
     width: auto;
   }
-  /* line 1633, ../scss/style.scss */
+  /* line 1643, ../scss/style.scss */
   .viewevent .container .event-header .event-title h1 {
     font-size: 26px;
     font-size: 2.6rem;
   }
-  /* line 1635, ../scss/style.scss */
+  /* line 1645, ../scss/style.scss */
   .viewevent .container .event-header .event-title h1 .event-sport-logo {
     padding: 0;
     font-size: 40px;
     font-size: 4rem;
   }
-  /* line 1641, ../scss/style.scss */
+  /* line 1651, ../scss/style.scss */
   .viewevent .container .event-header .event-orga {
     float: left;
     width: 100%;
   }
-  /* line 1644, ../scss/style.scss */
+  /* line 1654, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-avatar {
     display: none;
   }
-  /* line 1647, ../scss/style.scss */
+  /* line 1657, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info {
     float: left;
     text-align: left;
   }
-  /* line 1650, ../scss/style.scss */
+  /* line 1660, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info span {
     display: inline-block;
     width: auto;
   }
-  /* line 1654, ../scss/style.scss */
+  /* line 1664, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info span.orga-name {
     font-size: 12px;
     font-size: 1.2rem;
   }
-  /* line 1657, ../scss/style.scss */
+  /* line 1667, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info span.orga-age {
     font-size: 10px;
     font-size: 1rem;
   }
-  /* line 1660, ../scss/style.scss */
+  /* line 1670, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-info small {
     font-size: 12px;
     font-size: 1.2rem;
   }
-  /* line 1668, ../scss/style.scss */
+  /* line 1678, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-action {
     margin-bottom: 10px;
     margin-top: 10px;
     margin-right: 5px;
   }
-  /* line 1673, ../scss/style.scss */
+  /* line 1683, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-action .btn-ws {
     padding: 10px 20px;
   }
-  /* line 1677, ../scss/style.scss */
+  /* line 1687, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-status {
     float: left;
     margin-top: 2px;
   }
-  /* line 1683, ../scss/style.scss */
+  /* line 1693, ../scss/style.scss */
   .viewevent .container .col_large {
     width: 100%;
     padding: 10px 1%;
   }
-  /* line 1686, ../scss/style.scss */
+  /* line 1696, ../scss/style.scss */
   .viewevent .container .col_large .event-info {
     margin-bottom: 0;
     line-height: 150%;
     font-size: 20px;
     font-size: 2rem;
   }
-  /* line 1693, ../scss/style.scss */
+  /* line 1703, ../scss/style.scss */
   .viewevent .container .col_small {
     width: 100%;
     padding: 0;
     margin-top: 50px;
   }
-  /* line 1697, ../scss/style.scss */
+  /* line 1707, ../scss/style.scss */
   .viewevent .container .col_small #eventmap {
     width: 100%;
   }
 
-  /* line 1706, ../scss/style.scss */
+  /* line 1716, ../scss/style.scss */
   .viewuser .container {
     width: 100%;
   }
-  /* line 1709, ../scss/style.scss */
+  /* line 1719, ../scss/style.scss */
   .viewuser .container .user-header .user-avatar {
     width: 100px;
   }
-  /* line 1713, ../scss/style.scss */
+  /* line 1723, ../scss/style.scss */
   .viewuser .container .user-header .user-login h1 {
     font-size: 20px;
     font-size: 2rem;
     margin-bottom: 0;
   }
-  /* line 1717, ../scss/style.scss */
+  /* line 1727, ../scss/style.scss */
   .viewuser .container .user-header .user-login span {
     font-size: 10px;
     font-size: 1rem;
   }
-  /* line 1723, ../scss/style.scss */
+  /* line 1733, ../scss/style.scss */
   .viewuser .container .user-status .count_activity {
     float: left;
     width: auto;
     margin-right: 10px;
   }
-  /* line 1728, ../scss/style.scss */
+  /* line 1738, ../scss/style.scss */
   .viewuser .container .user-status .which_activity {
     float: left;
     width: auto;
   }
-  /* line 1733, ../scss/style.scss */
+  /* line 1743, ../scss/style.scss */
   .viewuser .container .col_large {
     width: 100%;
     margin-top: 20px;
     padding: 0 2%;
   }
-  /* line 1738, ../scss/style.scss */
+  /* line 1748, ../scss/style.scss */
   .viewuser .container .col_small {
     width: 100%;
     margin-top: 20px;
     padding: 0 2%;
   }
 
-  /* line 1747, ../scss/style.scss */
+  /* line 1757, ../scss/style.scss */
   #account .container {
     width: 100%;
   }
-  /* line 1749, ../scss/style.scss */
+  /* line 1759, ../scss/style.scss */
   #account .container .col_small {
     width: 100%;
     padding: 10px 5px;
   }
-  /* line 1753, ../scss/style.scss */
+  /* line 1763, ../scss/style.scss */
   #account .container .col_large {
     width: 100%;
     padding: 0 5px;
   }
-  /* line 1756, ../scss/style.scss */
+  /* line 1766, ../scss/style.scss */
   #account .container .col_large #account-form {
     padding: 0 5px;
     margin-top: 0;
   }
-  /* line 1757, ../scss/style.scss */
+  /* line 1767, ../scss/style.scss */
   #account .container .col_large #account-form h2 {
     text-align: center;
     font-size: 25px;
     font-size: 2.5rem;
   }
 
-  /* line 1769, ../scss/style.scss */
+  /* line 1779, ../scss/style.scss */
   .footer .container {
     width: 100%;
   }
-  /* line 1771, ../scss/style.scss */
+  /* line 1781, ../scss/style.scss */
   .footer .container ul {
     margin-left: 0;
   }
-  /* line 1773, ../scss/style.scss */
+  /* line 1783, ../scss/style.scss */
   .footer .container ul li {
     display: block;
     width: 100%;
   }
-  /* line 1776, ../scss/style.scss */
+  /* line 1786, ../scss/style.scss */
   .footer .container ul li a {
     font-size: 12px;
     font-size: 1.2rem;
@@ -2388,12 +2401,12 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* very small smartphone */
 @media only screen and (max-width: 240px) {
-  /* line 1787, ../scss/style.scss */
+  /* line 1797, ../scss/style.scss */
   #formSearch .cityRounded {
     padding-right: 0;
     padding-left: 0;
   }
-  /* line 1792, ../scss/style.scss */
+  /* line 1802, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerCityName #cityName {
     width: 100%;
     height: 40px;
@@ -2401,218 +2414,218 @@ TYPEAHEAD CUSTOM STYLE
     font-size: 25px;
     font-size: 2.5rem;
   }
-  /* line 1799, ../scss/style.scss */
+  /* line 1809, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs .containerExtend {
     display: none;
   }
-  /* line 1804, ../scss/style.scss */
+  /* line 1814, ../scss/style.scss */
   #formSearch .cityRounded .citySubmit .ws-icon-loupe {
     font-size: 20px;
     font-size: 2rem;
   }
-  /* line 1806, ../scss/style.scss */
+  /* line 1816, ../scss/style.scss */
   #formSearch .cityRounded .cityAriane {
     width: 60%;
   }
 }
 /* Smartphones landscape and Tablets portrait */
 @media only screen and (min-width: 480px) and (max-width: 768px) {
-  /* line 1817, ../scss/style.scss */
+  /* line 1827, ../scss/style.scss */
   .navbar {
     padding: 0 1%;
   }
-  /* line 1819, ../scss/style.scss */
+  /* line 1829, ../scss/style.scss */
   .navbar .weSport {
     padding: 0;
     margin-right: 20px;
   }
-  /* line 1820, ../scss/style.scss */
+  /* line 1830, ../scss/style.scss */
   .navbar .desktopMenu {
     display: none;
   }
-  /* line 1821, ../scss/style.scss */
+  /* line 1831, ../scss/style.scss */
   .navbar .mobileMenu {
     display: block;
   }
 
-  /* line 1823, ../scss/style.scss */
+  /* line 1833, ../scss/style.scss */
   #formSearch {
     width: 100%;
     margin: 40px 0 0 0;
   }
-  /* line 1826, ../scss/style.scss */
+  /* line 1836, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 80%;
     margin: 0 10%;
   }
-  /* line 1829, ../scss/style.scss */
+  /* line 1839, ../scss/style.scss */
   #formSearch .cityRounded .cityInputs {
     width: 70%;
   }
-  /* line 1832, ../scss/style.scss */
+  /* line 1842, ../scss/style.scss */
   #formSearch .cityRounded .cityAriane {
     width: 69%;
   }
-  /* line 1837, ../scss/style.scss */
+  /* line 1847, ../scss/style.scss */
   #formSearch .sportCheckboxs {
     display: none;
   }
-  /* line 1840, ../scss/style.scss */
+  /* line 1850, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 25px;
     font-size: 2.5rem;
   }
-  /* line 1841, ../scss/style.scss */
+  /* line 1851, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 35px;
     font-size: 3.5rem;
   }
-  /* line 1844, ../scss/style.scss */
+  /* line 1854, ../scss/style.scss */
   #formSearch .sportSelect {
     display: block;
     width: 100%;
     padding: 0 30%;
     margin-top: 30px;
   }
-  /* line 1849, ../scss/style.scss */
+  /* line 1859, ../scss/style.scss */
   #formSearch .sportSelect label.control-label {
     font-size: 14px;
     font-size: 1.4rem;
   }
 
-  /* line 1857, ../scss/style.scss */
+  /* line 1867, ../scss/style.scss */
   .connexion .container {
     width: 90%;
     margin: 0 5%;
   }
-  /* line 1860, ../scss/style.scss */
+  /* line 1870, ../scss/style.scss */
   .connexion .container .form-ws {
     width: 70%;
     margin-left: 15%;
     margin-right: 15%;
   }
-  /* line 1863, ../scss/style.scss */
+  /* line 1873, ../scss/style.scss */
   .connexion .container .form-ws .control-submit {
     width: 100%;
   }
 
-  /* line 1871, ../scss/style.scss */
+  /* line 1881, ../scss/style.scss */
   .register .container {
     width: 90%;
     margin: 0 5%;
   }
 
-  /* line 1878, ../scss/style.scss */
+  /* line 1888, ../scss/style.scss */
   .createEvent .container {
     width: 90%;
     margin: 0 5%;
   }
-  /* line 1881, ../scss/style.scss */
+  /* line 1891, ../scss/style.scss */
   .createEvent .container .col_large {
     width: 100%;
     padding: 0;
   }
-  /* line 1885, ../scss/style.scss */
+  /* line 1895, ../scss/style.scss */
   .createEvent .container .col_large .control-group .control-label {
     width: 15%;
   }
-  /* line 1892, ../scss/style.scss */
+  /* line 1902, ../scss/style.scss */
   .createEvent .container .col_small {
     width: 60%;
     margin: 0 20%;
     padding: 0;
   }
 
-  /* line 1900, ../scss/style.scss */
+  /* line 1910, ../scss/style.scss */
   .viewevent .container {
     width: 94%;
     margin: 0 3%;
   }
-  /* line 1906, ../scss/style.scss */
+  /* line 1916, ../scss/style.scss */
   .viewevent .container .event-header .event-orga .orga-avatar img {
     height: 70px;
   }
-  /* line 1911, ../scss/style.scss */
+  /* line 1921, ../scss/style.scss */
   .viewevent .container .col_small {
     width: 100%;
     padding: 50px 10% 50px 10%;
   }
-  /* line 1916, ../scss/style.scss */
+  /* line 1926, ../scss/style.scss */
   .viewevent .container .col_small .block .block-content {
     padding: 15px;
   }
-  /* line 1921, ../scss/style.scss */
+  /* line 1931, ../scss/style.scss */
   .viewevent .container .col_small .event-participants .event-participant-avatar {
     width: 70px;
     height: 70px;
   }
-  /* line 1925, ../scss/style.scss */
+  /* line 1935, ../scss/style.scss */
   .viewevent .container .col_small .event-participants strong {
     font-size: 17px;
     font-size: 1.7rem;
   }
-  /* line 1928, ../scss/style.scss */
+  /* line 1938, ../scss/style.scss */
   .viewevent .container .col_small .event-participants small {
     font-size: 14px;
     font-size: 1.4rem;
   }
-  /* line 1934, ../scss/style.scss */
+  /* line 1944, ../scss/style.scss */
   .viewevent .container .col_small .event-reviews ul li {
     font-size: 18px;
     font-size: 1.8rem;
   }
-  /* line 1936, ../scss/style.scss */
+  /* line 1946, ../scss/style.scss */
   .viewevent .container .col_small .event-reviews ul li img {
     width: 60px;
     height: 60px;
   }
-  /* line 1943, ../scss/style.scss */
+  /* line 1953, ../scss/style.scss */
   .viewevent .container .col_small .event-reviews a {
     font-size: 16px;
     font-size: 1.6rem;
   }
 
-  /* line 1953, ../scss/style.scss */
+  /* line 1963, ../scss/style.scss */
   .viewuser .container {
     width: 94%;
     padding: 0 3%;
   }
-  /* line 1959, ../scss/style.scss */
+  /* line 1969, ../scss/style.scss */
   .viewuser .col_large {
     width: 100%;
     padding: 20px 10%;
   }
-  /* line 1963, ../scss/style.scss */
+  /* line 1973, ../scss/style.scss */
   .viewuser .col_small {
     width: 100%;
     padding: 20px 10%;
   }
 
-  /* line 1970, ../scss/style.scss */
+  /* line 1980, ../scss/style.scss */
   #account .container {
     width: 94%;
     margin: 0 3%;
   }
-  /* line 1973, ../scss/style.scss */
+  /* line 1983, ../scss/style.scss */
   #account .container .col_small {
     width: 100%;
     padding: 20px 15%;
   }
-  /* line 1977, ../scss/style.scss */
+  /* line 1987, ../scss/style.scss */
   #account .container .col_large {
     width: 100%;
     padding: 0 5%;
   }
 
-  /* line 1985, ../scss/style.scss */
+  /* line 1995, ../scss/style.scss */
   .footer .container {
     width: 100%;
   }
-  /* line 1987, ../scss/style.scss */
+  /* line 1997, ../scss/style.scss */
   .footer .container ul {
     margin-left: 0;
   }
-  /* line 1989, ../scss/style.scss */
+  /* line 1999, ../scss/style.scss */
   .footer .container ul li {
     display: inline-block;
     width: auto;
@@ -2621,37 +2634,37 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* Tablets landscape and Small computer----------- */
 @media only screen and (min-width: 768px) and (max-width: 1025px) {
-  /* line 2003, ../scss/style.scss */
+  /* line 2013, ../scss/style.scss */
   .navbar {
     padding: 0 1%;
   }
-  /* line 2005, ../scss/style.scss */
+  /* line 2015, ../scss/style.scss */
   .navbar .weSport {
     padding: 0;
     padding-left: 10px;
     margin-right: 20px;
   }
-  /* line 2009, ../scss/style.scss */
+  /* line 2019, ../scss/style.scss */
   .navbar .nav li a {
     padding: 0 15px;
   }
 
-  /* line 2013, ../scss/style.scss */
+  /* line 2023, ../scss/style.scss */
   #formSearch {
     width: 100%;
   }
-  /* line 2015, ../scss/style.scss */
+  /* line 2025, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 70%;
     margin: 0 15%;
   }
-  /* line 2021, ../scss/style.scss */
+  /* line 2031, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 30px;
     font-size: 3rem;
   }
 
-  /* line 2026, ../scss/style.scss */
+  /* line 2036, ../scss/style.scss */
   .connexion .container {
     width: 100%;
   }

@@ -23,7 +23,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->Op
 
 
 	<div class="navbar navbar-fixed-top">
-	      		<a class="weSport" href="<?php echo Router::url('home');?>">
+	      		<a class="weSport" id="logoWeSport" href="<?php echo Router::url('home');?>">
 	      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
 		      	  	<i>we</i>Sport
 			</a>

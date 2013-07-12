@@ -1293,21 +1293,28 @@ div.col_small{
 
 .indexuser{
 
+	.form-locate{
+		#control-submit{
+			display: inline;
+		}
+	}
+
 	.col_large{
+		padding-left:1%;
 		.userlist{
 			width: 100%;
-			background-color:#EEE;
 			@extend %clearfix;
 			.user{
 				display: block;				
 				float:left;
-				width: 33%;
-				margin:5px 0;
+				width: 30%;
+				margin:5px 1%;
+				background-color:rgba(0,0,0,0.08);
 				img{ 
 					float:left;
-					width:50px;
-				 	height:50px;
-				 	margin-right:5px;
+					width:40px;
+				 	height:40px;
+				 	margin-right:3px;
 				 }
 				 span{
 				 	display: block;
@@ -1316,12 +1323,15 @@ div.col_small{
 				 strong{
 				 	display: block;
 				 	float:left;
+				 	@include rem(12);
 				 	
 				 }
 				 small{
 				 	display: block;
 				 	float:left;				 	
 				 	clear:left;
+				 	@include rem(9);
+				 	color:$deepgrey;
 				 }
 
 				 .pagination{

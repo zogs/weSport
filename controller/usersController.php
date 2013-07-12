@@ -126,17 +126,14 @@ class UsersController extends Controller{
 			}
 			
 			$this->session->write('userSearch',(array) $codes);		
-			$location = $this->Worlds->findStatesNames($codes);
 		}
 		elseif(is_array($this->session->read('userSearch'))){
 
 			$codes = $this->session->read('userSearch');			
-			$location = $this->Worlds->findStatesNames($codes);
 		}
 		elseif($city_id = $this->cookieEventSearch->read('cityID')){
 			
 			$codes = $this->Worlds->findCityById($city_id,'CC1,ADM1,ADM2,ADM3,ADM4,UNI as city');							
-			$location = $this->Worlds->findStatesNames($codes);
 		}
 
 		//query params
@@ -156,17 +153,17 @@ class UsersController extends Controller{
 
 		//location
 		$d['location_codes'] = $codes;
-		$d['location'] = $location;
+		$d['location_names'] = $this->Worlds->findStatesNames($codes);
 
 		//maps					
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');
 		$gmap = new GoogleMapAPI();
 		$gmap->setDivId('map');
-		$gmap->setCenter(implode(' ',(array)$location));
+		$gmap->setCenter(implode(' ',(array)$d['location_names']));
 		$gmap->setDisplayDirectionFields(true);
 		$gmap->setClusterer(true);
 		$gmap->setSize('100%','100%');
-		$gmap->setZoom(7);
+		$gmap->setZoom(6);
 		//$gmap->addKML('../googlemap/kml/Locator3RF.kml','radars_fixes','../googlemap/Locator3RF.png');
 		if(!empty($users)){
 			$path_to_kml = $this->Worlds->clusterOfWesportersCities('Wesporters Cities',$codes,$users);

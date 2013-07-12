@@ -137,8 +137,8 @@ class Controller {
 		if(isset(Conf::$css)){
 			$css = array_merge(Conf::$css,$css);
 		}
-		if(isset($this->css_load)){
-			$c = $this->css_load;
+		if(isset($this->loadCSS)){
+			$c = $this->loadCSS;
 			if(is_string($c)) $c = array($c);
 			if(is_array($c)) $css = array_merge($css,$c);
 		}

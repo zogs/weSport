@@ -9,27 +9,28 @@
 	<div class="container">
 		<div class="fresque fresque-mini"></div>		
 		<div class="white-sheet">
-			<section>
-				<form action="<?php echo Router::url('users/index/');?>" method="GET">
-					<?php				
-						echo $this->request('world','locate',array(array("obj"=>$location_codes)));
-
-						echo $this->Form->input('submit','',array('type'=>'submit','value'=>'Rechercher','class'=>'btn-ws btn-ws-small'));
-					?>					
-				</form>
-			</section>
-
-			<section>
-				<h1>Les sportifs de 
+			<div class="head-sheet">
+				<h1 class="title-sheet">
+					Les sportifs de 
 					<?php
 
-						foreach ($location as $key => $value) {
+						foreach ($location_names as $key => $value) {
 							$txt = $value;
 						}
 						echo $txt;
 					?>
 				</h1>
-			</section>			
+			</div>
+
+			<section>
+				<form class="form-locate" action="<?php echo Router::url('users/index/');?>" method="GET">
+					<?php				
+						echo $this->request('world','locate',array(array("obj"=>$location_codes)));
+						
+					?>	
+					<input type="submit" class="btn-ws btn-ws-small" value="Recherche">				
+				</form>
+			</section>		
 
 			<section>
 				<div class="col_large">	
@@ -42,7 +43,7 @@
 									<img src="<?php echo $user->getAvatar();?>" alt="">
 									<span>
 										<strong><?php echo $user->getLogin();?></strong>
-										<small><?php echo $user->getAge();?></small>
+										<small><?php echo $user->getAge();?> ans</small>
 									</span>
 								</a>
 							<?php endforeach; ?>
@@ -61,7 +62,7 @@
 				<div class="col_small">					
 				</div>
 
-				<div id="map" style="width:100%; height:300px">
+				<div id="map" style="width:100%; height:250px">
 					<?php echo $gmap->getGoogleMap(); ?>
 
 				</div>

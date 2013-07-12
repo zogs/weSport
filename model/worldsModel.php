@@ -379,7 +379,7 @@ class WorldsModel extends Model
 		}
 
 		//else
-		$path = implode('/',$a);
+		$path = implode('/',$a).$ext;
 		return $path;
 
  	}
