@@ -315,10 +315,12 @@ class PagesController extends Controller {
 				if(empty($data->time)) throw new zException("Robot used contact form - Login time must not be empty", 1);
 				if(abs(time()-$data->time) < 3) throw new zException("Robot used contact form - form filled too fast for human being", 1);				
 				
-				if($this->sendMailContact($data->name,$data->email,$data->title,$data->message)){
+				
 
-					$this->session->setFlash("Votre message a bien été envoyé","success");
-				}
+				if($this->sendMailContact($data->name,$data->email,$data->title,$data->message) && $this->Pages->saveContactMessage($data))
+					$this->session->setFlash("C'est gentil d'avoir laisser un petit mot !","success");				
+				else
+					$this->session->setFlash("Erreur lors de la sauvegarde du message",'error');
 				
 			}
 
