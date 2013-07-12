@@ -326,6 +326,7 @@ class PagesController extends Controller {
 
 			$this->loadModel('Users');
 			$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$this->session->user()->getID())));
+			if(empty($user)) $user = new User();
 			$d['user'] = $user;
 			
 			$this->set($d);

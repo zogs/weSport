@@ -85,7 +85,7 @@
 			/*===========
 			==== User review 
 			=============*/
-			if($this->session->user()->online() && $event->timing=='past' && $event->UserParticipation): ?>
+			if($this->session->user()->online() && $event->timing=='past' && isset($event->UserParticipation)): ?>
 			<div class="block event-userreview">
 				<div class="block-content">
 					<form action="<?php echo Router::url('events/review/'.$event->getID());?>" method="POST">
