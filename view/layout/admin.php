@@ -10,28 +10,25 @@
 </head>
 <body class="backend_admin">
 
-	<div class="navbar navbar-fixed-top">
-	  <div class="navbar-inner">
-	    <div   class="container">
-	      <a class="brand" href="<?php echo Router::url('admin/posts/index'); ?>">
-	  			Admin.
-			</a>
+        <div class="navbar navbar-fixed-top">
+                <a class="weSport" href="<?php echo Router::url('home');?>">
+                                <img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
+                                <i>we</i>Sport
+                                <small style="font-size:16px;font-style:italic;color:#555;">Administration</small>
+                </a>
 
-			<ul class="nav">
-				<li><a href="<?php echo Router::url('/'); ?>">Voir le site</a></li>				
-				<li><a href="<?php echo Router::url('admin/pages/index'); ?>">Pages</a></li>
-                                <li><a href="<?php echo Router::url('users/logout'); ?>">Deconnexion</a></li>
-				
-			</ul>
-		</div>
-	  </div>
-	</div>
+                <ul class="nav">
+                        <li><a href="<?php echo Router::url('admin/pages/index'); ?>">Pages</a></li>
+                        <li><a href="<?php echo Router::url('users/logout'); ?>">Deconnexion</a></li>
+                        <li><a href="<?php echo Router::url('/'); ?>">Voir le site</a></li>                             
+                </ul>
 
-	<div class="container mainContainer">
+        </div>
 
-		<?php echo $this->session->flash();?>
-		<?php echo $content_for_layout;?>
-	</div>
+        <div class="container mainContainer">
+                <?php echo $this->session->flash();?>
+                <?php echo $content_for_layout;?>
+        </div>
 </body>
 
 <script type="text/javascript">
@@ -41,6 +38,16 @@ tinyMCE.init({
         editor_selector : "wysiwyg",
         theme : "advanced",
         plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+        //Valid element that will be not removed
+        valid_elements : "em/i,strike,u,strong/b,div[align],br,#p[align],-ol[type|compact],-ul[type|compact],-li",
+        // plugins : "paste",
+        // paste_text_sticky : true,
+        // setup : function(ed) {
+        //     ed.onInit.add(function(ed) {
+        //       ed.pasteAsPlainText = true;
+        //     });
+        //   },
 
         // Theme options
         theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",

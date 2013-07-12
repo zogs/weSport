@@ -207,6 +207,22 @@ class PagesModel extends Model {
 		}
 	}
 
+	public function saveContactMessage($d){
+
+		$m = new stdClass();
+		$m->table='contact_message';
+		$m->user_id = $d->user_id;
+		$m->login = $d->name;
+		$m->email = $d->email;
+		$m->title = $d->title;
+		$m->message = $d->message;
+		$m->lang = $d->lang;
+
+		if($this->save($m))
+			return true;
+		return false;
+
+	}
 	public function deleteContent($id){
 
 		if($this->delete($id)) return true;
