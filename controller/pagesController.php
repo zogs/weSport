@@ -154,6 +154,23 @@ class PagesController extends Controller {
 		}
 
 
+		public function admin_home(){
+
+			$this->loadModel('Pages');
+			$this->loadModel('Events');
+			$this->loadModel('Users');
+
+			$d['totalUsers'] = $this->Users->countTotalUsers();
+			$d['monthRegistering'][2013] = $this->Users->countMonthRegisteringForYear(2013);
+			$d['todayRegistering'] = $this->Users->countRegisteringFromDays(1);
+
+			$d['totalEvents'] = $this->Events->countTotalEvents();
+			$d['nbEventsPerMonth'][2013] = $this->Events->countMonthEventsForYear(2013);
+			$d['nbEventsToday'] = $this->Events->countEventsFromDays(1);
+			
+			$this->set($d);
+		}
+
 		public function admin_index($menu=null){
 
 			$this->loadModel('Pages');

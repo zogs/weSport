@@ -91,6 +91,14 @@ class EventsModel extends Model{
 
 	);
 
+	public function __construct(){
+
+		parent::__construct();
+		
+		//cache for cluster of wesporter location
+		$this->cacheData = new Cache(Conf::getCachePath().'/statistics',1440); //one day
+
+	}
 	public function findEvents($params){		
 
 		extract($params);
@@ -563,6 +571,47 @@ class EventsModel extends Model{
 
 		$sql = "UPDATE sporters SET mail=1 WHERE id=$sporter_id";
 		return $this->query($sql);
+	}
+
+	public function countTotalEvents(){
+
+		$cachename = 'totalEvents';
+		if($cache = $this->cacheData->read($cachename)) return $cache;
+		$events = $this->findFirst(array('fields'=>"COUNT($this->primaryKey) as total"));
+		$return = $events->total;
+		$this->cacheData->write($cachename,$return);
+		return $return;
+	}
+
+	public function countEventsFromDays($days = 1){
+
+		$cachename = 'countEventsFrom'.$days.'days';
+		if($cache = $this->cacheData->read($cachename)) return $cache;
+		$sql = "select count($this->primaryKey) as count from $this->table where date(date)>=date(date_sub(now(),interval $days day))";
+		$res = $this->query($sql);		
+		$count = $res[0]->count;
+		$this->cacheData->write($cachename,$count);
+		return $count;
+	}
+
+	public function countMonthEventsForYear($year){
+
+		$cachename = 'countEventsPerMonthFor'.$year;
+		if($cache = $this->cacheData->read($cachename)) return unserialize($cache);
+		$sql = "select month(date) as month, count($this->primaryKey) as count
+				from $this->table
+				where year(date) = $year
+				group by month(date)
+				order by month(date)";
+
+		$res = $this->query($sql);
+		$a = array();
+		foreach ($res as $m) {
+			$monthName = date("F", mktime(0, 0, 0, $m->month, 10));
+			$a[$monthName] = $m->count;
+		}
+		$this->cacheData->write($cachename,serialize($a));
+		return $a;
 	}
 
 	public function countParticipants($event_id){

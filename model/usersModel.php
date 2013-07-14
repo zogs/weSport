@@ -121,7 +121,14 @@ class UsersModel extends Model{
 		),
 	);
 
+	public function __construct(){
 
+		parent::__construct();
+		
+		//cache for cluster of wesporter location
+		$this->cacheData = new Cache(Conf::getCachePath().'/statistics',1440); //one day
+
+	}
 	public function saveUser($user,$user_id = null){
 
 		//unset action value
@@ -277,7 +284,47 @@ class UsersModel extends Model{
 	}
 
 	
+	public function countTotalUsers(){
 
+		$cacheName = 'totalUsers';
+		if($cache = $this->cacheData->read($cacheName)) return $cache;
+		$users = $this->findFirst(array('fields'=>"COUNT($this->primaryKey) as total"));
+		$return = $users->total;
+		$this->cacheData->write($cacheName,$return);
+
+		return $return;
+	}
+
+	public function countRegisteringFromDays($days = 1){
+
+		$cacheName = 'countUsersFrom'.$days.'days';
+		if($cache = $this->cacheData->read($cacheName)) return $cache;
+		$sql = "select count($this->primaryKey) as count from $this->table where date(date_signin)>=date(date_sub(now(),interval $days day))";
+		$res = $this->query($sql);		
+		$count = $res[0]->count;
+		$this->cacheData->write($cacheName,$count);	
+		return $count;
+	}
+
+	public function countMonthRegisteringForYear($year){
+
+		$cacheName = 'countUsersPerMonthOf'.$year;
+		if($cache = $this->cacheData->read($cacheName)) return unserialize($cache);
+		$sql = "select month(date_signin) as month, count($this->primaryKey) as count
+				from $this->table
+				where year(date_signin) = $year
+				group by month(date_signin)
+				order by month(date_signin)";
+
+		$res = $this->query($sql);
+		$return = array();
+		foreach ($res as $m) {
+			$monthName = date("F", mktime(0, 0, 0, $m->month, 10));
+			$return[$monthName] = $m->count;
+		}
+		$this->cacheData->write($cacheName,serialize($return));
+		return $return;
+	}
 	// public function findUserThread($user_id){
 
 
