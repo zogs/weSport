@@ -186,9 +186,6 @@ class UsersController extends Controller{
 	*/
 	static function auto_connect($session){
 		
-		//autoconnect with facebook
-		//if(self::auto_connect_with_facebook();
-
 		//if user not connected and cookie auto connect	exist
 		if(isset($_COOKIE['auto_connect']) && !$session->user()->exist()){
 			
@@ -217,7 +214,7 @@ class UsersController extends Controller{
 			}
 			//if not delete cookie
 			else {					
-				setcookie('auto_connect','',time() - 3600);
+				setcookie('auto_connect','',time() - 3600, '/', 'wesport.zogs.org', false, true);
 			}
 		}
 	}
