@@ -865,7 +865,7 @@ class EventsController extends Controller{
     		//find user
     		$sporter->user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$sporter->user_id)));    		
     		//if user dont exist jump out
-    		if(!empty($sporter->user) && !$sporter->user->exist()) continue;
+    		if(empty($sporter->user) && !$sporter->user->exist()) continue;
 
     		//find event
     		$sporter->event = $this->Events->findEventById($sporter->event_id);
