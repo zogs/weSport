@@ -14,14 +14,12 @@
 			
 			<section>
 				<div class="event-header">
-					
-					<div class="event-title">
-						<h1>
-							<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>
-							<?php echo $event->getTitle();?>
-						</h1>
-						
-					</div>
+
+					<h1 class="event-title">
+						<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>
+						<?php echo $event->getTitle();?>
+					</h1>
+
 					
 					<div class="event-orga">
 						<div class="orga-avatar"><img src="<?php echo $event->author->getAvatar();?>"/></div>
@@ -213,6 +211,20 @@
 								<a href="<?php echo $participant->getLink();?>"><img class="event-avatar event-uncertains-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
 							<?php endforeach;?>							
 						</div>
+					</div>
+					
+					<div class="block block-yellow">
+						<script type="text/javascript"><!--
+							google_ad_client = "ca-pub-5083969946680628";
+							/* WeSport big rectangle */
+							google_ad_slot = "1932113308";
+							google_ad_width = 336;
+							google_ad_height = 280;
+							//-->
+							</script>
+							<script type="text/javascript"
+							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+						</script>
 					</div>
 
 					<div class="block block-green event-map">

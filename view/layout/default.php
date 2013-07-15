@@ -4,19 +4,29 @@
 
 //Si cette page est un objet OpenGraph on recupere les balises metas qui vont bien
 
-if(isset($this->OpenGraphObject)) $openGraph = $this->request('events',$this->OpenGraphObject['method'],array($event));
+if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 ?>
 <head <?php if(isset($openGraph['head'])) echo $openGraph['head'];?>>
-	<?php if(isset($openGraph['metas'])) echo $openGraph['metas']; ?>
+	
+	<title><?php echo isset($title_for_layout)?$title_for_layout : Conf::$website;?></title>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="description"content="<?php echo (!empty($description_for_layout))? $description_for_layout : '';?>" />
+	<meta name="keywords" content="<?php echo (!empty($keywords_for_layout))? $keywords_for_layout : '';?>" />
+	<meta name="robots" content="index,follow" />
+
+	<?php 
+	//Open Graph special meta tags
+	if(isset($openGraph['metas'])) echo $openGraph['metas']; 
+
+	?>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equip="cache-control" content="no-cache">
 	<link rel="icon" type="image/png" href="<?php echo Router::webroot('img/LOGO.gif');?>">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo Router::webroot('img/wesport.ico');?>">
 	<?php $this->loadCSS();?>
 	<?php $this->loadJS();?>	
-	<title><?php echo isset($title_for_layout)?$title_for_layout : Conf::$website;?></title>
 	
 </head>
 <body data-user_id="<?php echo $this->session->user()->getID(); ?>">

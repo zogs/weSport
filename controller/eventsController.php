@@ -98,7 +98,7 @@ class EventsController extends Controller{
 			$query['date'] = array('day'=> $weekday) ;
 			//find events in db
 			$dayevents = $this->Events->findEvents($query);			
-			$dayevents = $this->Events->joinSports($dayevents);	
+			$dayevents = $this->Events->joinSports($dayevents,$this->getLang());	
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
 			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
@@ -166,9 +166,15 @@ class EventsController extends Controller{
 		//setet exact Lat & Lon from googlemap
 		$event->addressCoord = array('lat'=>$gmap->centerLat,'lng'=>$gmap->centerLng);
 
-		//this page contain OpenGraph Object
-		$this->OpenGraphObject = array('method'=>'getOpenGraphEventMarkup'); //set the function to get the code
+		//set OpenGraph Object
+		$this->OpenGraphObject = $this->request('events','getOpenGraphEventMarkup',array($event));		
 
+		//debug($event);
+
+		//titre de la page
+		$d['title_for_layout'] = 'weSport - '.$event->getSportName().' à '.$event->getCityName().' le '.$event->getDate($this->getLang());
+		$d['description_for_layout'] = $event->author->getLogin().' organise un match de '.$event->getSportName().' près de la ville de '.$event->getCityName().' le '.$event->getDate($this->getLang()).' - via Wesport - '.$event->getTitle();
+		$d['keywords_for_layout'] = 'Sport : '.$event->getSportName();
 		$d['event'] = $event;
 		$this->set($d);
 
@@ -501,8 +507,10 @@ class EventsController extends Controller{
 		$d['user_events_in_futur'] = $this->Events->joinSports($d['user_events_in_futur'],$this->getLang());
 		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_past'] = $this->Events->joinSports($d['user_events_in_past'],$this->getLang());
+		
+		if($evt->exist()) 
+			$evt = $this->Events->joinSport($evt,$this->getLang());
 
-		$evt = $this->Events->joinSport($evt,$this->getLang());
 		$d['event'] = $evt;
 
 
@@ -561,10 +569,9 @@ class EventsController extends Controller{
 					<meta property="og:locality" content="'.$event->cityName.'" />
 					<meta property="og:country-name" content="'.$event->CC1.'" />
 					<meta property="we-sport-:sport_name"      content="'.$event->getSportName().'" /> 
-					  <meta property="we-sport-:date"            content="'.$event->date.'" /> 
+					<meta property="we-sport-:sport_action"    content="'.$event->getSportAction().'" />
+					  <meta property="we-sport-:date"            content="'.$event->getDate($this->getLang()).'" /> 
 					  <meta property="we-sport-:nb_participants" content="'.count($event->participants).'" /> 
-					  <meta property="we-sport-:nb_pending"      content="'.($event->nbmin-count($event->participants)).'" />
-
 				';
 
 		return array('head'=>$head,'metas'=>$metas);

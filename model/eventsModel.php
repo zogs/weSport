@@ -419,23 +419,66 @@ class EventsModel extends Model{
 
 	}
 
-	public function joinSports($events,$lang = 'fr'){
+	public function joinSports($events,$lang){
 
 		foreach ($events as $event) {
 			
-			$event = $this->joinSport($event,$lang = 'fr');					
+			$event = $this->joinSport($event,$lang);					
 		}
 		return $events;
 	}
 
-	public function joinSport($event,$lang = 'fr'){
+	public function joinSport($event,$lang){
+
+		if(empty($event->sport)) return $event->sport='';
+
+		$tab = array();
+		$sql = "SELECT S.sport_id, S.slug, I.name, I.action, I.object , I.lang
+				FROM sports as S
+				LEFT JOIN sports_i18n as I ON I.sport_id=S.sport_id
+				WHERE S.slug=:slug AND I.lang=:lang";
+
+		$tab[':slug'] = $event->sport;
+		$tab[':lang'] = $lang;
 		
-		$sport = $this->findFirst(array('table'=>'sports','fields'=>'id,sport_id,slug,'.$lang.' as name','conditions'=>array('slug'=>$event->sport)));
-		if(empty($sport)) $sport = $this->findFirst(array('table'=>'sports','fields'=>'id,sport_id,slug,fr as name','conditions'=>array('slug'=>$event->sport)));
-		$event->sport = $sport;
+		$res = $this->query($sql,$tab);
+
+		if(empty($res)){
+			$tab[':lang'] = Conf::$languageDefault;
+			$res = $this->query($sql,$tab);
+		}		
+		
+		$event->sport = $res[0];
 		return $event;
+		
 
 	}
+
+	public function findSports($lang){
+		$sql = "SELECT S.sport_id, S.slug, I.name, I.action, I.object, I.lang
+				FROM sports as S
+				LEFT JOIN sports_i18n as I on I.sport_id=S.sport_id
+				WHERE I.lang=:lang
+				ORDER BY S.sport_id";
+		$tab = array(':lang'=>$lang);
+		$res = $this->query($sql,$tab);
+		if(empty($res)){
+			$tab[':lang'] = Conf::$languageDefault;
+			$res = $this->query($sql,$tab);
+		}
+		return $res;
+	}
+
+	public function findSportsList($lang){
+
+		$a = array();
+		$sports = $this->findSports($lang);
+		foreach ($sports as $sport) {
+			$a[$sport->slug] = $sport->name;
+		}
+		return $a;
+	}
+
 	public function eventsParticipants($event_id,$proba){
 
 		$participants = $this->findParticipants($event_id, $proba);
@@ -534,15 +577,6 @@ class EventsModel extends Model{
 		return $participants;
 	}
 
-	public function findSportsList($lang = 'fr'){
-
-		$sports = $this->find(array('table'=>'sports','fields'=>array('slug',$lang)));
-		$r = array();
-		foreach ($sports as $key => $sport) {
-			$r[$sport->slug] = $sport->$lang;
-		}
-		return $r;		
-	}
 
 	public function findWeekParticipation($user_id,$nbweek = 1){
 
@@ -924,21 +958,33 @@ class Event{
 		return $d[2];
 	}
 
+	public function getRowDate(){
+		return $this->date;
+	}
+	public function getDate($lang=''){
+		if(empty($lang)) $lang = Conf::$languageDefault;
+		if($lang=='fr') return Date::datefr($this->date);
+		return $this->date;
+	}
 
 	public function getSportLogo(){
-		
+		if(!$this->exist()) return '';
 		if(file_exists(WEBROOT.'/img/sport_icons/30gif/'.$this->sport->slug.'.gif')) return Router::webroot('img/sport_icons/30gif/'.$this->sport->slug.'.gif');
 		return Router::webroot('img/sport_icons/30gif/relaxation.gif');
 	}
 
 	public function getSportName(){
-
+		if(!$this->exist()) return '';
 		return $this->sport->name;
 	}
 
 	public function getSportSlug(){
-
+		if(!$this->exist()) return '';
 		return $this->sport->slug;
+	}
+	public function getSportAction(){
+		if(!$this->exist()) return '';
+		return $this->sport->action.' '.$this->sport->object;
 	}
 	public function getAvatar(){
 

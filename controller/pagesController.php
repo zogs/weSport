@@ -73,9 +73,16 @@ class PagesController extends Controller {
 			//on réécrit le cookie avec les nouveaux parametres
 			$this->cookieEventSearch->write($params);		
 			
-			$d['params'] = $params;
-			$d['sports_available'] = $this->Events->find(array('table'=>'sports','fields'=>array('sport_id','slug',$this->getLang().' as name')));			
+			$d['params'] = $params;			
+			$d['sports_available'] = $this->Events->findSports($this->getLang());
+			$d['sports_available_txt'] = '';
+			foreach ($d['sports_available'] as $s) {
+							$d['sports_available_txt'] .= $s->name.', ';
+			}			
 			
+			$d['title_for_layout'] = "weSport - Organisation et rencontre sportive";
+			$d['description_for_layout'] = "Trouver des sportifs autour de chez vous et faites de nouvelles rencontres ! Découvrez de nouveaux sports ou perfectionnez vous, où que vous soyez !";
+			$d['keywords_for_layout'] = "Sport, activités sportives, ".$d['sports_available_txt'];
 			$this->set($d);
 
 		}

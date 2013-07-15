@@ -223,6 +223,11 @@ body{
 	color:black;
 	display: inline-block;
 	vertical-align: middle;
+
+	strong {
+		font-family: 'sans-serif';
+		display:none;
+	}
 }
 .ws-icon-small{
 	@include rem(30);
@@ -879,21 +884,17 @@ h1.title-sheet {
 	background-color:$lightgrey;
 	@extend %clearfix;	
 
-	div.event-title{		
+	h1.event-title{		
 		float:left;
+		display: block;
 		width:70%;
-
-		h1{
-			margin-top:0px;
-			margin-bottom: 0;
-			font-family: 'Boogaloo',Helvetica,Arial;
-			color:$deepblue;
-			font-weight: normal;
-			@include rem(35);
-
-		}
-
-		
+		margin-top:0px;
+		margin-bottom: 0;
+		font-family: 'Boogaloo',Helvetica,Arial;
+		color:$deepblue;
+		font-weight: normal;
+		@include rem(35);
+	
 	}
 
 	div.event-orga{
@@ -925,7 +926,7 @@ h1.title-sheet {
 
 		div.orga-avatar{			
 			float:right;
-			img { height:100px; padding:2px; border:1px solid #CCC;}
+			img { height:100px; width:100px; padding:2px; border:1px solid #CCC;}
 		}
 	}
 }
@@ -988,9 +989,9 @@ h1.title-sheet {
 
 div.col_large{
 	float:left;
-	width:600px;
+	width:580px;
 	min-height: 300px;
-	padding:10px 5px 0 40px;
+	padding:10px 5px 0 30px;
 
 	h2.event-info{
 		@include rem(22);
@@ -1008,10 +1009,10 @@ div.col_large{
 }
 
 div.col_small{
-	float:left;
+	float:right;
 	width:340px;
 	min-height: 300px;
-	padding:10px 0px 0 40px;
+	padding:10px 0px 0 4px;
 }
 
 .block{
