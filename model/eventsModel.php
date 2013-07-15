@@ -617,7 +617,7 @@ class EventsModel extends Model{
 		return $return;
 	}
 
-	public function countEventsFromDays($days = 1){
+	public function countEventsFromDays($days = 0){
 
 		$cachename = 'countEventsFrom'.$days.'days';
 		if($cache = $this->cacheData->read($cachename)) return $cache;

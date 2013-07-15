@@ -77,7 +77,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				//Admin section button
 				if($this->session->user()->getRole()=='admin'):?>
 				<li>
-					<a href="<?php echo Router::url('admin/pages/index');?>">Admin.</a>
+					<a href="<?php echo Router::url('admin/pages/home');?>">Admin.</a>
 				</li>
 				<?php endif;
 				

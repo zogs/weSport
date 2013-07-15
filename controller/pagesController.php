@@ -169,11 +169,11 @@ class PagesController extends Controller {
 
 			$d['totalUsers'] = $this->Users->countTotalUsers();
 			$d['monthRegistering'][2013] = $this->Users->countMonthRegisteringForYear(2013);
-			$d['todayRegistering'] = $this->Users->countRegisteringFromDays(1);
+			$d['todayRegistering'] = $this->Users->countRegisteringFromDays(0);
 
 			$d['totalEvents'] = $this->Events->countTotalEvents();
 			$d['nbEventsPerMonth'][2013] = $this->Events->countMonthEventsForYear(2013);
-			$d['nbEventsToday'] = $this->Events->countEventsFromDays(1);
+			$d['nbEventsToday'] = $this->Events->countEventsFromDays(0);
 			
 			$this->set($d);
 		}

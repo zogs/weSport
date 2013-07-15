@@ -295,7 +295,7 @@ class UsersModel extends Model{
 		return $return;
 	}
 
-	public function countRegisteringFromDays($days = 1){
+	public function countRegisteringFromDays($days = 0){
 
 		$cacheName = 'countUsersFrom'.$days.'days';
 		if($cache = $this->cacheData->read($cacheName)) return $cache;
