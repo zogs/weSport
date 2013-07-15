@@ -887,9 +887,10 @@ class Event{
 	public $ADM3    = '';
 	public $ADM4    = '';
 	public $CC1     = '';
-	public $hours   = 12;
-	public $minutes = 00;
-	public $time    = '12:00:00';
+	public $hours   = '';
+	public $minutes = '';
+	public $seconds = '';
+	public $time    = '12:00:00'; //default time
 	public $timing  = '';
 
 	public function __construct( $fields = array() ){
@@ -944,16 +945,19 @@ class Event{
 	}
 
 	public function getHours(){
+		if(!empty($this->hours)) return $this->hours;	
 		$d = explode(':',$this->time);
 		return $d[0];
 	}
 
 	public function getMinutes(){
+		if(!empty($this->minutes)) return $this->minutes;
 		$d = explode(':',$this->time);
 		return $d[1];
 	}
 
 	public function getSecondes(){
+		if(!empty($this->seconds)) return $this->seconds;
 		$d = explode(':',$this->time);
 		return $d[2];
 	}

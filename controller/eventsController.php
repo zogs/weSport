@@ -491,16 +491,10 @@ class EventsController extends Controller{
 					//if not validate , return a incomplete event fill with the data
 					$evt = new Event($new);					
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
-				}
-			
+					$this->request->data = $evt;//send data to form class
+				}		
 		
 		}
-		else {							
-				
-				$this->request->data = $evt;//send data to form class
-					
-		}
-
 		
 		$d['sports_available'] = $this->Events->findSportsList($this->getLang());
 		$d['user_events_in_futur'] = $this->Events->findEvents(array('date'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
