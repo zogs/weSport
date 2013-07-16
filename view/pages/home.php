@@ -98,6 +98,49 @@
 	</div>
 </div>
 
+<ol class='tourbus-legs' id='wesport-demo'>
+
+  <li data-el='#logoWeSport' data-orientation='bottom' data-width='500' data-arrow='20%' data-margin='20' data-align="left">
+    <h2>Bienvenue sur WeSport !</h2>
+    <p>Site d'organisation d'activitées sportives dans ta ville</p>
+    <a href='javascript:void(0);' class='btn tourbus-next'>Comment ça marche?</a>
+    <a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Merci je connais</a>
+  </li>
+
+  <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
+    <h2>Ta ville</h2>
+    <p>Tape ici ta ville et choisi la dans la liste déroulante</p>
+    <p><small>Tu peux étendre le rayon d'activité jusqu'à 100km !</small></p>
+    <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
+  </li>
+
+  <li data-el='#sportCheckboxs' data-orientation='top' data-width='350'>
+  	<h2>Les sports</h2>
+    <p>Choisi un ou plusieurs sports !</p>
+    <p><small>Par default tous les sports sont sélectionnés</small></p>
+    <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
+  </li>
+
+  <li data-el="#calendar-content" data-orientation="top" data-width='400'>
+  	<p><strong>Les annonces apparaissent dans le calendrier</strong></p>
+  	<p><small>Tu peux utiliser les flèches gauches et droites pour naviger (ou un slide pour les écrans tactiles !)</small></p>
+  	<a href="javascript:void(0);" class="btn tourbus-next">Compris !</a>
+  </li>
+
+  <li data-el="#contact" data-orientation="top" date-width='300' data-align="center">
+  	<h2>Aidez nous</h2>
+  	<p><strong>WeSport</strong> est encore en version beta !<br />Donnez nous votre avis, rapportez nous les bugs rencontrés, payer nous une bière ! ect ...</p>
+  	<a href="javascript:void(0);" class="btn tourbus-next">Une dernière chose !</a>
+  	<a href="<?php echo Router::url('pages/contact');?>" class="btn btn-inverse">Nous écrire !</a>
+  </li>
+
+  <li data-el="#registerMenu" data-orientation="bottom" data-width='400' data-align="right">
+  	<h2>Inscrivez-vous :)</h2>
+  	<p>Facile, rapide, gratuit !</p>
+  	<a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Fermer</a>
+  </li>
+
+</ol>
 
 <script type="text/javascript">
 
@@ -105,7 +148,7 @@ var current_date = '<?php echo date("Y-m-d");?>';
 
 $(document).ready(function(){
 
-
+	//Sport checkbox slider
 	$('#sportCheckboxs').FlowSlider();
 	$('#sportCheckboxs').css('overflow','visible');
 
@@ -229,6 +272,8 @@ $(document).ready(function(){
 				checkCurrentWeek();
 
 				$('#calendar-loader > .text').hide();
+
+
 			},
 			dataType:'html'
 		});		
@@ -282,6 +327,18 @@ $(document).ready(function(){
 			callPreviousWeek();
 		}
 	});
+
+
+
+	//Demo Tourbus
+
+	if($('body').attr('data-user_id')==0 && $('body').attr('data-first-visite')==1 && $(window).width()>=768){
+
+		var demo = $('#wesport-demo').tourbus({leg:{scrollto:0}});
+		demo.trigger('depart.tourbus');
+		
+	}
+
 
 
 

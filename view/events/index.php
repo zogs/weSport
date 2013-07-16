@@ -3,10 +3,11 @@
 
 		<?php 
 			foreach ($events as $date => $evts):
+				$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1;
 		?>
-			<td style="width:2%" class="colomn-<?php echo Date::dateDiff(date('Y-m-d'),$date)%7+1;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>">
+			<td style="width:2%" class="colomn-<?php echo $datediff;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $datediff;?>">
 
-				<div class="colomn-date">
+				<div class="colomn-date" id="colomn-date-<?php echo $datediff;?>">
 					
 					<a href="">
 					<?php

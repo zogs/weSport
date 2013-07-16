@@ -11,11 +11,27 @@ class PagesController extends Controller {
 
 		public function home( $day = null ){					
 
+			$this->view = 'pages/home';
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
-			$this->loadJS = array('js/jquery/jquery.touchSwipe.min.js','js/jquery/jquery.flowslider.js');
-			$this->view = 'pages/home';
-			
+			$this->loadJS = array(
+				'js/jquery/jquery.touchSwipe.min.js',
+				'js/jquery/jquery.flowslider.js',
+				'js/jquery/tourbus/jquery.tourbus.min.js',
+				'js/jquery/jquery.scrollTo-min.js',
+				);
+			$this->loadCSS = array(
+				'js/jquery/tourbus/tourbus.css'
+				);
+
+
+			//Cookie first visite
+			$d['first_visite'] = false; //default valie
+			if(isset($_COOKIE['first_visite'])) //if cookie first visite is set, set to true
+			 	$d['first_visite'] = true;
+			 else			
+				$_COOKIE['first_visite'] = time(); //else set the cookie
+
 			//date
 			if($day === null ){
 

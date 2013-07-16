@@ -29,7 +29,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 	<?php $this->loadJS();?>	
 	
 </head>
-<body data-user_id="<?php echo $this->session->user()->getID(); ?>">
+<body data-user_id="<?php echo $this->session->user()->getID(); ?>" <?php if(isset($first_visite) && $first_visite===true) echo 'data-first-visite="1"';?>>
 
 
 	<div class="navbar navbar-fixed-top">
@@ -58,7 +58,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 						<?php else: ?>
 							<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>
 							<li class="divider"></li>	
-							<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
+							<li><a href="<?php echo Router::url('users/register');?>">Inscription</a></li>
 						<?php endif; ?>						
 					</ul>
 				</li>
@@ -84,7 +84,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				?>			
 			</ul>
 
-			<ul class="nav pull-right desktopMenu">
+			<ul class="nav pull-right desktopMenu" id="registerMenu">
 				<?php if ($this->session->user()->isLog()): ?>
 					<li><a href="<?php echo Router::url('users/account');?>">
 							<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	
@@ -125,7 +125,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				$menu = $this->request('pages','getMenu',array('bottom'));
 				foreach ($menu as $page):
 				?>
-					<li><a href="<?php echo Router::url($page->slug);?>"><?php echo $page->title;?></a></li>
+					<li><a href="<?php echo Router::url($page->slug);?>" id="<?php echo $page->slug;?>"><?php echo $page->title;?></a></li>
 				<?php endforeach;?>
 				 			
 			</ul>
