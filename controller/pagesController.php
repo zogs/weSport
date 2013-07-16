@@ -24,13 +24,12 @@ class PagesController extends Controller {
 				'js/jquery/tourbus/tourbus.css'
 				);
 
-
 			//Cookie first visite
-			$d['first_visite'] = false; //default valie
-			if(isset($_COOKIE['first_visite'])) //if cookie first visite is set, set to true
-			 	$d['first_visite'] = true;
-			 else			
-				$_COOKIE['first_visite'] = time(); //else set the cookie
+			$d['first_visite'] = false; //default value
+			if(!isset($_COOKIE['first_visite'])){ //if cookie first visite not set				
+				setcookie('first_visite',time(),44000, '/', 'wesport.zogs.org', false, true); // set the cookie
+			 	$d['first_visite'] = true;			
+			}
 
 			//date
 			if($day === null ){
