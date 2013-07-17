@@ -938,6 +938,10 @@ class Event{
 
 		return $this->title;
 	}
+	public function getDescription(){
+
+		return $this->description;
+	}
 
 	public function getTime(){
 
