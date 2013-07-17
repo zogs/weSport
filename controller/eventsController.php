@@ -566,6 +566,7 @@ class EventsController extends Controller{
 					<meta property="we-sport-:sport_action"    content="'.$event->getSportAction().'" />
 					  <meta property="we-sport-:date"            content="'.$event->getTimestamp().'" /> 
 					  <meta property="we-sport-:nb_participants" content="'.count($event->participants).'" /> 
+					  <meta property="we-sport-:confirmed"     content="'.(($event->isConfirm())? 'true' : 'false').'" />
 				';
 
 		return array('head'=>$head,'metas'=>$metas);
