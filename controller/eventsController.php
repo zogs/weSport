@@ -569,6 +569,12 @@ class EventsController extends Controller{
 					<meta property="we-sport-:date"            content="'.$event->getTimestamp().'" /> 
 					<meta property="we-sport-:nb_participants" content="'.count($event->participants).'" /> 
 					<meta property="we-sport-:confirmed"     content="'.(($event->isConfirm())? 'true' : 'false').'" />
+					<meta property="we-sport-:time"         content="'.$event->time.'" /> 
+				  	<meta property="we-sport-:latitude"  content="'.$event->addressCoord['lat'].'" /> 
+				  	<meta property="we-sport-:longitude" content="'.$event->addressCoord['lng'].'" />
+				  	<meta property="we-sport-:adresse" content="'.$event->address.'" />
+					<meta property="we-sport-:ville" content="'.$event->cityName.'" />
+					<meta property="we-sport-:pays" content="'.$event->CC1.'" />
 				';
 
 		return array('head'=>$head,'metas'=>$metas);
