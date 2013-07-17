@@ -491,7 +491,7 @@ class EventsController extends Controller{
 					//if not validate , return a incomplete event fill with the data
 					$evt = new Event($new);					
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
-					$this->request->data = $evt;//send data to form class
+					
 				}		
 		
 		}
@@ -504,6 +504,8 @@ class EventsController extends Controller{
 		
 		if($evt->exist()) 
 			$evt = $this->Events->joinSport($evt,$this->getLang());
+
+		$this->request->data = $evt;//send data to form class
 
 		$d['event'] = $evt;
 

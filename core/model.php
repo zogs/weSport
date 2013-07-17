@@ -64,6 +64,18 @@
  		
  	}
 
+ 	//Permet de charger un autre model
+	public function loadModel($name){ 	
+		
+		$classname = $name.'Model';
+
+		if(!isset($this->$name)) {
+				
+			$this->$name = new $classname();
+			
+		}			
+	}
+
  	public function setTimeZone(){
 
 		$now = new DateTime();

@@ -347,11 +347,12 @@ class EventsModel extends Model{
 		//day is superior or equal as current day and time is superior as current time
 		$sql.= ' AND ( ( date = CURDATE() AND time > CAST("'.date("H:i:s").'" AS time) )';
 		//OR following days
-		$sql.= ' OR date >= CURDATE() )';
+		$sql.= ' OR date > CURDATE() )';
 		//number of event to return
 		$sql.= ' LIMIT '.$count;
 		
 		$res = $this->query($sql,$val);
+
 		$events = array();
 		foreach ($res as $event) {
 			
@@ -502,6 +503,13 @@ class EventsModel extends Model{
 
 		//timestamp of the event date
 		$event->timestamp = strtotime($event->date.' '.$event->time);
+
+		//Country of the city
+		if(empty($event->CC1)){
+			$this->loadModel('Worlds');
+			$city = $this->Worlds->findCityById($event->cityID,'CC1');
+			$event->CC1 = $city->CC1;
+		}
 
 		
 		if($id = $this->save($event)) {
@@ -892,6 +900,7 @@ class Event{
 	public $seconds = '';
 	public $time    = '12:00:00'; //default time
 	public $timing  = '';
+	public $confirmed = 0;
 
 	public function __construct( $fields = array() ){
 		

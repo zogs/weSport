@@ -72,11 +72,11 @@
                     ";
                 if($user->user_id!=0){
                 $html .= "<textarea name='content' class='formComment' placeholder='Reply to ".$com->user->getLogin()."'></textarea> 
-                            <input class='btn btn-small' type='submit' name='' value='Send'>";
+                            <input class='btn btn-small' type='submit' name='' value='Envoyer'>";
                 }
                 else {
                 $html .= "<textarea disabled='disabled' name='content' placeholder='Log in to comment'></textarea>
-                            <input disabled='disabled' class='btn btn-small' type='submit' name='' value='Send'>";
+                            <input disabled='disabled' class='btn btn-small' type='submit' name='' value='Envoyer'>";
                 }
             
             $html .= "  <input type='hidden' name='context' value='".$config->context."' />
@@ -105,9 +105,13 @@
                 <img class="logo" src="<?php echo $com->user->getAvatar() ?>" alt="image avatar" />
             
                 <div class="content">   
+               
+
                     <?php if(!empty($com->title)): ?>                 
-                    <div class="title"><?php echo $com->title; ?></div>                                
+                    <div class="title"><a href="<?php echo Router::url($com->context.'/post/'.$com->id.'/'.String::slugify($com->title));?>"><?php echo $com->title; ?></a></div>                                
                     <?php endif; ?>
+
+
                     <div class="user"><?php echo $com->user->getLogin();?></div>
                     <abbr class="date timeago" title="<?php echo $com->date;?>"><?php echo $com->date;?></abbr>
                     

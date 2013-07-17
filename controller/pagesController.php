@@ -296,13 +296,21 @@ class PagesController extends Controller {
 			$this->set($d);
 		}
 
-		public function blog(){
+		public function blog($post_id=null, $slug=null){
 
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
 
+			//If a post is specified
+			if(isset($post_id)){
+				$this->loadModel('Comments');
+				$post = $this->Comments->getComments($post_id);
+				if($post[0]->context!='blog') exit();
+				$d['post_id'] = $post_id;
+			}
+
 			//EVENTS TO COME
-			$eventsToCome = $this->Events->getEventsToCome('FR',10);
+			$eventsToCome = $this->Events->getEventsToCome($this->getCountryCode(),10);
 
 
 			//CREATE GOOGLE MAP
@@ -323,18 +331,20 @@ class PagesController extends Controller {
 			foreach ($eventsToCome as $event) {
 				
 				$event = $this->Events->joinSport($event,$this->getLang());
-				$event = $this->Worlds->JOIN_GEO($event);
-				
+				$event = $this->Worlds->JOIN_GEO($event);				
 				$full_address = $event->address.', '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
 
 				$gmap->addMarkerByAddress($event->address.' , '.$event->getCityName(), $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->getSportName()."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p><p><small>".$event->description."</small></p>",$event->getSportSlug(),$event->getSportLogo());
 			}			
-			$gmap->generate();
+			$gmap->generate();			
 			$d['gmap'] = $gmap;
 			
+			reset($eventsToCome);
+			$d['eventsToCome'] = $eventsToCome;
 
 			$this->set($d);
 		}
+
 
 		public function contact(){
 

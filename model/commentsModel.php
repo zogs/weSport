@@ -238,7 +238,7 @@ class CommentsModel extends Model
 		}
 		elseif(is_numeric($comments_id)){
 
-			$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comment_id));
+			$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comments_id));
 			$array[] = $res[0];					
 		}
 

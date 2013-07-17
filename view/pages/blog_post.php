@@ -1,4 +1,4 @@
-<div class="blog">
+<div class="blog blog_post">
 	<div class="top-banner">
 		<div class="void"></div>
 		<div class="fresque"></div>
@@ -18,42 +18,20 @@
 
 						if($this->session->user()->getRole()=='admin') $allowComment = true;
 						else $allowComment = false;
-
-						if(!isset($post_id)){
-
-							$this->request('comments','show',array(
-																	array(
-																		'context'=>'blog',
-																		'context_id'=>1,
-																		'allowTitle'=>true,
-																		'allowComment'=>$allowComment,
-																		'allowReply'=>true,
-																		'displayRenderButtons'=>false,
-																		'showFormReply'=>true,
-																		'enablePreview'=>true,
-																		'enableInfiniteScrolling'=>true
-																		),
-																	)
-											);
-						}
-						elseif(is_numeric($post_id)){
-
-
-							$this->request('comments','show',array(
-																	array(
-																		'context'=>'comment',
-																		'context_id'=>$post_id,
-																		'allowTitle'=>true,
-																		'allowComment'=>$allowComment,
-																		'allowReply'=>true,
-																		'displayRenderButtons'=>false,
-																		'showFormReply'=>false,
-																		'enablePreview'=>true,
-																		'enableInfiniteScrolling'=>false
-																		),
-																	)
-											);
-						}
+						$this->request('comments','show',array(
+																array(
+																	'context'=>'blog',
+																	'context_id'=>1,
+																	'allowTitle'=>true,
+																	'allowComment'=>$allowComment,
+																	'allowReply'=>true,
+																	'displayRenderButtons'=>false,
+																	'showFormReply'=>true,
+																	'enablePreview'=>true,
+																	'enableInfiniteScrolling'=>true
+																	),
+																)
+										);
 
 			 	?>
 

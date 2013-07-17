@@ -1352,6 +1352,18 @@ div.col_small{
 }
 
 
+.blog{
+
+	.col_small{
+		.block{
+			.block-content { padding:0;}
+		}
+		.events-to-come {
+			.block-content{ padding:5px 2%;}
+		}
+	}
+}
+
 /*=======
 == ACCOUNT
 =======*/
@@ -1473,7 +1485,26 @@ div.col_small{
 			border:0;
 			@include box-shadow(0 0 0 #000);
 			background-color: #F0F0F0;
+
+			form.formCommentReply{ display:none;}
+			form.formCommentReply:last-child{ display: block;}
+
 		}
+		
+
+		form.formCommentReply{
+			background: transparent;
+			border:0;			
+			img.userAvatarCommentForm{
+				height:30px;
+				width:30px;
+			}
+			textarea{
+				@include rem(10);
+				border-color:#DEDEDE;
+			}
+		}
+
 		
 }
 #bottomComments{
