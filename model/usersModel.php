@@ -386,6 +386,8 @@ class User {
 
 	public function __construct( $fields = array() ){
 
+		if(empty($fields)) return;
+		
 		foreach ($fields as $field => $value) {
 			
 			$this->$field = $value;
