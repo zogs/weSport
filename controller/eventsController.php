@@ -562,18 +562,18 @@ class EventsController extends Controller{
 				  	<meta property="og:street-address" content="'.$event->address.'" />
 					<meta property="og:locality" content="'.$event->cityName.'" />
 					<meta property="og:country-name" content="'.$event->CC1.'" />
-					<meta property="we-sport-:sport_name"      content="'.$event->getSportName().'" />
-					<meta property="we-sport-:sport_title"     content="'.$event->getTitle().'" />
-					<meta property="we-sport-:sport_description" content="'.substr($event->getDescription(),0,100).'" /> 
-					<meta property="we-sport-:sport_action"    content="'.$event->getSportAction().'" />
-					<meta property="we-sport-:sport_datetime"            content="'.$event->getTimestamp().'" /> 
-					<meta property="we-sport-:sport_participants" content="'.count($event->participants).'" /> 
-					<meta property="we-sport-:sport_confirmed"     content="'.(($event->isConfirm())? 'true' : 'false').'" />
-				  	<meta property="we-sport-:sport_latitude"  content="'.$event->addressCoord['lat'].'" /> 
-				  	<meta property="we-sport-:sport_longitude" content="'.$event->addressCoord['lng'].'" />
-				  	<meta property="we-sport-:sport_adresse" content="'.$event->address.'" />
-					<meta property="we-sport-:sport_ville" content="'.$event->cityName.'" />
-					<meta property="we-sport-:sport_pays" content="'.$event->CC1.'" />
+					<meta property="we-sport-:name"      content="'.$event->getSportName().'" />
+					<meta property="we-sport-:title"     content="'.$event->getTitle().'" />
+					<meta property="we-sport-:description" content="'.substr($event->getDescription(),0,100).'" /> 
+					<meta property="we-sport-:action"    content="'.$event->getSportAction().'" />
+					<meta property="we-sport-:datetime"            content="'.$event->getTimestamp().'" /> 
+					<meta property="we-sport-:participants" content="'.count($event->participants).'" /> 
+					<meta property="we-sport-:confirmed"     content="'.(($event->isConfirm())? 'true' : 'false').'" />
+				  	<meta property="we-sport-:latitude"  content="'.$event->addressCoord['lat'].'" /> 
+				  	<meta property="we-sport-:longitude" content="'.$event->addressCoord['lng'].'" />
+				  	<meta property="we-sport-:adresse" content="'.$event->address.'" />
+					<meta property="we-sport-:ville" content="'.$event->cityName.'" />
+					<meta property="we-sport-:pays" content="'.$event->CC1.'" />
 				';
 
 		return array('head'=>$head,'metas'=>$metas);
