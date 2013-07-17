@@ -564,7 +564,7 @@ class EventsController extends Controller{
 					<meta property="og:country-name" content="'.$event->CC1.'" />
 					<meta property="we-sport-:sport_name"      content="'.$event->getSportName().'" /> 
 					<meta property="we-sport-:sport_action"    content="'.$event->getSportAction().'" />
-					  <meta property="we-sport-:date"            content="'.$event->getDate($this->getLang()).'" /> 
+					  <meta property="we-sport-:date"            content="'.$event->getTimestamp().'" /> 
 					  <meta property="we-sport-:nb_participants" content="'.count($event->participants).'" /> 
 				';
 

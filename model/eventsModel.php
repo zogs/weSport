@@ -970,6 +970,9 @@ class Event{
 		if($lang=='fr') return Date::datefr($this->date);
 		return $this->date;
 	}
+	public function getTimestamp(){
+		return $this->timestamp;
+	}
 
 	public function getSportLogo(){
 		if(!$this->exist()) return '';
