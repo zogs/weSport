@@ -73,7 +73,9 @@ window.onload = function() {
 			'ws-icon-smiley-2' : '&#x61;',
 			'ws-icon-thumbs-up-2' : '&#x62;',
 			'ws-icon-loupe' : '&#x64;',
-			'ws-icon-plus-alt' : '&#x63;'
+			'ws-icon-plus-alt' : '&#x63;',
+			'ws-icon-danse' : '&#x65;',
+			'ws-icon-voile' : '&#x66;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, html, c, el;

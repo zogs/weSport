@@ -554,7 +554,7 @@ class EventsController extends Controller{
 				  <meta property="og:url"                   content="'.$_SERVER['REQUEST_URI'].'" /> 
 				  <meta property="og:type"                  content="ogbeta:events.event" /> 
 				  <meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
-				  <meta property="og:image"                 content="'.Conf::$websiteURL.'/'.$event->getSportLogo().'" /> 
+				  <meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo().'" /> 
 				  <meta property="og:description"			content="'.$event->description.'" />
 				  <meta property="event:start_time"         content="'.$event->time.'" /> 
 				  <meta property="event:location:latitude"  content="'.$event->addressCoord['lat'].'" /> 
