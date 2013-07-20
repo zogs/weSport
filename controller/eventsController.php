@@ -226,7 +226,7 @@ class EventsController extends Controller{
 				$this->session->setFlash("C'est cool on va bien s'éclater :) ","success",5);
 
 				//If facebook user post to OG:
-				if($user->isFacebookUser()) $this->openGraphPostEvent($event,$user);
+				if($user->isFacebookUser()) $this->fb_openGraph_JoinSport($event,$user);
 
 				//On préviens l'organisateur
 				if($this->sendNewParticipant($event,$user)){
@@ -552,14 +552,14 @@ class EventsController extends Controller{
 	}
 		
 
-	public function openGraphPostEvent($event,$user){
+	public function fb_openGraph_JoinSport($event,$user){
 
 		if(!$user->isFacebookUser()) return false;
 
 		$url = 'https://graph.facebook.com/me/we-sport-:do';
 		$params = array(
 			'access_token'=>$user->getFacebookToken(),
-			'sport'=>$event->getUrl()
+			'sport'=>Conf::getSiteUrl().$event->getUrl()
 			);
 
 		$res = curl_post_request($url,$params);
@@ -571,7 +571,7 @@ class EventsController extends Controller{
 		//debug($event);
 		$head = "prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#'";
 		$metas = '<meta property="fb:app_id"                content="'.Conf::$facebook['appId'].'" /> 
-				  	<meta property="og:url"                   content="http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'" /> 
+				  	<meta property="og:url"                   content="'.Conf::getSiteUrl().$event->getUrl().'" /> 
 				  	<meta property="og:type"                  content="we-sport-:sport" /> 
 				  	<meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
 				  	<meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo().'" /> 
