@@ -280,7 +280,7 @@ class UsersController extends Controller{
 		  $user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser->id)));
 		
 		  //Si il n'existe pas on l'enregistre dans la base
-		  if(empty($user) && !$user->exist()){
+		  if(empty($user) || !$user->exist()){
 
 		  	//on vérifie que ce login n'existe pas déjà
 			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$fbuser->username)));							
