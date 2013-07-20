@@ -202,8 +202,8 @@ class EventsController extends Controller{
 			if($data->user_id!=$this->session->user()->getID()) throw new zException("user is different from session's user", 1);
 				
 			//On vérifie si l'événement existe bien
-			$event = $this->Events->findFirst(array('conditions'=>array('id'=>$data->event_id)));
-			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
+			$event = $this->Events->findEventByID($data->event_id);
+			if(!$event->exist()) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
 			$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$data->user_id)));
