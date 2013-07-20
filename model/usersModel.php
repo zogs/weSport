@@ -486,5 +486,18 @@ class User {
 		if(!empty($this->sexe)) return $this->sexe;
 	}
 
+	public function isFacebookUser(){
+		if(!empty($this->facebook_id)) return true;
+		return false;
+	}
+	public function getFacebookId(){
+		if(!empty($this->facebook_id)) return $this->facebook_id;
+		return false;
+	}
+	public function getFacebookToken(){
+		if(!empty($this->facebook_token)) return $this->facebook_token;
+		return false;
+	}
+
 }
  ?>

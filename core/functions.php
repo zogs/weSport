@@ -199,6 +199,26 @@ function curl_get_file_contents($URL) {
     else return FALSE;
   }
 
+
+function curl_post_request($url,$fields){
+
+	foreach($fields as $key=>$value) { $fields_string .= $key.'='.urlencode($value).'&'; }
+	rtrim($fields_string, '&');
+
+	$c = curl_init();
+	curl_setopt($c,CURLOPT_URL,$url);
+	curl_setopt($c,CURLOPT_POST,count($fields));
+	curl_setopt($c,CURLOPT_POSTFIELDS,$fields_string);
+
+	$result = curl_exec($c);
+	$err = curl_getinfo($c,CURLINFO_HTTP_CODE);
+	curl_close($c);
+
+	if($result) return $result;
+	else debug($err);
+}
+
+
 function getUrlDomain($_url, $_extension = false, $_scheme = false){
     
 

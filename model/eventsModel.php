@@ -922,6 +922,11 @@ class Event{
 		return true;
 	}
 
+	public function getUrl(){
+
+		return Router::url('events/view/'.$this->getID().'/'.$this->getSlug());
+	}
+
 	public function getAuthor(){
 
 		if(isset($this->author->login)) return $this->author->login;

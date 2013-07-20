@@ -225,6 +225,9 @@ class EventsController extends Controller{
 				//Set flash
 				$this->session->setFlash("C'est cool on va bien s'éclater :) ","success",5);
 
+				//If facebook user post to OG:
+				if($user->isFacebookUser()) $this->openGraphPostEvent($event,$user);
+
 				//On préviens l'organisateur
 				if($this->sendNewParticipant($event,$user)){
 
@@ -547,7 +550,23 @@ class EventsController extends Controller{
 
 		
 	}
-					
+		
+
+	public function openGraphPostEvent($event,$user){
+
+		if(!$user->isFacebookUser()) return false;
+
+		$url = 'https://graph.facebook.com/me/we-sport-:do';
+		$params = array(
+			'access_token'=>$user->getFacebookToken(),
+			'sport'=>$event->getUrl()
+			);
+
+		$res = curl_post_request($url,$params);
+
+		debug($res);
+	}
+
 	public function getOpenGraphEventMarkup($event){
 		//debug($event);
 		$head = "prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#'";

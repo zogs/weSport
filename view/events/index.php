@@ -31,7 +31,7 @@
 				?>
 				
 				<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?>">				
-					<a class="events-link" href="<?php echo Router::url('events/view/'.$event->getID().'/'.$event->getSlug());?>">
+					<a class="events-link" href="<?php echo $event->getUrl();?>">
 		
 						<div class="events-time">
 							<?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?>
