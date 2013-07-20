@@ -202,6 +202,7 @@ function curl_get_file_contents($URL) {
 
 function curl_post_request($url,$fields){
 
+	$fields_string = '';
 	foreach($fields as $key=>$value) { $fields_string .= $key.'='.urlencode($value).'&'; }
 	rtrim($fields_string, '&');
 
