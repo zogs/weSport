@@ -552,15 +552,11 @@ class EventsController extends Controller{
 		//debug($event);
 		$head = "prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#'";
 		$metas = '<meta property="fb:app_id"                content="'.Conf::$facebook['appId'].'" /> 
-				  	<meta property="og:type"                  content="event" /> 
-				  	<meta property="og:url"                   content="'.$_SERVER['REQUEST_URI'].'" /> 
-				  	<meta property="og:type"                  content="ogbeta:events.event" /> 
+				  	<meta property="og:url"                   content="'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'" /> 
+				  	<meta property="og:type"                  content="we-sport-:sport" /> 
 				  	<meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
 				  	<meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo().'" /> 
 				  	<meta property="og:description"			content="'.substr($event->getDescription(),0,100).'" />
-				  	<meta property="event:start_time"         content="'.$event->time.'" /> 
-				  	<meta property="event:location:latitude"  content="'.$event->addressCoord['lat'].'" /> 
-				  	<meta property="event:location:longitude" content="'.$event->addressCoord['lng'].'" />
 				  	<meta property="og:street-address" content="'.$event->address.'" />
 					<meta property="og:locality" content="'.$event->cityName.'" />
 					<meta property="og:country-name" content="'.$event->CC1.'" />
