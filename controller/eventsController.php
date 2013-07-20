@@ -248,7 +248,7 @@ class EventsController extends Controller{
 				throw new zException('Unknown error while saving user participation',1);
 				
 		
-			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
+			//$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
 		}
 	}
 
