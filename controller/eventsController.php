@@ -222,9 +222,8 @@ class EventsController extends Controller{
 			//Sauver la participations
 			if($this->Events->saveParticipants($user, $event, $proba)){
 				
-				//Set flash
+				//Set flash				
 				$this->session->setFlash("C'est cool on va bien s'éclater :) ","success",5);
-
 				//If facebook user post to OG:
 				if($user->isFacebookUser()) $this->fb_openGraph_JoinSport($event,$user);
 
@@ -248,7 +247,7 @@ class EventsController extends Controller{
 				throw new zException('Unknown error while saving user participation',1);
 				
 		
-			//$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
+			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
 		}
 	}
 
