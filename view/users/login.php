@@ -10,10 +10,10 @@
 		<div class="white-sheet">
 			<div class="fresque fresque-mini"></div>
 			<div class="head-sheet"><h1 class="title-sheet">CONNEXION</h1></div>		
-			<?php echo $this->session->flash(); ?>
-			<form class="form form-ws label-hidden w60 center" action="<?php echo Router::url('users/login'); ?>" method='post'>
+
+			<form class="form form-ws label-hidden w50 fleft form-register" action="<?php echo Router::url('users/login'); ?>" method='post'>
 			
-					
+					<p class="intro"></p>
 					<?php echo $this->Form->input('login','Pseudo ou email',array('required'=>'required','placeholder'=>'Pseudo ou E-mail','icon'=>'icon-user')); ?>
 					<?php echo $this->Form->input('password','Mot de passe',array('type'=>'password','required'=>'required','placeholder'=>'Mot de passe','icon'=>'icon-lock')); ?>							
 					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>			
@@ -33,7 +33,14 @@
 					</div>
 			</form>	
 
-		<div class="fresque"></div>
+			<form class="form-wp form-facebook">
+				<p class="intro"></p>
+				<a href="<?php echo UsersController::link_register_with_facebook();?>">
+					<img src="<?php echo Router::webroot('img/connect_with_facebook.png');?>"/>
+				</a>				
+			</form>
+
 		</div>	
+		<div class="fresque"></div>
 	</div>	
 </div>

@@ -57,7 +57,7 @@
 		
 
 			<form class="form-wp form-facebook">
-				<p class="intro">Ou en 1 clic seulement !</p>
+				<p class="intro">Ou en 1 clic seulement avec Facebook!</p>
 				<a href="<?php echo UsersController::link_register_with_facebook();?>">
 					<img src="<?php echo Router::webroot('img/register_with_facebook.png');?>"/>
 				</a>				

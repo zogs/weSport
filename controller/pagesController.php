@@ -26,8 +26,8 @@ class PagesController extends Controller {
 
 			//Cookie first visite
 			$d['first_visite'] = false; //default value
-			if(!isset($_COOKIE['first_visite'])){ //if cookie first visite not set				
-				setcookie('first_visite',time(), 44000, '', $_SERVER['SERVER_NAME'], false, true); // set the cookie
+			if(!isset($_COOKIE['site_visited'])){ //if cookie first visite not set				
+				setcookie('site_visited',time(), 44000, '', $_SERVER['SERVER_NAME'], false, true); // set the cookie
 			 	$d['first_visite'] = true;	
 			 		
 			}

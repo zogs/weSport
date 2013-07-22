@@ -268,7 +268,7 @@ class UsersModel extends Model{
  		$results = $this->query($sql);
  		
 
- 		if(empty($results)) return array();
+ 		if(empty($results)) return array(new User());
 
  		$users = array();
  		foreach ($results as $user) {

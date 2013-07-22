@@ -556,15 +556,26 @@ class EventsController extends Controller{
 
 		if(!$user->isFacebookUser()) return false;
 
-		$url = 'https://graph.facebook.com/me/we-sport-:do';
+		//find english ACTION SPORT
+		$this->loadModel('Events');
+		$sport = $this->Events->findSport(array('slug'=>$event->sport,'lang'=>'en'));
+		$action = $sport->action;
+
+		//url & params to POST to facebook open graph
+		$url = 'https://graph.facebook.com/me/we-sport-:'.$action;
 		$params = array(
 			'access_token'=>$user->getFacebookToken(),
-			'sport'=>Conf::getSiteUrl().$event->getUrl()
+			'sport'=>Conf::getSiteUrl().$event->getUrl(),
+			'start_time'=>$event->getDate('en').' '.$event->getTime()
 			);
 
-		$res = curl_post_request($url,$params);
+		//execute POST request via cURL
+		$fb_json = curl_post_request($url,$params);
+		$fb_return = json_decode($fb_json);
 
-		debug($res);
+		//return 
+		if(isset($fb_return->id)) return true;
+		else $this->session->setFlash('Erreur OpenGraph : url{'.$url.'} return => '.$fb_json,'error');
 	}
 
 	public function getOpenGraphEventMarkup($event){
@@ -597,7 +608,7 @@ class EventsController extends Controller{
 	}
 
 
-	private function findEmailsParticipants($event,$mailingSetting=false,$withAuthor=false){
+	private function findEmailsParticipants($event,$mailingName=false,$withAuthor=false){
 
 		$emails = array();
 
@@ -612,24 +623,25 @@ class EventsController extends Controller{
 
 			$user = $this->Users->findFirstUser(array('fields'=>'user_id,email','conditions'=>array('user_id'=>$sporter->user_id)));			
 			
-			if($withAuthor===false && $user->user_id==$event->user_id) continue; //sauf si on veut sauter l'organisateur de l'evt
+			//si l'utilisateur nexiste pas on saute
+			if(empty($user) || !$user->exist()) continue;
+
+			if($withAuthor===false && $user->user_id==$event->user_id) continue; //on saute l'organisateur de l'événement 
 			
-			//on recupere les preferences mailing de l'utilisateur
-			if($mailingSetting){
-				$setting = $this->Users->findFirst(array('table'=>'users_settings_mailing','fields'=>$mailingSetting,'conditions'=>array('user_id'=>$sporter->user_id)));				
+			if($mailingName){
+				//on recupere les preferences mailing de l'utilisateur
+				$setting = $this->Users->findFirst(array('table'=>'users_settings_mailing','fields'=>$mailingName,'conditions'=>array('user_id'=>$sporter->user_id)));				
+				//si l'utilisateur prefere ne pas recevoir ce mail on saute
+				if(!empty($setting) && $setting->$mailingName == 0) continue;
 			}
 
-			if( //si l'utilisateur existe
-				$user->exist()
-				&& //et si la preference mailing n'est pas desactivé 
-				!empty($setting) && $setting->$mailingSetting !=0
-				)
-			{
-				$emails[] = $user->email;
-			} 
+			
+			//on push l'email dans un tableau
+			$emails[] = $user->email;
+			 
 				
 		}
-		
+		//retourne le tableau
 		return $emails;
 	}
 	

@@ -455,6 +455,11 @@ class EventsModel extends Model{
 
 	}
 
+	public function findSport($params = array() ){
+		
+		return $this->findFirst(array('table'=>'sports_i18n','conditions'=>$params));
+	}
+
 	public function findSports($lang){
 		$sql = "SELECT S.sport_id, S.slug, I.name, I.action, I.object, I.lang
 				FROM sports as S

@@ -216,7 +216,7 @@ function curl_post_request($url,$fields){
 	curl_close($c);
 
 	if($result) return $result;
-	else debug($err);
+	else debug($err);return $err;
 }
 
 

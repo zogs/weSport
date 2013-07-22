@@ -445,6 +445,17 @@ body{
 
 }
 
+//intro tourbus
+.tourbus-leg-inner{
+	p {
+		
+		small{
+			@include rem(11);
+			color:grey;
+		}
+	}
+}
+
 .calendar {	
 	background-image:url(../img/fresque.jpg);
 	background-repeat: repeat-y;
@@ -830,7 +841,7 @@ h1.title-sheet {
 	color:white;
 }	
 
-.register {
+.register,.connexion {
 
 	.form-register{
 		margin:0;
@@ -844,6 +855,7 @@ h1.title-sheet {
 		border:0;
 		padding-bottom:50px;
 		text-align: center;
+		img{ width:185px;}
 	}
 
 	p.intro {
