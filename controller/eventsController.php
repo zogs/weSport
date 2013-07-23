@@ -277,7 +277,7 @@ class EventsController extends Controller{
 			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
-			$user = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$data->user_id)));
+			$user = $this->Users->findFirstUser(array('fields'=>'user_id,facebook_id,facebook_token','conditions'=>array('user_id'=>$data->user_id)));
 			if(!$user->exist()) throw new zException("L'utilisateur n'existe pas",1);
 
 			//On vérifie qu'il participe
@@ -287,8 +287,7 @@ class EventsController extends Controller{
 
 				//Si c'est un utilisateur facebook on supprime la story
 				if($user->isFacebookUser()) $this->fb_openGraph__RemoveGoToSport($user,$event);
-				debug($user);
-				exit();
+	
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
 					//On previens
