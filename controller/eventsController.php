@@ -608,10 +608,16 @@ class EventsController extends Controller{
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 		$facebook->setAccessToken($user->getFacebookToken());
-		$res = $facebook->api('/'.$post_id,'DELETE',array('access_token'=>$user->getFacebookToken(),'method'=>'delete'));
 
-		debug($res);
-		exit();
+		try{
+			$res = $facebook->api('/'.$post_id,'DELETE',array('access_token'=>$user->getFacebookToken(),'method'=>'delete'));
+		} catch (FacebookApiException $e){
+			
+			return false;
+		}
+
+		$this->session->setFlash('Deleting OpenGraph action !','success');
+		return true;
 	}
 
 	public function getOpenGraphEventMarkup($event){
