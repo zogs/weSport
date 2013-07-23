@@ -215,11 +215,11 @@ function curl_post_request($url,$fields){
 	$info = curl_getinfo($c, CURLINFO_CONTENT_TYPE);
 
 	if(strstr($info,'text/html') || strstr($info,'application/json')){
-	
+		debug('ok');
 		return $data;
 	}
 	else {
-
+		debug('fail');
 		$err = curl_getinfo($c,CURLINFO_HTTP_CODE);
 		return $err;
 	}

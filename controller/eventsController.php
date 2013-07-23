@@ -574,7 +574,7 @@ class EventsController extends Controller{
 		$fb_json = curl_post_request($url,$params);
 		$fb_return = json_decode($fb_json);
 
-		echo $fb_json;
+		debug($fb_json);
 		echo '<br>';
 		echo $fb_return;
 		exit();
