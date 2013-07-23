@@ -576,6 +576,7 @@ class EventsController extends Controller{
 
 		debug($fb_json);
 		debug($fb_return);
+		exit();
 		//return 
 		if(!empty($fb_return->id) && is_numeric($fb_return->id)) return true;
 		else {
