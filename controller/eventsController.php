@@ -577,7 +577,7 @@ class EventsController extends Controller{
 		//facebook SDK
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
-		$id = $facebook->api($api_call);
+		//$id = $facebook->api($api_call);
 
 		debug($id);
 		
