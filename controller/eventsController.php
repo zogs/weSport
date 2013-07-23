@@ -599,10 +599,10 @@ class EventsController extends Controller{
 
 	public function fb_openGraph__RemoveGoToSport($user,$event){
 
-		if(!$user->isFacebookUser()) return;
+		if(!$user->isFacebookUser()) echo 'is not fb user';
 
 		$fb_id = $this->Events->getFBGotoSportID($user->getID(),$event->id);
-		if($fb_id==0) return;
+		if($fb_id==0) echo 'fb_id == 0';
 
 		//facebook SDK
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
