@@ -865,6 +865,27 @@ class EventsModel extends Model{
 
 	}
 
+	public function saveFBGotoSportID($user_id,$event_id,$fb_id){
+
+		$id = $this->getFBGotoSportID($user_id,$event_id);
+		if(empty($id)) return;
+
+		$s = new stdClass();
+		$s->table = 'sporters';
+		$s->key = 'id';
+		$s->id = $id;
+		$s->fb_id = $fb_id;
+
+		if($this->save($s)) return true;
+		else return false;
+	}
+
+	public function getFBGotoSportID($user_id,$event_id){
+
+		$e = $this->findFirst(array('table'=>'sporters','fields'=>array('id'),'conditions'=>array('event_id'=>$event_id,'user_id'=>$user_id)));
+		return $e->id;
+	}
+
 
 	public function setSportPracticed($user_id,$current_sport){
 

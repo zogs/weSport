@@ -225,7 +225,7 @@ class EventsController extends Controller{
 				//Set flash				
 				$this->session->setFlash("C'est cool on va bien s'éclater :) ","success",5);
 				//If facebook user post to OG:
-				if($user->isFacebookUser()) $this->fb_openGraph_JoinSport($event,$user);
+				if($user->isFacebookUser()) $this->fb_openGraph__GoToSport($event,$user);
 
 				//On préviens l'organisateur
 				if($this->sendNewParticipant($event,$user)){
@@ -284,6 +284,10 @@ class EventsController extends Controller{
 			$check = $this->Users->findFirst(array('table'=>'sporters','fields'=>'id','conditions'=>array('user_id'=>$data->user_id,'event_id'=>$data->event_id)));
 			//Si il participe
 			if(!empty($check)) {
+
+				//Si c'est un utilisateur facebook on supprime la story
+				if($user->isFacebookUser()) $this->fb_openGraph__RemoveGoToSport($user,$event);
+
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
 					//On previens
@@ -551,7 +555,7 @@ class EventsController extends Controller{
 	}
 		
 
-	public function fb_openGraph_JoinSport($event,$user){
+	public function fb_openGraph__GoToSport($event,$user){
 
 		if(!$user->isFacebookUser()) return false;
 
@@ -576,11 +580,33 @@ class EventsController extends Controller{
 		$res = $facebook->api($url,'POST',$params);
 
 		//return 
-		if(!empty($res) && is_numeric($res['id'])) return true;
+		if(!empty($res) && is_numeric($res['id'])) {
+
+			//save the id of the facebook story
+			$this->Events->saveFBGoToSportID($user->getID(),$event->id,$res['id']);
+
+			return true;
+		}
 		else {
 			debug($res);
 			$this->session->setFlash('Erreur OpenGraph','error');			
 		}
+	}
+
+	public function fb_openGraph__RemoveGoToSport($user,$event){
+
+		if(!$user->isFacebookUser()) return;
+
+		$fb_id = $this->Events->getFBGotoSportID($user->getID(),$event->id);
+
+		//facebook SDK
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
+		$facebook->setAccessToken($user->getFacebookToken());
+		$res = $facebook->api('/'.$fb_id,'DELETE');
+
+		debug($res);
+		exit();
 	}
 
 	public function getOpenGraphEventMarkup($event){
