@@ -558,13 +558,15 @@ class EventsController extends Controller{
 		//find english ACTION SPORT
 		$this->loadModel('Events');
 		$sport = $this->Events->findSport(array('slug'=>$event->sport,'lang'=>'en'));
-		$action = $sport->action;
+		$sport_action = $sport->action;
 
 		//url & params to POST to facebook open graph
-		$url = 'https://graph.facebook.com/me/we-sport-:will_'.$action;
+		$url = 'https://graph.facebook.com/me/we-sport-:go_to';
 		$params = array(
 			'access_token'=>$user->getFacebookToken(),
 			'sport'=>Conf::getSiteUrl().$event->getUrl(),
+			'sport_action'=>$sport_action,
+			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);
 
 		//execute POST request via cURL
