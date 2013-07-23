@@ -575,7 +575,11 @@ class EventsController extends Controller{
 
 		//return 
 		if(isset($fb_return->id)) return true;
-		else $this->session->setFlash('Erreur OpenGraph : url{'.$url.'} return => '.$fb_json,'error');
+		else {
+			$this->session->setFlash('Erreur OpenGraph','error');
+			debug($fb_return);
+			exit();
+		}
 	}
 
 	public function getOpenGraphEventMarkup($event){

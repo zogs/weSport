@@ -215,8 +215,8 @@ function curl_post_request($url,$fields){
 	$err = curl_getinfo($c,CURLINFO_HTTP_CODE);
 	curl_close($c);
 
-	if($result) return $result;
-	else debug($err);return $err;
+	return $result;	
+
 }
 
 
