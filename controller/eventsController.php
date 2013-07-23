@@ -562,21 +562,25 @@ class EventsController extends Controller{
 		if($sport_action=='go') $sport_action = ''; // "Go" is the default verb , no need to pass it in the og API call
 
 		//url & params to POST to facebook open graph
-		$url = 'https://graph.facebook.com/me/we-sport-:go_to';
+		$url = '/me/we-sport-:go_to';
 		$params = array(
 			'access_token'=>$user->getFacebookToken(),
 			'sport'=>Conf::getSiteUrl().$event->getUrl(),
 			'sport_action'=>$sport_action,
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);
+		//create api call url
+		$api_call = '';
+		foreach($params as $key=>$value) { $api_call .= $key.'='.urlencode($value).'&'; }
+		rtrim($api_call, '&');
 
-		//execute POST request via cURL
-		$fb_json = curl_post_request($url,$params);
-		$fb_return = json_decode($fb_json);
+		//facebook SDK
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
+		$id = $facebook->api($api_call);
 
-		debug($fb_json);
-		echo '<br>';
-		echo $fb_return;
+		debug($id);
+		
 		exit();
 		//return 
 		if(!empty($fb_return->id) && is_numeric($fb_return->id)) return true;
