@@ -608,7 +608,7 @@ class EventsController extends Controller{
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 		$facebook->setAccessToken($user->getFacebookToken());
-		$res = $facebook->api('/'.$user->getFacebookId().'_'.$fb_id,'DELETE');
+		$res = $facebook->api('/'.$fb_id.'_'.$user->getFacebookId(),'DELETE');
 
 		debug($res);
 		exit();
