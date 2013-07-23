@@ -883,7 +883,7 @@ class EventsModel extends Model{
 	public function getFBGotoSportID($user_id,$event_id){
 
 		$e = $this->findFirst(array('table'=>'sporters','fields'=>array('id'),'conditions'=>array('event_id'=>$event_id,'user_id'=>$user_id)));
-		return $e->id;
+		return $e->idate(format);
 	}
 
 

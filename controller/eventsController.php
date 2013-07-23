@@ -583,7 +583,11 @@ class EventsController extends Controller{
 		if(!empty($res) && is_numeric($res['id'])) {
 
 			//save the id of the facebook story
-			$this->Events->saveFBGoToSportID($user->getID(),$event->id,$res['id']);
+			if($this->Events->saveFBGoToSportID($user->getID(),$event->id,$res['id'])){
+				$this->session->setFlash('Facebook id saved','success');
+			}
+
+			$this->session->setFlash('Story published on facebook');
 
 			return true;
 		}
@@ -598,6 +602,7 @@ class EventsController extends Controller{
 		if(!$user->isFacebookUser()) return;
 
 		$fb_id = $this->Events->getFBGotoSportID($user->getID(),$event->id);
+		if($fb_id==0) return;
 
 		//facebook SDK
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
