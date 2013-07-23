@@ -577,7 +577,7 @@ class EventsController extends Controller{
 		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 		$facebook->setAccessToken($user->getFacebookToken());
 		debug($url);
-		$id = $facebook->api($url);
+		$id = $facebook->api($url,'POST');
 
 		debug($id);
 		
