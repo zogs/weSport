@@ -212,7 +212,7 @@ function curl_post_request($url,$fields){
 	curl_setopt($c,CURLOPT_POSTFIELDS,$fields_string);
 
 	$data = curl_exec($c);
-	$info = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+	$info = curl_getinfo($c, CURLINFO_CONTENT_TYPE);
 
 	if(strstr($info,'text/html') || strstr($info,'application/json')){
 	
