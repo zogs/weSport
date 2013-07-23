@@ -567,24 +567,18 @@ class EventsController extends Controller{
 			'sport'=>Conf::getSiteUrl().$event->getUrl(),
 			'sport_action'=>$sport_action,
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
-			);
-		//create api call url
-		foreach($params as $key=>$value) { $url .= $key.'='.urlencode($value).'&'; }
-		rtrim($url, '&');
+			);		
 
 		//facebook SDK
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 		$facebook->setAccessToken($user->getFacebookToken());
-		debug($url);
-		$id = $facebook->api($url,'POST');
+		$res = $facebook->api($url,'POST',$params);
 
-		debug($id);
-		
-		exit();
 		//return 
-		if(!empty($fb_return->id) && is_numeric($fb_return->id)) return true;
+		if(!empty($res) && is_numeric($res['id'])) return true;
 		else {
+			debug($res);
 			$this->session->setFlash('Erreur OpenGraph','error');			
 		}
 	}
