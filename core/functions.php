@@ -211,12 +211,20 @@ function curl_post_request($url,$fields){
 	curl_setopt($c,CURLOPT_POST,count($fields));
 	curl_setopt($c,CURLOPT_POSTFIELDS,$fields_string);
 
-	$result = curl_exec($c);
-	$err = curl_getinfo($c,CURLINFO_HTTP_CODE);
+	$data = curl_exec($c);
+	$info = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+	if(strstr($info,'text/html') || strstr($info,'application/json')){
+	
+		return $data;
+	}
+	else {
+
+		$err = curl_getinfo($c,CURLINFO_HTTP_CODE);
+		return $err;
+	}
+
 	curl_close($c);
-
-	return $result;	
-
 }
 
 
