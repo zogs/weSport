@@ -96,7 +96,7 @@ class PagesController extends Controller {
 							$d['sports_available_txt'] .= $s->name.', ';
 			}			
 			
-			$d['title_for_layout'] = "weSport - Organisation et rencontre sportive";
+			$d['title_for_layout'] = "weSport - Agenda et rencontres sportives";
 			$d['description_for_layout'] = "Trouver des sportifs autour de chez vous et faites de nouvelles rencontres ! Découvrez de nouveaux sports ou perfectionnez vous, où que vous soyez !";
 			$d['keywords_for_layout'] = "Sport, activités sportives, ".$d['sports_available_txt'];
 			$this->set($d);

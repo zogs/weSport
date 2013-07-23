@@ -561,11 +561,10 @@ class EventsController extends Controller{
 		$action = $sport->action;
 
 		//url & params to POST to facebook open graph
-		$url = 'https://graph.facebook.com/me/we-sport-:'.$action;
+		$url = 'https://graph.facebook.com/me/we-sport-:will_'.$action;
 		$params = array(
 			'access_token'=>$user->getFacebookToken(),
 			'sport'=>Conf::getSiteUrl().$event->getUrl(),
-			'start_time'=>$event->getDate('en').' '.$event->getTime()
 			);
 
 		//execute POST request via cURL
