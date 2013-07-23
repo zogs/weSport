@@ -287,7 +287,8 @@ class EventsController extends Controller{
 
 				//Si c'est un utilisateur facebook on supprime la story
 				if($user->isFacebookUser()) $this->fb_openGraph__RemoveGoToSport($user,$event);
-
+				debug($user);
+				exit();
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
 					//On previens
