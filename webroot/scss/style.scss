@@ -405,7 +405,8 @@ body{
 				background-color: #FFF; 
 				border:10px solid #FFF; 
 				@include border-radius(100px);
-				@include transition(0.2s ease);
+				@include transition(0.2s ease);				
+				/*@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
 			}
 			label span {
 				@include rem(35); 
