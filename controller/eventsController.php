@@ -138,7 +138,8 @@ class EventsController extends Controller{
 
 		//events
 		$event = $this->Worlds->JOIN_GEO($event);
-		$event = $this->Events->joinSport($event,$this->getLang());		
+		$event->sport = $this->Events->findSport(array('slug'=>$event->sport,$this->getLang()));
+		$event->sport_en = $this->Events->findSport(array('slug'=>$event->sport->slug,'lang'=>'en'));	
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		
 		//Participants
@@ -167,7 +168,7 @@ class EventsController extends Controller{
 		$event->addressCoord = array('lat'=>$gmap->centerLat,'lng'=>$gmap->centerLng);
 
 		//set OpenGraph Object
-		$this->OpenGraphObject = $this->request('events','getOpenGraphEventMarkup',array($event));		
+		$this->OpenGraphObject = $this->request('events','fb_og_metaMarkup',array($event));		
 
 		//debug($event);
 
@@ -225,7 +226,7 @@ class EventsController extends Controller{
 				//Set flash				
 				$this->session->setFlash("C'est cool on va bien s'éclater :) ","success",5);
 				//If facebook user post to OG:
-				if($user->isFacebookUser()) $this->fb_openGraph__GoToSport($event,$user);
+				if($user->isFacebookUser()) $this->fb_og_GoToSport($event,$user);
 
 				//On préviens l'organisateur
 				if($this->sendNewParticipant($event,$user)){
@@ -286,7 +287,7 @@ class EventsController extends Controller{
 			if(!empty($check)) {
 
 				//Si c'est un utilisateur facebook on supprime la story
-				if($user->isFacebookUser()) $this->fb_openGraph__RemoveGoToSport($user,$event);
+				if($user->isFacebookUser()) $this->fb_og_RemoveGoToSport($user,$event);
 	
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
@@ -380,6 +381,9 @@ class EventsController extends Controller{
 		//if an event is specifyed
 		if($event_id!=0){
 
+
+			//L'événement ne pas nouveau
+			$is_new = false;
 			//find event
 			$evt = $this->Events->findEventById($event_id);
 			//exit if event not exist
@@ -399,7 +403,9 @@ class EventsController extends Controller{
 			
 		}
 		else{
-			//else init a empty event
+			//L'événement est nouveau
+			$is_new = true;
+			//créer un evenement vide pour l'affichage par default
 			$evt = new Event();
 
 		}
@@ -471,17 +477,28 @@ class EventsController extends Controller{
 						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 						$this->Events->saveParticipants($u,$evt);						
 						
-					
-						//email the changes 
-						//if there are changes and event is not finished
-						if(!empty($changes)&&$evt->timingSituation()!='past'){
-							
-							if($this->sendEventChanges($new,$changes)){
+						//if the event is new
+						if($is_new==true){
 
-								$this->session->setFlash('Les modifications ont été envoyées aux participants','warning');
-							}
+							//if its a facebook user, publish via the facebook OpenGraph
+							if($this->session->user()->isFacebookUser()) $this->fb_og_WantSport($evt,$this->session->user());
 						}
 
+						//if the event already exist
+						if($is_new==false){
+
+							//if there are changes and event is not finished
+							//email the changes 
+							if(!empty($changes)&&$evt->timingSituation()!='past'){
+								
+								if($this->sendEventChanges($new,$changes)){
+
+									$this->session->setFlash('Les modifications ont été envoyées aux participants','warning');
+								}
+							}
+							
+						}
+					
 						//redirect
 						//$this->redirect('events/create/'.$event_id);
 					}
@@ -553,9 +570,38 @@ class EventsController extends Controller{
 
 		
 	}
-		
+	
+	public function fb_og_WantSport($event,$user){
 
-	public function fb_openGraph__GoToSport($event,$user){
+		if(!$user->isFacebookUser()) return false;
+
+		//find english ACTION SPORT
+		$this->loadModel('Events');
+		$sport = $this->Events->findSport(array('slug'=>$event->sport,'lang'=>'en'));
+		$sport_action = $sport->action;
+		if($sport_action=='go') $sport_action = ''; // "Go" is the default verb , no need to pass it in the og API call
+
+		$url = '/me/we-sport-:want_to?';
+		$params = array(
+			'sport'=>$event->getUrl(),
+			'sport_action'=>$sport_action,
+			'end_time'=>$event->getDate('en').' '.$event->getTime()
+			);
+
+		$res = $this->facebook->api($url,'POST',$params);
+
+		if(!empty($res) && is_numeric($res['id'])){
+			$this->session->setFlash('Story published on facebook');
+			return true;
+		}
+		else {
+			debug($res);
+			$this->session->setFlash('Erreur OpenGraph','error');			
+		}
+
+	}
+
+	public function fb_og_GoToSport($event,$user){
 
 		if(!$user->isFacebookUser()) return false;
 
@@ -568,27 +614,20 @@ class EventsController extends Controller{
 		//url & params to POST to facebook open graph
 		$url = '/me/we-sport-:go_to?';
 		$params = array(
-			'sport'=>Conf::getSiteUrl().$event->getUrl(),
+			'sport'=>$event->getUrl(),
 			'sport_action'=>$sport_action,
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);		
 
-		//facebook SDK
-		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
-		$facebook->setAccessToken($user->getFacebookToken());
-		$res = $facebook->api($url,'POST',$params);
+		//facebook SDK		
+		$res = $this->facebook->api($url,'POST',$params);
 
 		//return 
 		if(!empty($res) && is_numeric($res['id'])) {
-
 			//save the id of the facebook story
-			if($this->Events->saveFBGoToSportID($user->getID(),$event->id,$res['id'])){
-				$this->session->setFlash('Facebook id saved','success');
-			}
-
+			if($this->Events->saveFBGoToSportID($user->getID(),$event->id,$res['id'])){}
+			//flash		
 			$this->session->setFlash('Story published on facebook');
-
 			return true;
 		}
 		else {
@@ -597,20 +636,15 @@ class EventsController extends Controller{
 		}
 	}
 
-	public function fb_openGraph__RemoveGoToSport($user,$event){
+	public function fb_og_RemoveGoToSport($user,$event){
 
 		if(!$user->isFacebookUser()) exit('is not facebook user');
 
 		$post_id = $this->Events->getFBGotoSportID($user->getID(),$event->id);
 		if($post_id==0) exit('post_id=0');
 
-		//facebook SDK
-		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
-		$facebook->setAccessToken($user->getFacebookToken());
-
 		try{
-			$res = $facebook->api('/'.$post_id,'DELETE',array('access_token'=>$user->getFacebookToken(),'method'=>'delete'));
+			$res = $tthis->facebook->api('/'.$post_id,'DELETE',array('access_token'=>$user->getFacebookToken(),'method'=>'delete'));
 		} catch (FacebookApiException $e){
 			
 			return false;
@@ -620,11 +654,11 @@ class EventsController extends Controller{
 		return true;
 	}
 
-	public function getOpenGraphEventMarkup($event){
+	public function fb_og_metaMarkup($event){
 		//debug($event);
 		$head = "prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#'";
 		$metas = '<meta property="fb:app_id"                content="'.Conf::$facebook['appId'].'" /> 
-				  	<meta property="og:url"                   content="'.Conf::getSiteUrl().$event->getUrl().'" /> 
+				  	<meta property="og:url"                   content="'.$event->getUrl().'" /> 
 				  	<meta property="og:type"                  content="we-sport-:sport" /> 
 				  	<meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
 				  	<meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo().'" /> 
@@ -632,10 +666,9 @@ class EventsController extends Controller{
 				  	<meta property="og:street-address" content="'.$event->address.'" />
 					<meta property="og:locality" content="'.$event->cityName.'" />
 					<meta property="og:country-name" content="'.$event->CC1.'" />
-					<meta property="we-sport-:name"      content="'.$event->getSportName().'" />
+					<meta property="we-sport-:name"      content="'.$event->sport_en->name.'" />
 					<meta property="we-sport-:title"     content="'.$event->getTitle().'" />
-					<meta property="we-sport-:description" content="'.substr($event->getDescription(),0,100).'" /> 
-					<meta property="we-sport-:action"    content="'.$event->getSportAction().'" />
+					<meta property="we-sport-:description" content="'.substr($event->getDescription(),0,100).'" /> 					
 					<meta property="we-sport-:datetime"            content="'.$event->getTimestamp().'" /> 
 					<meta property="we-sport-:participants" content="'.count($event->participants).'" /> 
 					<meta property="we-sport-:confirmed"     content="'.(($event->isConfirm())? 'true' : 'false').'" />

@@ -343,10 +343,7 @@ class UsersController extends Controller{
 
 	public static function link_register_with_facebook(){
 
-		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-		$facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
-
-		$user = $facebook->getUser();
+		$user = $this->facebook->getUser();
 
 		//unique id that facebook send back to protect csrf attacks
 		$state = String::random(20);
