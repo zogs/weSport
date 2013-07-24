@@ -476,7 +476,7 @@ class EventsController extends Controller{
 						//save organizator participation		
 						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
 						$this->Events->saveParticipants($u,$evt);						
-						
+
 						//if the event is new
 						if($is_new==true){
 
@@ -578,8 +578,7 @@ class EventsController extends Controller{
 		//find english ACTION SPORT
 		$this->loadModel('Events');
 		$sport = $this->Events->findSport(array('slug'=>$event->sport,'lang'=>'en'));
-		$sport_action = $sport->action;
-		if($sport_action=='go') $sport_action = ''; // "Go" is the default verb , no need to pass it in the og API call
+		$sport_action = $sport->action;		
 
 		$url = '/me/we-sport-:want_to?';
 		$params = array(

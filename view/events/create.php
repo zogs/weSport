@@ -30,8 +30,8 @@
 					<?php echo $this->Form->input("id","hidden",array("value"=>$event->id)) ;?>
 					<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>
 					<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
-					<?php echo $this->Form->input('title',"Titre",array('placeholder'=>"Petit match entre amis, ...")) ;?>
 					<?php echo $this->Form->select('sport','Sport',$sports_available,array('default'=>$event->getSportSlug(),'placeholder'=>"Choisir un sport",'style'=>'width:100%;')); ?>
+					<?php echo $this->Form->input('title',"Titre",array('placeholder'=>"Petit match entre amis, ...")) ;?>
 					<?php //$this->request('world','formLocate',array('city','Location',$event,array('helper'=>"Choississez jusqu'a votre ville"))); ?>
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","style"=>"width:100%;","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
