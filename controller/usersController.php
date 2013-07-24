@@ -341,15 +341,15 @@ class UsersController extends Controller{
 
 	}
 
-	public static function link_register_with_facebook(){
-
+	public function link_register_with_facebook(){
+			
 		$user = $this->facebook->getUser();
 
 		//unique id that facebook send back to protect csrf attacks
-		$state = String::random(20);
-		$_SESSION['fbstate'] = $state;
+		//$state = String::random(20);
+		//$_SESSION['fbstate'] = $state;
 
-		$loginUrl = $facebook->getLoginUrl(array(
+		$loginUrl = $this->facebook->getLoginUrl(array(
 			'redirect_uri'=>'http://wesport.zogs.org/users/facebook_connect',
 			'scope'=>'email,user_birthday,publish_actions',
 			//'state'=>$state,

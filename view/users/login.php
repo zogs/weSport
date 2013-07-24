@@ -35,7 +35,7 @@
 
 			<form class="form-wp form-facebook">
 				<p class="intro"></p>
-				<a href="<?php echo UsersController::link_register_with_facebook();?>">
+				<a href="<?php echo $this->request('users','link_register_with_facebook');?>">
 					<img src="<?php echo Router::webroot('img/connect_with_facebook.png');?>"/>
 				</a>				
 			</form>

@@ -23,16 +23,10 @@ class Controller {
 		//Initialisation autoconnection
 		UsersController::auto_connect($this->session);
 
-
-		//Si c'est un utilisateur inscript par facebook
 		//on instancie un objet facebook pour nous permettre de faire de appel à l'API
-		if($this->session->user()->isFacebookUser()) {
-
-			require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-			$this->facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
-			$this->facebook->setAccessToken($this->session->user()->getFacebookToken());
-			
-		}
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+		$this->facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
+		$this->facebook->setAccessToken($this->session->user()->getFacebookToken());		
 		
 		//Si une request est passé on effectue des vérifications de sécurité
 		if($request){
