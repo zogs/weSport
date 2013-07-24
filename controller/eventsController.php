@@ -666,6 +666,7 @@ class EventsController extends Controller{
 					<meta property="og:locality" content="'.$event->cityName.'" />
 					<meta property="og:country-name" content="'.$event->CC1.'" />
 					<meta property="we-sport-:name"      content="'.$event->sport_en->name.'" />
+					<meta property="we-sport-:action"    content="'.$event->sport_en->action.'" />
 					<meta property="we-sport-:title"     content="'.$event->getTitle().'" />
 					<meta property="we-sport-:description" content="'.substr($event->getDescription(),0,100).'" /> 					
 					<meta property="we-sport-:datetime"            content="'.$event->getTimestamp().'" /> 
