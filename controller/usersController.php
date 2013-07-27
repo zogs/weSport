@@ -231,6 +231,11 @@ class UsersController extends Controller{
 		//store in db
 		$access_token = '';
 
+		if(empty($_REQUEST['code'])){
+			$this->session->setFlash("Erreur avec facebook","error");
+			$this->e404('Facebook ne nous a pas communiquer les informations nécessaires. N\'oubliez de bien accepter l\'application ! ');
+		}
+
 		$code = $_REQUEST['code'];
 
 		// If we get a code, it means that we have re-authed the user 

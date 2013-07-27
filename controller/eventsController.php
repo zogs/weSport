@@ -608,7 +608,7 @@ class EventsController extends Controller{
 		$this->loadModel('Events');
 		$sport = $this->Events->findSport(array('slug'=>$event->sport,'lang'=>'en'));
 		$sport_action = $sport->action;
-		if($sport_action=='go') $sport_action = ''; // "Go" is the default verb , no need to pass it in the og API call
+		//if($sport_action=='go') $sport_action = ''; // "Go" is the default verb , no need to pass it in the og API call
 
 		//url & params to POST to facebook open graph
 		$url = '/me/we-sport-:go_to?';
