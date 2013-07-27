@@ -342,7 +342,7 @@ class UsersController extends Controller{
 	}
 
 	public function link_register_with_facebook(){
-			
+
 		$user = $this->facebook->getUser();
 
 		//unique id that facebook send back to protect csrf attacks
@@ -541,7 +541,7 @@ class UsersController extends Controller{
 							$check = $this->Users->findFirstUser(array('fields'=>'email','conditions'=>array('email'=>$data->email)));
 							if($check->exist()){
 								unset($data->email);
-								$this->session->setFlash('Cette email est déjà utilisé dans notre système.');
+								$this->session->setFlash('Cet email est déjà utilisé dans notre système.');
 							}
 						}
 					
