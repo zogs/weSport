@@ -339,6 +339,8 @@ class UsersController extends Controller{
 		$this->session->setToken();				
 		$this->session->setFlash('Vous êtes maintenant connecté grace à facebook !','success');
 
+		$this->redirect('/');
+
 	}
 
 	public function link_register_with_facebook(){
