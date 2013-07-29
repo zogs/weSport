@@ -228,18 +228,20 @@ class UsersController extends Controller{
 		$app_secret = Conf::$facebook['secret'];
 		$my_url     = 'http://wesport.zogs.org/users/facebook_connect';
 
-		//store in db
+		//data to store in db
 		$access_token = '';
 
+		//Si l'API ne revoit pas de code de connexion
 		if(empty($_REQUEST['code'])){
 			$this->session->setFlash("Erreur avec facebook","error");
 			$this->e404('Facebook ne nous a pas communiquer les informations nécessaires. N\'oubliez de bien accepter l\'application ! ');
 		}
 
+		//else the code is set
 		$code = $_REQUEST['code'];
 
-		// If we get a code, it means that we have re-authed the user 
-		  //and can get a valid access_token. 
+		//its means that we have re-authed the user 
+		//and can get a valid access_token. 
 		  if (isset($code)) {		  	
 		    $token_url="https://graph.facebook.com/oauth/access_token?client_id="
 		      . $app_id . "&redirect_uri=" . urlencode($my_url) 
@@ -256,16 +258,17 @@ class UsersController extends Controller{
 		  }
 
 		  //Confirm the token by querying the Graph
+		  //Return the facebook user object
 		  $graph_url = "https://graph.facebook.com/me?"
 		    . "access_token=" . $access_token;
 		  $response = curl_get_file_contents($graph_url);
 		  $decoded_response = json_decode($response);
 		    
-		  //Check for errors 
+		  //if the API return an error
 		  if (isset($decoded_response->error)) {
 		  	//check to seee if its an aAuth error
 		  	if ($decoded_response->error->type== "OAuthException") {
-		  		//if error get a new valid token and reload this methode
+		  		//if its an OAuth error, then try to get an new access token by reload this method
 		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
 		  				."client_id=".$app_id
 		  				."&redirect_uri=".urlencode($my_url);
@@ -275,12 +278,15 @@ class UsersController extends Controller{
 		  		throw new zException("Facebook connect : other error append", 1);		  		
 		  	}
 		  }
-		  //if no errors, user is in the decoded_response
-		  else {
-		  	$fbuser = $decoded_response;	  			  	
-		  }
+		  
 
-		  debug($fbuser);
+		  //if no errors, user is in the decoded_response		 
+		  $fbuser = $decoded_response;	  			  	
+		  
+			  //(fix) set a name for the og: Test User
+			  if(empty($fbuser->username) && !empty($fbuser->name)) $fbuser->username = $fbuser->name;
+		  
+
 		  //On vérifie si il existe dans la base
 		  $user = $this->Users->findFirstUser(array('conditions'=>array('facebook_id'=>$fbuser->id)));
 		
