@@ -660,7 +660,7 @@ class EventsController extends Controller{
 				  	<meta property="og:url"                   content="'.$event->getUrl().'" /> 
 				  	<meta property="og:type"                  content="we-sport-:sport" /> 
 				  	<meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
-				  	<meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo().'" /> 
+				  	<meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo('big').'" /> 
 				  	<meta property="og:description"			content="'.substr($event->getDescription(),0,100).'" />
 				  	<meta property="og:street-address" content="'.$event->address.'" />
 					<meta property="og:locality" content="'.$event->cityName.'" />

@@ -1018,10 +1018,15 @@ class Event{
 		return $this->timestamp;
 	}
 
-	public function getSportLogo(){
+	public function getSportLogo($size='small'){
 		if(!$this->exist()) return '';
-		if(file_exists(WEBROOT.'/img/sport_icons/30gif/'.$this->sport->slug.'.gif')) return Router::webroot('img/sport_icons/30gif/'.$this->sport->slug.'.gif');
-		return Router::webroot('img/sport_icons/30gif/relaxation.gif');
+		
+		if($size=='small') $size=30;
+		elseif($size=='big') $size=60;
+		else debug('Size of getSportLogo() is not an appropriate value');
+		
+		if(file_exists(WEBROOT.'/img/sport_icons/'.$size.'gif/'.$this->sport->slug.'.gif')) return Router::webroot('img/sport_icons/'.$size.'gif/'.$this->sport->slug.'.gif');
+		return Router::webroot('img/sport_icons/'.$size.'gif/relaxation.gif');
 	}
 
 	public function getSportName(){
