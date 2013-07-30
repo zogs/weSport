@@ -158,7 +158,9 @@ $(document).ready(function(){
     $("select.geo-select").livequery(function(){
     	$(this).select2();
     });
-    $("select#CC1").select2({ formatResult: addCountryFlagToSelectState, formatSelection: addCountryFlagToSelectState});
+    $("select#CC1").livequery(function(){
+    	$(this).select2({ formatResult: addCountryFlagToSelectState, formatSelection: addCountryFlagToSelectState});
+    });
 
 
 

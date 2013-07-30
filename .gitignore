@@ -1,6 +1,6 @@
 #perso
 webroot/cache/*
-webroot/media/users/avatar/*
+webroot/media/*
 .sass-cache/*
 
 
