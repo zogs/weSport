@@ -643,7 +643,7 @@ class EventsController extends Controller{
 		if($post_id==0) exit('post_id=0');
 
 		try{
-			$res = $tthis->facebook->api('/'.$post_id,'DELETE',array('access_token'=>$user->getFacebookToken(),'method'=>'delete'));
+			$res = $this->facebook->api('/'.$post_id,'DELETE',array('access_token'=>$user->getFacebookToken(),'method'=>'delete'));
 		} catch (FacebookApiException $e){
 			
 			return false;
