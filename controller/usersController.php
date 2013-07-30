@@ -363,7 +363,7 @@ class UsersController extends Controller{
 		//$_SESSION['fbstate'] = $state;
 
 		$loginUrl = $this->facebook->getLoginUrl(array(
-			'redirect_uri'=>'http://wesport.zogs.org/users/facebook_connect',
+			'redirect_uri'=>Conf::getSiteUrl().'/users/facebook_connect',
 			'scope'=>'email,user_birthday,publish_actions',
 			//'state'=>$state,
 			));
