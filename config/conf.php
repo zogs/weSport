@@ -11,7 +11,8 @@ class Conf {
 	static $websiteURL = 'wesport.zogs.org';
 	static $websiteURLs = array(
 		'localhost'=>'http://localhost/wesport',
-		'wesport.zogs.org'=>'http://wesport.zogs.org'
+		'wesport.zogs.org'=>'http://wesport.zogs.org',
+		'we-sport.fr' => 'http://we-sport.fr'
 		);
 	static $websiteDOT = 'wesport.com';
 	static $contactEmail = 'pierresimon.gossot@free.fr';
@@ -34,6 +35,12 @@ class Conf {
 			'database' => 'wesport',
 			'login'    => 'root',
 			'password' => 'XSgvEPbG'
+			),
+		'we-sport.fr' => array(
+			'host'    => 'localhost',
+			'database'=> 'wesport',
+			'login'   => 'root',
+			'password'=> 'XSgvEPbG'
 			) 
 		);
 
@@ -46,6 +53,7 @@ class Conf {
 	static $cachePath = array(
 		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
 		'wesport.zogs.org' => '../webroot/cache',
+		'we-sport.fr' => '../webroot/cache'
 		);
 
 
@@ -107,7 +115,7 @@ class Conf {
 
 
 			$transport = Swift_SmtpTransport::newInstance('mail.gandi.net',465,"ssl")
-				->setUsername('wesport@zogs.org')
+				->setUsername('contact@we-sport.fr')
 				->setPassword('justdoit');
 
 			//PHP mail() function
