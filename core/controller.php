@@ -147,6 +147,7 @@ class Controller {
 			if(is_string($c)) $c = array($c);
 			if(is_array($c)) $css = array_merge($css,$c);
 		}
+		
 		foreach ($css as $name => $url) {
 
 			if(strpos($url,'http')!==0) $url = Router::webroot($url);

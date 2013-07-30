@@ -36,7 +36,7 @@ class UsersController extends Controller{
 					if(isset($data->remember)){
 						//set secret key cookie
 						$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
-						setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false, true);
+						setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', Conf::getSiteUrl(), false, true);
 
 					}
 
@@ -96,7 +96,7 @@ class UsersController extends Controller{
 		
 		unset($_SESSION['user']);
 		unset($_SESSION['token']);
-		setcookie('auto_connect','', time() - 3600, '/', 'wesport.zogs.org', false, true);
+		setcookie('auto_connect','', time() - 3600, '/', Conf::getSiteUrl(), false, true);
 
 		$this->session->setFlash('Vous êtes maintenant déconnecté','info',2);	
 		$this->reload();
@@ -198,7 +198,7 @@ class UsersController extends Controller{
 
 			//if user not exist delete cookie
 			if(!$user->exist()) {				
-				setcookie('auto_connect','', time() - 3600, '/', 'wesport.zogs.org', false, true);
+				setcookie('auto_connect','', time() - 3600, '/', Conf::getSiteUrl(), false, true);
 				return false;
 			}
 
@@ -210,11 +210,11 @@ class UsersController extends Controller{
 				//write user session
 				$session->write('user',$user);
 				$session->setToken();
-				setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false , true);
+				setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', Conf::getSiteUrl(), false , true);
 			}
 			//if not delete cookie
 			else {					
-				setcookie('auto_connect','',time() - 3600, '/', 'wesport.zogs.org', false, true);
+				setcookie('auto_connect','',time() - 3600, '/', Conf::getSiteUrl(), false, true);
 			}
 		}
 	}
@@ -226,7 +226,7 @@ class UsersController extends Controller{
 
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
-		$my_url     = 'http://wesport.zogs.org/users/facebook_connect';
+		$my_url     = Conf::getSiteUrl().'/users/facebook_connect';
 
 		//data to store in db
 		$access_token = '';
@@ -337,7 +337,7 @@ class UsersController extends Controller{
 
 		//set cookie for autoconnexion			
 		$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);//set secret key cookie
-		setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', 'wesport.zogs.org', false, true);
+		setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', Conf::getSiteUrl(), false, true);
 
 		//unset session data
 		unset( $user->hash);
