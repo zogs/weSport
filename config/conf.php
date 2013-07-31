@@ -12,7 +12,8 @@ class Conf {
 	static $websiteURLs = array(
 		'localhost'=>'http://localhost/wesport',
 		'wesport.zogs.org'=>'http://wesport.zogs.org',
-		'we-sport.fr' => 'http://we-sport.fr'
+		'we-sport.fr' => 'http://we-sport.fr',
+		'default' => 'http://we-sport.fr'
 		);
 	static $websiteDOT = 'wesport.com';
 	static $contactEmail = 'pierresimon.gossot@free.fr';
@@ -41,7 +42,14 @@ class Conf {
 			'database'=> 'wesport',
 			'login'   => 'root',
 			'password'=> 'XSgvEPbG'
+			),
+		'default' => array(
+			'host'    => 'localhost',
+			'database'=> 'wesport',
+			'login'   => 'root',
+			'password'=> 'XSgvEPbG'
 			) 
+		);
 		);
 
 	//Language code
@@ -53,7 +61,8 @@ class Conf {
 	static $cachePath = array(
 		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
 		'wesport.zogs.org' => '../webroot/cache',
-		'we-sport.fr' => '../webroot/cache'
+		'we-sport.fr' => '../webroot/cache',
+		'default' => '../webroot/cache'
 		);
 
 
@@ -133,12 +142,14 @@ class Conf {
 
 	    public static function getSiteUrl(){	    	
 	    	$host = self::getHost();	    	
-	    	return self::$websiteURLs[$host];
+	    	if(isset(self::$websiteUrls[$host])) return self::$websiteURLs[$host];
+	    	return self::$websiteURLs['default'];
 	    }
 
 	    public static function getCachePath(){
 	    	$host = self::getHost();
-	    	return self::$cachePath[$host];
+	    	if(isset(self::$cachePath[$host])) return self::$cachePath[$host];
+	    	return self::$cachePath['default'];
 	    }
 
 }

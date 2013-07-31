@@ -25,8 +25,10 @@
 				</div>
 
 				<?php
+					
 
-				foreach ($evts as $event):
+
+				foreach ($evts as $event){
 				
 				?>
 				
@@ -50,8 +52,8 @@
 				</div>
 
 				<?php	
-										
-					endforeach;
+								
+					}
 
 				?>
 
