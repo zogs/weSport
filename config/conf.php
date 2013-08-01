@@ -141,7 +141,7 @@ class Conf {
 
 	    public static function getSiteUrl(){	    	
 	    	$host = self::getHost();	    	
-	    	if(isset(self::$websiteUrls[$host])) return self::$websiteURLs[$host];
+	    	if(isset(self::$websiteURLs[$host])) return self::$websiteURLs[$host];
 	    	return self::$websiteURLs['default'];
 	    }
 
