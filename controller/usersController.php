@@ -234,7 +234,8 @@ class UsersController extends Controller{
 		//Si l'API ne revoit pas de code de connexion
 		if(empty($_REQUEST['code'])){
 			$this->session->setFlash("Erreur avec facebook","error");
-			$this->e404('Facebook ne nous a pas communiquer les informations nécessaires. N\'oubliez de bien accepter l\'application ! ');
+			$this->session->setFlash('[DEBUG] QUERY STRING was : '.$_SERVER['QUERY_STRING'],'warning');
+			$this->e404('Facebook ne nous a pas communiquer les informations nécessaires. N\'oubliez pas de bien accepter l\'application ! ');
 		}
 
 		//else the code is set

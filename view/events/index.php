@@ -57,7 +57,7 @@
 
 				?>
 
-				<a class="addEvent tooltipbottom" data-toggle="tooltip" title="Ajouter votre sport" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
+				<a class="addEvent tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
 			</td>
 		<?php
 			$cdate = $date;
