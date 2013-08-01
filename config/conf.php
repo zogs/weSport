@@ -48,8 +48,7 @@ class Conf {
 			'database'=> 'wesport',
 			'login'   => 'root',
 			'password'=> 'XSgvEPbG'
-			) 
-		);
+			) 		
 		);
 
 	//Language code
