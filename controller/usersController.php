@@ -240,22 +240,17 @@ class UsersController extends Controller{
 		//else the code is set
 		$code = $_REQUEST['code'];
 
-		//its means that we have re-authed the user 
-		//and can get a valid access_token. 
-		  if (isset($code)) {		  	
-		    $token_url="https://graph.facebook.com/oauth/access_token?client_id="
-		      . $app_id . "&redirect_uri=" . urlencode($my_url) 
-		      . "&client_secret=" . $app_secret 
-		      . "&code=" . $code . "&display=popup";
-		    $response = file_get_contents($token_url);
-		    $params = null;
-		    parse_str($response, $params);
-		    $access_token = $params['access_token'];
-		    
-		  }
-		  else {
-		  	throw new zException("Facebook connect : params -code- is not in $_REQUEST", 1);	
-		  }
+		//the user have accepted the application
+		//we can get a valid access_token. 		  	
+		$token_url="https://graph.facebook.com/oauth/access_token?client_id="
+		  . $app_id . "&redirect_uri=" . urlencode($my_url) 
+		  . "&client_secret=" . $app_secret 
+		  . "&code=" . $code . "&display=popup";
+		$response = file_get_contents($token_url);
+		$params = null;
+		parse_str($response, $params);
+		$access_token = $params['access_token'];
+		    	 
 
 		  //Confirm the token by querying the Graph
 		  //Return the facebook user object

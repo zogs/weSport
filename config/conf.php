@@ -142,7 +142,7 @@ class Conf {
 	    public static function getSiteUrl(){	    	
 	    	$host = self::getHost();	    	
 	    	if(isset(self::$websiteURLs[$host])) return self::$websiteURLs[$host];
-	    	return self::$websiteURLs['default'];
+	    	return self::$websiteURL['default'];
 	    }
 
 	    public static function getCachePath(){
