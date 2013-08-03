@@ -368,7 +368,7 @@ class PagesController extends Controller {
 				
 
 				if($this->sendMailContact($data->name,$data->email,$data->title,$data->message) && $this->Pages->saveContactMessage($data))
-					$this->session->setFlash("C'est gentil d'avoir laisser un petit mot !","success");				
+					$this->session->setFlash("Merci de votre message !","success");				
 				else
 					$this->session->setFlash("Erreur lors de la sauvegarde du message",'error');
 				

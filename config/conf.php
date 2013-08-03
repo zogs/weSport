@@ -15,8 +15,8 @@ class Conf {
 		'we-sport.fr' => 'http://we-sport.fr',
 		'default' => 'http://we-sport.fr'
 		);
-	static $websiteDOT = 'wesport.com';
-	static $contactEmail = 'pierresimon.gossot@free.fr';
+	static $websiteDOT = 'we-sport.fr';
+	static $contactEmail = 'contact@we-sport.fr';
 	static $lang = 'fr';
 	static $pays = 'FR';
 
