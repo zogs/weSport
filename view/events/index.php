@@ -32,7 +32,7 @@
 				
 				?>
 				
-				<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?>">				
+				<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
 					<a class="events-link" href="<?php echo $event->getUrl();?>">
 		
 						<div class="events-time">

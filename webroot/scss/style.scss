@@ -659,7 +659,7 @@ body{
 			padding:10px;
 			min-height:100px;
 			background-color:#FFF;
-			border:2px solid rgba(0,0,0,0.1);
+			border:1px solid rgba(0,0,0,0.1);
 			border-bottom:4px solid rgba(0,0,0,0.2);
 			@include border-radius(20px);
 
@@ -698,6 +698,11 @@ body{
 					}
 				}
 			}
+		}
+
+		.events-confirmed {
+			border-bottom-width: 6px;
+			border-color:$darkgreen;
 		}
 
 	}
