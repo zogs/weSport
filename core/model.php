@@ -42,7 +42,7 @@
  			$pdo = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['database'],
  				$conf['login'],
  				$conf['password'],
- 				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',PDO::MYSQL_ATTR_INIT_COMMAND => $this->setTimeZone() ) //Important pour l'encode des carateres
+ 				array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") //Important pour l'encode des carateres
  				);
  			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING); //Important pour afficher les erreurs
  			//$pdo->exec('SET NAMES utf8');
