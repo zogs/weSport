@@ -93,6 +93,8 @@
 
 		$offset = sprintf('%+d:%02d', $hrs*$sgn, $mins);
 
+		debug("SET time_zone='$offset'");
+
 		return "SET time_zone='$offset'";
  	}
 
