@@ -45,7 +45,7 @@
  				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',PDO::MYSQL_ATTR_INIT_COMMAND => $this->setTimeZone() ) //Important pour l'encode des carateres
  				);
  			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING); //Important pour afficher les erreurs
- 			$pdo->exec('SET NAMES utf8');
+ 			//$pdo->exec('SET NAMES utf8');
  			Model::$connections[$host] = $pdo; //Attribution de la connexion a une varaible static
  			$this->db = $pdo;	 //Attribution de la connexion a une varaible 
  			
