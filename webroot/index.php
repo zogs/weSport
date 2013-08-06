@@ -1,10 +1,16 @@
 <?php
 
+header('Content-Type: text/html; charset=utf-8');
+
+//Errors report
 error_reporting(E_ALL);
 ini_set('display_errors','1');
 
-
+//star timer
 //$debut = microtime(true);
+
+
+//Constant
 define('DEBUG',2);
 define('WEBROOT',dirname(__FILE__));
 define('ROOT',dirname(WEBROOT));
@@ -19,8 +25,7 @@ include CORE.'/functions.php';
 //Date time zone
 date_default_timezone_set('Europe/Paris');
 
-//
-header('Content-Type: text/html; charset=UTF-8');
+
 
 //Errors gestion
 include CORE.'/errors.php';
@@ -57,11 +62,7 @@ new Routes();
 //launch the dispacher
 new Dispatcher(new Request());
 
-?>
 
-
-
-<?php
+//End timer
 //echo 'Page généré en '.round(microtime(true) - $debut,5).' secondes';
 ?>
-
