@@ -35,7 +35,7 @@
 
 				<div class="clearfix"></div>
 			</div>
-
+		bonjour é"(é"ç_(éàùù)
 			<div class="sportCheckboxs" id="sportCheckboxs">
 				<?php 					
 					$sports_selected = $this->cookieEventSearch->read('sports');									
