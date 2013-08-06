@@ -91,6 +91,7 @@ class PagesController extends Controller {
 			
 			$d['params'] = $params;			
 			$d['sports_available'] = $this->Events->findSports($this->getLang());
+			debug($d['sports_available']);
 			$d['sports_available_txt'] = '';
 			foreach ($d['sports_available'] as $s) {
 							$d['sports_available_txt'] .= $s->name.', ';
