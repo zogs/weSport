@@ -90,9 +90,7 @@ class PagesController extends Controller {
 			$this->cookieEventSearch->write($params);		
 			
 			$d['params'] = $params;			
-			$d['sports_available'] = $this->Events->findSports($this->getLang());
-			debug('test des accents : éçàèû');
-			debug($d['sports_available']);
+			$d['sports_available'] = $this->Events->findSports($this->getLang());			
 			$d['sports_available_txt'] = '';
 			foreach ($d['sports_available'] as $s) {
 							$d['sports_available_txt'] .= $s->name.', ';
