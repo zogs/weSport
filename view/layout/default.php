@@ -30,7 +30,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 	<?php $this->loadJS();?>	
 	
 </head>
-<body data-user_id="<?php echo $this->session->user()->getID(); ?>" data-first-visite="<?php echo (isset($first_visite) && $first_visite===true)? '1':'0';?>">
+<body data-user_id="<?php echo $this->session->user()->getID(); ?>" data-display-demo="<?php echo (!empty($display_demo))? 1 : 0;?>">
 
 
 	<div class="navbar navbar-fixed-top">

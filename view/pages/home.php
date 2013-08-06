@@ -35,7 +35,7 @@
 
 				<div class="clearfix"></div>
 			</div>
-			
+
 			<div class="sportCheckboxs" id="sportCheckboxs">
 				<?php 					
 					$sports_selected = $this->cookieEventSearch->read('sports');									
@@ -335,10 +335,15 @@ $(document).ready(function(){
 
 
 	//Demo Tourbus
-	//if user is not logged  &&  it's a first visite   &&  screen size is enough
-	if($('body').attr('data-user_id')==0 && $('body').attr('data-first-visite')==1 && $(window).width()>=768){
-
+	if(
+		$('#wesport-demo').length!=0 // if a demo tour is present on the DOM
+		&& $('body').attr('data-user_id')==0 // and if no user is log
+		&& $('body').attr('data-display-demo')==1 //and if the cookie settings are ok
+		&& $(window).width()>=768) // and if the screen is large enougth
+	{
+		//Init the demo tour
 		var demo = $('#wesport-demo').tourbus({leg:{scrollto:0}});
+		//Start the demo tour
 		demo.trigger('depart.tourbus');
 		
 	}

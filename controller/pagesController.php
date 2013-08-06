@@ -24,14 +24,20 @@ class PagesController extends Controller {
 				'js/jquery/tourbus/tourbus.css'
 				);
 
-			//Cookie first visite
-			$d['first_visite'] = false; //default value
-			if(!isset($_COOKIE['site_visited'])){ //if cookie first visite not set				
-				setcookie('site_visited',time(), 44000, '', $_SERVER['SERVER_NAME'], false, true); // set the cookie
-			 	$d['first_visite'] = true;	
-			 		
+			//Set cookie for demo tour
+			$d['display_demo'] = 1;
+			if(!isset($_COOKIE['nb_visits'])){
+				setcookie('nb_visits',0,time()+604800);	// a one week cookie						
 			}
-
+			else {
+				$nb = $_COOKIE['nb_visits'];
+				$nb++;
+				setcookie('nb_visits',$nb,time()+3024000); // extends for a month
+				//At the 5th visit, the demo tour is not displayed
+				if($nb > 3)
+					$d['display_demo'] = 0;
+			}
+		
 			//date
 			if($day === null ){
 
