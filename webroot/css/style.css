@@ -60,9 +60,9 @@ body {
   background-color: #a3caea;
   font-family: 'Boogaloo';
   padding: 0 5%;
-  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
-  -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 /* line 121, ../scss/style.scss */
 .navbar .weSport li a,
@@ -270,7 +270,7 @@ body {
   -o-border-radius: 15px;
   border-radius: 15px;
   border-bottom: 5px solid #FFF;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 /* line 266, ../scss/style.scss */
 .alert p {
@@ -428,7 +428,7 @@ body {
   font-size: 45px;
   font-size: 4.5rem;
   color: #DDD;
-  color: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.5);
   margin-left: -6px;
   margin-bottom: 0;
 }
@@ -448,9 +448,9 @@ body {
   border: 12px solid #427b8b;
   border-radius: 100px;
   padding: 15px;
-  -webkit-transition: 0s ease;
-  -moz-transition: 0s ease;
-  -o-transition: 0s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
   transition: 0.2s ease;
 }
 /* line 368, ../scss/style.scss */
@@ -500,9 +500,9 @@ body {
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
   border-radius: 100px;
-  -webkit-transition: 0s ease;
-  -moz-transition: 0s ease;
-  -o-transition: 0s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
   transition: 0.2s ease;
   /*@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
 }
@@ -511,9 +511,9 @@ body {
   font-size: 35px;
   font-size: 3.5rem;
   margin: 2px;
-  -webkit-transition: 0s ease;
-  -moz-transition: 0s ease;
-  -o-transition: 0s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
   transition: 0.2s ease;
 }
 /* line 417, ../scss/style.scss */
@@ -704,7 +704,7 @@ body {
   width: 100%;
   padding: 15px 0;
   text-align: center;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 /* line 593, ../scss/style.scss */
 .calendar .colomn-date a {
@@ -885,8 +885,8 @@ body {
   padding: 10px;
   min-height: 100px;
   background-color: #FFF;
-  border: 2px solid rgba(0, 0, 0, 0);
-  border-bottom: 4px solid rgba(0, 0, 0, 0);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
@@ -962,9 +962,9 @@ body {
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  -webkit-transition: all 0s ease-in-out;
-  -moz-transition: all 0s ease-in-out;
-  -o-transition: all 0s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 /* line 723, ../scss/style.scss */
@@ -1443,9 +1443,9 @@ div.col_small {
   line-height: 100%;
   margin: 0;
   background-color: #BBB;
-  -webkit-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
-  -moz-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
-  box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
 }
 /* line 1048, ../scss/style.scss */
 .block .block-content {
@@ -1781,7 +1781,7 @@ div.col_small {
   float: left;
   width: 30%;
   margin: 5px 1%;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.08);
 }
 /* line 1332, ../scss/style.scss */
 .indexuser .col_large .userlist .user img {
@@ -2051,9 +2051,9 @@ div.col_small {
 .footer {
   width: 100%;
   border-top: 15px solid #a3caea;
-  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
-  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
-  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
+  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
   background-color: #1b3a43;
   padding: 20px 5%;
 }
@@ -2092,9 +2092,9 @@ TYPEAHEAD CUSTOM STYLE
   padding: 8px 0;
   text-align: left;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* line 1574, ../scss/style.scss */

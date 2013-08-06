@@ -950,7 +950,7 @@ class Event{
 
 	public function getUrl(){
 
-		return Conf::getSiteUrl().Router::url('events/view/'.$this->getID().'/'.$this->getSlug());
+		return Router::url('events/view/'.$this->getID().'/'.$this->getSlug());
 	}
 
 	public function getAuthor(){
