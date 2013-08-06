@@ -39,13 +39,15 @@
  		//On essaye de se connecter a la base
  		try{
  			//Creation d'un objet PDO
- 			$pdo = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['database'],
- 				$conf['login'],
- 				$conf['password'],
- 				array(
- 					PDO::MYSQL_ATTR_INIT_COMMAND => $this->setTimeZone() ) // Important pour les dates
- 					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", //Important pour l'encode des carateres
- 				);
+ 			$pdo = new PDO(
+ 						'mysql:host='.$conf['host'].';dbname='.$conf['database'],
+		 				$conf['login'],
+		 				$conf['password'],
+		 				array(
+		 					PDO::MYSQL_ATTR_INIT_COMMAND => $this->setTimeZone(), // Important pour les dates
+		 					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8" //Important pour l'encode des carateres
+		 					)
+		 				);
  			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING); //Important pour afficher les erreurs
  			
  			Model::$connections[$host] = $pdo; //Attribution de la connexion a une varaible static
