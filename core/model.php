@@ -186,23 +186,97 @@
 
  	}
 
+ 	/**
+ 	* Return an array list of all the tables of the database
+ 	* @return array(0=>string,...)
+ 	*/
+	public function findAllTables(){
+
+		$database = Conf::getDatabase('database');
+		$sql = "SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema='$database' ORDER BY table_name ASC;";
+		$res = $this->query($sql,array(),'list');
+		return $res;
+
+	}
+
+	/**
+	* Return the primary key of a table
+	* @return string
+	*/
+	public function findPrimaryKeyForTable($table){
+
+		$database = Conf::getDatabase('database');
+		$sql = "SHOW KEYS FROM $table WHERE Key_name = 'PRIMARY'";
+		$res = $this->query($sql,array('table'=>$table),'fetchAll','array');
+		return $res[0]['Column_name'];		
+	}
+
+	/**
+	* Return an array list of all fields of a table
+	* @param table : name of the table
+	* @return array(0=>string,...)
+	*/
+	public function findFieldsForTable($table){
+		
+		$database = Conf::getDatabase('database');
+		$sql = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_schema=:database AND table_name=:table;";
+		$res = $this->query($sql,array('database'=>$database,'table'=>$table),'list');
+		return $res;
+	}
+
+
  	//=======================================
  	// Execute une requete sql
- 	public function query($sql,$values = array()){
+ 	/**
+ 	 * Execute une requete sql
+ 	 * @param $sql sql string 
+ 	 * @param $values array of value to prepare the query ( optional )
+ 	 * @param $fetchType method for fetching results ( fetchAll by default but prefer using fetch for large query)
+ 	 * @param $returnType PDO method for fetching ( obj, array, num )
+ 	 */
+ 	public function query($sql, $values = array(), $fetchType = 'fetchAll', $returnType = 'obj'){
  		
+ 		//Prepare query and execute
  		$pre = $this->db->prepare($sql);
  		$pre->execute($values);
- 		
- 		if($pre->errorCode()==0){
 
+ 		//Conf return fetching
+ 		if($returnType=='obj') $returnType = PDO::FETCH_OBJ;
+ 		if($returnType=='array') $returnType = PDO::FETCH_ASSOC;
+ 		if($returnType=='num') $returnType = PDO::FETCH_NUM;
+ 		
+ 		//If no error
+ 		if($pre->errorCode()==0){
+ 			//if there are a least one row
  			if($pre->columnCount()>0){
- 				return $pre->fetchAll(PDO::FETCH_OBJ);
+ 				//use fetchAll for small query ( quicker but consume memory)
+ 				if($fetchType=='fetchAll'){
+
+ 					return $pre->$fetchType($returnType);
+ 				}
+ 				//use fetch & while for big query ( consume much more less memory)
+ 				elseif($fetchType=='fetch'){
+
+ 					$data = array();
+ 					while($row = $pre->fetch($returnType)){
+ 						$data[] = $row;
+ 					}
+ 					return $data;
+ 				}
+ 				//use in case of SINGLE field per row !
+ 				elseif($fetchType=='list'){
+ 					$data = array();
+ 					while($row = $pre->fetch(PDO::FETCH_NUM)){
+ 						if(count($row)>1) throw new zException("Number of field can't not exceed 1 in a LIST query {model:query()}", 1);
+ 						$data[] = $row[0]; 						
+ 					}
+ 					return $data;
+ 				}
  			}
  			else {
  				return true;
  			}
- 		}
- 			
+ 		} 			
  		else
  			$this->reportPDOError($pre,__FUNCTION__,$sql);
  	}
@@ -821,6 +895,7 @@ public function validates($data, $rules = null, $field = null){
 
 		return $objects;		
 	}
+
 
 
 }

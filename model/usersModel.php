@@ -295,13 +295,19 @@ class UsersModel extends Model{
 		return $return;
 	}
 
+	public function findRegisteringFromDays($days = 0){
+
+		$sql = "SELECT * FROM $this->table WHERE DATE(date_signin) >= DATE( DATE_SUB(NOW(),INTERVAL $days DAY))";
+		$res = $this->query($sql);
+		return $res;
+	}
+
 	public function countRegisteringFromDays($days = 0){
 
 		$cacheName = 'countUsersFrom'.$days.'days';
 		if($cache = $this->cacheData->read($cacheName)) return $cache;
-		$sql = "select count($this->primaryKey) as count from $this->table where date(date_signin)>=date(date_sub(now(),interval $days day))";
-		$res = $this->query($sql);		
-		$count = $res[0]->count;
+		$users = $this->findRegisteringFromDays($days);
+		$count = count($users);
 		$this->cacheData->write($cacheName,$count);	
 		return $count;
 	}

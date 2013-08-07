@@ -18,9 +18,10 @@
                 </a>
 
                 <ul class="nav">
+                        <li><a href="<?php echo Router::url('/'); ?>">Site</a></li>                             
                         <li><a href="<?php echo Router::url('admin/pages/index'); ?>">Pages</a></li>
+                        <li><a href="<?php echo Router::url('admin/pages/request');?>">Req.</a></li>
                         <li><a href="<?php echo Router::url('users/logout'); ?>">Deconnexion</a></li>
-                        <li><a href="<?php echo Router::url('/'); ?>">Voir le site</a></li>                             
                 </ul>
 
         </div>

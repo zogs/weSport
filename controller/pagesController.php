@@ -72,7 +72,7 @@ class PagesController extends Controller {
 
 				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
 				if(empty($params['cityID'])) {					
-					if(isset($params['cityName'])){
+					if(!empty($params['cityName'])){
 						$cities = $this->Worlds->suggestCities(array('CC1'=>'FR','prefix'=>$params['cityName'])); //on recupere les villes qui correspondent						
 						if(!empty($cities)){
 							$params['cityID'] = $cities[0]->city_id; //et on choisi la premiere ville
@@ -105,6 +105,7 @@ class PagesController extends Controller {
 			$d['title_for_layout'] = "weSport - Agenda et rencontres sportives";
 			$d['description_for_layout'] = "Trouver des sportifs autour de chez vous et faites de nouvelles rencontres ! Découvrez de nouveaux sports ou perfectionnez vous, où que vous soyez !";
 			$d['keywords_for_layout'] = "Sport, activités sportives, ".$d['sports_available_txt'];
+			
 			$this->set($d);
 
 		}
@@ -195,8 +196,76 @@ class PagesController extends Controller {
 
 			$d['totalEvents'] = $this->Events->countTotalEvents();
 			$d['nbEventsPerMonth'][2013] = $this->Events->countMonthEventsForYear(2013);
-			$d['nbEventsToday'] = $this->Events->countEventsFromDays(0);
+			$d['nbEventsToday'] = $this->Events->countEventsForNextDays(0);
 			
+			$this->set($d);
+		}
+
+		public function admin_request(){
+
+			$this->loadModel('Pages');
+
+			$d['table'] = '';
+			$d['field'] = '';	
+			$d['primaryKey'] = '';		
+			$d['all_tables'] = $this->Pages->findAllTables();
+
+			if($data = $this->request->post()){
+				
+				if(isset($data->table_choice) && !empty($data->table)){
+
+					$d['all_fields'] = $this->Pages->findFieldsForTable($data->table);
+					$d['primaryKey'] = $this->Pages->findPrimaryKeyForTable($data->table);
+					$d['table'] = $data->table;
+				}
+
+				if(isset($data->query)){
+
+					$sql = "SELECT * FROM $data->table WHERE $data->field = :$data->field";
+					$d['results'] = $this->Pages->query($sql,array($data->field=>$data->value));
+					$d['all_fields'] = $this->Pages->findFieldsForTable($data->table);
+					$d['primaryKey'] = $data->primaryKey;
+					$d['table'] = $data->table;
+					$d['field'] = $data->field;
+				}
+
+				if(isset($data->update)){
+					
+					$nb = $data->nbresults;
+					$table = $data->table;
+					$primaryKey = $data->primaryKey;
+					unset($data->nbresults);
+					unset($data->table);
+					unset($data->primaryKey);
+					unset($data->update);
+
+
+					for($i=0; $i<$nb; $i++) {
+					
+						$obj = new stdClass();
+						$obj->table = $table;
+						$obj->key = $primaryKey;
+						foreach ($data as $key => $value) {
+							$obj->$key = $value[$i];
+						}
+
+						$err = 0;
+						if($this->Pages->save($obj)){
+
+						}
+						else{
+							$err++;
+						}
+					}
+
+					if($err==0)
+						$this->session->setFlash('Items saved');
+					else
+						$this->session->setFlash($err." errors occured when saving the items","warning");
+					
+				}
+			}
+
 			$this->set($d);
 		}
 

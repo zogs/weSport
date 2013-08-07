@@ -139,6 +139,17 @@ class Conf {
 	    	return self::$websiteURL;
 	    }
 
+	    public static function getDatabase($field = null){
+
+	    	if(isset(self::$databases[self::getHost()])) $db = self::$databases[self::getHost()];
+	    	else $db = self::$databases['default'];
+
+	    	if($field==null) return $db;
+	    	if(isset($db[$field])) return $db[$field];
+	    	else throw new zException("No field -".$field."- in the database configuration , {conf:getDatabase()}", 1);
+	    	
+	    }
+
 	    public static function getSiteUrl(){	    	
 	    	$host = self::getHost();	    	
 	    	if(isset(self::$websiteURLs[$host])) return self::$websiteURLs[$host];

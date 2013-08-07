@@ -630,13 +630,18 @@ class EventsModel extends Model{
 		return $return;
 	}
 
-	public function countEventsFromDays($days = 0){
+	public function findEventForNextDays($days = 0){
 
+		$sql = "SELECT * FROM $this->table WHERE date >= CURDATE() AND date <=DATE_ADD(CURDATE(),INTERVAL $days DAY)";
+		$res = $this->query($sql);
+		return $res;
+	}
+
+	public function countEventsForNextDays($days = 0){		
 		$cachename = 'countEventsFrom'.$days.'days';
 		if($cache = $this->cacheData->read($cachename)) return $cache;
-		$sql = "select count($this->primaryKey) as count from $this->table where date(date)>=date(date_sub(now(),interval $days day))";
-		$res = $this->query($sql);		
-		$count = $res[0]->count;
+		$events = $this->findEventForNextDays($days);	
+		$count = count($events);
 		$this->cacheData->write($cachename,$count);
 		return $count;
 	}
