@@ -269,10 +269,7 @@ class PagesController extends Controller {
 			$this->set($d);
 		}
 
-		public function admin_dailyMail(){
-
-			//only available from cron job
-			if(get_class($this->request)!='Cron') exit();
+		public function admin_dailyMail(){			
 
 			$this->view = 'none';
     		$this->layout = 'none';
