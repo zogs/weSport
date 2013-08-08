@@ -269,7 +269,9 @@ class PagesController extends Controller {
 			$this->set($d);
 		}
 
-		public function admin_dailyMail(){			
+		public function sendMailDailyStatToAdmins(){			
+
+			if(get_class($this->request)!='Cron') exit('only cron job can access this method {pages:sendMailDailyStatToAdmins}');
 
 			$this->view = 'none';
     		$this->layout = 'none';
