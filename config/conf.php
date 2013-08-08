@@ -7,8 +7,8 @@ class Conf {
 	static $adminPrefix = 'vestiaire';
 	static $emailsAdmins = array(
 								'guichardsim@gmail.com',
-								//'pierresimon.gossot@gmail.com',
-								//'contact@we-sport.fr'
+								'pierresimon.gossot@gmail.com',
+								'contact@we-sport.fr'
 								);
 
 	//Website information
