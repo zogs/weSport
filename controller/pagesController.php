@@ -294,7 +294,7 @@ class PagesController extends Controller {
 	        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
 
 	        //Récupère le template et remplace les variables
-	        $body = file_get_contents('../view/email/admin/daily.html');
+	        $body = file_get_contents(ROOT.'/view/email/admin/daily.html');
 	        $body = preg_replace("~{events_planned}~i", $events_planned, $body);
 	        $body = preg_replace("~{events_deposed}~i", $events_deposed, $body);
 	        $body = preg_replace("~{events_confirmed}~i", $events_confirmed, $body);
