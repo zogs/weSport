@@ -5,6 +5,11 @@ class Conf {
 	
 	//Prefix to access backend
 	static $adminPrefix = 'vestiaire';
+	static $emailsAdmins = array(
+								'guichardsim@gmail.com',
+								//'pierresimon.gossot@gmail.com',
+								//'contact@we-sport.fr'
+								);
 
 	//Website information
 	static $website = 'weSport';

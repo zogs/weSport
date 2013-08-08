@@ -630,7 +630,23 @@ class EventsModel extends Model{
 		return $return;
 	}
 
-	public function findEventForNextDays($days = 0){
+	public function findEventsDeposedLastDays($days = 0){
+
+		$sql = "SELECT * FROM $this->table WHERE DATE(date_depot) >= DATE( DATE_SUB(NOW(),INTERVAL $days DAY))";
+		$res = $this->query($sql);
+		return $res;
+	}
+
+	public function countEventsDeposedLastDays($days = 0){		
+		$cachename = 'countEventsDeposedFrom'.$days.'days';
+		if($cache = $this->cacheData->read($cachename)) return $cache;
+		$events = $this->findEventsDeposedLastDays($days);	
+		$count = count($events);
+		$this->cacheData->write($cachename,$count);
+		return $count;
+	}
+
+	public function findEventsForNextDays($days = 0){
 
 		$sql = "SELECT * FROM $this->table WHERE date >= CURDATE() AND date <=DATE_ADD(CURDATE(),INTERVAL $days DAY)";
 		$res = $this->query($sql);
@@ -640,7 +656,7 @@ class EventsModel extends Model{
 	public function countEventsForNextDays($days = 0){		
 		$cachename = 'countEventsFrom'.$days.'days';
 		if($cache = $this->cacheData->read($cachename)) return $cache;
-		$events = $this->findEventForNextDays($days);	
+		$events = $this->findEventsForNextDays($days);	
 		$count = count($events);
 		$this->cacheData->write($cachename,$count);
 		return $count;

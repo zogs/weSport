@@ -269,6 +269,58 @@ class PagesController extends Controller {
 			$this->set($d);
 		}
 
+		public function admin_dailyMail(){
+
+			//only available from cron job
+			if(get_class($this->request)!='Cron') exit();
+
+			$this->view = 'none';
+    		$this->layout = 'none';
+			$this->loadModel('Events');
+			$this->loadModel('Users');
+
+			$events_planned = $this->Events->findEventsForNextDays(0);
+			$events_confirmed = 0;
+			foreach ($events_planned as $e) {
+				if($e->confirmed==1) $events_confirmed++;
+			}
+			$events_planned = count($events_planned);
+			$events_deposed = $this->Events->countEventsDeposedLastDays(0);
+			$registration = $this->Users->countRegisteringFromDays(0);
+
+			//admin mails
+			$emails = Conf::$emailsAdmins;			
+			
+			//Création d'une instance de swift mailer
+	        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+
+	        //Récupère le template et remplace les variables
+	        $body = file_get_contents('../view/email/admin/daily.html');
+	        $body = preg_replace("~{events_planned}~i", $events_planned, $body);
+	        $body = preg_replace("~{events_deposed}~i", $events_deposed, $body);
+	        $body = preg_replace("~{events_confirmed}~i", $events_confirmed, $body);
+	        $body = preg_replace("~{registration}~i", $registration, $body);
+
+	        //Création du mail
+	        $message = Swift_Message::newInstance()
+	          ->setSubject("Daily stat")
+	          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+	          ->setTo($emails)
+	          ->setBody($body, 'text/html', 'utf-8');          
+	       
+	        //Envoi du message et affichage des erreurs éventuelles
+	        if (!$mailer->send($message, $failures))
+	        {
+	            $log = 'Fail: Mail daily stat.';
+	        }
+	        else $log = 'Daily stat. sended: registration'.$registration.', events planned:'.$events_planned.' , confirmed:'.$events_confirmed.'  events deposed:'.$events_deposed;
+
+	       
+    		$this->Events->saveLog('admin mail','pages/admin_dailyMail',$log);
+    		exit($log);
+
+		}
+
 		public function admin_index($menu=null){
 
 			$this->loadModel('Pages');
