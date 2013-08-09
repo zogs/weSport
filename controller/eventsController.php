@@ -582,7 +582,7 @@ class EventsController extends Controller{
 
 		$url = '/me/we-sport-:want_to?';
 		$params = array(
-			'sport'=>$event->getUrl(),
+			'sport'=>Conf::getSiteUrl().$event->getUrl(),
 			'sport_action'=>$sport_action,
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);
@@ -613,7 +613,7 @@ class EventsController extends Controller{
 		//url & params to POST to facebook open graph
 		$url = '/me/we-sport-:go_to?';
 		$params = array(
-			'sport'=>$event->getUrl(),
+			'sport'=>Conf::getSiteUrl().$event->getUrl(),
 			'sport_action'=>$sport_action,
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);		
