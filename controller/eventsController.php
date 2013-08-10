@@ -131,6 +131,7 @@ class EventsController extends Controller{
 		if(!isset($id) || !is_numeric($id)) return false;
 
 		$event = $this->Events->findEventById($id);	
+		$sport = $event->sport;
 		
 		if(empty($event)) $this->e404("Cet événement n'existe pas");
 
@@ -138,8 +139,8 @@ class EventsController extends Controller{
 
 		//events
 		$event = $this->Worlds->JOIN_GEO($event);
-		$event->sport = $this->Events->findSport(array('slug'=>$event->sport,$this->getLang()));
-		$event->sport_en = $this->Events->findSport(array('slug'=>$event->sport->slug,'lang'=>'en'));	
+		$event->sport = $this->Events->findSport(array('slug'=>$sport,$this->getLang()));
+		$event->sport_en = $this->Events->findSport(array('slug'=>$sport,'lang'=>'en'));	
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		
 		//Participants
