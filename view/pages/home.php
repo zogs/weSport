@@ -10,7 +10,7 @@
 				
 				<div class="cityInputs">
 					<div class="containerCityName">
-						<?php if(!empty($params['cityName'])): ?><a class="resetCity tooltiptop" title="Supprimer la ville" href="?cityName=&cityID=">x</a><?php endif; ?>
+						<?php if(!empty($params['cityID'])): ?><a class="resetCity tooltiptop" title="Supprimer la ville" href="?cityName=&cityID=">x</a><?php endif; ?>
 						<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo (!empty($params['cityName']))? $params['cityName'] : 'Votre ville ?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
 					</div>
 					<div class="containerExtend">
