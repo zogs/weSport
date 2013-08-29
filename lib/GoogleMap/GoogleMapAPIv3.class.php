@@ -604,6 +604,7 @@ class GoogleMapAPI
 		$this->content .= "\t\t\t" . 'geocoder.geocode( { "address": address}, function(results, status) {' . "\n";
 		$this->content .= "\t\t\t\t" . 'if (status == google.maps.GeocoderStatus.OK) {' . "\n";
 		$this->content .= "\t\t\t\t" . 'map' . $this->googleMapId . '.setCenter(results[0].geometry.location);' . "\n";
+		$this->content .= "\t\t\t\t" . '} else if(status == google.maps.GeocoderStatus.ZERO_RESULTS) {' . "\n";
 		$this->content .= "\t\t\t\t" . '} else {' . "\n";
 		$this->content .= "\t\t\t\t" . 'alert("Geocode was not successful for the following reason: " + status);' . "\n";
 		$this->content .= "\t\t\t\t" . '}' . "\n";
