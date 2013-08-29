@@ -103,39 +103,39 @@
 
   <li data-el='#logoWeSport' data-orientation='bottom' data-width='500' data-arrow='20%' data-margin='20' data-align="left">
     <h2>Bienvenue sur WeSport !</h2>
-    <p><strong>Agenda des activitées sportives de ta ville</strong>
-		<br><small>Mettre ici une petite phrase qui va bien</small>
+    <p><strong>L'agenda des activitées sportives de ta ville !</strong>
+		<br><small><i>Pour ne plus jamais jour seul au Jokari</i></small>
     </p>
-    <a href='javascript:void(0);' class='btn tourbus-next'>Comment ça marche?</a>
-    <a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Merci je connais</a>
+    <a href='javascript:void(0);' class='btn tourbus-next'>Visite guidée</a>
+    <a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Non merci</a>
   </li>
 
   <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
-    <p><strong>Tape ici ta ville et choisi dans la liste déroulante</strong></p>
-    <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km )</small></p>
+    <p><strong>Tape ici la ville de ton choix et/ou choisi dans la liste déroulante</strong></p>
+    <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km ! )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
   </li>
 
   <li data-el='#sportCheckboxs' data-orientation='top' data-width='350'>
-    <p><strong>Tu peux choisir uniquement les sports que tu veux voir </strong></p>
-    <p><small>( par default tous les sports sont affichés )</small></p>
+    <p><strong>Tu peux afficher uniquement les sports que tu souhaite ! </strong></p>
+    <p><small>( par default, tous les sports sont affichés )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
   </li>
 
   <li data-el="#calendar-content" data-orientation="top" data-width='400'>
   	<p><strong>Les annonces apparaissent dans le calendrier</strong></p>
-  	<p><small>( tu peux voir les jours suivants avec la fléche de droite, ou pour les écrans tactiles slider le calendrier ;)</small></p>
+  	<p><small>( tu peux naviguer vers les jours suivants avec la fléche de droite, ou pour les écrans tactiles en slidant le calendrier !)</small></p>
   	<a href="javascript:void(0);" class="btn tourbus-next">Compris !</a>
   </li>
 
   <li data-el="#contact" data-orientation="top" date-width='300' data-align="center">
   	<h2>Soyez sympa</h2>
-  	<p><strong>WeSport est encore en version de test !</strong>
-  	<br>Soyez sympa, donnez nous votre avis, vos idées, vos envies, vos difficultés, ect ...
-  	<br><strong>On se fera un plaisir de vous répondre !</strong>
+  	<p>WeSport est encore en version de test !
+  	<br><strong>Donnez nous votre avis, vos idées, vos envies, vos difficultés, ect ...</strong>
+  	<br>On se fera un plaisir de vous répondre !
   	</p>
   	<a href="javascript:void(0);" class="btn tourbus-next">Une dernière chose</a>
-  	<a href="<?php echo Router::url('pages/contact');?>" class="btn">Nous écrire</a>
+  	<a href="<?php echo Router::url('pages/contact');?>" class="btn">Donnez votre avis</a>
   </li>
 
   <li data-el="#registerMenu" data-orientation="bottom" data-width='400' data-align="right">
