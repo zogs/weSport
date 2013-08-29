@@ -468,7 +468,7 @@
 					return $destination;
 				}
 				else {
-					throw new zException("Impossible to move the uploaded file", 1);
+					throw new zException("Impossible to move the uploaded file : ".$_FILES[$name]['error'], 1);
 					
 				}
 				
