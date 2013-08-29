@@ -113,7 +113,7 @@ class UsersModel extends Model{
 					'destination' => 'media/users/avatar',
 					'extentions'=>array('png','gif','jpg','jpeg','JPG','bmp'),
 					'extentions_error'=>'Your avatar is not an image file',
-					'max_size'=>100000,
+					'max_size'=>10000000, // 10 Mo
 					'max_size_error'=>'Your image is too big',
 					'ban_php_code'=>true
 					)
