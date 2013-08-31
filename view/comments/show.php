@@ -20,10 +20,10 @@
                             <?php 
                                 //Si c'est l'admin , il peut mettre un titre a son commentaire
                                 if($this->allowTitle):?>
-                                <input type="text" name="title" id="commentTitle" placeholder="<?php echo $this->titlePlaceholder;?>" />
+                                <input type="text" name="title" id="commentTitle" placeholder="<?php echo $this->placeholderTitleForm;?>" />
                                 <?php endif; ?>
 
-                            <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->textareaPlaceholder;?>"></textarea>
+                            <textarea name="content" id="commentTextarea" class="formComment" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->placeholderCommentForm;?>"></textarea>
                             <input type="hidden" name="context" value="<?php echo $context; ?>" />
                             <input type="hidden" name="context_id" value="<?php echo $context_id; ?>" />                 
                             <input type="hidden" name="type" id="type" value='com' /> 
@@ -37,7 +37,7 @@
                         </div>
                         <?php else: ?>
                         <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
-                        <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->noLoggedPlaceholder;?>"></textarea>
+                        <textarea disabled="disabled" name="content" data-url-preview="<?php echo Router::url('comments/preview'); ?>" placeholder="<?php echo $this->placeholderNeedLog;?>"></textarea>
                         <?php endif; ?>
                         <div class="clearfix"></div>
                     </form>                                   
@@ -109,10 +109,10 @@
                             <form class="formCommentReply" action="<?php echo Router::url('comments/reply'); ?>" method="POST">                
                                 <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
                                 <?php if($this->session->user()->isLog()):?>
-                                <textarea name="content" class="formComment" placeholder="Reply here"></textarea> 
+                                <textarea name="content" class="formComment" placeholder="<?php echo $this->placeholderReplyForm;?>"></textarea> 
                                 <input class="btn btn-small" type="submit" name="" value="Send">
                                 <?php else: ?>
-                                 <textarea disabled='disabled' name="content" placeholder="Log in to comment"></textarea> 
+                                 <textarea disabled='disabled' name="content" placeholder="<?php echo $this->placeholderNeedLog;?>"></textarea> 
                                 <input disabled='disabled' class="btn btn-small" type="submit" name="" value="Send">
                                 <?php endif;?>
                                 <input type="hidden" name="context" value="<?php echo $context; ?>"  />

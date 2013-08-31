@@ -15,21 +15,23 @@
  	
  	//Options parameters
  	public $commentsPerPage = 6;
- 	public $repliesDisplayPerComment = 3;
+ 	public $repliesDisplayPerComment = 5;
  	public $allowComment = true;
  	public $allowReply = true;
  	public $displayReply = true;
  	public $allowVoting = false;
  	public $enablePreview = true;
- 	public $showFormReply = false;
+ 	public $levelFormReplyToDisplay = 1;
  	public $allowTitle = false; 
  	public $displayRenderButtons = false;
  	public $enableInfiniteScrolling = false;
 
  	//Default text value
- 	public $titlePlaceholder = "Write here to add a title";
- 	public $textareaPlaceholder = "Poser votre question";
- 	public $noLoggedPlaceholder = "Veuillez vous connecter pour commenter";
+ 	public $placeholderTitleForm = "Ecrire un titre";
+ 	public $placeholderCommentForm = "Ecrire un commentaire";
+ 	public $placeholderNeedLog = "Veuillez vous connecter pour commenter...";
+ 	public $placeholderReplyForm = "Ecrire un commentaire...";
+ 	public $linkReply = "Répondre";
 
 
  	/*=======================================

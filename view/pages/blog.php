@@ -31,7 +31,9 @@
 																		'displayRenderButtons'=>false,
 																		'showFormReply'=>true,
 																		'enablePreview'=>true,
-																		'enableInfiniteScrolling'=>true
+																		'enableInfiniteScrolling'=>true,
+																		'textareaPlaceholder'=>'Ecrire le message',
+																		'titlePlaceholder' => 'Ecrire un titre'
 																		),
 																	)
 											);
@@ -47,9 +49,11 @@
 																		'allowComment'=>$allowComment,
 																		'allowReply'=>true,
 																		'displayRenderButtons'=>false,
-																		'showFormReply'=>false,
+																		'showFormReply'=>true,
 																		'enablePreview'=>true,
-																		'enableInfiniteScrolling'=>false
+																		'enableInfiniteScrolling'=>false,
+																		'textareaPlaceholder'=>'Ecrire le message',
+																		'titlePlaceholder' => 'Ecrire un titre'
 																		),
 																	)
 											);

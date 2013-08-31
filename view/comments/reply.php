@@ -14,6 +14,9 @@
     //If there are comments
     if(!empty($com)){
 
+        //set the config to not display a form reply
+        $this->levelFormReplyToDisplay=0;
+
         //Create the html 
         $html = show_comments($com,$this->session->user(),$this);
         

@@ -1,52 +1,58 @@
  <?php 
     header ('Content-type: text/html; charset=utf-8');
 
+    //level of replies
+    global $levelReplies;
+    $levelReplies=1; //bu default to 1
 
-    function show_comments($coms,$user,$config){
+    function show_comments($coms,$user,$config,$main=true){
+
+        global $levelReplies;
 
         $html='';
         if(!is_array($coms)) $coms = array($coms);
         foreach ($coms as $com) {            
 
-            if(isset($com->thread )){
+            //create html comment
+            $html.= html_comment($com, $user, $config);
 
-                if($com->thread == 'manifNews'){
-
-                    $html .= html_comment( $com , $user);
-                }
-
-                if($com->thread == 'joinProtest'){
-
-                    $html .= html_joinProtest( $com , $user);
-                }
+            //if we want to display the reply form for this level of replies
+            if($levelReplies <= $config->levelFormReplyToDisplay){
+                $html .= html_formReply($com,$user,$config);
             }
 
-            else {
-
-                $html.= html_comment($com, $user, $config);
-
-               
-
-                    $html.= show_replies($com,$user,$config);
-                
+            $html .= '<div class="replies" id="replies'.$com->id.'">'; 
+            //create html replies
+            if(!empty($com->replies)){  
+                                  
+                $levelReplies++;    
+                $html.= show_replies($com,$user,$config);                 
+              
             }
+            $html .= '</div>';  
+        
+            //if this is the main thread, reset the level of replies to 1
+            if($main==true) $levelReplies = 1;
+            
         }
 
         return $html;
     }
 
 
-    function show_replies($com,$user,$config){
-        
-        $html = '<div class="replies">'; 
 
+
+    function show_replies($com,$user,$config){        
+
+
+        $html='';
         //if display reply if there are replies
         if($config->displayReply && !empty($com->replies)){
 
             $replyshowed = array_slice($com->replies, 0, $config->repliesDisplayPerComment);
             $replyhidden = array_slice($com->replies, $config->repliesDisplayPerComment);
 
-            $html .= show_comments($replyshowed,$user,$config);
+            $html .= show_comments($replyshowed,$user,$config,false);
 
             if(!empty($replyhidden)){
                
@@ -59,24 +65,29 @@
             }
             $html .= '</div>';
             $html .='<div class="hiddenReplies">';
-            $html .= show_comments($replyhidden,$user,$config);
+            $html .= show_comments($replyhidden,$user,$config,false);
             $html .= '</div>';
             }
         }
        
-        //Reply form
-        if($config->showFormReply ){
+        
 
-            $html.= "<form class='formCommentReply' action='".Router::url('comments/reply')."' method='POST'>                
-                        <img class='userAvatarCommentForm' src='".$user->getAvatar()."' />
-                    ";
-                if($user->user_id!=0){
-                $html .= "<textarea name='content' class='formComment' placeholder='Reply to ".$com->user->getLogin()."'></textarea> 
-                            <input class='btn btn-small' type='submit' name='' value='Envoyer'>";
-                }
-                else {
-                $html .= "<textarea disabled='disabled' name='content' placeholder='Log in to comment'></textarea>
-                            <input disabled='disabled' class='btn btn-small' type='submit' name='' value='Envoyer'>";
+        return $html;
+
+    }
+
+    function html_formReply($com,$user,$config){
+
+        $html= "<form class='formCommentReply' action='".Router::url('comments/reply')."' method='POST'>                
+                <img class='userAvatarCommentForm' src='".$user->getAvatar()."' />
+                ";
+        if($user->user_id!=0){
+            $html .= "<textarea name='content' class='formComment' placeholder='".$config->placeholderReplyForm."'></textarea> 
+                        <input class='btn btn-small' type='submit' name='' value='Envoyer'>";
+        }
+        else {
+            $html .= "<textarea disabled='disabled' name='content' placeholder='".$config->placeholderNeedLog."'></textarea>
+                        <input disabled='disabled' class='btn btn-small' type='submit' name='' value='Envoyer'>";
                 }
             
             $html .= "  <input type='hidden' name='context' value='".$config->context."' />
@@ -84,13 +95,9 @@
                         <input type='hidden' name='type' value='com' />
                         <input type='hidden' name='reply_to' value='".$com->id."' />                            
                         
-                    </form>" ;
-        }
-
-        $html .= '</div>';  
+                    </form>" ; 
 
         return $html;
-
     }
 
 
@@ -102,7 +109,11 @@
         ob_start();
         ?>
             <div class="thread post <?php echo ($com->reply_to!=0)? 'reply':'';?> <?php echo 'type_'.$com->type;?> <?php echo (!empty($com->title))? 'type_news':'';?>" id="<?php echo 'com'.$com->id; ?>">  
-                <img class="logo" src="<?php echo $com->user->getAvatar() ?>" alt="image avatar" />
+                
+                <div class="logo">
+                    <img src="<?php echo $com->user->getAvatar() ?>" alt="Logo/Avatar" />
+                </div>
+                    
             
                 <div class="content">   
                
@@ -165,7 +176,7 @@
                                 <?php endif; ?>
 
                                 <?php if($config->allowReply): ?>             
-                                <a class="btn-comment-reply" data-comid="<?php echo $com->id; ?>" data-comlogin="<?php echo $com->user->getLogin();?>" href="<?php echo $com->id;?>">Reply</a>                                
+                                <a class="btn-comment-reply" data-comid="<?php echo $com->id; ?>" data-comlogin="<?php echo $com->user->getLogin();?>" href="<?php echo $com->id;?>"><?php echo $config->linkReply;?></a>                                
                                 <?php endif; ?>
 
                                 

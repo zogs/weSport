@@ -296,7 +296,7 @@ $(document).ready(function(){
             var reply_login = $(this).attr('data-comlogin');
             var comment_id = $(this).attr('data-comid');
             form.find('input[name=reply_to]').val(reply_to);
-            form.find('textarea').attr('placeholder','Reply to '+reply_login);
+            form.find('textarea').attr('placeholder','Répondre à '+reply_login);
             $("#com"+comment_id).after(form);   
 
             return false;
@@ -320,7 +320,7 @@ $(document).ready(function(){
                    if(!com.fail){
 							                    
                     $("#formCommentReply").appendTo("#hiddenFormReply");                    
-                    $("#com"+parent_id).next('.replies').remove();
+                    $("#replies"+parent_id).remove();
                     $("#com"+parent_id).replaceWith(com.content);
 
                    }
