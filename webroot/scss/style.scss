@@ -310,27 +310,29 @@ body{
 	margin-top:40px;
 
 	.cityRounded {
+
+		width:38%; 
+		margin:0 auto;
+		height:90px;
 		display: block;
-		width:50%; 
-		margin:0 25%;
-		padding:10px 15px 10px 40px;
+		position:relative;
 		background-color:$darkblue;
 		@include border-radius(200px);
-		@include box-shadow(0 0 0 20px lighten($deepblue,3%));
+		@include box-shadow(0 0 0 10px lighten($deepblue,3%));
 		border:1px solid #FFF;		
 
 		.cityInputs {
 
-			position:relative;
-			float:left;
+			position:absolute;
+			top:18%;
+			left:20px;			
 			width:80%;
-			margin:0;
-			margin-top:5px;
+
 			padding:0 30px;
 
 			.containerExtend {				
 				position:absolute;
-				top:50%;
+				top:30%;
 				left:80%;				
 				width:20%; 
 				overflow:hidden;				
@@ -339,37 +341,44 @@ body{
 			}
 			.containerCityName { 
 				float:left; width:80%;
-				#cityName { width:100%; height:60px; margin:0; padding:0; @include rem(45); line-height:100%; border:0; background-color:transparent; }
-				.resetCity { position:absolute; top:40%; left:10px; font-family:Helvetica,Arial,sans-serif; @include rem(20); font-weight: bold; color:$deepblue;}
+				#cityName { width:100%; height:60px; margin:0; padding:0; @include rem(35); line-height:100%; border:0; background-color:transparent; }
+				.resetCity { position:absolute; top:25%; left:10px; font-family:Helvetica,Arial,sans-serif; @include rem(20); font-weight: bold; color:$deepblue;}
 				.resetCity:hover { text-decoration: none; color:$darkred;}
 				.twitter-typeahead {width:100%;}
 				.twitter-typeahead > input { height: 100%; width:100%;}
-				.twitter-typeahead > input { @include rem(45); background:transparent; font-family:'Alba',Helvetica,Arial,sans-serif; outline:0; }
+				.twitter-typeahead > input { @include rem(35); background:transparent; font-family:'Alba',Helvetica,Arial,sans-serif; outline:0; }
 				.twitter-typeahead > #cityName {color:white;}
-				.twitter-typeahead .tt-hint { @include rem(45); color:#DDD; color:rgba(255,255,255,0.5); margin-left:-6px; margin-bottom:0;}
+				.twitter-typeahead .tt-hint { @include rem(35); color:#DDD; color:rgba(255,255,255,0.5); margin-left:-6px; margin-bottom:0;}
 			}
 		}
 
 		.cityAriane {
-			float:left;			
+			position:absolute;
+			bottom:5%;	
+			left:20px;	
 			width:74%;
 			margin:0 3%;
-			padding-top:5px;
-			color:#FFF;					
-			border-top:2px solid #FFF;
+			@include rem(12);
+			color:#BBB;					
 		}
 
 		.citySubmit { 
-			float:right ; 					
+
+			position:absolute;
+			right:-20px;
+			top:-20px;
+			width:130px;
+			height:130px;			
 			background-color:$lightblue;
-			border:12px solid $deepblue; 
+			border:14px solid #275e6d; 
 			border-radius: 100px;
 			padding:15px;
 			@include transition(0.2s ease);
 
 			.ws-icon-loupe { 
 				color:#FFF; 
-				@include rem(55);
+				@include rem(65);
+				text-shadow:-1px 1px rgba(0,0,0,0.2),-2px 2px rgba(0,0,0,0.2),-3px 3px rgba(0,0,0,0.2);
 			}
 			.ws-icon-loupe:hover{
 										
@@ -1615,7 +1624,6 @@ TYPEAHEAD CUSTOM STYLE
   	.cityRounded{
   		width:100%;
   		margin:0;
-  		padding:20px 10px;
   		@include border-radius(50px);
   		@include box-shadow(0 0 0 #000);
 
@@ -1640,10 +1648,14 @@ TYPEAHEAD CUSTOM STYLE
   			}
   		}
   		.citySubmit{
-			
+  			top:-5px;
+			width:100px;
+			height:100px;			
+			border-width:10px;
   			.ws-icon-loupe { @include rem(30);}
   		}
   		.cityAriane{
+  			display:none;
   			width:65%;  			
   			@include rem(10);
   		}
@@ -1876,7 +1888,7 @@ TYPEAHEAD CUSTOM STYLE
 						width:100%;
 						height:40px;
 	  					padding-left:10px;				
-	  					@include rem(25);
+	  					@include rem(20);
 					}					
 				}	
 				.containerExtend{
@@ -1884,13 +1896,21 @@ TYPEAHEAD CUSTOM STYLE
 				}			
 			}
 			.citySubmit{
-				.ws-icon-loupe { @include rem(20);}
+				.ws-icon-loupe { }
 			}
 			.cityAriane{
 				width:60%;
 			}
 		}
 	}
+	.calendar {
+		.calendar-nav{
+			.colomn-nav {
+				width:10%;
+			}			
+		}
+	}
+	
 }
 
 

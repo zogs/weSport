@@ -116,11 +116,11 @@ class EventsModel extends Model{
 				//default in km
 				$onedegree = 111.045;
 				$earthradius = 6366.565;
-				if(!empty($km) && $km == true){ // in km
+				if(!empty($params['extend_metric']) && $params['extend_metric'] == 'km'){ // in km
 					$onedegree = 111.045;
 					$earthradius = 6366.565;
 				}
-				if(!empty($miles) && $miles==true) {
+				if(!empty($params['extend_metric']) && $params['extend_metric'] == 'miles'){ // in km
 					$onedegree = 69;
 					$earthradius = 3956;
 				}			;				
@@ -300,8 +300,8 @@ class EventsModel extends Model{
 			$sql .= ' '.$end;
 		}
 
-		  // debug($sql);
-		  // debug($values);
+		   //debug($sql);
+		   //debug($values);
 		$results = $this->query($sql,$values);
 
 		$events = array();
@@ -465,7 +465,7 @@ class EventsModel extends Model{
 				FROM sports as S
 				LEFT JOIN sports_i18n as I on I.sport_id=S.sport_id
 				WHERE I.lang=:lang
-				ORDER BY S.sport_id";
+				ORDER BY I.name";
 		$tab = array(':lang'=>$lang);
 		$res = $this->query($sql,$tab);
 		if(empty($res)){

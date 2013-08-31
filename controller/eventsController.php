@@ -74,6 +74,8 @@ class EventsController extends Controller{
 				//and set params for the model
 				$query['cityLat'] = $city->LATITUDE;
 				$query['cityLon'] = $city->LONGITUDE;
+				$query['extend'] = $params['extend'];
+				$query['extend_metric'] = 'km';
 			}			
 		}
 

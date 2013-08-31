@@ -42,7 +42,7 @@
 					$sports_selected = $this->cookieEventSearch->read('sports');									
 					foreach ($sports_available as $sport):?>						
 						<div class="sportChoice">
-							<input type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
+							<input class="sportCheckbox" type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
 							<label for="label-<?php echo $sport->slug;?>" class="tooltiptop" data-toggle="tooltip" title="<?php echo $sport->name;?>">
 								<span class="ws-icon ws-icon-<?php echo $sport->slug;?>"><strong><?php echo $sport->name;?></strong></span>
 							</label>
@@ -78,11 +78,13 @@
 
 					<td>
 						<div class="calendar-content"
-							 id="calendar-content" 
-							 data-url-calendar="<?php echo Router::url('events/calendar/');?>"
-							  data-url-calendar-prev="<?php echo Router::url('events/calendar/prev');?>"
-							  data-url-calendar-next="<?php echo Router::url('events/calendar/next');?>"
-							  data-url-calendar-now="<?php echo Router::url('events/calendar/now');?>">
+							id="calendar-content" 
+							data-url-calendar="<?php echo Router::url('events/calendar/');?>"
+							data-url-calendar-prev="<?php echo Router::url('events/calendar/prev');?>"
+							data-url-calendar-next="<?php echo Router::url('events/calendar/next');?>"
+							data-url-calendar-now="<?php echo Router::url('events/calendar/now');?>"
+							data-url-calendar-date="<?php echo Router::url('events/calendar/date');?>"
+							  >
 						</div>
 					</td>
 				
@@ -157,6 +159,13 @@ $(document).ready(function(){
 	$('#sportCheckboxs').FlowSlider();
 	$('#sportCheckboxs').css('overflow','visible');
 
+	//Sport button
+	//Submit form on click
+	$('.sportCheckbox').change(function(){
+		callCurrentWeek();
+		
+	});
+
 	// On mouse over change widht of the items
 	
 	$(".www_FlowSlider_com-item").each(function(_, item) {
@@ -202,7 +211,7 @@ $(document).ready(function(){
 	var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
 
 
-	callCurrentWeek();
+	callThisWeek();
 
 	function slideCalendar(direction,width){
 
@@ -297,8 +306,15 @@ $(document).ready(function(){
 		callWeek(url,direction);
 	}
 
-	function callCurrentWeek(direction){
+	function callThisWeek(direction){
 		var url = $('#calendar-content').attr('data-url-calendar-now');
+		callWeek(url,direction);
+	}
+
+	function callCurrentWeek(direction){
+		var url = $('#calendar-content').attr('data-url-calendar-date');
+		var date = $('.events-week').attr('data-first-day');
+		url = url+'/'+date;
 		callWeek(url,direction);
 	}
 
@@ -318,7 +334,7 @@ $(document).ready(function(){
 
 	$('.calendar-nav-now').livequery(function(){
 		$(this).click(function(){
-			callCurrentWeek('prev');
+			callThisWeek('prev');
 			return false;
 		});
 	});

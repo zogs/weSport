@@ -524,7 +524,7 @@ class PagesController extends Controller {
 			        //Création du mail
 			        $message = Swift_Message::newInstance()
 			          ->setSubject("Contact de - ".$sender_name)
-			          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+			          ->setFrom($sender_mail, $sender_name)
 			          ->setTo(Conf::$contactEmail)
 			          ->setBody($body, 'text/html', 'utf-8');          
 			       
