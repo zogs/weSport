@@ -256,9 +256,8 @@ class CommentsModel extends Model
 
 		$c = new stdClass();
 		$c = $com;
-
-		
-		$c->content = str_replace(array("\\n","\\r"),array("<br />",""),$c->content); 
+			
+		$c->content = nl2br($c->content);
 
 		if(!empty($c->media) && !empty($c->media_url)){
 			$c->content = str_replace($c->media_url,'',$c->content);
