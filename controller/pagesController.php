@@ -517,13 +517,14 @@ class PagesController extends Controller {
 			        $body = file_get_contents('../view/email/contact.html');
 			        $body = preg_replace("~{site}~i", Conf::$website, $body);
 			        $body = preg_replace("~{title}~i", $title, $body);
-			        $body = preg_replace("~{name}~i", $sender_name, $body);
+			        $body = preg_replace("~{user}~i", $sender_name, $body);
+			        $body = preg_replace("~{user_mail}~i", $sender_mail, $body);
 			        $body = preg_replace("~{date}~i", Date::datefr(date('Y-m-d')), $body);
 			        $body = preg_replace("~{message}~i", $message, $body);
 
 			        //Création du mail
 			        $message = Swift_Message::newInstance()
-			          ->setSubject("Contact de - ".$sender_name)
+			          ->setSubject($title." - ".$sender_name)
 			          ->setFrom($sender_mail, $sender_name)
 			          ->setTo(Conf::$contactEmail)
 			          ->setBody($body, 'text/html', 'utf-8');          
