@@ -85,10 +85,10 @@
             $html .= "<textarea name='content' class='formComment' placeholder='".$config->placeholderReplyForm."'></textarea> 
                         <input class='btn btn-small' type='submit' name='' value='Envoyer'>";
         }
-        else {
-            $html .= "<textarea disabled='disabled' name='content' placeholder='".$config->placeholderNeedLog."'></textarea>
-                        <input disabled='disabled' class='btn btn-small' type='submit' name='' value='Envoyer'>";
-                }
+        else 
+        {
+            $html .= "<textarea disabled='disabled' name='content' placeholder='".$config->placeholderNeedLog."'></textarea>";
+        }
             
             $html .= "  <input type='hidden' name='context' value='".$config->context."' />
                         <input type='hidden' name='context_id' value='".$config->context_id."'/>
