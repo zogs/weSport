@@ -822,6 +822,8 @@ class UsersController extends Controller{
 					$new->salt = randomString(10);
 					$new->hash = md5($new->salt.$data->password);
 					$new->user_id = $user->user_id;
+					$new->valid = 1;
+
 					if($this->Users->save($new)){
 
 						//find the recovery data 
