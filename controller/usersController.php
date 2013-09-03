@@ -175,8 +175,6 @@ class UsersController extends Controller{
 		$gmap->setSize('100%','100%');
 		$gmap->setZoom(6);
 		//$gmap->addKML('../googlemap/kml/Locator3RF.kml','radars_fixes','../googlemap/Locator3RF.png');
-		debug($users);
-		debug($codes);
 		if(!empty($users)){
 			$path_to_kml = $this->Worlds->clusterOfWesportersCities('Wesporters Cities',$codes,$users);
 			$gmap->addKML($path_to_kml,'Sportifs','../webroot/img/LOGO.gif');

@@ -304,7 +304,7 @@ class WorldsModel extends Model
 
  		$cities = array(); 		
 		foreach ($users as $user) {			
-			if($user->exist()==true && isset($user->city))				
+			if($user->exist()==true && !empty($user->city))				
 				$c = $this->findCityById($user->city,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
 				$cities[] = array('user_id'=>$user->user_id,'login'=>$user->login,'city'=>$c->name,'lat'=>$c->lat,'lon'=>$c->lon);
 		}
