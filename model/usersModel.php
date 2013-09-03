@@ -144,6 +144,9 @@ class UsersModel extends Model{
 			unset($user->year);
 		}
 
+		//default avatar
+		if(!isset($user->avatar)) $user->avatar = rand(1,10);
+
 		//maybye there is nothing to save
 		$tab = (array) $user;
 		if( (count($tab)==0 ) || (count($tab)==1 && isset($tab['user_id'])))
@@ -425,7 +428,8 @@ class User {
 
 		if(isset($this->avatar)&&!empty($this->avatar)&&file_exists(WEBROOT.DS.$this->avatar)) return Router::webroot($this->avatar);
 		elseif(strpos($this->avatar,'http')===0) return $this->avatar;
-		else return Router::webroot('img/LOGO.gif');
+		elseif(is_numeric($this->avatar)) return Router::webroot('img/avatars/default'.$this->avatar.'.gif');
+		else return Router::webroot('img/avatars/default1.gif');
 	}
 
 	public function getLink(){

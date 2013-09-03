@@ -958,7 +958,7 @@ h1.title-sheet {
 
 		div.orga-avatar{			
 			float:right;
-			img { height:100px; width:100px; padding:2px; border:1px solid #CCC;}
+			img { height:100px; width:100px; padding:2px; border:1px solid #DDD; background-color:#FFF;}
 		}
 	}
 }
@@ -1079,7 +1079,8 @@ div.col_small{
 				height:30px;
 				margin-right:5px;
 				padding:1px;
-				border:1px solid #AAA;
+				border:1px solid #CCC;
+				background-color:#FFF;
 
 			}			
 			strong{

@@ -1036,7 +1036,7 @@ class Event{
 		return $this->date;
 	}
 	public function getDatetime(){
-		return $this->getDate().' '.$this->getTime();
+		return $this->getRowDate().' '.$this->getTime();
 	}
 	public function getTimestamp(){
 		return $this->timestamp;
