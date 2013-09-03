@@ -3,6 +3,13 @@ class EventsController extends Controller{
 
 	public $primaryKey = 'id';
 
+	public function __construct($req=null){
+
+		parent::__construct($req);
+
+		$this->cacheWeather = new Cache(Conf::getCachePath().'/events_weather_forecast',2); //3 hours
+	}
+
 	public function calendar($action = 'now',$date = null){
 
 		$this->view = 'events/index';
@@ -693,6 +700,17 @@ class EventsController extends Controller{
 		return true;
 	}
 
+	private function deleteWeatherCache($eid){
+
+		$cachename = 'event'.$eid;
+		$this->cacheWeather->delete($cachename);
+	}
+
+	private function clearWeatherCache(){
+
+		$this->cacheWeather->clear();
+	}
+
 	public function getEventWeather($eid,$token){
 
 		//security
@@ -703,7 +721,6 @@ class EventsController extends Controller{
 		$this->view = 'events/weather';
 
 		//cache system
-		$this->cacheWeather = new Cache(Conf::getCachePath().'/events_weather_forecast',2); //3 hours
 		//if the weather forecast have been put in cache , return the cached version
 		$cachename = 'event'.$eid;
 		if($cache = $this->cacheWeather->read($cachename)){		
@@ -1085,11 +1102,13 @@ class EventsController extends Controller{
 	        	$nb_mail_sended++;
 
 	        	//increment events particpants						
-		$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->event->user_id,'field'=>'events_participants','number'=>$sporter->event->numParticipants));
-		//increment sporters encourter
-		$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
-		//Set sport practiced for stat
-		$this->Events->setSportPracticed($sporter->user_id,$sporter->event->getSportSlug());
+				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->event->user_id,'field'=>'events_participants','number'=>$sporter->event->numParticipants));
+				//increment sporters encourter
+				$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$sporter->user_id,'field'=>'sporters_encounted','number'=>$sporter->event->numParticipants));
+				//Set sport practiced for stat
+				$this->Events->setSportPracticed($sporter->user_id,$sporter->event->getSportSlug());
+				//delete weather cache
+				$this->deleteWeatherCache($sporter->event->id);
 
 	        }
 	        else $nb_mail_error++;

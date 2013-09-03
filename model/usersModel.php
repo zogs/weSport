@@ -425,7 +425,7 @@ class User {
 
 		if(isset($this->avatar)&&!empty($this->avatar)&&file_exists(WEBROOT.DS.$this->avatar)) return Router::webroot($this->avatar);
 		elseif(strpos($this->avatar,'http')===0) return $this->avatar;
-		else return 'img/LOGO.gif';
+		else return Router::webroot('img/LOGO.gif');
 	}
 
 	public function getLink(){

@@ -74,7 +74,7 @@
 							<span class="label">En attente</span> <span class="nb-participant">de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
 					<?php endif;?>	
 				<?php elseif($event->timing=='past'): ?>			
-							<span class="label">Terminé</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->date;?></abbr></span>
+							<span class="label">Terminé</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
 				<?php endif; ?>
 				</div>
 			</div>
@@ -134,7 +134,7 @@
 
 					<h2 class="event-info">
 						<span class="ws-icon-<?php echo $event->sport->slug;?>"></span>
-						<?php echo $event->sport->name;?>
+						<?php echo ucfirst($event->getSportName());?>
 					</h2>
 
 					<?php if(!empty($event->description)): ?>

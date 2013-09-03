@@ -1035,6 +1035,9 @@ class Event{
 		if($lang=='fr') return Date::datefr($this->date);
 		return $this->date;
 	}
+	public function getDatetime(){
+		return $this->getDate().' '.$this->getTime();
+	}
 	public function getTimestamp(){
 		return $this->timestamp;
 	}
