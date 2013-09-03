@@ -302,7 +302,7 @@ class WorldsModel extends Model
  				return Conf::getCachePath().'/users_location/'.$path;
  		}
 
- 		$cities = array();
+ 		$cities = array(); 		
 		foreach ($users as $user) {			
 			if($user->exist()==true && isset($user->city))				
 				$c = $this->findCityById($user->city,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
