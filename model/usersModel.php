@@ -252,18 +252,18 @@ class UsersModel extends Model{
  		$sql .= " WHERE ";
 
 
- 		 if(isset($req['conditions'])){ 			
+ 		 if(!empty($req['conditions'])){ 			
  			
  			$sql .= $this->sqlConditions($req['conditions']);
  			
  		}
 
- 		if(isset($req['order'])){
+ 		if(!empty($req['order'])){
  			if($req['order'] == 'random') $sql .= ' ORDER BY rand()';
  			else $sql .= ' ORDER BY '.$req['order'];
  		}
 
- 		if(isset($req['limit'])){
+ 		if(!empty($req['limit'])){
 			$sql .= ' LIMIT '.$req['limit'];
  		}
 

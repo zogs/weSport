@@ -151,9 +151,12 @@ class UsersController extends Controller{
 		$params['conditions'] = (array) $codes;
 		$params['fields'] = 'user_id,login,avatar,role,prenom,nom,birthdate,sexe,facebook_id,date_signin,city';
 		$params['limit'] = (($this->request->page-1)*$perPage).','.$perPage;
-		//query users
+		//users by page
 		$users = $this->Users->findUsers($params);
-
+		//all users !
+		$params['limit'] = '';
+		$all_users = $this->Users->findUsers($params);
+		
 		//total
 		unset($params['limit']);
 		$params['fields'] = 'count(user_id) as count';
@@ -176,7 +179,7 @@ class UsersController extends Controller{
 		$gmap->setZoom(6);
 		//$gmap->addKML('../googlemap/kml/Locator3RF.kml','radars_fixes','../googlemap/Locator3RF.png');
 		if(!empty($users)){
-			$path_to_kml = $this->Worlds->clusterOfWesportersCities('Wesporters Cities',$codes,$users);
+			$path_to_kml = $this->Worlds->clusterOfWesportersCities('Wesporters Cities',$codes,$all_users);
 			$gmap->addKML($path_to_kml,'Sportifs','../webroot/img/LOGO.gif');
 		}
 		$gmap->generate();
