@@ -24,64 +24,74 @@ class UsersController extends Controller{
 				$field = 'login';
 			
 			$user = $this->Users->findFirstUser(array(
-				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account,birthdate',
-				'conditions' => array($field=>$login,'valid'=>1))
+				'fields'=> 'user_id,login,avatar,hash,salt,role,CC1,lang,account,birthdate,valid',
+				'conditions' => array($field=>$login))
 			);
 
 			if($user->exist()){
 
-				if($user->hash == md5($user->salt.$data->password)){
+				if($user->valid==1){
 
-					//if the remember checbox is checked
-					if(isset($data->remember)){
-						//set secret key cookie
-						$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
-						setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', Conf::getSiteUrl(), false, true);
+					if($user->hash == md5($user->salt.$data->password)){
 
-					}
+						//if the remember checbox is checked
+						if(isset($data->remember)){
+							//set secret key cookie
+							$key = sha1($user->login.$user->hash.$user->salt.$_SERVER['REMOTE_ADDR']);
+							setcookie('auto_connect',$user->user_id.'----'.$key, time() + 3600 * 24 * 7, '/', Conf::getSiteUrl(), false, true);
 
-					//increment user connexion
-					$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$user->getID(),'field'=>'user_connexion'));
-
-					//unset useless info
-					unset( $user->hash);
-					unset( $user->salt);
-					unset($_SESSION['user']);
-					unset($_SESSION['token']);
-
-					//write session
-					$this->user = $user;
-					$this->session->write('user', $user);
-					$this->session->setToken();				
-					$this->session->setFlash('Vous êtes maintenant connecté','success',2);
-
-					//redirection
-					// redirect to the previous location if the user use the login page
-					if(isset($data->previous_url)){
-						if(strpos($data->previous_url,'/events/')) { //if the previous page is about an event redirect to the page						
-							header('Location: '.$data->previous_url);
-							exit();
 						}
+
+						//increment user connexion
+						$this->Users->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$user->getID(),'field'=>'user_connexion'));
+
+						//unset useless info
+						unset( $user->hash);
+						unset( $user->salt);
+						unset($_SESSION['user']);
+						unset($_SESSION['token']);
+
+						//write session
+						$this->user = $user;
+						$this->session->write('user', $user);
+						$this->session->setToken();				
+						$this->session->setFlash('Vous êtes maintenant connecté','success',2);
+
+						//redirection
+						// redirect to the previous location if the user use the login page
+						if(isset($data->previous_url)){
+							if(strpos($data->previous_url,'/events/')) { //if the previous page is about an event redirect to the page						
+								header('Location: '.$data->previous_url);
+								exit();
+							}
+						}
+						//else the user is using the navbar formular, redirect current page
+						else {
+
+							$this->reload();
+						}
+
+						//if the current page is an user action, redirect to the homepage
+						if(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'/users/')){
+
+							$this->redirect('/');
+						}				
+					
 					}
-					//else the user is using the navbar formular, redirect current page
 					else {
-
-						$this->reload();
-					}
-
-					//if the current page is an user action, redirect to the homepage
-					if(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'/users/')){
-
-						$this->redirect('/');
-					}				
-				
+						$this->session->setFlash('Mauvais mot de passe','error');
+					}	
 				}
-				else {
-					$this->session->setFlash('Mauvais mot de passe','error');
-				}						
+				else{
+
+					//security code
+					$code = String::random(10);
+					$_SESSION['secu_request_activation_mail'] = $code;
+					$this->session->setFlash("Vous n'avez pas encore activé votre compte ! Veuillez cliquer sur le lien d'activation reçu dans votre boite mail. <a href='".Router::url('users/requestActivationMail?u='.$user->getID().'&c='.$code)."'>Ou demander un nouveau mail d'activation en cliquant ici</a>",'error');
+				}					
 			}
 			else {
-				$this->session->setFlash("Le ".$field." <strong>".$data->login."</strong> n'existe pas ou le compte n'a pas été activé...",'error');
+				$this->session->setFlash("Le ".$field." <strong>".$data->login."</strong> n'existe pas ...",'error');
 			}
 			$data->password = "";				
 
@@ -821,8 +831,7 @@ class UsersController extends Controller{
 					$new = new stdClass();
 					$new->salt = randomString(10);
 					$new->hash = md5($new->salt.$data->password);
-					$new->user_id = $user->user_id;
-					$new->valid = 1;
+					$new->user_id = $user->user_id;					
 
 					if($this->Users->save($new)){
 
@@ -992,6 +1001,34 @@ class UsersController extends Controller{
 				
 		}	
 		$this->set($d);	
+	}
+
+	public function requestActivationMail(){
+
+		$this->view = 'users/login';
+
+		if($data = $this->request->get()){
+
+			if($data->c == $_SESSION['secu_request_activation_mail']){
+
+				$this->loadModel('Users');
+				$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$data->u),'fields'=>'email,login,codeactiv,user_id'));
+
+				if($this->sendValidateMail(array('dest'=>$user->email,'user'=>$user->login,'codeactiv' =>$user->codeactiv,'user_id'=>$user->user_id))){
+
+					$this->session->setFlash("Un email d'activation vient d'être envoyé à l'adresse <strong>".$user->email."</strong> ! (Pensez à vérifier les indésirables)",'info');
+
+					$_SESSION['secu_request_activation_mail'] = '';
+				}
+				else{
+					$this->session->setFlash('Hum... Une erreur inconnue a eu lieu. Veuillez nous contacter directement');
+				}
+			}
+			else{
+				$this->e404();
+			}
+		}
+
 	}
 
 

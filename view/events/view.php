@@ -183,7 +183,8 @@
 																		array('context'=>'events',
 																				'context_id'=>$event->id,
 																				'displayRenderButtons'=>true,
-																				'enableInfiniteScrolling'=>false
+																				'enableInfiniteScrolling'=>false,
+																				'levelFormReplyToDisplay'=>0
 																			)
 																	)
 											);
@@ -213,7 +214,7 @@
 						</div>
 					</div>
 					
-					<div class="block block-yellow">
+					<div class="block">
 						<script type="text/javascript"><!--
 							google_ad_client = "ca-pub-5083969946680628";
 							/* WeSport big rectangle */
@@ -233,6 +234,15 @@
 							<?php echo $gmap->getGoogleMap(); ?>
 						</div>
 					</div>
+				
+					<?php if($this->displayEventWeather($event)): ?>
+					<div class="block block-yellow event-weather" id="event-weather" data-url="<?php echo Router::url('events/getEventWeather/'.$event->getID().'/'.$this->session->token());?>">
+						<h3>Prévision météo</h3>
+						<div class="block-content">
+							<small>En attende des données météo...</small>
+						</div>
+					</div>
+					<?php endif; ?>
 					
 					<?php if($event->authorReviewed()): ?>
 					<div class="block block-orange event-reviews">
@@ -259,5 +269,24 @@
 </div>
 
 <script type="text/javascript">
+
+	$(document).ready(function(){
+
+		//Retrieve weather data
+		if($('#event-weather').length!=0){
+
+			var obj = $('#event-weather');
+			var url = obj.attr('data-url');
+
+			$.ajax({
+				type:'GET',
+				url: url,
+				success: function(html){
+					obj.children('div.block-content').empty().html(html);
+				}
+			});
+		}
+
+	});
 
 </script>

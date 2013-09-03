@@ -33,7 +33,15 @@
 				?>
 				
 				<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
-					<a class="events-link" href="<?php echo $event->getUrl();?>">
+					<a class="events-link" 
+						href="<?php echo $event->getUrl();?>"
+						title="<?php echo $event->getTitle();?>"
+						data-content="Ville : <strong><?php echo $event->getCityName();?></strong><br />													
+										Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge().' ans';?>)<br />
+										Participants : <strong><?php echo $event->getNbParticipants();?></strong><br />
+										<i><?php echo substr($event->getDescription(),0,100);?></i>
+									"
+					>
 		
 						<div class="events-time">
 							<?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?>
@@ -43,8 +51,8 @@
 
 						<div class="events-content">							
 							<span class="events-title">
-								<div class="ws-sport-icon tooltiptop" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>
-								<?php echo $event->title; ?>
+								<div class="ws-sport-icon tooltiptop" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>						
+									<?php echo $event->title; ?>								
 							</span>																												
 						</div>
 					</a>
@@ -57,7 +65,7 @@
 
 				?>
 
-				<a class="addEvent tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
+				<a class="addEvent tooltipbottom" data-toggle="tooltip" title="Poster ce <?php echo Date::dayoftheweek(date('D',strtotime($date)));?>" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
 			</td>
 		<?php
 			$cdate = $date;

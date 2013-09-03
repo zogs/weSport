@@ -155,6 +155,21 @@ var current_date = '<?php echo date("Y-m-d");?>';
 
 $(document).ready(function(){
 
+
+	$('#calendar-content .events-link').livequery(function(){
+
+		$(this).popover({
+			html:true,
+			trigger:'hover',
+			placement:'top',
+			container:'body',
+			delay: { show: 1500, hide: 100 }		
+		});
+	});
+
+
+
+
 	//Sport checkbox slider
 	$('#sportCheckboxs').FlowSlider();
 	$('#sportCheckboxs').css('overflow','visible');

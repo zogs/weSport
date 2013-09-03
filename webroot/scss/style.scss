@@ -674,6 +674,10 @@ body{
 			border-bottom:4px solid rgba(0,0,0,0.2);
 			@include border-radius(20px);
 
+			.events-link{
+				display:block;
+			}
+
 			.events-link:hover{
 				.events-content{
 					.events-title{
@@ -696,14 +700,13 @@ body{
 					position:relative;
 					float:left;
 					color:$deepblue;
-					@include rem(15);
+					@include rem(14);
 					font-weight: bold;
-					margin:5px 0 0 0;										
+					margin:2px 0 0 0;										
 				}
 				.ws-sport-icon { 
 					float:left;
 					margin-right:5px;
-					margin-top:-5px;
 					span {
 						@include rem(35); color:#000; 
 					}
@@ -1199,6 +1202,21 @@ div.col_small{
 		width:300px;
 	}
 }
+
+.event-weather{
+	.block-content{
+		padding:10px;
+		img{
+			float:left;
+			margin-right:5px;
+		}
+		span{
+			@include rem(12);
+		}
+	}
+}
+
+
 .block-action{
 	@extend %clearfix;
 	text-align:center;

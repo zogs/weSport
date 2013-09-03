@@ -73,7 +73,7 @@
 				</div>					
 
 				<?php if(!empty($user_events_in_futur)):?>
-				<div class="block block-orange event-to-come">
+				<div class="block block-green event-to-come">
 					<h3>Mes activités à venir</h3>
 					<div class="block-content">
 						<ul>
@@ -92,7 +92,7 @@
 				<?php endif; ?>		
 
 				<?php if(!empty($user_events_in_past)): ?>
-				<div class="block block-green event-finished">
+				<div class="block block-orange event-finished">
 					<h3>Activités terminés</h3>
 					<div class="block-content">
 						<ul>

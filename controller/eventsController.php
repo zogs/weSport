@@ -3,7 +3,6 @@ class EventsController extends Controller{
 
 	public $primaryKey = 'id';
 
-
 	public function calendar($action = 'now',$date = null){
 
 		$this->view = 'events/index';
@@ -80,7 +79,7 @@ class EventsController extends Controller{
 		}
 
 		//
-		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed';
+		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed, E.description';
 
 		//if some sport are selected
 		if(!empty($params['sports'])){
@@ -110,7 +109,6 @@ class EventsController extends Controller{
 
 		}
 
-
 		$d['events'] = $events;
 		$d['firstday'] = $firstday;
 		$d['numDaysPerWeek'] = $numDaysPerWeek;
@@ -125,6 +123,8 @@ class EventsController extends Controller{
 
 
 	public function view($id = null,$slug = null){
+
+		$this->view = 'events/view';
 
 		$this->loadModel('Events');
 		$this->loadModel('Worlds');	
@@ -683,6 +683,67 @@ class EventsController extends Controller{
 				';
 
 		return array('head'=>$head,'metas'=>$metas);
+	}
+
+	protected function displayEventWeather($e){
+
+		$diff = Date::dateDiff(Date('Y-m-d'),$e->date);
+		if($diff>5)
+			return false;
+		return true;
+	}
+
+	public function getEventWeather($eid,$token){
+
+		//security
+		if(!is_numeric($eid)) exit();
+		if($token!=$this->session->token()) exit();
+
+		$this->layout = 'none';
+		$this->view = 'events/weather';
+
+		//cache system
+		$this->cacheWeather = new Cache(Conf::getCachePath().'/events_weather_forecast',2); //3 hours
+		//if the weather forecast have been put in cache , return the cached version
+		$cachename = 'event'.$eid;
+		if($cache = $this->cacheWeather->read($cachename)){		
+			$this->set('weather',unserialize($cache));
+			return;
+		}
+		//else
+		//load models
+		$this->loadModel('Events');
+		$this->loadModel('Worlds');
+		//find event and city
+		$event = $this->Events->findEventByID($eid,'cityID,date');
+		$city = $this->Worlds->findCityById($event->cityID,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
+		//check if the vent is in the 5 following days
+		$diff = Date::dateDiff(Date('Y-m-d'),$event->date);
+		if($diff>5) {
+			//set error
+			$this->set('error','forecast_limit_5days');
+			return;
+		}
+		//set api key and api url
+		//api http://developer.worldweatheronline.com/
+		$api_key = 'a25upsyrnfwkrdce8nysm9ux';
+		$url = "http://api.worldweatheronline.com/free/v1/weather.ashx?key=$api_key&q=$city->lat,$city->lon&date=$event->date&cc=no&format=json";
+		
+		//get content
+		$json = curl_get_file_contents($url);
+		$json = json_decode($json);
+
+		//if weather data is not retrieve, that mean taht the request limit have been reached		
+		if(!isset($json->data)){
+			$this->set('error','max_limit_request');
+			return;
+		}
+
+		//set weather
+		$weather = $json->data->weather[0];
+		$this->cacheWeather->write($cachename,serialize($weather));
+		$this->set('weather',$weather);
+
 	}
 
 
