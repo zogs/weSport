@@ -105,8 +105,8 @@
 
   <li data-el='#logoWeSport' data-orientation='bottom' data-width='500' data-arrow='20%' data-margin='20' data-align="left">
     <h2>Bienvenue sur WeSport !</h2>
-    <p><strong>L'agenda des activitées sportives de ta ville !</strong>
-		<br><small><i>Pour ne plus jamais jour seul au Jokari</i></small>
+    <p><strong>L'agenda des activités sportives de ta ville !</strong>
+		<br><small><i>Pour ne plus jamais jouer seul au Jokari</i></small>
     </p>
     <a href='javascript:void(0);' class='btn tourbus-next'>Visite guidée</a>
     <a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Non merci</a>
