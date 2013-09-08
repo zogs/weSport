@@ -734,6 +734,13 @@ class EventsController extends Controller{
 		//find event and city
 		$event = $this->Events->findEventByID($eid,'cityID,date');
 		$city = $this->Worlds->findCityById($event->cityID,'FULLNAMEND as name,LATITUDE as lat,LONGITUDE as lon');
+
+		//if no city return error
+		if(empty($city)){
+			$this->set('error','no city');
+			return;
+		}
+
 		//check if the vent is in the 5 following days
 		$diff = Date::dateDiff(Date('Y-m-d'),$event->date);
 		if($diff>5) {
