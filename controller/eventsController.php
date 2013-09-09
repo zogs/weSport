@@ -64,7 +64,8 @@ class EventsController extends Controller{
 				$cookie['date'] = $day;	
 						
 			}
-		}			
+		}	
+		
 
 		//if city is entered
 		if(!empty($params['cityID'])){
@@ -89,6 +90,9 @@ class EventsController extends Controller{
 				$cookie['extend'] = $extend;
 			}			
 		}
+		else{
+			$cookie['extend'] = '';
+		}
 
 		//
 		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed, E.description';
@@ -97,6 +101,9 @@ class EventsController extends Controller{
 		if(!empty($params['sports'])){
 			$query['sports'] = $params['sports'];
 			$cookie['sports'] = $params['sports'];
+		}
+		else {
+			$cookie['sports'] = '';
 		}
 
 
