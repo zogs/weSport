@@ -90,6 +90,16 @@ $fontgrey:#9e9e34;
         }
     }
 }
+/* emboss */
+@mixin box-emboss($opacity:0.8, $opacity2:0.1){
+    box-shadow:white($opacity) 0 1px 0, inset black($opacity2) 0 1px 0;
+}
+/* opacity */
+@mixin opacity($opacity:0.5) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
 
 
 html {	
@@ -423,11 +433,11 @@ body{
 				@include rem(35); 
 				margin:2px;
 				@include transition(0.2s ease);
+				@include opacity(0.2);
 			}
 
 			label:hover {
-				margin-top:-15%;
-				border-color:$lightblue;
+				margin-top:-15%;				
 				@include rotate(360deg);
 				span.ws-icon{
 					@include rem(60);
@@ -435,11 +445,19 @@ body{
 			}
 			input:checked ~ label {
 				margin-top:-15%;
-				border-color:$darkblue;
 				@include rotate(360deg);
 				span.ws-icon{
+					@include opacity(1);
 					@include rem(60);
+
 				}
+			}
+		}
+	}
+	.sportCheckboxs.allSportDisplayed{
+		.sportChoice{
+			label span {
+				@include opacity(1);
 			}
 		}
 	}
@@ -1207,6 +1225,7 @@ div.col_small{
 .event-weather{
 	.block-content{
 		padding:10px;
+		padding-bottom:0;
 		img{
 			float:left;
 			margin-right:5px;
@@ -1214,7 +1233,17 @@ div.col_small{
 		span{
 			@include rem(12);
 		}
+		.mention{
+			text-align: right;
+			@include rem(12);
+			color:$deepgrey;
+			a{
+				text-decoration: none;
+				color:$deepgrey;			
+			}
+		}
 	}
+	
 }
 
 

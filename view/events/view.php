@@ -239,7 +239,8 @@
 					<div class="block block-yellow event-weather" id="event-weather" data-url="<?php echo Router::url('events/getEventWeather/'.$event->getID().'/'.$this->session->token());?>">
 						<h3>Prévision météo</h3>
 						<div class="block-content">
-							<small>En attende des données météo...</small>
+							<div id="weather-content"><small>En attende des données météo...</small></div>							
+							<div class="mention"><small>Powered by <a href="http://worldweatheronline.com" target="_blank" title="Worldweatheronline.com">Worldweatheronline.com</strong></small></div>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -282,7 +283,7 @@
 				type:'GET',
 				url: url,
 				success: function(html){
-					obj.children('div.block-content').empty().html(html);
+					$('#weather-content').empty().html(html);
 				}
 			});
 		}

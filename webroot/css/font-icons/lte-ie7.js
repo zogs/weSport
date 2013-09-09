@@ -3,10 +3,9 @@
 window.onload = function() {
 	function addIcon(el, entity) {
 		var html = el.innerHTML;
-		el.innerHTML = '<span style="font-family: \'ws-icon\'">' + entity + '</span>' + html;
+		el.innerHTML = '<span style="font-family: \'ws-font\'">' + entity + '</span>' + html;
 	}
 	var icons = {
-			'ws-icon-paintball' : '&#x21;',
 			'ws-icon-relaxation' : '&#x22;',
 			'ws-icon-volley' : '&#x23;',
 			'ws-icon-velo' : '&#x24;',
@@ -73,12 +72,16 @@ window.onload = function() {
 			'ws-icon-smiley-2' : '&#x61;',
 			'ws-icon-thumbs-up-2' : '&#x62;',
 			'ws-icon-loupe' : '&#x64;',
-			'ws-icon-plus-alt' : '&#x63;',
+			'ws-icon-other' : '&#x63;',
 			'ws-icon-danse' : '&#x65;',
-			'ws-icon-voile' : '&#x66;'
+			'ws-icon-voile' : '&#x66;',
+			'ws-icon-paintball' : '&#x21;',
+			'ws-icon-fighting' : '&#xe001;',
+			'ws-icon-flying' : '&#xe000;',
+			'ws-icon-other-2' : '&#xe002;'
 		},
 		els = document.getElementsByTagName('*'),
-		i, attr, html, c, el;
+		i, attr, c, el;
 	for (i = 0; ; i += 1) {
 		el = els[i];
 		if(!el) {

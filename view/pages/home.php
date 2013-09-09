@@ -37,9 +37,11 @@
 				<div class="clearfix"></div>
 			</div>
 
-			<div class="sportCheckboxs" id="sportCheckboxs">
-				<?php 					
-					$sports_selected = $this->cookieEventSearch->read('sports');									
+			<?php 
+			$sports_selected = $this->cookieEventSearch->read('sports');									
+			?>
+			<div class="sportCheckboxs <?php if(empty($sports_selected)) echo 'allSportDisplayed';?>" id="sportCheckboxs">
+				<?php 																	
 					foreach ($sports_available as $sport):?>						
 						<div class="sportChoice">
 							<input class="sportCheckbox" type="checkbox" name="sports[]" value="<?php echo $sport->slug;?>" id="label-<?php echo $sport->slug;?>" <?php if(!empty($sports_selected)&&in_array($sport->slug,$sports_selected)) echo "checked='checked'";?> >
@@ -113,20 +115,20 @@
   </li>
 
   <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
-    <p><strong>Tape ici la ville de ton choix et/ou choisi dans la liste déroulante</strong></p>
+    <p><strong>Tapes ici la ville de ton choix et/ou choisis dans la liste déroulante</strong></p>
     <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km ! )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
   </li>
 
   <li data-el='#sportCheckboxs' data-orientation='top' data-width='350'>
-    <p><strong>Tu peux afficher uniquement les sports que tu souhaite ! </strong></p>
-    <p><small>( par default, tous les sports sont affichés )</small></p>
+    <p><strong>Tu peux afficher uniquement les sports que tu souhaites ! </strong></p>
+    <p><small>( par défaut, tous les sports sont affichés )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
   </li>
 
   <li data-el="#calendar-content" data-orientation="top" data-width='400'>
   	<p><strong>Les annonces apparaissent dans le calendrier</strong></p>
-  	<p><small>( tu peux naviguer vers les jours suivants avec la fléche de droite, ou pour les écrans tactiles en slidant le calendrier !)</small></p>
+  	<p><small>( tu peux naviguer vers les jours suivants avec la flèche de droite, ou, pour les écrans tactiles, en slidant le calendrier !)</small></p>
   	<a href="javascript:void(0);" class="btn tourbus-next">Compris !</a>
   </li>
 
@@ -177,8 +179,13 @@ $(document).ready(function(){
 	//Sport button
 	//Submit form on click
 	$('.sportCheckbox').change(function(){
+		//call same week
 		callCurrentWeek();
-		
+
+		if($('.sportCheckbox:checked').length!=0)
+			$('#sportCheckboxs').removeClass('allSportDisplayed');		
+		else 
+			$('#sportCheckboxs').addClass('allSportDisplayed');				
 	});
 
 	// On mouse over change widht of the items
