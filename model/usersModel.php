@@ -152,19 +152,23 @@ class UsersModel extends Model{
 		if( (count($tab)==0 ) || (count($tab)==1 && isset($tab['user_id'])))
 			return true;	
 
-		if($id = $this->save($user)){
+		if($user_id = $this->save($user)){
+
+			//create mailing 
+			$this->saveUserSettingsMailing($user_id);
 
 			//create statistics
-			$this->saveUserStatistics($id);
+			$this->saveUserStatistics($user_id);
 
-			return $id;
+
+			return $user_id;
 		}
 		else
 			return false;
 
 	}
 
-	public function saveUserSettingsMailing($user_id,$settings){
+	public function saveUserSettingsMailing($user_id,$settings = array()){
 
 		$settings_exist = $this->findFirst(array('table'=>'users_settings_mailing','fields'=>'id','conditions'=>array('user_id'=>$user_id)));
 
