@@ -68,7 +68,7 @@ class PagesController extends Controller {
 				}	
 
 				//If sport not defined set sport to zero
-				if(!$this->request->get('sports')) $params['sports'] = '';
+				if(!$this->request->get('sports') && empty($params['sports'])) $params['sports'] = '';
 
 				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
 				if(empty($params['cityID'])) {					
@@ -91,7 +91,7 @@ class PagesController extends Controller {
 			$params['location'] = $this->Worlds->findCityById($params['cityID'],'CC1,ADM1,ADM2,ADM3,ADM4');
 			$params['location'] = $this->Worlds->findStatesNames($params['location']);
 			$params['location'] = (array) $params['location'];
-
+			
 			//on réécrit le cookie avec les nouveaux parametres
 			$this->cookieEventSearch->write($params);		
 			

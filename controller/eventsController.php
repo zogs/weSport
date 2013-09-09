@@ -33,6 +33,9 @@ class EventsController extends Controller{
 		else
 			$numDaysPerWeek = $params['dayperweek'];
 		
+		//Get cookie parameter
+		$cookie = $this->cookieEventSearch->arr();
+
 		
 		if(!empty($action)){
 
@@ -57,10 +60,8 @@ class EventsController extends Controller{
 
 				$query['date'] = $day;
 
-				//set cookie date
-				$arr = $this->cookieEventSearch->arr();
-				$arr['date'] = $day;
-				$this->cookieEventSearch->write($arr);			
+				//set cookie date			
+				$cookie['date'] = $day;	
 						
 			}
 		}			
@@ -73,6 +74,7 @@ class EventsController extends Controller{
 
 		//if extend to city arroud
 		if(!empty($params['extend']) && $params['extend'] != ' '){			
+			$extend = $params['extend'];
 			if(!empty($params['cityID'])){
 
 				//find latitude longitude of the city
@@ -80,8 +82,11 @@ class EventsController extends Controller{
 				//and set params for the model
 				$query['cityLat'] = $city->LATITUDE;
 				$query['cityLon'] = $city->LONGITUDE;
-				$query['extend'] = $params['extend'];
+				$query['extend'] = $extend;
 				$query['extend_metric'] = 'km';
+
+				//set extend cookie
+				$cookie['extend'] = $extend;
 			}			
 		}
 
@@ -91,7 +96,15 @@ class EventsController extends Controller{
 		//if some sport are selected
 		if(!empty($params['sports'])){
 			$query['sports'] = $params['sports'];
+			$cookie['sports'] = $params['sports'];
 		}
+
+
+		//Rewrite cookie to remember the search				
+		$this->cookieEventSearch->write($cookie);
+
+
+
 		//initialize variable for days loop
 		//first day of the week
 		$firstday = $day;
