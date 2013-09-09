@@ -502,7 +502,7 @@ class UsersController extends Controller{
 					$this->Users->save($data);
 
 					$this->session->setFlash('<strong>Bravo</strong> '.$user->login.' ! Tu as validé ton inscription','success');
-					$this->session->setFlash('Tu peux te <strong>connecter</strong> dés maintenant!','info');
+					$this->session->setFlash('Tu peux te <strong>connecter</strong> dès maintenant!','info');
 									
 
 				}
