@@ -448,9 +448,7 @@ class EventsModel extends Model{
 			$tab[':lang'] = Conf::$languageDefault;
 			$res = $this->query($sql,$tab);
 		}		
-		
-		debug($event);
-		debug($res);
+	
 
 		$event->sport = $res[0];
 		return $event;
