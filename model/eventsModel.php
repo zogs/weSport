@@ -525,6 +525,11 @@ class EventsModel extends Model{
 			$event->CC1 = $city->CC1;
 		}
 
+		//description
+		if(!empty($event->description)){
+			$event->description = nl2br($event->description);
+		}
+
 		
 		if($id = $this->save($event)) {
 

@@ -509,9 +509,7 @@ class EventsController extends Controller{
 
 						//if the event is new
 						if($is_new==true){
-
-							
-							$this->session->setFlash('<a href="'.Router::url('events/shareActionOnFacebook/want/'.$event_id.'/'.$this->session->user()->getID()).'">Partager cette activité sur facebook</a>');
+													
 							//if its a facebook user, publish via the facebook OpenGraph
 							if($this->session->user()->isFacebookUser()) $this->fb_og_WantSport($evt,$this->session->user());
 						}
