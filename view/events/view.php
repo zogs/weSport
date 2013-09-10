@@ -141,7 +141,7 @@
 					<div class="event-description">
 						<h3>Description de l'activité</h3>
 						<div class="block-content">
-							<span><?php echo $event->description;?></span>
+							<span><?php echo $event->getDescription();?></span>
 						</div>
 					</div>
 					<?php endif; ?>
