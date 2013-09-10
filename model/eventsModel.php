@@ -450,7 +450,7 @@ class EventsModel extends Model{
 		}		
 		
 		debug($res);
-		exit();
+		
 		$event->sport = $res[0];
 		return $event;
 		
