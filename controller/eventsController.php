@@ -617,9 +617,6 @@ class EventsController extends Controller{
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);
 
-		debug($params);
-		exit();
-
 		$res = $this->facebook->api($url,'POST',$params);
 
 		if(!empty($res) && is_numeric($res['id'])){
@@ -690,10 +687,10 @@ class EventsController extends Controller{
 		//debug($event);
 		$head = "prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#'";
 		$metas = '<meta property="fb:app_id"                content="'.Conf::$facebook['appId'].'" /> 
-				  	<meta property="og:url"                   content="'.$event->getUrl().'" /> 
+				  	<meta property="og:url"                   content="'.Conf::getSiteUrl().$event->getUrl().'" /> 
 				  	<meta property="og:type"                  content="we-sport-:sport" /> 
 				  	<meta property="og:title"                 content="'.$event->title.' - '.$event->getSportName().'" /> 
-				  	<meta property="og:image"                 content="http://'.Conf::$websiteURL.''.$event->getSportLogo('big').'" /> 
+				  	<meta property="og:image"                 content="http://'.Conf::getSiteUrl().$event->getSportLogo('big').'" /> 
 				  	<meta property="og:description"			content="'.substr($event->getDescription(),0,100).'" />
 				  	<meta property="og:street-address" content="'.$event->address.'" />
 					<meta property="og:locality" content="'.$event->cityName.'" />
