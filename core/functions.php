@@ -302,6 +302,4 @@ function getUrlDomain($_url, $_extension = false, $_scheme = false){
 		else return 'wrong vimeo url';
     }
 
-    function br2nl($foo) {
-		return preg_replace("/\<br\s*\/?\>/i", "\n", $foo);
-	}
+   

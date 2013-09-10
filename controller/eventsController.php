@@ -560,7 +560,7 @@ class EventsController extends Controller{
 			$evt = $this->Events->joinSport($evt,$this->getLang());
 
 			//On replace les <br/> par \n pour le textarea
-			$evt->description = br2ln($evt->description);
+			$evt->description = String::br2ln($evt->description);
 		}
 
 		$this->request->data = $evt;//send data to form class

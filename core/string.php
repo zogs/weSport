@@ -43,4 +43,8 @@ class String {
 	    return $text;
 	}
 
+	static function br2nl($foo) {
+		return preg_replace("/\<br\s*\/?\>/i", "\n", $foo);
+	}
+
 } ?>
