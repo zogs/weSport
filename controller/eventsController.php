@@ -513,7 +513,7 @@ class EventsController extends Controller{
 							
 							$this->session->setFlash('<a href="'.Router::url('events/shareActionOnFacebook/want/'.$event_id.'/'.$this->session->user()->getID()).'">Partager cette activité sur facebook</a>');
 							//if its a facebook user, publish via the facebook OpenGraph
-							//if($this->session->user()->isFacebookUser()) $this->fb_og_WantSport($evt,$this->session->user());
+							if($this->session->user()->isFacebookUser()) $this->fb_og_WantSport($evt,$this->session->user());
 						}
 
 						//if the event already exist
@@ -602,22 +602,10 @@ class EventsController extends Controller{
 
 		
 	}
-	
-	public function shareActionOnFacebook($action='want',$event_id,$user_id){
-
-		$this->loadModel('Events');
-		$this->loadModel('Users');
-
-		$event = $this->Events->findEventById($event_id);	
-		$user = $this->Users->findFirstUser(array('conditions'=>array('user_id'=>$user_id)));
-
-		if($action='want')
-			$this->fb_og_WantSport($event,$user);
-
-	}
 
 
 	public function fb_og_WantSport($event,$user){
+
 
 		if(!$user->isFacebookUser()) return false;
 
