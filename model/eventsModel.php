@@ -449,6 +449,8 @@ class EventsModel extends Model{
 			$res = $this->query($sql,$tab);
 		}		
 		
+		debug($res);
+		exit();
 		$event->sport = $res[0];
 		return $event;
 		
