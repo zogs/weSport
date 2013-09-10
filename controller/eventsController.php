@@ -65,7 +65,7 @@ class EventsController extends Controller{
 						
 			}
 		}	
-		
+
 
 		//if city is entered
 		if(!empty($params['cityID'])){
@@ -616,6 +616,9 @@ class EventsController extends Controller{
 			'sport_action'=>$sport_action,
 			'end_time'=>$event->getDate('en').' '.$event->getTime()
 			);
+
+		debug($params);
+		exit();
 
 		$res = $this->facebook->api($url,'POST',$params);
 
