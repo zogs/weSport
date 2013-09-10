@@ -1015,7 +1015,7 @@ class Event{
 	}
 	public function getDescription(){
 
-		return br2nl($this->description);
+		return $this->description;
 	}
 
 	public function getTime(){

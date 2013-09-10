@@ -555,8 +555,13 @@ class EventsController extends Controller{
 		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_past'] = $this->Events->joinSports($d['user_events_in_past'],$this->getLang());
 		
-		if($evt->exist()) 
+		if($evt->exist()) {
+			//On joint les sports dans la langue de l'utilisation
 			$evt = $this->Events->joinSport($evt,$this->getLang());
+
+			//On replace les <br/> par \n pour le textarea
+			$evt->description = br2ln($evt->description);
+		}
 
 		$this->request->data = $evt;//send data to form class
 
