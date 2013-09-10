@@ -22,7 +22,6 @@ window.onload = function() {
 			'ws-icon-rando' : '&#x2f;',
 			'ws-icon-pingpong' : '&#x30;',
 			'ws-icon-patin' : '&#x31;',
-			'ws-icon-natation' : '&#x32;',
 			'ws-icon-laser' : '&#x33;',
 			'ws-icon-kayak' : '&#x34;',
 			'ws-icon-karting' : '&#x35;',
@@ -78,7 +77,8 @@ window.onload = function() {
 			'ws-icon-paintball' : '&#x21;',
 			'ws-icon-fighting' : '&#xe001;',
 			'ws-icon-flying' : '&#xe000;',
-			'ws-icon-other-2' : '&#xe002;'
+			'ws-icon-other-2' : '&#xe002;',
+			'ws-icon-swimming' : '&#xe003;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
