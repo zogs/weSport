@@ -51,7 +51,7 @@
 						<div class="events-content">							
 							<span class="events-title">
 								<div class="ws-sport-icon tooltiptop" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>						
-									<?php echo $event->title; ?>								
+									<?php echo ucfirst($event->title); ?>								
 							</span>																												
 						</div>
 					</a>
