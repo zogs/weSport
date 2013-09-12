@@ -3,6 +3,7 @@ RewriteEngine On
 ## EXCEPTION: TOUS LES ROBOTS MEMES ANONYMES OU BANNIS PEUVENT ACCEDER A CES FICHIERS
 RewriteCond %{REQUEST_URI} !^/robots.txt
 RewriteCond %{REQUEST_URI} !^/sitemap.xml
+RewriteCond %{HTTP_USER_AGENT} !^facebookexternalhit
 ##
 RewriteCond %{HTTP_USER_AGENT} ^-?$ [OR] ## ANONYMES
 RewriteCond %{HTTP_USER_AGENT} ^[bcdfghjklmnpqrstvwxz\ ]{8,}|^[0-9a-z]{15,}|^[0-9A-Za-z]{19,}|^[A-Za-z]{3,}\ [a-z]{4,}\ [a-z]{4,} [OR] ## CEUX QUI INVENTENT DES NOMS AU HASARD 
