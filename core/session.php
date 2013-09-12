@@ -197,9 +197,9 @@ class Session {
 			return Conf::$pays;
 	}
 
-	public function get_client_language($availableLanguages, $default='fr'){
-     
-	    if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+	public function get_client_language($availableLanguages, $default='fr'){     	     		
+	   
+	if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 	     
 		    $langs=explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
 		     
