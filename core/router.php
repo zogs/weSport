@@ -37,7 +37,7 @@ class Router{
 					}
 					$match = true;
 				}
-			}
+			}			
 		}
 		//Si l'url ne correspond pas a une regle on parse selon la regle de base /controller/action/params
 		//On separe l'url 

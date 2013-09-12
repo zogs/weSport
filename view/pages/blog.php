@@ -91,7 +91,7 @@
 							<?php foreach ($eventsToCome as $e):?>							
 								<li>
 									
-									<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
+									<a href="<?php echo $e->getUrl();?>" title="<?php echo $e->getTitle();?>">
 										<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
 										<?php echo $e->getTitle();?>
 									</a>

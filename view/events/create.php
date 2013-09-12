@@ -15,7 +15,7 @@
 				
 				<h1 class="title-sheet">					
 					<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?>"></span>
-					<?php echo '<a href="'.Router::url('events/view/'.$event->getID()).'">'.$event->getTitle().'</a>';?>
+					<?php echo '<a href="'.$event->getUrl().'">'.$event->getTitle().'</a>';?>
 				</h1>
 				<?php else: ?>
 				<h1 class="title-sheet">

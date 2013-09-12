@@ -1,4 +1,6 @@
 <div class="homepage">
+	<h1>Faites du sport dans votre region !</h1>
+	
 	<div class="row-fluid">
 		<div class="flash"><?php echo $this->session->flash() ;?></div>
 		

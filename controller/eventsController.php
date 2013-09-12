@@ -149,7 +149,7 @@ class EventsController extends Controller{
 
 
 
-	public function view($id = null,$slug = null){
+	public function view($id = null,$slug = null,$sport = null){
 
 		$this->view = 'events/view';
 

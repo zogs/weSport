@@ -994,7 +994,8 @@ class Event{
 
 	public function getUrl(){
 
-		return Router::url('events/view/'.$this->getID().'/'.$this->getSlug());
+		//return Router::url('events/view/'.$this->getID().'/'.$this->getSlug());
+		return Router::url($this->getSportSlug().'/'.$this->getID().'/'.$this->getSlug());
 	}
 
 	public function getAuthor(){

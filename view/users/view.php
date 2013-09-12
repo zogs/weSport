@@ -47,7 +47,7 @@
 							<?php if(!empty($hasOrganized)): ?>
 							<?php foreach ($hasOrganized as $event): ?>
 								<li>
-									<a href="<?php echo Router::url('events/view/'.$event->getID());?>">
+									<a href="<?php echo $event->getUrl();?>">
 										<span class="ws-icon ws-icon-small ws-icon-<?php echo $event->sport->slug;?>"></span>
 										<?php echo $event->getTitle();?>
 									</a>
@@ -91,7 +91,7 @@
 								<?php if(!empty($futurParticipation)): ?>
 								<?php foreach ($futurParticipation as $event): ?>
 								<li>
-									<a href="<?php echo Router::url('events/view/'.$event->getID());?>">
+									<a href="<?php echo $event->getUrl();?>">
 										<span class="ws-icon ws-icon-small ws-icon-<?php echo $event->sport->slug;?>"></span>
 										<?php echo $event->getTitle();?>
 									</a>
