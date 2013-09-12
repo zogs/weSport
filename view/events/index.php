@@ -34,8 +34,7 @@
 				
 				<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
 					<a class="events-link" 
-						href="<?php echo $event->getUrl();?>"
-						title="<?php echo $event->getTitle();?>"
+						href="<?php echo $event->getUrl();?>"						
 						data-content="Ville : <strong><?php echo $event->getCityName();?></strong><br />													
 										Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge().' ans';?>)<br />
 										Participants : <strong><?php echo $event->getNbParticipants();?></strong><br />
