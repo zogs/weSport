@@ -104,7 +104,7 @@
 			<article>
 				<div class="col_large">
 					<h2 class="event-info">
-						<span class="ws-icon-calendar"></span>
+						<span class="ws-icon-calendar" title="Date"></span>
 						<?php
 
 							if($event->date == date("Y-m-d"))
@@ -117,23 +117,28 @@
 					</h2>
 
 					<h2 class="event-info">
-						<span class="ws-icon-alarm"></span>
+						<span class="ws-icon-alarm" title="Heure"></span>
 						<?php echo str_replace(':','h',substr($event->time,0,5));?>
 					</h2>
 
 					<h2 class="event-info">
-						<span class="ws-icon-location-2"></span>
-						<?php echo $event->getCityName();?>
+						<span class="ws-icon-location-2" title="Ville"></span>
+						<?php echo $event->getCityName();?>	
+						<small><?php echo $event->lastRegion();?></small>			
+					</h2>
+
+					<h2 class="event-info">
+						<span class="ws-icon-map-2" title="Adresse"></span>						
 						<?php if($this->session->user()->online()): ?>
-						<small><?php echo stripcslashes($event->address);?></small>
+						<?php echo ucfirst($event->address);?>
 						<?php else: ?>
-						<small><?php echo substr(stripcslashes($event->address),0,8).'...';?></small>
+						<?php echo substr(ucfirst($event->address),0,8).'...';?>
 						<small><a href="<?php echo Router::url('users/login');?>">Connectez-vous</a> pour voir la suite de l'adresse</small>
 						<?php endif; ?>
 					</h2>
 
 					<h2 class="event-info">
-						<span class="ws-icon-<?php echo $event->sport->slug;?>"></span>
+						<span class="ws-icon-<?php echo $event->sport->slug;?>" title="Sport"></span>
 						<?php echo ucfirst($event->getSportName());?>
 					</h2>
 

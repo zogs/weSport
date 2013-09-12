@@ -187,7 +187,7 @@ class EventsController extends Controller{
 		$gmap->setSize('100%','250px');
 		$gmap->setLang('fr');
 		$gmap->setEnableWindowZoom(true);
-		$fullAddress = $event->address.' , '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();
+		$fullAddress = $event->address.' , '.$event->getCityName().', '.$event->firstRegion().', '.$event->getCountry();	
 		$gmap->addMarkerByAddress( $fullAddress, $event->title, "<img src='".$event->getSportLogo()."' width='40px' height='40px'/><strong>".$event->title."</strong> <p>sport : <em>".$event->getSportName()."<em><br />Adresse: <em>".addslashes($event->address)."<br />Ville : <em>".$event->getCityName()."</em></p>",$event->getSportName());
 		$gmap->setCenter($fullAddress);
 		$gmap->setZoom(12);
@@ -446,7 +446,7 @@ class EventsController extends Controller{
 			//data to save		
 			$new = $this->request->post();
 			
-			// if cityID is not defined			
+			//find a city if cityID is not defined			
 			 if(empty($new->cityID)){
 				//find cityID with cityName
 				if(!empty($new->cityName)){
@@ -462,6 +462,12 @@ class EventsController extends Controller{
 				}
 			}
 
+			//find states of the city, and latitude longitude
+			$states = $this->Worlds->findCityById($new->cityID,'ADM1,ADM2,ADM3,ADM4,CC1,LATITUDE as LAT,LONGITUDE as LON');
+			foreach ($states as $key => $value) {
+				if(!empty($value)) $new->$key = $value;
+			}
+
 			//init var
 			$new->slug = slugify($new->title);
 
@@ -473,7 +479,7 @@ class EventsController extends Controller{
 
 						//On regarde quel sont les changements , dans le but d'avertir les participants
 						$changes = array();
-						$silent_changes = array('slug','nbmin','cityID');
+						$silent_changes = array('slug','nbmin','cityID','ADM1','ADM2','ADM3','ADM4','CC1','LAT','LON');
 						foreach ($new as $key => $value) {
 							if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
 						}

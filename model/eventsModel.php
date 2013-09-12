@@ -530,6 +530,15 @@ class EventsModel extends Model{
 			$event->description = nl2br($event->description);
 		}
 
+		//nombre minimum
+		if(isset($event->nbmin)){			
+			if($event->nbmin<=0) {
+				$event->nbmin = 1;
+				$event->confirmed = 1;
+			}
+		} 
+
+
 		
 		if($id = $this->save($event)) {
 
