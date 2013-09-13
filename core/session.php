@@ -5,9 +5,6 @@ class Session {
 
 		$this->controller = $controller;
 
-		debug('shit');
-		debug($_SESSION);
-
 		if(!isset($_SESSION)){
 			session_start();
 
@@ -22,9 +19,7 @@ class Session {
 				$user->setlang($this->get_client_language(array_keys(Conf::$languageAvailable,Conf::$languageDefault)));
 				$this->write('user',$user);
 
-			}
-
-			debug($_SESSION);			
+			}		
 
 			//destroy session if user in not from User class
 			if(!$_SESSION['user'] instanceof User){
@@ -36,8 +31,6 @@ class Session {
 				session_destroy();
 			}
 
-			debug($_SESSION);			
-			
 		}
 		
 	}
