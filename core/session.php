@@ -226,7 +226,7 @@ class Session {
 				if($file != '.' && $file != '..'){
 				
 					// Comment the 'if(...){' and '}' lines if you get a significant amount of traffic
-					if(time()- filemtime(session_save_path() . '\\' . $file) < MAX_IDLE_TIME * 60) {
+					if(time()- filemtime(session_save_path() . DS . $file) < MAX_IDLE_TIME * 60) {
 					$count++;
 					}
 				}
