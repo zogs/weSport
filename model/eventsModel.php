@@ -1084,7 +1084,9 @@ class Event{
 
 	public function getSportSlug(){
 		if(!$this->exist()) return '';
-		return $this->sport->slug;
+		if(is_string($this->sport)) return $this->sport;
+		if(isset($this->sport->slug) && is_string($this->sport->slug)) return $this->sport->slug;
+		
 	}
 	public function getSportAction(){
 		if(!$this->exist()) return '';
