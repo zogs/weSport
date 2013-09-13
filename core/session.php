@@ -218,7 +218,7 @@ class Session {
 
     public function getOnlineUsers(){ // http://www.devarticles.com/c/a/PHP/The-Quickest-Way-To-Count-Users-Online-With-PHP/1/#sthash.cHfuOYb9.dpuf
 
-    	define('MAX_IDLE_TIME',3);
+    	$max_online_time = 5; //temps qu'une session est active en minute
 
 		if ( $directory_handle = opendir( session_save_path() ) ) {			
 			$count = 0;
@@ -226,7 +226,7 @@ class Session {
 				if($file != '.' && $file != '..'){
 				
 					// Comment the 'if(...){' and '}' lines if you get a significant amount of traffic
-					if(time()- filemtime(session_save_path() . DS . $file) < MAX_IDLE_TIME * 60) {
+					if(time()- filemtime(session_save_path() . DS . $file) < $max_online_time * 60) {
 					$count++;
 					}
 				}
