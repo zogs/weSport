@@ -161,7 +161,7 @@ body{
 
 	.nav.pull-right { 
 		
-		.nav-avatar { position:relative; height:50px;}
+		.nav-avatar { position:relative; height:36px;}
 		form { display:none;}
 
 		li.dropdown {
@@ -2196,12 +2196,13 @@ TYPEAHEAD CUSTOM STYLE
    		padding:0 1%;
    		.weSport{
    			padding:0; padding-left:10px;
-   			margin-right:0px;
+   			margin-right:0px; 
+   			margin-top:0px;
 
    		}
    		.nav li a {
    			padding:0 15px;
-   			@include rem(22);
+   			@include rem(24);
 
    		}
    }

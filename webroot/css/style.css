@@ -114,7 +114,7 @@ body {
 /* line 164, ../scss/style.scss */
 .navbar .nav.pull-right .nav-avatar {
   position: relative;
-  height: 50px;
+  height: 36px;
 }
 /* line 165, ../scss/style.scss */
 .navbar .nav.pull-right form {
@@ -2843,30 +2843,31 @@ TYPEAHEAD CUSTOM STYLE
     padding: 0;
     padding-left: 10px;
     margin-right: 0px;
+    margin-top: 0px;
   }
-  /* line 2202, ../scss/style.scss */
+  /* line 2203, ../scss/style.scss */
   .navbar .nav li a {
     padding: 0 15px;
-    font-size: 22px;
-    font-size: 2.2rem;
+    font-size: 24px;
+    font-size: 2.4rem;
   }
 
-  /* line 2208, ../scss/style.scss */
+  /* line 2209, ../scss/style.scss */
   #formSearch {
     width: 100%;
   }
-  /* line 2210, ../scss/style.scss */
+  /* line 2211, ../scss/style.scss */
   #formSearch .cityRounded {
     width: 70%;
     margin: 0 15%;
   }
-  /* line 2216, ../scss/style.scss */
+  /* line 2217, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 30px;
     font-size: 3rem;
   }
 
-  /* line 2221, ../scss/style.scss */
+  /* line 2222, ../scss/style.scss */
   .connexion .container {
     width: 100%;
   }
