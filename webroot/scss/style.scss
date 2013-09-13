@@ -132,7 +132,7 @@ body{
 			@include rem(28);
 			color:$deepblue;
 			line-height: 150%;
-			padding:0 30px;
+			padding:0 20px;
 			margin:5px 0;
 			@include text-shadow(0 0 0 #fff);
 			}
@@ -203,6 +203,36 @@ body{
 			}		
 		}
 
+	}
+
+	#userCounter {
+		position:absolute;
+		right:80px;
+		top:100%;
+		background:#3b707f;
+		color:$lightblue;
+		padding:10px 23px;
+		font-family:Arial,sans-serif;
+		@include rem(12);
+		text-align:left;
+
+		span{
+			margin-right:10px;
+		}
+
+		b.circle{
+			display: inline-block;
+			margin-right:6px;
+			@include border-radius(100px);
+			width:10px; height:10px;
+			background:#BBB;
+		}
+		b.circle-green{
+			background:#8fdc89;
+		}
+		b.circle-blue{
+			background:#a3caea;
+		}
 	}
 
 }
@@ -314,7 +344,7 @@ body{
 
 
 .homepage{
-	h1:first-child{ position:absolute; top:0px;}
+	h1:first-child{ display:none;}
 }
 
 #formSearch{
@@ -2158,16 +2188,19 @@ TYPEAHEAD CUSTOM STYLE
   
 
 /* Tablets landscape and Small computer----------- */  
-@media only screen and (min-width : 768px) and (max-width : 1025px) {  
+@media only screen and (min-width : 768px) and (max-width : 1125px) {  
    
    .navbar{
    		padding:0 1%;
    		.weSport{
    			padding:0; padding-left:10px;
-   			margin-right:20px;
+   			margin-right:0px;
+
    		}
    		.nav li a {
    			padding:0 15px;
+   			@include rem(22);
+
    		}
    }
    #formSearch{

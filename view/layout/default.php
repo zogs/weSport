@@ -34,7 +34,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 
 	<div class="navbar navbar-fixed-top">
-	      		<a class="weSport" id="logoWeSport" href="<?php echo Router::url('home');?>">
+	      		<a class="weSport" id="logoWeSport" href="<?php echo Router::url('');?>">
 	      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
 		      	  	<i>we</i>Sport
 			</a>
@@ -111,7 +111,19 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 					<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
 					<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
 				<?php endif ?>
-			</ul>	
+			</ul>
+
+			<div id="userCounter">
+				<span><b class="circle circle-grey"></b><?php echo $this->request('users','getCountTotalUsers',array());?> inscrits</span>
+				<span><b class="circle circle-green"></b>5 en ligne</span>
+				<?php 
+				if($id = $this->cookieEventSearch->read('cityID')):?>
+					<br><span><b class="circle circle-blue"></b>
+					<?php echo $this->request('users','getCountTotalUsersByCity',array($id)); ?>
+					à
+					<?php echo $this->cookieEventSearch->read('cityName'); ?>
+				<?php endif; ?>													
+			</div>	
 	</div>
 
 	<div class="container-fluid mainContainer">	

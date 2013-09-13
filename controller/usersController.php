@@ -1148,6 +1148,18 @@ class UsersController extends Controller{
     }
 
 
+	public function getCountTotalUsers(){
+
+		$this->loadModel('Users');
+		return $this->Users->countTotalUsers();
+	}  
+
+	public function getCountTotalUsersByCity($city_id){
+
+		$this->loadModel('Users');
+		return $this->Users->CountTotalUsersByCity($city_id);
+	}  
+
     // public function index(){
 
     // 	if($this->session->user()->isLog()){

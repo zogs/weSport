@@ -296,10 +296,20 @@ class UsersModel extends Model{
 		$cacheName = 'totalUsers';
 		if($cache = $this->cacheData->read($cacheName)) return $cache;
 		$users = $this->findFirst(array('fields'=>"COUNT($this->primaryKey) as total"));
-		$return = $users->total;
-		$this->cacheData->write($cacheName,$return);
+		$total = $users->total;
+		$this->cacheData->write($cacheName,$total);
 
-		return $return;
+		return $total;
+	}
+
+	public function countTotalUsersByCity($city_id){
+
+		$cachename = 'nbUserByCIty/'.$city_id;
+		if($cache = $this->cacheData->read($cachename)) return $cache;
+		$users = $this->findFirst(array('fields'=>"COUNT($this->primaryKey) as total",'conditions'=>array('city'=>$city_id)));
+		$total = $users->total;
+		$this->cacheData->write($cachename,$total);
+		return $total;
 	}
 
 	public function findRegisteringFromDays($days = 0){

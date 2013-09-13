@@ -1,6 +1,6 @@
 <div class="homepage">
 	<h1>Faites du sport dans votre region !</h1>
-	
+
 	<div class="row-fluid">
 		<div class="flash"><?php echo $this->session->flash() ;?></div>
 		
@@ -163,6 +163,10 @@ var current_date = '<?php echo date("Y-m-d");?>';
 
 $(document).ready(function(){
 
+
+	//Appel la semaine courante
+	callThisWeek();
+
 	//Info bulle des activités
 	$('#calendar-content .events-link').livequery(function(){
 		$(this).popover({
@@ -234,9 +238,7 @@ $(document).ready(function(){
 	// });
 
 
-	//Nombre de jour à afficher en fonction de la largeur de l'écran
-	var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
-
+	
 
 	function slideCalendar(direction,width){
 
@@ -275,9 +277,11 @@ $(document).ready(function(){
 
 	function findNumberDayPerWeek(){
 
+		//Nombre de jour à afficher en fonction de la largeur de l'écran
+		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
 		var screenWidth = $(window).width();
 		var nb;
-		for(var maxwidth in dayPerWeek){			
+		for(var maxwidth in dayPerWeek){	
 			if(screenWidth<=maxwidth) return dayPerWeek[maxwidth];	
 		}
 		return 7;
