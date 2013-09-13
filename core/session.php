@@ -5,8 +5,7 @@ class Session {
 
 		$this->controller = $controller;
 
-		debug('shit');
-		debug($_SESSION);
+		session_destroy();
 
 		if(!isset($_SESSION)){
 			session_start();
@@ -23,9 +22,7 @@ class Session {
 				$this->write('user',$user);
 
 			}
-
-			debug($_SESSION);			
-
+			
 			//destroy session if user in not from User class
 			if(!$_SESSION['user'] instanceof User){
 
@@ -34,9 +31,7 @@ class Session {
 				}
 				$_SESSION = array();
 				session_destroy();
-			}
-
-			debug($_SESSION);			
+			}		
 			
 		}
 		
