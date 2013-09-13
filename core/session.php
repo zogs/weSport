@@ -6,6 +6,7 @@ class Session {
 		$this->controller = $controller;
 
 		debug('shit');
+		debug($_SESSION);
 
 		if(!isset($_SESSION)){
 			session_start();
