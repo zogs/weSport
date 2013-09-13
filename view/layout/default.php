@@ -115,7 +115,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 			<div id="userCounter">
 				<span><b class="circle circle-grey"></b><?php echo $this->request('users','getCountTotalUsers',array());?> inscrits</span>
-				<span><b class="circle circle-green"></b>5 en ligne</span>
+				<span><b class="circle circle-green"></b><?php echo $this->session->getOnlineUsers();?></span>
 				<?php 
 				if($id = $this->cookieEventSearch->read('cityID')):?>
 					<br><span><b class="circle circle-blue"></b>
