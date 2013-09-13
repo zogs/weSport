@@ -21,6 +21,7 @@ class Session {
 
 			}
 
+			debug($_SESSION);			
 
 			//destroy session if user in not from User class
 			if(!$_SESSION['user'] instanceof User){
@@ -30,7 +31,9 @@ class Session {
 				}
 				$_SESSION = array();
 				session_destroy();
-			}			
+			}
+
+			debug($_SESSION);			
 			
 		}
 		
