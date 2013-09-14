@@ -49,13 +49,16 @@ class PagesModel extends Model {
 		//On cherche si la page existe dans la langue souhaité
 		$page = $this->findPageBySlug($slug);
 		if($page->exist() && $page->lang == $lang){
+			debug('1');
 			return $page;
 		}
 		else {
+			debug('2');
 			//Sinon on cherche si le slug existe
 			$slug = $this->findFirst(array('table'=>$this->table_i18n,'fields'=>'page_id,lang','conditions'=>array('slug'=>$slug)));
 			//Si oui, on renvoi la page correspondante dans la langue du slug
 			if(!empty($slug)){
+				debug('3');
 				$page = $this->getPage($slug->page_id);
 				$page = $this->JOIN_i18n($page,$slug->lang);
 				return new Page($page);

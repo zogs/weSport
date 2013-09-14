@@ -129,7 +129,7 @@ class PagesController extends Controller {
 			if(!$this->request->get('lang'))
 				$page = $this->Pages->findPageBySlug($slug);
 			else {
-				debug('lol');
+				debug($this->request->get('lang'));
 				$page = $this->Pages->findPageBySlugAndLang($slug,$this->request->get('lang'));
 			}
 
