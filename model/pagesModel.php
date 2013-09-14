@@ -59,8 +59,10 @@ class PagesModel extends Model {
 			//Si oui, on renvoi la page correspondante dans la langue du slug
 			if(!empty($slug)){
 				debug('3');
+				debug($slug);
 				$page = $this->getPage($slug->page_id);
 				$page = $this->JOIN_i18n($page,$slug->lang);
+				debug($page);
 				return new Page($page);
 			}		
 		}
