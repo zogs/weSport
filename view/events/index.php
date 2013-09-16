@@ -1,15 +1,11 @@
 <table class="events-week" data-first-day="<?php echo $firstday;?>">
 	<tr>
-
 		<?php 
 			foreach ($events as $date => $evts):
 				$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1;
 		?>
 			<td style="width:2%" class="colomn-<?php echo $datediff;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $datediff;?>">
-
 				<div class="colomn-date" id="colomn-date-<?php echo $datediff;?>">
-					
-					<a href="">
 					<?php
 						if($date==date('Y-m-d')){
 							echo "<strong>Aujourd'hui</strong>";	
@@ -18,20 +14,13 @@
 						else{						
 							echo '<strong>'.Date::dayoftheweek(date('D',strtotime($date))).'</strong>';
 							echo '<br /><i>'.Date::day_month($date).'</i>';							
-						}
-					
+						}					
 					?>
-					</a>
 				</div>
 
-				<?php
-					
-
-
-				foreach ($evts as $event){
-				
-				?>
-				
+				<?php				
+				foreach ($evts as $event):				
+				?>				
 				<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
 					<a class="events-link" 
 						href="<?php echo $event->getUrl();?>"						
@@ -47,7 +36,6 @@
 							<?php if($event->confirmed==1):?><span class="label label-success label-confirmed tooltiptop" data-toggle="tooltip" title="L'activité est confirmé!">Confirmé</span><?php endif;?>
 							<?php if(isset($event->UserParticipation)): ?><span class="label label-important label-participe tooltiptop" data-toggle="tooltip" title="Je participe"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
 						</div>
-
 						<div class="events-content">							
 							<span class="events-title">
 								<div class="ws-sport-icon tooltiptop" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>						
@@ -60,7 +48,7 @@
 
 				<?php	
 								
-					}
+				endforeach;
 
 				?>
 

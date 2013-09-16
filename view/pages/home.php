@@ -174,7 +174,8 @@ $(document).ready(function(){
 			html:true,
 			trigger:'hover',
 			placement:'top',
-			container:'body',
+			container:'body',			
+			speed:10,
 			delay: { show: 800, hide: 100 }		
 		});
 	});

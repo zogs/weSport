@@ -654,10 +654,8 @@ body{
 		padding:15px 0;
 		text-align: center;
 		@include text-shadow(0 0 5px rgba(0,0,0,0.5));
+		color:white;
 
-		a {
-			color:white;
-		}
 		strong {
 			text-transform: uppercase;
 				@include rem(20);
