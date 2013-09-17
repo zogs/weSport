@@ -33,9 +33,9 @@ class Controller {
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
 		$this->facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 		$this->facebook->setAccessToken($this->session->user()->getFacebookToken());
-		debug($request);
+		
 		//redirect on facebook login if the user comes from the facebook appcenter
-		if($request->get('fb_appcenter')==1 && $request->get('code')) $this->redirect('users/facebook_connect?code='.$request->get('code'));		
+		if($_GET['fb_appcenter']==1 && $_GET['code']) $this->redirect('users/facebook_connect?code='.$_GET['code']);		
 		
 
 		
