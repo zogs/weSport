@@ -22,13 +22,6 @@ class Controller {
 		//Initialisation autoconnection
 		UsersController::auto_connect($this->session);
 
-		//on instancie un objet facebook pour nous permettre de faire de appel à l'API
-		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
-		$this->facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
-		$this->facebook->setAccessToken($this->session->user()->getFacebookToken());
-		//redirect on facebook login if the user comes from the facebook appcenter
-		if($this->request->get('fb_appcenter')==1 && $this->request->get('code')) $this->redirect('users/facebook_connect?code='.$this->request->get('code'));		
-		
 		//Si une request est passé on effectue des vérifications de sécurité
 		if($request){
 
@@ -36,6 +29,14 @@ class Controller {
 			$this->security($request); //On check le jeton de sécurité
 			require ROOT.DS.'config'.DS.'hook.php'; //Systeme de hook pour changer le layer en fonction du prefixe
 		}
+		
+		//on instancie un objet facebook pour nous permettre de faire de appel à l'API
+		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
+		$this->facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
+		$this->facebook->setAccessToken($this->session->user()->getFacebookToken());
+		//redirect on facebook login if the user comes from the facebook appcenter
+		if($this->request->get('fb_appcenter')==1 && $this->request->get('code')) $this->redirect('users/facebook_connect?code='.$this->request->get('code'));		
+		
 
 		
 	}
