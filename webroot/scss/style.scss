@@ -1817,7 +1817,7 @@ TYPEAHEAD CUSTOM STYLE
   		}
   	}
   	.calendar-period{
-  		display: none;
+  		visibility: hidden;
   	}
   }
 
@@ -2053,7 +2053,7 @@ TYPEAHEAD CUSTOM STYLE
 	}
 	.calendar {
 		.calendar-period{
-	  		display: none;
+	  		visibility: hidden;
 	  	}
 		.calendar-nav{
 			.colomn-nav {
@@ -2106,7 +2106,7 @@ TYPEAHEAD CUSTOM STYLE
 
 		}
 		.calendar-period{
-  			display: none;
+  			visibility: hidden;
   		}
 	}
 	
@@ -2283,7 +2283,7 @@ TYPEAHEAD CUSTOM STYLE
 			}
 		}
 		.calendar-period{
-	  		display: none;
+	  		visibility: hidden;
 	  	}
    }
 	.connexion{
