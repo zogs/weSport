@@ -239,7 +239,7 @@ class UsersController extends Controller{
 
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
-		$my_url     = Conf::getSiteUrl().'/users/facebook_connect';
+		$my_url     = Conf::getSiteUrl().'/users/facebook_connect/';
 
 		//data to store in db
 		$access_token = '';
@@ -372,7 +372,7 @@ class UsersController extends Controller{
 		//$_SESSION['fbstate'] = $state;
 
 		$loginUrl = $this->facebook->getLoginUrl(array(
-			'redirect_uri'=>Conf::getSiteUrl().'/users/facebook_connect',
+			'redirect_uri'=>Conf::getSiteUrl().'/users/facebook_connect/',
 			'scope'=>'email,user_birthday,publish_actions',
 			//'state'=>$state,
 			));
