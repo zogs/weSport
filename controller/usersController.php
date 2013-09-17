@@ -257,7 +257,7 @@ class UsersController extends Controller{
 		//the user have accepted the application
 		//we can get a valid access_token. 		  	
 		$token_url="https://graph.facebook.com/oauth/access_token?client_id="
-		  . $app_id . "&redirect_uri=" . $my_url
+		  . $app_id . "&redirect_uri=" . urlencode($my_url)
 		  . "&client_secret=" . $app_secret 
 		  . "&code=" . $code . "&display=popup";
 		$response = file_get_contents($token_url);
@@ -280,7 +280,7 @@ class UsersController extends Controller{
 		  		//if its an OAuth error, then try to get an new access token by reload this method
 		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
 		  				."client_id=".$app_id
-		  				."&redirect_uri=".$my_url;
+		  				."&redirect_uri=".urlencode($my_url);
 		  		$this->redirect($dialog_url);
 		  	}
 		  	else {
@@ -372,7 +372,7 @@ class UsersController extends Controller{
 		//$_SESSION['fbstate'] = $state;
 
 		$loginUrl = $this->facebook->getLoginUrl(array(
-			'redirect_uri'=>Conf::getSiteUrl().'/users/facebook_connect/',
+			'redirect_uri'=>urlencode(Conf::getSiteUrl().'/users/facebook_connect/'),
 			'scope'=>'email,user_birthday,publish_actions',
 			//'state'=>$state,
 			));
