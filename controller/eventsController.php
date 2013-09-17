@@ -10,7 +10,7 @@ class EventsController extends Controller{
 		$this->cacheWeather = new Cache(Conf::getCachePath().'/events_weather_forecast',2); //3 hours
 	}
 
-	public function calendar($action = 'now',$date = null){
+	public function calendar($period='week',$action = 'now',$date = null){
 
 		$this->view = 'events/index';
 		$this->layout = 'none';
@@ -23,18 +23,22 @@ class EventsController extends Controller{
 		//GET Parameter
 		$params =(array) $this->request->get();
 
+		//COOKIE parameter
+		$cookie = $this->cookieEventSearch->arr();
+
 		//check validity of the date
 		if(isset($date))
 			if(!Date::is_valid_date($date,'yyyy-mm-dd')) exit('date is not valid');
 		
 		//Number of day of the week
-		if(!isset($params['dayperweek']))
-			$numDaysPerWeek = 7;		
-		else
-			$numDaysPerWeek = $params['dayperweek'];
+		$numDaysPerWeek = 7;		
+		if(isset($params['nbdays']) && is_numeric($params['nbdays'])){
+			$numDaysPerWeek = $params['nbdays'];		
+			$cookie['nbdays'] = $params['nbdays'];
+		}
 		
-		//Get cookie parameter
-		$cookie = $this->cookieEventSearch->arr();
+		if(isset($params['maxdays']) && 0 != $params['maxdays'] && is_numeric($params['maxdays']))
+			$numDaysPerWeek = $params['maxdays'];
 
 		
 		if(!empty($action)){
@@ -68,13 +72,13 @@ class EventsController extends Controller{
 
 
 		//if city is entered
-		if(!empty($params['cityID'])){
+		if(!empty($params['cityID']) && is_numeric($params['cityID'])){
 			//set location for the model
 			$query['location'] = array('cityID'=>$params['cityID']);
 		}
 
 		//if extend to city arroud
-		if(!empty($params['extend']) && $params['extend'] != ' '){			
+		if(!empty($params['extend']) && $params['extend'] != ' ' && is_numeric($params['cityID'])){			
 			$extend = $params['extend'];
 			if(!empty($params['cityID'])){
 
@@ -110,8 +114,6 @@ class EventsController extends Controller{
 		//Rewrite cookie to remember the search				
 		$this->cookieEventSearch->write($cookie);
 
-
-
 		//initialize variable for days loop
 		//first day of the week
 		$firstday = $day;
@@ -136,10 +138,20 @@ class EventsController extends Controller{
 
 		}
 
-		$d['events'] = $events;
+		if($numDaysPerWeek<=7){
+			$numWeeks = 1;
+			$weeks = array($events);
+		}
+		else {
+			$weeks = array_chunk($events, 7,true);	
+			$numWeeks = count($weeks);		
+		}
+
+
+		$d['weeks'] = $weeks;
 		$d['firstday'] = $firstday;
+		$d['numWeeks'] = $numWeeks;
 		$d['numDaysPerWeek'] = $numDaysPerWeek;
-		
 		
 		$this->set($d);
 		$this->render();

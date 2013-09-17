@@ -509,6 +509,33 @@ body{
 		}
 	}
 
+	.calendar-period{
+		float:left;
+		margin-left:5%;
+		padding:2px 0 0 0;
+		.periodChoice{
+			display:inline-block;
+			margin:0 5px;
+			position:relative;
+			input[type=radio]{
+				position: absolute;
+				top:0;
+				left:0;
+				visibility: hidden;
+			}
+			label { 
+				padding:0 15px;
+				background-color:#45585d;
+				@include border-radius(10px);
+				@include rem(10);
+				color:#838382;
+			}
+			label:hover,input.periodRadio:checked ~ label{
+				background-color: $deepblue;
+				color:white;
+			}
+		}		
+	}
 }
 
 //intro tourbus
@@ -529,15 +556,15 @@ body{
 	position:relative;
 	@extend %clearfix;
 	.calendar-header {
+		overflow: hidden;
 		background-color:$darkblue;
 		width:100%;
-		height:25px;
 		position:relative;
 		
 		.calendar-loader{
-			width:100%;
+			float:left;
 			text-align: center;
-			
+			padding-top:3px;
 			span.text{
 				display: none;
 				color:#FFF;
@@ -590,7 +617,7 @@ body{
 			overflow:hidden;
 			@extend %clearfix;
 
-			 .events-week { 
+			 .events-weeks { 
 			 	position: absolute; 
 			 	top:0; 
 			 	left:0; 
@@ -626,21 +653,22 @@ body{
 
 			 	}
 
-			 	.addEvent{
-			 		display: block;
-			 		width:70%;
-			 		margin:10px 15%;
-			 		padding:20px;
-			 		text-align: center;
-			 		@include rem(70);
-			 		span.ws-icon{
-			 			color:inherit;			
-			 		}
-			 	}			 
+			 				 
 			 }
 		}
 	}
 
+	.addEvent{
+ 		display: block;
+ 		width:70%;
+ 		margin:10px 15% 30px;
+ 		padding:20px;
+ 		text-align: center;
+ 		@include rem(70);
+ 		span.ws-icon{
+ 			color:inherit;			
+ 		}
+ 	}
 
 	.calendar-footer {
 		background:$darkblue;
@@ -671,11 +699,11 @@ body{
 		$perCent:3%;		
 		table-layout: fixed;
 		width:100%;
-		min-height:1000px;
+		/*min-height:1000px;*/
 
-		tr {height:100%; min-height:1000px;}
+		tr.events-week {/*height:100%; min-height:1000px;*/}
 
-		td { vertical-align: top; height:1000px; min-height:1000px; }
+		td { vertical-align: top; /*height:1000px; min-height:1000px;*/ }
 		td.colomn-1 { background-color: $red; @include box-shadow(inset 0 0 0 30px darken($red,$perCent));}
 		td.colomn-2 { background-color: $softred; @include box-shadow(inset 0 0 0 30px darken($softred,$perCent));}
 		td.colomn-3 { background-color: $lightred; @include box-shadow(inset 0 0 0 30px darken($lightred,$perCent));}
@@ -715,62 +743,92 @@ body{
 			a img {margin-right:-5px;}
 		}
 
+	}
+	.events {
+		width:96%;
+		margin:5px auto;
+		padding:10px;
+		min-height:100px;
+		background-color:#FFF;
+		border:1px solid rgba(0,0,0,0.1);
+		border-bottom:4px solid rgba(0,0,0,0.2);
+		@include border-radius(20px);
 
-		.events {
-			width:96%;
-			margin:5px auto;
-			padding:10px;
-			min-height:100px;
-			background-color:#FFF;
-			border:1px solid rgba(0,0,0,0.1);
-			border-bottom:4px solid rgba(0,0,0,0.2);
-			@include border-radius(20px);
+		.events-link{
+			display:block;
+		}
 
-			.events-link{
-				display:block;
-			}
-
-			.events-link:hover{
-				.events-content{
-					.events-title{
-						color:$darkblue;
-					}
-				}
-			}
-
-			.events-time {
-				font-weight:bold;
-				@include rem(18);
-				color:#d0d0d0;				
-
-				.label-confirmed { @include rem(10);}
-				.label-participe { @include border-radius(20px);}
-			}
-
+		.events-link:hover{
 			.events-content{
 				.events-title{
-					position:relative;
-					float:left;
-					color:$deepblue;
-					@include rem(14);
-					font-weight: bold;
-					margin:2px 0 0 0;										
-				}
-				.ws-sport-icon { 
-					float:left;
-					margin-right:5px;
-					span {
-						@include rem(35); color:#000; 
-					}
+					color:$darkblue;
 				}
 			}
 		}
 
-		.events-confirmed {
-			border-bottom-width: 6px;
-			border-color:$darkgreen;
+		.events-time {
+			font-weight:bold;
+			@include rem(18);
+			color:#d0d0d0;				
+
+			.label-confirmed { @include rem(10);}
+			.label-participe { @include border-radius(20px);}
 		}
 
+		.events-content{
+			.events-title{
+				position:relative;
+				float:left;
+				color:$deepblue;
+				@include rem(14);
+				font-weight: bold;
+				margin:2px 0 0 0;										
+			}
+			.ws-sport-icon { 
+				float:left;
+				margin-right:5px;
+				span {
+					@include rem(35); color:#000; 
+				}
+			}
+		}
+	}
+
+	.events-confirmed {
+		border-bottom-width: 6px;
+		border-color:$darkgreen;
+	}
+
+}
+
+.minified-events{
+	.colomn-date {
+		padding:5px 0 10px 0;
+		strong{
+			@include rem(14);
+		}
+		i{
+			@include rem(12);
+		}
+	}
+	.addEvent{
+		@include rem(40);
+		padding:0;
+	}
+	.events-week{
+		border-bottom:10px solid rgba(0,0,0,0.04);
+		&:last-child{ border:0;}
+	}
+	.events-day {
+		text-align:center;
+	}
+	.events{
+		width:auto;
+		min-height:10px;
+		display:inline-block;
+		.events-title { display:none;}
+		.events-time { display:none;}
+		.events-content .ws-sport-icon { margin:0;}
 	}
 }
 
@@ -1758,6 +1816,9 @@ TYPEAHEAD CUSTOM STYLE
   			@include rem(14);
   		}
   	}
+  	.calendar-period{
+  		display: none;
+  	}
   }
 
 	.connexion{
@@ -1991,6 +2052,9 @@ TYPEAHEAD CUSTOM STYLE
 		}
 	}
 	.calendar {
+		.calendar-period{
+	  		display: none;
+	  	}
 		.calendar-nav{
 			.colomn-nav {
 				width:10%;
@@ -2041,6 +2105,9 @@ TYPEAHEAD CUSTOM STYLE
 			}
 
 		}
+		.calendar-period{
+  			display: none;
+  		}
 	}
 	
 	.connexion{
@@ -2215,6 +2282,9 @@ TYPEAHEAD CUSTOM STYLE
 				label span { @include rem(30);}
 			}
 		}
+		.calendar-period{
+	  		display: none;
+	  	}
    }
 	.connexion{
 		.container{

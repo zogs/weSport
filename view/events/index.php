@@ -1,10 +1,13 @@
-<table class="events-week" data-first-day="<?php echo $firstday;?>">
-	<tr>
+<table class="events-weeks <?php if($numWeeks>=3) echo 'minified-events';?>" data-first-day="<?php echo $firstday;?>">
+	<?php
+		foreach ($weeks as $week):
+	?>
+	<tr class="events-week">
 		<?php 
-			foreach ($events as $date => $evts):
+			foreach ($week as $date => $evts):
 				$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1;
 		?>
-			<td style="width:2%" class="colomn-<?php echo $datediff;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $datediff;?>">
+			<td style="width:2%" class="events-day colomn-<?php echo $datediff;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $datediff;?>">
 				<div class="colomn-date" id="colomn-date-<?php echo $datediff;?>">
 					<?php
 						if($date==date('Y-m-d')){
@@ -37,10 +40,8 @@
 							<?php if(isset($event->UserParticipation)): ?><span class="label label-important label-participe tooltiptop" data-toggle="tooltip" title="Je participe"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
 						</div>
 						<div class="events-content">							
-							<span class="events-title">
-								<div class="ws-sport-icon tooltiptop" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>						
-									<?php echo ucfirst($event->title); ?>								
-							</span>																												
+							<div class="ws-sport-icon tooltipbottom" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>						
+							<span class="events-title"><?php echo ucfirst($event->title); ?></span>																												
 						</div>
 					</a>
 					<div class="clearfix"></div>
@@ -59,5 +60,8 @@
 			endforeach;
 		?>
 	</tr>
+	<?php
+	endforeach;
+	?>
 </table>
 

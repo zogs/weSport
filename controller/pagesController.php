@@ -47,7 +47,8 @@ class PagesController extends Controller {
 			}
 			else {
 				$params['date'] = $day;
-				$cookie = $this->cookieEventSearch->arr();			
+				$cookie = $this->cookieEventSearch->arr();
+				debug($cookie);			
 				$cookie['date'] = $day;						
 				$this->cookieEventSearch->write($cookie);				
 			}
@@ -58,7 +59,8 @@ class PagesController extends Controller {
 			$params['cityName'] = $this->cookieEventSearch->read('cityName');
 			$params['extend'] = $this->cookieEventSearch->read('extend');
 			$params['location'] = $this->cookieEventSearch->read('location');
-
+			$params['nbdays'] = $this->cookieEventSearch->read('nbdays');
+		
 			//Ou on utilise les données de la requete
 			if($this->request->get()){
 				
@@ -84,7 +86,9 @@ class PagesController extends Controller {
 				//if extend is not defined set it to zero
 				if(!$this->request->get('extend')) $params['extend'] = '';
 
-
+				if($this->request->get('nbdays') && is_numeric($this->request->get('nbdays'))){
+					$params['nbdays'] = $this->request->get('nbdays');
+				}
 			}
 
 			//On recupere le nom des regions
@@ -93,7 +97,7 @@ class PagesController extends Controller {
 			$params['location'] = (array) $params['location'];
 			
 			//on réécrit le cookie avec les nouveaux parametres
-			$this->cookieEventSearch->write($params);		
+			$this->cookieEventSearch->write($params);	
 			
 			$d['params'] = $params;			
 			$d['sports_available'] = $this->Events->findSports($this->getLang());			
