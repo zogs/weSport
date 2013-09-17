@@ -279,8 +279,8 @@ class UsersController extends Controller{
 		  	if ($decoded_response->error->type== "OAuthException") {
 		  		//if its an OAuth error, then try to get an new access token by reload this method
 		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
-		  				."client_id=".$app_id
-		  				."&redirect_uri=".$my_url;
+		  				."redirect_uri=".$my_url;
+		  				."&client_id=".$app_id
 		  		$this->redirect($dialog_url);
 		  	}
 		  	else {
