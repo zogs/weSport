@@ -289,7 +289,7 @@ $(document).ready(function(){
 	function setHeightCalendar(){
 
 		var heightCalendar = $("#calendar-content .events-weeks").height();
-		$("#calendar-content").css('height',heightCalendar).css('min-height','1000px');
+		$("#calendar-content").css('height',heightCalendar);
 	}
 
 	function findNumberDayPerWeek(){
