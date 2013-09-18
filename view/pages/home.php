@@ -70,7 +70,7 @@
 				<div class="calendar-period">
 					<div class="periodChoice">
 						<input type="radio" class="periodRadio" id="period1" name="nbdays" value="7" <?php if($params['nbdays']<=7) echo 'checked="checked"';?>>
-						<label for="period1">1 semaines</label>
+						<label for="period1">1 semaine</label>
 					</div>
 					<div class="periodChoice">
 						<input type="radio" class="periodRadio" id="period2" name="nbdays" value="14" <?php if($params['nbdays']>7) echo 'checked="checked"';?>>	
