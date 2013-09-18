@@ -240,10 +240,9 @@ class UsersController extends Controller{
 		$access_token = '';
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
-		if(isset($_GET['fb_connect']))
-			$my_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
+		$redirect_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
 		if(isset($_GET['fb_appcenter']))
-			$my_url =urlencode(Conf::getSiteUrl().'/?fb_source=appcenter&fb_appcenter=1');
+			$redirect_url =urlencode(Conf::getSiteUrl().'/?fb_source=appcenter&fb_appcenter=1');
 
 
 
@@ -260,7 +259,7 @@ class UsersController extends Controller{
 		//the user have accepted the application
 		//we can get a valid access_token. 		  	
 		$token_url="https://graph.facebook.com/oauth/access_token?client_id="
-		  . $app_id . "&redirect_uri=" .$my_url
+		  . $app_id . "&redirect_uri=" .$redirect_url
 		  . "&client_secret=" . $app_secret 
 		  . "&code=" . $code . "&display=popup";
 		$response = file_get_contents($token_url);
@@ -282,7 +281,7 @@ class UsersController extends Controller{
 		  	if ($decoded_response->error->type== "OAuthException") {
 		  		//if its an OAuth error, then try to get an new access token by reload this method
 		  		$dialog_url = "https://www.facebook.com/dialog/oauth?"
-		  				."redirect_uri=".$my_url
+		  				."redirect_uri=".$redirect_url
 		  				."&client_id=".$app_id;
 		  		$this->redirect($dialog_url);
 		  	}
