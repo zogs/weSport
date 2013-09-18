@@ -241,7 +241,7 @@ class UsersController extends Controller{
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
 		$redirect_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
-		if(isset($_GET['fb_appcenter']))
+		if(isset($_GET['source']) && $_GET['source']=='appcenter')
 			$redirect_url =urlencode(Conf::getSiteUrl().'/?fb_source=appcenter&fb_appcenter=1');
 
 
