@@ -778,7 +778,7 @@ body{
 		.events-content{
 			.events-title{
 				position:relative;
-				float:left;
+				display:inline;
 				color:$deepblue;
 				@include rem(14);
 				font-weight: bold;

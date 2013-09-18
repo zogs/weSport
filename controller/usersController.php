@@ -237,12 +237,15 @@ class UsersController extends Controller{
 		$this->view = "users/login";
 		$this->loadModel('Users');
 
+		$access_token = '';
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
-		$my_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
+		if(isset($_GET['fb_connect']))
+			$my_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
+		if(isset($_GET['fb_appcenter']))
+			$my_url =urlencode(Conf::getSiteUrl().'/?fb_source=appcenter&fb_appcenter=1');
 
-		//data to store in db
-		$access_token = '';
+
 
 		//Si l'API ne revoit pas de code de connexion
 		if(empty($_REQUEST['code'])){
