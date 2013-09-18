@@ -239,7 +239,7 @@ class UsersController extends Controller{
 
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
-		$my_url     = urlencode(Conf::getSiteUrl().'/');
+		$my_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
 
 		//data to store in db
 		$access_token = '';
