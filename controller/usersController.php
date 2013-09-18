@@ -240,13 +240,15 @@ class UsersController extends Controller{
 		$access_token = '';
 		$app_id     = Conf::$facebook['appId'];
 		$app_secret = Conf::$facebook['secret'];
+		//redirect uri
 		$redirect_url     = urlencode(Conf::getSiteUrl().'/?fb_connect=1');
-		if(isset($_GET['source']) && $_GET['source']=='appcenter')
+		// /!\ if called directly from appcenter, change the redirect_uri  /!\ to be compliant with facebook logic that requires same redirect_uri from each call
+		if(isset($_GET['source']) && $_GET['source']=='appcenter') 
 			$redirect_url =urlencode(Conf::getSiteUrl().'/?fb_source=appcenter&fb_appcenter=1');
 
 
 
-		//Si l'API ne revoit pas de code de connexion
+		//debug error si l'API ne revoit pas de code de connexion 
 		if(empty($_REQUEST['code'])){
 			$this->session->setFlash("Erreur avec facebook","error");
 			$this->session->setFlash('[DEBUG] QUERY STRING was : '.$_SERVER['QUERY_STRING'],'warning');
@@ -255,6 +257,7 @@ class UsersController extends Controller{
 
 		//else the code is set
 		$code = $_REQUEST['code'];
+
 
 		//the user have accepted the application
 		//we can get a valid access_token. 		  	

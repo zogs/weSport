@@ -34,7 +34,7 @@ class Controller {
 		$this->facebook = new Facebook(array('appId'=>Conf::$facebook['appId'],'secret'=>Conf::$facebook['secret'],'cookie'=>true));
 		$this->facebook->setAccessToken($this->session->user()->getFacebookToken());
 		
-		//redirect on facebook login if the user comes from the facebook appcenter
+		//redirect on facebook connect method if its a facebook log in request
 		if(isset($_GET['fb_source']) || isset($_GET['fb_connect']) && isset($_GET['code'])) $this->redirect('users/facebook_connect?code='.$_GET['code'].'&source='.$_GET['fb_source']);		
 		
 
