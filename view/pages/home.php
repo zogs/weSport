@@ -137,7 +137,7 @@
   </li>
 
   <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
-    <p><strong>Tapes ici la ville de ton choix et/ou choisis dans la liste déroulante</strong></p>
+    <p><strong>Tape ici la ville de ton choix et/ou choisis dans la liste déroulante</strong></p>
     <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km ! )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
   </li>
