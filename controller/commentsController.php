@@ -354,7 +354,7 @@
 				if(!preg_match($pattern,$url) || strpos($url,'.')===0 || strpos($url,'.')=='') exit('not url');
 
 				//parse url and get domain & extension
-				$purl = $this->request->parse_url($url);
+				$purl = String::parse_url($url);
 				$domain = $purl['domain'];
 				$extension = $purl['extension'];
 

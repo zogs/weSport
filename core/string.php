@@ -47,4 +47,43 @@ class String {
 		return preg_replace("/\<br\s*\/?\>/i", "\n", $foo);
 	}
 
+	static function parse_url($_url = null){
+    
+	    try{
+
+			$parsed = parse_url($_url);
+			
+			$arr = array();
+			$arr['www']='';
+			$arr['protocol']='';
+			$arr['domain']='';
+			$arr['subdomain']='';
+			$arr['extension']='';
+			$arr['path']='';
+			$arr['query']='';
+			$arr['all']='';
+
+			if(strpos($parsed['host'],'www.')===0){				
+				$arr['www'] = 'www.';
+				$parsed['host'] = str_replace('www.','',$parsed['host']);
+			}			
+			$host = explode('.',$parsed['host']);
+			$ln = count($host);
+			$arr['extension'] = $host[$ln-1];
+			$arr['domain'] = $host[$ln-2];
+			$arr['subdomain'] = ($ln>2)? $host[$ln-3] : '';
+			
+			if(!empty($parsed['path'])) $arr['path'] = $parsed['path'];
+			if(!empty($parsed['query'])) $arr['query'] = $parsed['query'];
+			if(!empty($parsed['scheme'])) $arr['protocol'] = $parsed['scheme'].'://';
+			
+			$arr['all'] = $_url;
+
+			return $arr;
+			}
+	    catch(Exception $e){
+	    	return false;
+	    }
+	}
+
 } ?>

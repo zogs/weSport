@@ -218,6 +218,13 @@
 							<?php endforeach;?>							
 						</div>
 					</div>
+
+					<div class="block block-green event-map">
+						<h3>Carte géographique</h3>
+						<div class="block-content">
+							<?php echo $gmap->getGoogleMap(); ?>
+						</div>
+					</div>
 					
 					<div class="block">
 						<script type="text/javascript"><!--
@@ -232,16 +239,9 @@
 							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 						</script>
 					</div>
-
-					<div class="block block-green event-map">
-						<h3>Carte géographique</h3>
-						<div class="block-content">
-							<?php echo $gmap->getGoogleMap(); ?>
-						</div>
-					</div>
 				
 					<?php if($this->displayEventWeather($event)): ?>
-					<div class="block block-yellow event-weather" id="event-weather" data-url="<?php echo Router::url('events/getEventWeather/'.$event->getID().'/'.$this->session->token());?>">
+					<div class="block block-yellow event-weather" id="event-weather" data-url="<?php echo Router::url('/events/getEventWeather/'.$event->getID().'/'.$this->session->token());?>">
 						<h3>Prévision météo</h3>
 						<div class="block-content">
 							<div id="weather-content"><small>En attende des données météo...</small></div>							

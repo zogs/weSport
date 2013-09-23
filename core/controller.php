@@ -19,6 +19,10 @@ class Controller {
 		//Si la request nest pas une requete cron on instancie le cookie recherche
 		if(get_class($request)!='Cron') $this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
 
+
+		//Gestion des sous domains		
+		$this->ifSubdomainExist();		
+
 		//Initialisation autoconnection
 		UsersController::auto_connect($this->session);
 
@@ -253,6 +257,18 @@ class Controller {
 		
 		exit();
 
+	}
+
+	
+	//Tcheck if subdomain exist and launch the handleSubdomain function if exist
+	private function ifSubdomainExist(){
+		if($url = Conf::getParsedUrl()){
+			if(!empty($url['subdomain'])){
+				if(method_exists($this,'handleSubdomain')){
+					$this->handleSubdomain($url['subdomain']);
+				}
+			}
+		}
 	}
 
 	public function getCountryCode(){

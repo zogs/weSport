@@ -144,10 +144,10 @@ class Router{
 
 		//Security token
 		$url = Router::addToken($url);	
-
+		//return $url;
 		//Correction 
-		$url = str_replace('//','/',BASE_URL.'/'.$url);
-
+		$url = str_replace('//','/','/'.$url);
+		//debug($url);
 		return $url;
 	}
 
@@ -174,7 +174,9 @@ class Router{
 	static function webroot($url){
 		$url = trim($url,'/');
 		$url = Router::addToken($url);//add security token
-		$url = BASE_URL.'/'.$url;
+
+		//$url = BASE_URL.'/'.$url;
+		$url = '/'.$url;
 		$url = str_replace('//','/',$url);
 		return $url;
 

@@ -23,7 +23,7 @@
                 if(strpos($name,$this->cName) !== false ){ // make sure it is a cookie set by this application
                     $subname = substr($name,strlen($this->cName) + 1);
                     $cookArr[$subname] = $val;
-                    $this->KillCookie($name);
+                    $this->kill($name);
                 }
             }
             $this->write($cookArr);
@@ -31,7 +31,7 @@
         // This is the opposite from above. changes a serialized cookie to multiple cookies without loss of data
         if(!$this->cSerialize && isset($_COOKIE[$iname])){
             $cookArr = unserialize($_COOKIE[$iname]);
-            $this->KillCookie($iname);
+            $this->kill($iname);
             $this->write($cookArr);
         }
     }
@@ -40,12 +40,12 @@
 
 
     public function killAll(){
-    foreach($_COOKIE as $name=>$val){
-    if(strpos($name,$this->cName) !== false){
-    $_COOKIE[$name] = NULL;
-    $this->KillCookie($name);
-    }
-    }
+        foreach($_COOKIE as $name=>$val){
+            if(strpos($name,$this->cName) !== false){
+                $_COOKIE[$name] = NULL;
+                $this->kill($name);
+            }
+        }
     }
     public function read($item)
     {

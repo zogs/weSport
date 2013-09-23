@@ -142,6 +142,16 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				<?php endforeach;?>
 				 			
 			</ul>
+
+			<ul class='footer-cities'>
+				<?php
+				foreach (Conf::$villes as $sub => $ville): 
+				?>	
+					<li><a href="http://<?php echo $sub;?>.we-sport.fr"><?php echo $ville['name'];?></a></li>
+				<?php
+				endforeach;
+				?>
+			</ul>
 			<div class="copyright">2013 © weSport</div>
 		</div>
 	</div>

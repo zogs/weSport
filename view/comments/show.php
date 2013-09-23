@@ -90,7 +90,7 @@
                     </div>
                 <?php endif; ?>
 
-                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>" data-comments-config='<?php echo addslashes(json_encode($this->config));?>'>
+                    <div id="comments" data-start="0" data-comments-url="<?php echo Router::url('/comments/index/'.$context.'/'.$context_id); ?>" data-url-count-com="<?php echo Router::url('comments/tcheck/'.$context.'/'.$context_id.'/'); ?>" data-comments-config='<?php echo addslashes(json_encode($this->config));?>'>
                         <?php 
                         // load in ajax 
                         ?>                    

@@ -9,6 +9,22 @@ class PagesController extends Controller {
 			if(isset($request)) $this->pagename = $request->action;
 		}
 
+		public function handleSubdomain($sub){
+
+			//si le cookie CITY exist déjà stop
+			if($this->cookieEventSearch->read('cityID')!=''){
+				return;
+			}
+			//if the subdomain is a predefined city
+			if(array_key_exists($sub,Conf::$villes)){
+				$cookie = $this->cookieEventSearch->arr();
+				$cookie['cityName'] = Conf::$villes[$sub]['name'];
+				$cookie['cityID'] = Conf::$villes[$sub]['id'];
+
+				$this->cookieEventSearch->write($cookie);
+			}
+		}
+
 		public function home( $day = null ){					
 
 			$this->view = 'pages/home';
@@ -38,19 +54,21 @@ class PagesController extends Controller {
 					$d['display_demo'] = 0;
 			}
 		
-			//date
+			//Valeur par default de la recherche
+			$params['sports'] = '';
+			$params['cityID'] = '';
+			$params['cityName'] = '';
+			$params['extend'] = '';
+			$params['location'] = '';
+			$params['nbdays'] = 7;
+			$params = array_merge($params,$this->cookieEventSearch->arr());			
+
+			//Date de début à afficher
 			if($day === null ){
-
-					$params = $this->cookieEventSearch->arr();
 					$params['date'] = date('Y-m-d');				
-
 			}
 			else {
-				$params['date'] = $day;
-				$cookie = $this->cookieEventSearch->arr();
-				debug($cookie);			
-				$cookie['date'] = $day;						
-				$this->cookieEventSearch->write($cookie);				
+				$params['date'] = $day;										
 			}
 
 			//On utilise par default les données du cookie
@@ -60,7 +78,8 @@ class PagesController extends Controller {
 			$params['extend'] = $this->cookieEventSearch->read('extend');
 			$params['location'] = $this->cookieEventSearch->read('location');
 			$params['nbdays'] = $this->cookieEventSearch->read('nbdays');
-		
+			
+			
 			//Ou on utilise les données de la requete
 			if($this->request->get()){
 				
@@ -97,8 +116,7 @@ class PagesController extends Controller {
 			$params['location'] = (array) $params['location'];
 			
 			//on réécrit le cookie avec les nouveaux parametres
-			$this->cookieEventSearch->write($params);	
-			
+			$this->cookieEventSearch->write($params);					
 			$d['params'] = $params;			
 			$d['sports_available'] = $this->Events->findSports($this->getLang());			
 			$d['sports_available_txt'] = '';

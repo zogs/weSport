@@ -15,11 +15,12 @@ class Conf {
 	static $website = 'weSport';
 	static $websiteURL = 'wesport.zogs.org';
 	static $websiteURLs = array(
-		'localhost'=>'http://localhost/wesport',
-		'wesport.zogs.org'=>'http://wesport.zogs.org',
-		'we-sport.fr' => 'http://we-sport.fr',
+		'localwesport'=>'http://localhost/wesport',
+		'zogs'=>'http://wesport.zogs.org',
+		'we-sport' => 'http://we-sport.fr',
 		'default' => 'http://we-sport.fr'
 		);
+	static $parsed_url;
 	static $websiteDOT = 'we-sport.fr';
 	static $contactEmail = 'contact@we-sport.fr';
 	static $lang = 'fr';
@@ -36,17 +37,23 @@ class Conf {
 			'login'    => 'root',
 			'password' => ''
 			),
-		'wesport.zogs.org' =>array(
+		'zogs' =>array(
 			'host'     => 'localhost',
 			'database' => 'wesport',
 			'login'    => 'root',
 			'password' => 'XSgvEPbG'
 			),
-		'we-sport.fr' => array(
+		'we-sport' => array(
 			'host'    => 'localhost',
 			'database'=> 'wesport',
 			'login'   => 'root',
 			'password'=> 'XSgvEPbG'
+			),
+		'localwesport' => array(
+			'host'    => 'localhost',
+			'database'=> 'wesport',
+			'login'   => 'root',
+			'password'=> ''
 			),
 		'default' => array(
 			'host'    => 'localhost',
@@ -64,8 +71,8 @@ class Conf {
 	//Cache
 	static $cachePath = array(
 		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
-		'wesport.zogs.org' => '../webroot/cache',
-		'we-sport.fr' => '../webroot/cache',
+		'zogs' => '../webroot/cache',
+		'we-sport' => '../webroot/cache',
 		'default' => '../webroot/cache'
 		);
 
@@ -109,7 +116,6 @@ class Conf {
 		);
 
 
-
 		/**
 		 * getTransportSwiftMailer
 		 * return instance of Swift_SmtpTransport
@@ -140,8 +146,22 @@ class Conf {
 
 	    public static function getHost(){
 
-	    	if(isset($_SERVER['HTTP_HOST'])) return $_SERVER['HTTP_HOST'];	    	
-	    	return self::$websiteURL;
+	  		$url = self::getParsedUrl();
+
+	    	if(isset($url['domain'])) return $url['domain'];	    	
+	    	return 'default';
+	    }
+
+	    public static function getParsedUrl(){
+	    	if(isset(self::$parsed_url)) return self::$parsed_url;
+	    	$url = Conf::getProtocol().'://'.$_SERVER['HTTP_HOST'];
+	    	self::$parsed_url = String::parse_url($url);
+	    	return self::$parsed_url;
+	    }
+
+	    public static function getProtocol(){
+	    	if(strpos($_SERVER['SERVER_PROTOCOL'],'HTTP/')===0) return 'http';
+	    	if(strpos($_SERVER['SERVER_PROTOCOL'],'HTTPS/')===0) return 'https'; //to test
 	    }
 
 	    public static function getDatabase($field = null){
@@ -166,6 +186,109 @@ class Conf {
 	    	if(isset(self::$cachePath[$host])) return self::$cachePath[$host];
 	    	return self::$cachePath['default'];
 	    }
+
+	    
+	static $villes = array(		
+		'paris'=>array(
+			'name'=>'Paris',
+			'id'=>'-2085971'),
+		'lyon'=>array(
+			'name'=>'Lyon',
+			'id'=>'-2074875'
+			),
+		'marseille'=>array(
+			'name'=>'Marseille',
+			'id'=>'-2076832'
+			),
+		'toulouse'=>array(
+			'name'=>'Toulouse',
+			'id'=>'-2108604'
+			),
+		'lille'=>array(
+			'name'=>'Lille',
+			'id'=>'-2073017'
+			),
+		'bordeaux'=>array(
+			'name'=>'Bordeaux',
+			'id'=>'-2028797'
+			),
+		'nice'=>array(
+			'name'=>'Nice',
+			'id'=>'-2083425'
+			),
+		'nantes'=>array(
+			'name'=>'Nantes',
+			'id'=>'-2082685'
+			),
+		'strasbourg'=>array(
+			'name'=>'Strasbourg',
+			'id'=>'-2106720'
+			),
+		'rennes'=>array(
+			'name'=>'Rennes',
+			'id'=>'-2091750'
+			),
+		'grenoble'=>array(
+			'name'=>'Grenoble',
+			'id'=>'-2050459'
+			),
+		'rouen'=>array(
+			'name'=>'Rouen',
+			'id'=>'-2093460'
+			),	
+		'toulon'=>array(
+			'name'=>'Toulon',
+			'id'=>'-2108587'
+			),
+		'montpellier'=>array(
+			'name'=>'Montpellier',
+			'id'=>'-2081122'
+			),
+		'lens'=>array(
+			'name'=>'Lens',
+			'id'=>'-2066898'
+			),
+		'avignon'=>array(
+			'name'=>'Avignon',
+			'id'=>'-2023517'
+			),	
+		'saint-etienne'=>array(
+			'name'=>'Saint-Etienne',
+			'id'=>'-2096986'
+			),	
+		'tours'=>array(
+			'name'=>'Tours',
+			'id'=>'-2108776'
+			),
+		'clermont-ferrand'=>array(
+			'name'=>'Clermont-ferrand',
+			'id'=>'-2037731'
+			),
+		'nancy'=>array(
+			'name'=>'Nancy',
+			'id'=>'-2082645'
+			),
+		'orleans'=>array(
+			'name'=>'Orléans',
+			'id'=>'-2084904'
+			),
+		'caen'=>array(
+			'name'=>'Caen',
+			'id'=>'-2031765'
+			),
+		'angers'=>array(
+			'name'=>'Angers',
+			'id'=>'-2020931'
+			),
+		'metz'=>array(
+			'name'=>'Metz',
+			'id'=>'-2078532'
+			),
+		'dijon'=>array(
+			'name'=>'Dijon',
+			'id'=>'-2041884'
+			),	
+		);
 
 }
 
