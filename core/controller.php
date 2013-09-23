@@ -239,9 +239,11 @@ class Controller {
 				header("HTTP/1.1 301 Moved Permanently");
 			}
 
-			if(strpos($url,'http')===0)
+			if(strpos($url,'http')===0){
 				header("Location: ".$url);
-			
+				exit();
+			}
+
 			header("Location: ".Router::url($url));
 		}
 		exit();		
