@@ -826,9 +826,11 @@ body{
 		width:auto;
 		min-height:10px;
 		display:inline-block;
-		.events-title { display:none;}
 		.events-time { display:none;}
-		.events-content .ws-sport-icon { margin:0;}
+		.events-content {
+			.events-title { display:none;}
+			.ws-sport-icon { margin:0;}
+		}
 	}
 }
 
