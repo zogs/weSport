@@ -238,6 +238,10 @@ class Controller {
 			if($code == 301) {
 				header("HTTP/1.1 301 Moved Permanently");
 			}
+
+			if(strpos($url,'http')===0)
+				header("Location: ".$url);
+			
 			header("Location: ".Router::url($url));
 		}
 		exit();		
@@ -259,7 +263,7 @@ class Controller {
 
 	}
 
-	
+
 	//Tcheck if subdomain exist and launch the handleSubdomain function if exist
 	private function ifSubdomainExist(){
 		if($url = Conf::getParsedUrl()){
