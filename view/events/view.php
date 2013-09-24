@@ -62,8 +62,8 @@
 							<a class="btn-ws" href="<?php echo Router::url('users/register');?>">Inscription</a>
 						<?php endif; ?>	
 					<?php endif; ?>
-
-					</div>
+					<div class="fb-like" data-width="450" data-layout="button_count" data-show-faces="true" data-send="false" style="position:relative;top:4px;right:-10px;"></div>
+				</div>
 				
 				<div class="event-status">
 				<?php if($event->timing=='tocome'): ?>

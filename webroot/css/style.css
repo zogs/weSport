@@ -1510,8 +1510,8 @@ h1.title-sheet {
 }
 /* line 1100, ../scss/style.scss */
 .event-action-bar .event-action {
+  position: relative;
   float: left;
-  margin-top: 3px;
 }
 /* line 1103, ../scss/style.scss */
 .event-action-bar .event-action a.btn-ws {
