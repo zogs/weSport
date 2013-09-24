@@ -8,7 +8,7 @@
 
 	<div class="container">
 		<div class="fresque fresque-mini"></div>
-		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>"> </a></div>	
+		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" rel="nofollow" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>"> </a></div>	
 		<div class="white-sheet">
 			<section>
 				<div class="user-header">
@@ -110,7 +110,7 @@
 								<?php foreach ($eventsReviewed as $key => $review): ?>
 								<?php if(!empty($review->event)):?>
 								<li>
-										<a href="<?php echo Router::url('users/view/'.$review->user->getID().'/'.$review->user->getLogin());?>">
+										<a href="<?php echo Router::url('users/view/'.$review->user->getID().'/'.$review->user->getLogin());?>" rel="me nofollow">
 											<img class="event-avatar tooltiptop" src="<?php echo $review->user->getAvatar();?>" alt="" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)">
 										</a>
 										<span><?php echo $review->review; ?></span>				
