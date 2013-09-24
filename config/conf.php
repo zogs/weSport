@@ -12,7 +12,7 @@ class Conf {
 								);
 
 	//Website information
-	static $website = 'weSport';
+	static $website = 'we-Sport';
 	static $websiteURL = 'wesport.zogs.org';
 	static $websiteURLs = array(
 		'localwesport'=>'http://localhost/wesport',
