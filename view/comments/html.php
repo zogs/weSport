@@ -58,10 +58,10 @@
                
             $html .= '<div class="showHiddenReplies">';
             if($config->repliesDisplayPerComment==0){
-                $html .= '<a href="#" class="showReplies">Afficher les '.count($replyhidden).' réponse(s)</a>';
+                $html .= '<a href="#" class="showReplies" rel="nofollow">Afficher les '.count($replyhidden).' réponse(s)</a>';
             }
             else {
-                $html .= '<a href="#" class="showReplies">Afficher '.count($replyhidden).' autres réponse(s)</a>';
+                $html .= '<a href="#" class="showReplies" rel="nofollow">Afficher '.count($replyhidden).' autres réponse(s)</a>';
             }
             $html .= '</div>';
             $html .='<div class="hiddenReplies">';
@@ -129,7 +129,7 @@
                     <div class="content_txt comment_<?php echo $com->type;?>">    
                                             
                         <?php if($com->isModerate() ): ?>
-                        <span class="commentIsModerate"><?php echo $com->isModerate('msg'); ?> <a href="#"> Afficher quand même </a></span>
+                        <span class="commentIsModerate"><?php echo $com->isModerate('msg'); ?> <a href="#" rel="nofollow"> Afficher quand même </a></span>
                         <?php endif; ?>
 
                         <div>
@@ -169,14 +169,14 @@
                             <?php if($cuser->user_id!=0): ?>
 
                                 <?php if($config->allowVoting): ?>
-                                <a class="btn-vote bubbtop" title="Like this comment" data-url="<?php echo Router::url('comments/vote/'.$com->id); ?>" >                      
+                                <a class="btn-vote bubbtop" title="Like this comment" data-url="<?php echo Router::url('comments/vote/'.$com->id); ?>" rel="nofollow" >                      
                                         <span class="badge badge-info" <?php if ($com->note == 0): ?>style="display:none"<?php endif ?>><?php echo $com->note; ?></span>
                                     Like                         
                                 </a> 
                                 <?php endif; ?>
 
                                 <?php if($config->allowReply): ?>             
-                                <a class="btn-comment-reply" data-comid="<?php echo $com->id; ?>" data-comlogin="<?php echo $com->user->getLogin();?>" href="<?php echo $com->id;?>"><?php echo $config->linkReply;?></a>                                
+                                <a class="btn-comment-reply" data-comid="<?php echo $com->id; ?>" data-comlogin="<?php echo $com->user->getLogin();?>" href="<?php echo $com->id;?>" rel="nofollow"><?php echo $config->linkReply;?></a>                                
                                 <?php endif; ?>
 
                                 
