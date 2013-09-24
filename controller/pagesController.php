@@ -416,6 +416,7 @@ class PagesController extends Controller {
 
 				if($this->Pages->validates($new)){
 					
+					debug($new);
 					if($page_id = $this->Pages->savePage($new)){
 
 						if($this->Pages->saveTraduction($new,$page_id)){
