@@ -14,6 +14,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="description"content="<?php echo (!empty($description_for_layout))? $description_for_layout : '';?>" />
 	<meta name="keywords" content="<?php echo (!empty($keywords_for_layout))? $keywords_for_layout : '';?>" />
+	<meta name="google-site-verification" content="SeofOTfUyHE48_yX-s-Q2BUdqWuTiXZiX9fSkdGgZ9w" />
 	<meta name="robots" content="index,follow" />
 
 	<?php 
