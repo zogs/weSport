@@ -13,7 +13,7 @@
 				
 				<div class="cityInputs">
 					<div class="containerCityName">
-						<?php if(!empty($params['cityID'])): ?><a class="resetCity tooltiptop" title="Supprimer la ville" href="?cityName=&cityID=">x</a><?php endif; ?>
+						<?php if(!empty($params['cityID'])): ?><a class="resetCity tooltiptop" title="Supprimer la ville" href="?cityName=&cityID=" rel="nofollow">x</a><?php endif; ?>
 						<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo (!empty($params['cityName']))? $params['cityName'] : 'Votre ville ?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
 					</div>
 					<div class="containerExtend">
@@ -133,26 +133,26 @@
     <p><strong>L'agenda des activités sportives de ta ville !</strong>
 		<br><small><i>Pour ne plus jamais jouer seul au Jokari</i></small>
     </p>
-    <a href='javascript:void(0);' class='btn tourbus-next'>Visite guidée</a>
-    <a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Non merci</a>
+    <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Visite guidée</a>
+    <a href="javascript:void(0);" class='btn tourbus-stop' rel="nofollow"><i class="icon icon-remove"></i> Non merci</a>
   </li>
 
   <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
     <p><strong>Tape ici la ville de ton choix et/ou choisis dans la liste déroulante</strong></p>
     <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km ! )</small></p>
-    <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
+    <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Suivant</a>
   </li>
 
   <li data-el='#sportCheckboxs' data-orientation='top' data-width='350'>
     <p><strong>Tu peux afficher uniquement les sports que tu souhaites ! </strong></p>
     <p><small>( par défaut, tous les sports sont affichés )</small></p>
-    <a href='javascript:void(0);' class='btn tourbus-next'>Suivant</a>
+    <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Suivant</a>
   </li>
 
   <li data-el="#calendar-content" data-orientation="top" data-width='400'>
   	<p><strong>Les annonces apparaissent dans le calendrier</strong></p>
   	<p><small>( tu peux naviguer vers les jours suivants avec la flèche de droite, ou, pour les écrans tactiles, en slidant le calendrier !)</small></p>
-  	<a href="javascript:void(0);" class="btn tourbus-next">Compris !</a>
+  	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Compris !</a>
   </li>
 
   <li data-el="#contact" data-orientation="top" date-width='300' data-align="center">
@@ -161,15 +161,15 @@
   	<br><strong>Donnez nous votre avis, vos idées, vos envies, vos difficultés, ect ...</strong>
   	<br>On se fera un plaisir de vous répondre !
   	</p>
-  	<a href="javascript:void(0);" class="btn tourbus-next">Une dernière chose</a>
-  	<a href="<?php echo Router::url('pages/contact');?>" class="btn">Donnez votre avis</a>
+  	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Une dernière chose</a>
+  	<a href="<?php echo Router::url('pages/contact');?>" class="btn" rel="nofollow">Donnez votre avis</a>
   </li>
 
   <li data-el="#registerMenu" data-orientation="bottom" data-width='400' data-align="right">
   	<h2>Inscrivez-vous :)</h2>
   	<p>C'est facile, rapide, et gratuit !</p>
-  	<a href="javascript:void(0);" class='btn tourbus-stop'><i class="icon icon-remove"></i> Terminer</a>
-  	<a href="<?php echo Router::url('users/register');?>" class="btn">S'inscrire</a>
+  	<a href="javascript:void(0);" class='btn tourbus-stop' rel="nofollow"><i class="icon icon-remove"></i> Terminer</a>
+  	<a href="<?php echo Router::url('users/register');?>" class="btn" rel="nofollow">S'inscrire</a>
   </li>
 
 </ol>
@@ -296,7 +296,8 @@ $(document).ready(function(){
 	function findNumberDayPerWeek(){
 
 		//Nombre de jour à afficher en fonction de la largeur de l'écran
-		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
+		//var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
+		var dayPerWeek = {320:1,480:2,768:3};
 		var screenWidth = $(window).width();
 		var nb;
 		for(var maxwidth in dayPerWeek){	

@@ -59,7 +59,7 @@
 			<form class="form-wp form-facebook">
 				<p class="intro">Ou en 1 clic seulement avec Facebook!</p>
 				<p class="btn-facebook">
-					<a href="<?php echo $this->request('users','link_register_with_facebook');?>" target="_self"><img src="<?php echo Router::webroot('img/register_with_facebook.png');?>"/></a>									
+					<a rel="nofollow" href="<?php echo $this->request('users','link_register_with_facebook');?>" target="_self"><img src="<?php echo Router::webroot('img/register_with_facebook.png');?>"/></a>									
 				</p>
 				<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FWesport-Community%2F642996032385245&amp;width=292&amp;height=500&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=153720748148187" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:258px;" allowTransparency="true"></iframe>
 			</form>

@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="container">
-		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>"></a></div>	
+		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>" rel="nofollow"></a></div>	
 		<div class="fresque fresque-mini"></div>
 		<div class="white-sheet">
 			
@@ -25,7 +25,7 @@
 						<div class="orga-avatar"><img src="<?php echo $event->author->getAvatar();?>"/></div>
 						<div class="orga-info">
 							<span><small>Organisateur</small></span>
-							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>"><?php echo $event->author->login;?></a></span>
+							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>" rel="me nofollow"><?php echo $event->author->login;?></a></span>
 							<span class="orga-age"><?php echo $event->author->getAge();?> ans</span>
 						</div>
 
@@ -39,7 +39,7 @@
 						<?php if($this->session->user()->online()): ?>
 							<?php if(!$event->isAdmin($this->session->user()->getID())): ?>
 								<?php if(isset($event->UserParticipation)): ?>
-									<a class="btn-ws" > 
+									<a class="btn-ws" rel="nofollow"> 
 										<i class="icon icon-ok-sign icon-white"></i>
 										<?php if($event->UserParticipation->proba==1): ?> Vous participez !<?php endif;?>
 										<?php if($event->UserParticipation->proba==0): ?> Peut être !<?php endif;?>
@@ -155,25 +155,25 @@
 					<div class="block block-action">
 							<?php if(!$event->isAdmin($this->session->user()->getID())): ?>
 								<?php if(isset($event->UserParticipation)): ?>
-									<a class="btn-ws btn-ws-success" > 
+									<a class="btn-ws btn-ws-success" rel="nofollow"> 
 										<i class="icon icon-ok-sign icon-white"></i>
 										<?php if($event->UserParticipation->proba==1): ?> Vous participez !<?php endif;?>
 										<?php if($event->UserParticipation->proba==0): ?> Peut être !<?php endif;?>
 									</a>
-									<a class="btn btn-link" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>"><i class="icon-remove"></i> Annuler</a>
+									<a class="btn btn-link" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>" rel="nofollow"><i class="icon-remove"></i> Annuler</a>
 								<?php else: ?>
-									<a class="btn-ws" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>">
+									<a class="btn-ws" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">
 										<i class="icon-white icon-ok"></i>
 										Je veux en être!
 									</a>
-									<a style="display:none" class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>">
+									<a style="display:none" class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>" rel="nofollow">
 										<i class="icon-white icon-asterisk"></i>
 										Peut-être
 									</a>
 								<?php endif; ?>
 							
 							<?php else: ?>	
-							<a class="btn btn-small" href="<?php echo Router::url('events/create/'.$event->id);?>">Modifier mon annonce</a>					
+							<a class="btn btn-small" href="<?php echo Router::url('events/create/'.$event->id);?>" rel="nofollow">Modifier mon annonce</a>					
 							<?php endif;?>												
 					</div>
 					<?php endif; ?>
@@ -206,7 +206,7 @@
 						<h3><?php echo count($event->participants);?> Participants</h3>
 						<div class="block-content">
 							<?php foreach ($event->participants as $participant):?>										
-								<a href="<?php echo $participant->getLink();?>">
+								<a href="<?php echo $participant->getLink();?>" rel="nofollow">
 									<img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/>
 									<strong><?php echo $participant->getLogin();?></strong>
 									<br />
@@ -252,7 +252,7 @@
 					
 					<?php if($event->authorReviewed()): ?>
 					<div class="block block-orange event-reviews">
-						<h3>Derniers avis sur <a class="event-user" href="<?php echo $event->author->getLink();?>"><?php echo $event->author->getLogin();?></a></h3>
+						<h3>Derniers avis sur <a class="event-user" href="<?php echo $event->author->getLink();?>" rel="me nofollow"><?php echo $event->author->getLogin();?></a></h3>
 						<div class="block-content">
 							<ul>
 							<?php foreach ($event->reviews as $key => $review):?>					
