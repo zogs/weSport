@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="container">
-		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>" rel="nofollow"></a></div>	
+		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" rel="nofollow" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>" rel="nofollow"></a></div>	
 		<div class="fresque fresque-mini"></div>
 		<div class="white-sheet">
 			

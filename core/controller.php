@@ -16,9 +16,11 @@ class Controller {
 		$this->Date = new Date($this->session);
 		$this->cache = new Cache(Conf::getCachePath(),60);
 		
-		//Si la request nest pas une requete cron on instancie le cookie recherche
-		if(get_class($request)!='Cron') $this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
+		//Si cest un requete cron ne pas executé la suite
+		if(get_class($request)=='Cron') return;
 
+		//On instyancie le cookie de recherche
+		$this->cookieEventSearch = new Cookie('Search',60*60*24*30,true);
 
 		//Gestion des sous domains		
 		$this->ifSubdomainExist();		
