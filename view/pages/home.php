@@ -51,6 +51,7 @@
 							<label for="label-<?php echo $sport->slug;?>" class="tooltiptop" data-toggle="tooltip" title="<?php echo ucfirst($sport->name);?>">
 								<span class="ws-icon ws-icon-<?php echo $sport->slug;?>"><strong><?php echo $sport->name;?></strong></span>
 							</label>
+							<a href="?sports%5B%5D=<?php echo $sport->slug;?>"><?php echo $sport->name;?></a>
 						</div>						
 				 	<?php endforeach; ?>					
 				<?php ?>				

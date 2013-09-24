@@ -36,7 +36,7 @@
 			<form class="form-wp form-facebook">
 				<p class="intro"></p>
 				<p class="btn-facebook">
-					<a class="btn-facebook" href="<?php echo $this->request('users','link_register_with_facebook');?>"><img src="<?php echo Router::webroot('img/connect_with_facebook.png');?>"/></a>					
+					<a class="btn-facebook" rel='nofollow' href="<?php echo $this->request('users','link_register_with_facebook');?>"><img src="<?php echo Router::webroot('img/connect_with_facebook.png');?>"/></a>					
 				</p>
 				<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FWesport-Community%2F642996032385245&amp;width=292&amp;height=300&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=153720748148187" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:258px;" allowTransparency="true"></iframe>
 			</form>

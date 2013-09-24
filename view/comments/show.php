@@ -49,42 +49,42 @@
                     <div id="tri" class="commentFilter btn-toolbar">
 
                         <div class="btn-group pull-right">
-                            <a class="btn  btn-mini dropdown-toggle bubble-bottom" title="Type of comments" data-toggle="dropdown" href="#">
+                            <a class="btn  btn-mini dropdown-toggle bubble-bottom" title="Type of comments" data-toggle="dropdown" href="#" rel="nofollow">
                             Type
                             <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                            <li><a class="type_com" href="?type=com">Commentaires</a></li>
-                            <li><a class="type_com" href="?type=img">Images</a></li>
-                            <li><a class="type_com" href="?type=video">Vidéo</a></li>
-                            <li><a class="type_com" href="?type=all">Tout</a></li>
+                            <li><a class="type_com" href="?type=com" rel="nofollow">Commentaires</a></li>
+                            <li><a class="type_com" href="?type=img" rel="nofollow">Images</a></li>
+                            <li><a class="type_com" href="?type=video" rel="nofollow">Vidéo</a></li>
+                            <li><a class="type_com" href="?type=all" rel="nofollow">Tout</a></li>
                             </ul>
                         </div>
                         <div class="btn-group pull-right">
-                            <a class="btn btn-mini dropdown-toggle bubble-bottom" title="Ordering comments" data-toggle="dropdown">
+                            <a class="btn btn-mini dropdown-toggle bubble-bottom" title="Ordering comments" data-toggle="dropdown" rel="nofollow">
                             Ordre
                             <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                            <li><a class="type_com" href="?order=datedesc">+ récent</a></li>
-                            <li><a class="type_com" href="?order=dateasc">+ ancien</a></li>
-                            <li><a class="type_com" href="?order=notedesc">mieux noté</a></li>
-                            <li><a class="type_com" href="?order=noteasc">moins bien noté</a></li>
+                            <li><a class="type_com" href="?order=datedesc" rel="nofollow">+ récent</a></li>
+                            <li><a class="type_com" href="?order=dateasc" rel="nofollow">+ ancien</a></li>
+                            <li><a class="type_com" href="?order=notedesc" rel="nofollow">mieux noté</a></li>
+                            <li><a class="type_com" href="?order=noteasc" rel="nofollow">moins bien noté</a></li>
                             </ul>
                         </div>  
                         <div class="btn-group pull-right">
-                            <a id="refresh_com" class="btn btn-mini bubble-bottom" title="Display new comments" >
+                            <a id="refresh_com" class="btn btn-mini bubble-bottom" title="Display new comments" rel="nofollow">
                                 <i class="icon-repeat"></i>  Actualiser <span class="badge badge-inverse hide" id="badge"></span>
                             </a>
                             <span id="ajaxLoader" style="display:none"><img src="<?php echo Router::webroot('img/ajax-loader.gif');?>" alt="Loading" /></span>
-                            <a class="btn btn-mini dropdown-toggle hide" data-toggle="dropdown" href="#">              
+                            <a class="btn btn-mini dropdown-toggle hide" data-toggle="dropdown" href="#" rel="nofollow">              
                             <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                            <li><a class="set_refresh" href="600">Toutes les 10 min</a></li>
-                            <li><a class="set_refresh" href="300">Toutes les 5 min</a></li>
-                            <li><a class="set_refresh" href="120">Toutes les 2 min</a></li>
-                            <li><a class="set_refresh" href="60">Toutes les 1 min</a></li>
+                            <li><a class="set_refresh" href="600" rel="nofollow">Toutes les 10 min</a></li>
+                            <li><a class="set_refresh" href="300" rel="nofollow">Toutes les 5 min</a></li>
+                            <li><a class="set_refresh" href="120" rel="nofollow">Toutes les 2 min</a></li>
+                            <li><a class="set_refresh" href="60" rel="nofollow">Toutes les 1 min</a></li>
                             </ul>
                         </div>      
                     </div>
@@ -96,7 +96,7 @@
                         ?>                    
                     </div>
                     <div id="bottomComments">
-                        <a  id="showMoreComments" href="" ><span class="icon-arrow-down"></span> Afficher plus de commentaires</a>
+                        <a  id="showMoreComments" href="" rel="nofollow"><span class="icon-arrow-down"></span> Afficher plus de commentaires</a>
                         <div id='loadingComments'><span class="ajaxLoader"></span> Chargement des commentaires ...</div>
                         <div id='noMoreComments'>Fin des commentaires</div>
                         <div id="noCommentYet">Pas encore de commentaires</div>                        
