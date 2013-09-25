@@ -154,6 +154,8 @@ class Conf {
 
 	    public static function getParsedUrl(){
 	    	if(isset(self::$parsed_url)) return self::$parsed_url;
+	    	if(!isset($_SERVER['HTTP_HOST'])) return false;
+	    	
 	    	$url = Conf::getProtocol().'://'.$_SERVER['HTTP_HOST'];
 	    	self::$parsed_url = String::parse_url($url);
 	    	return self::$parsed_url;
