@@ -160,6 +160,8 @@ class Conf {
 	    }
 
 	    public static function getProtocol(){
+
+	    	if(!isset($_SERVER['SERVER_PROTOCOL'])) return 'http';
 	    	if(strpos($_SERVER['SERVER_PROTOCOL'],'HTTP/')===0) return 'http';
 	    	if(strpos($_SERVER['SERVER_PROTOCOL'],'HTTPS/')===0) return 'https'; //to test
 	    }
