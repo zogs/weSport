@@ -101,12 +101,14 @@ class Cache {
         	
         $parts = explode(DIRECTORY_SEPARATOR, $dir);
         $file = array_pop($parts);
+        debug($parts);
+        debug($file);
         if(strpos($dir,DIRECTORY_SEPARATOR)===0) 
         	$dir = '/';
         else
         	$dir = '';
         foreach($parts as $part){
-         
+         	debug($dir.=$part);
             if(!is_dir($dir .= $part)) mkdir($dir);
             $dir .= DIRECTORY_SEPARATOR;
         }
