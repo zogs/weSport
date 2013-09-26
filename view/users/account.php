@@ -69,6 +69,7 @@
 						
 						<?php echo $this->Form->input('prenom','Prenom',array('icon'=>'icon-user','placeholder'=>'Prenom')); ?>
 						<?php echo $this->Form->input('nom','Nom',array('icon'=>'icon-user','placeholder'=>'Nom')); ?>	
+						<?php echo $this->Form->input('descr','Description',array('icon'=>'icon-align-left','placeholder'=>'Description','helper'=>'Decrivez vous en qq mots (130 caractères)')); ?>
 						<?php echo $this->Form->select('sexe','Sexe',array('h'=>'Homme','f'=>'Femme'),array('placeholder'=>'Sexe','icon'=>'icon-star-empty','default'=>$user->getSexe())); ?>				
 						<div class="control-group" id="control-birthday">
 							<label for="birthday" class="control-label">Anniversaire</label>

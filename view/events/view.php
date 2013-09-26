@@ -13,22 +13,22 @@
 		<div class="white-sheet">
 			
 			<section>
-				<div class="event-header">
-
-					<h1 class="event-title">
-						<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>
-						<?php echo $event->getTitle();?>
-					</h1>
+				<div class="content-header">
+					<div class="header-left">
+						<h1 class="event-title">
+							<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>
+							<?php echo $event->getTitle();?>
+						</h1>
+					</div>
 
 					
-					<div class="event-orga">
+					<div class="header-right">
 						<div class="orga-avatar"><img src="<?php echo $event->author->getAvatar();?>"/></div>
 						<div class="orga-info">
-							<span><small>Organisateur</small></span>
 							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>" rel="me nofollow"><?php echo $event->author->login;?></a></span>
 							<span class="orga-age"><?php echo $event->author->getAge();?> ans</span>
+							<span class="orga-link"><a href="<?php echo $event->author->getLink();?>" rel="me nofollow">Voir la fiche</a></span>
 						</div>
-
 					</div>				
 				</div>
 			</section>
