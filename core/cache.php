@@ -116,7 +116,7 @@ class Cache {
             if(!is_dir($dir)) mkdir($dir);
             $dir .= DIRECTORY_SEPARATOR;
         }
-        file_put_contents("$dir".DIRECTORY_SEPARATOR."$file", $contents);
+        file_put_contents("$dir"."$file", $contents);
     }
 
 
