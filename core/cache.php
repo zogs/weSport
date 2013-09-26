@@ -98,7 +98,8 @@ class Cache {
 
 
  	private function file_force_contents($dir, $contents){
-        	
+        
+        debug($dir);	
         $parts = explode(DIRECTORY_SEPARATOR, $dir);
         $file = array_pop($parts);
         debug($parts);
@@ -107,6 +108,7 @@ class Cache {
         	$dir = '/';
         else
         	$dir = '';
+        debug($dir);
         foreach($parts as $part){
          	debug($dir.=$part);
             if(!is_dir($dir .= $part)) mkdir($dir);
