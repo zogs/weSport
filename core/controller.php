@@ -16,6 +16,13 @@ class Controller {
 		$this->Date = new Date($this->session);
 		$this->cache = new Cache(Conf::getCachePath(),60);
 		
+		//Si une request est passé on effectue des vérifications de sécurité
+		if($request){
+			$this->request = $request; //ON stocke la request dans l'instance
+			$this->security($request); //On check le jeton de sécurité
+			require ROOT.DS.'config'.DS.'hook.php'; //Systeme de hook pour changer le layer en fonction du prefixe
+		}
+		
 		//Si cest un requete cron ne pas executé la suite
 		if(get_class($request)=='Cron') return;
 
@@ -28,12 +35,6 @@ class Controller {
 		//Initialisation autoconnection
 		UsersController::auto_connect($this->session);
 
-		//Si une request est passé on effectue des vérifications de sécurité
-		if($request){
-			$this->request = $request; //ON stocke la request dans l'instance
-			$this->security($request); //On check le jeton de sécurité
-			require ROOT.DS.'config'.DS.'hook.php'; //Systeme de hook pour changer le layer en fonction du prefixe
-		}
 
 		//on instancie un objet facebook pour nous permettre de faire de appel à l'API
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
@@ -328,7 +329,8 @@ class Controller {
 				if($request->get('token')!=$this->session->read('token')){
 
 					//$this->session->setFlash("bad token","error");
-					$this->e404('Your security token is outdated, please log in again');
+					$this->session->setFlash("<strong>Oups</strong>, il faut se reconnecter ...",'info');
+					$this->redirect('users/login');
 				}
 				else {
 					unset($this->get->token);
