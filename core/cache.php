@@ -110,6 +110,7 @@ class Cache {
         	$dir = '';
         debug($dir);
         foreach($parts as $part){
+        	if(empty($part)) continue;
         	$dir .= $part;
          	debug($dir);
             if(!is_dir($dir)) mkdir($dir);
