@@ -98,21 +98,18 @@ class Cache {
 
 
  	private function file_force_contents($dir, $contents){
-        
-        debug($dir);	
+        	
         $parts = explode(DIRECTORY_SEPARATOR, $dir);
         $file = array_pop($parts);
-        debug($parts);
-        debug($file);
+
         if(strpos($dir,DIRECTORY_SEPARATOR)===0) 
         	$dir = '/';
         else
         	$dir = '';
-        debug($dir);
+      
         foreach($parts as $part){
         	if(empty($part)) continue;
         	$dir .= $part;
-         	debug($dir);
             if(!is_dir($dir)) mkdir($dir);
             $dir .= DIRECTORY_SEPARATOR;
         }
