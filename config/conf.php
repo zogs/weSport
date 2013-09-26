@@ -68,12 +68,12 @@ class Conf {
 	static $languageAvailable = array('fr'=>'Francais','en'=>'English');
 	static $languageDefault = 'fr';	
 
-	//Cache
-	static $cachePath = array(
-		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
-		'zogs' => '../webroot/cache',
-		'we-sport' => '/home/zogs/www/we-sport.fr/httpdocs/webroot/cache',
-		'default' => '../webroot/cache'
+	//Cache directory ( from /webroot )
+	static $cacheDirectory = array( 
+		'localwesport' => 'cache',
+		'zogs' => 'cache',
+		'we-sport' => 'cache',
+		'default' => 'cache'
 		);
 
 
@@ -187,8 +187,8 @@ class Conf {
 
 	    public static function getCachePath(){
 	    	$host = self::getHost();
-	    	if(isset(self::$cachePath[$host])) return self::$cachePath[$host];
-	    	return self::$cachePath['default'];
+	    	if(isset(self::$cacheDirectory[$host])) return WEBROOT.DS.self::$cacheDirectory[$host];
+	    	return WEBROOT.DS.self::$cacheDirectory['default'];
 	    }
 
 	    
