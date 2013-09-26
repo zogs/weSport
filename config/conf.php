@@ -72,7 +72,7 @@ class Conf {
 	static $cachePath = array(
 		'localhost' => 'D:/wamp/www/wesport/webroot/cache',
 		'zogs' => '../webroot/cache',
-		'we-sport' => '/home/zogs/www/we-sport.fr/httpdocs/webroot/cache',
+		'we-sport' => 'home/zogs/www/we-sport.fr/httpdocs/webroot/cache',
 		'default' => '../webroot/cache'
 		);
 
