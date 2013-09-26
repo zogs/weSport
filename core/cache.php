@@ -110,8 +110,9 @@ class Cache {
         	$dir = '';
         debug($dir);
         foreach($parts as $part){
-         	debug($dir.=$part);
-            if(!is_dir($dir .= $part)) mkdir($dir);
+        	$dir .= $part;
+         	debug($dir);
+            if(!is_dir($dir)) mkdir($dir);
             $dir .= DIRECTORY_SEPARATOR;
         }
         file_put_contents("$dir".DIRECTORY_SEPARATOR."$file", $contents);
