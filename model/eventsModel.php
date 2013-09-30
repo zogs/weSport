@@ -1050,8 +1050,6 @@ class Event{
 	public $time    = '12:00:00'; //default time
 	public $timing  = '';
 	public $confirmed = 0;
-	public $startdate = 0;
-	public $enddate = 0;
 	public $recur_day = array();
 
 	public function __construct( $fields = array() ){
@@ -1274,7 +1272,7 @@ class Event{
 
 	public function isRecurrent(){
 
-		if(!empty($this->recur_day)) return true;
+		if(!empty($this->serie_id)) return true;
 		return false;
 	}
 

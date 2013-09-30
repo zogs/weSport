@@ -39,15 +39,21 @@
 					<div class="control-group" id="control-date">
 						<label for="" class="control-label">Date</label>
 						<div class="controls">
-							<div id="control-ocur" style=" <?php if($event->isRecurrent()) echo 'display:none;';?>">
+							<div id="control-ocur">
 								<?php echo $this->Form->_input('date','Date',array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ','value'=>(($this->request->get('date'))? $this->request->get('date'):''))) ;?>								
 							</div>
-							<div id="control-recur" style="<?php if($event->isRecurrent()) echo 'display:block';?>">
+							<div id="control-recur" style="<?php if($event->isRecurrent()) echo 'display:none';?>">
 							<?php echo $this->Form->_input('startdate','',array('class'=>'datepicker','placeholder'=>'Date de début','style'=>'float:left;width:46%;margin-right:6%')); ?>
 							<?php echo $this->Form->_input('enddate','',array('class'=>'datepicker','placeholder'=>'Date de fin','style'=>'flaot:left;width:46%')); ?>
 							<?php echo $this->Form->_checkbox('recur_day[]','',Form::WeekDays(),array('openwrap'=>'<div class="checkbox_recur_day">','closewrap'=>'</div>'));?>
 							</div>
-							<p class="help-inline"><a href="#" id="open-control-recur">Date régulière ?</a></p>
+							<p class="help-inline">
+								<?php if(!$event->isRecurrent()):?>
+								<a href="#" id="open-control-recur">Date régulière ?</a>
+							<?php else:?>
+								<small>Cet événement fait partie d'une série</small>
+							<?php endif; ?>								
+							</p>
 								
 						</div>
 					</div>
@@ -89,8 +95,7 @@
 
 				<?php if(!empty($user_events_in_futur)):?>
 				<div class="block block-green event-to-come events-list">
-					<h3>Mes activités à venir</h3>
-					<?php debug($user_events_in_futur); ?>
+					<h3>Mes activités à venir</h3>					
 					<div class="block-content">
 						<ul>
 							<?php foreach ($user_events_in_futur as $e):?>							
