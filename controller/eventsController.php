@@ -429,7 +429,7 @@ class EventsController extends Controller{
 			//find event
 			$evt = $this->Events->findEventById($event_id);
 			//exit if event not exist
-			if(!$evt->exist()) throw new zException("Can not modify - Event not exist", 1);
+			if(!$evt->exist()) $this->redirect('events/create');
 			
 			//redistect if user not exist
 			if(!$evt->isAdmin($this->session->user()->getID())){
@@ -496,7 +496,7 @@ class EventsController extends Controller{
 						$silent_changes = array('slug','nbmin','cityID','ADM1','ADM2','ADM3','ADM4','CC1','LAT','LON','startdate','enddate');
 						
 						if($evt->getNbParticipants()>1){
-							
+
 							foreach ($new as $key => $value) {
 
 								if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
