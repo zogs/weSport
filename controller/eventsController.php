@@ -493,11 +493,14 @@ class EventsController extends Controller{
 
 						//On regarde quel sont les changements , dans le but d'avertir les participants
 						$changes = array();
-						$silent_changes = array('slug','nbmin','cityID','ADM1','ADM2','ADM3','ADM4','CC1','LAT','LON');
+						$silent_changes = array('slug','nbmin','cityID','ADM1','ADM2','ADM3','ADM4','CC1','LAT','LON','startdate','enddate');
 						
-						foreach ($new as $key => $value) {
+						if($evt->getNbParticipants()>1){
+							
+							foreach ($new as $key => $value) {
 
-							if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
+								if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
+							}
 						}
 
 
@@ -524,9 +527,7 @@ class EventsController extends Controller{
 						//get event
 						$evt = $this->Events->findEventById($event_id);
 					
-						//save organizator participation		
-						$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
-						$this->Events->saveParticipants($u,$evt);						
+											
 
 						//if the event is new
 						if($is_new==true){

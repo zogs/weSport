@@ -528,10 +528,20 @@ class EventsModel extends Model{
 		unset($e->startdate);
 		unset($e->enddate);
 
+		$this->loadModel('Users');		
+
+
 		if($id = $this->save($e)) {
 
 			//if new event, increment event created  statistics			
 			if(isset($e->id) && $e->id!=$id) $this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$e->user_id,'field'=>'events_created'));
+
+			
+			//save organizator participation
+			$u = $this->Users->findFirstUser(array('fields'=>'user_id','conditions'=>array('user_id'=>$this->session->user()->getID())));
+			$e->id = $id;
+			$this->saveParticipants($u,$e);	
+
 
 			return $id;
 		}
