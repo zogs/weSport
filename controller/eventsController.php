@@ -495,6 +495,7 @@ class EventsController extends Controller{
 						$changes = array();
 						$silent_changes = array('slug','nbmin','cityID','ADM1','ADM2','ADM3','ADM4','CC1','LAT','LON','startdate','enddate');
 						
+						$evt = $this->Events->joinEventsParticipants($evt);
 						if($evt->getNbParticipants()>1){
 
 							foreach ($new as $key => $value) {
