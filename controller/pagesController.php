@@ -24,6 +24,7 @@ class PagesController extends Controller {
 				$this->cookieEventSearch->write($cookie);
 			}
 			else{
+				
 				$this->redirect('http://we-sport.fr');
 			}
 		}

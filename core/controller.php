@@ -272,7 +272,7 @@ class Controller {
 	//Tcheck if subdomain exist and launch the handleSubdomain function if exist
 	private function ifSubdomainExist(){
 		if($url = Conf::getParsedUrl()){
-			if(!empty($url['subdomain'])){
+			if(!empty($url['subdomain']) && $url['domain']!='zogs'){
 				if(method_exists($this,'handleSubdomain')){
 					$this->handleSubdomain($url['subdomain']);
 				}
