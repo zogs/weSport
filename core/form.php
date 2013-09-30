@@ -360,13 +360,16 @@ class Form{
 		(isset($params['class']))? $class = "class='".$params['class']."'" : $class = '' ;
 		(isset($params['default']))? $default = $params['default'] : $default = '';
 		(isset($params['javascript']))? $javascript = $params['javascript'] : $javascript = '';
+
+		$field = str_replace('[]','',$id);
+
 		if(isset($options['value'])){
 			$default = $params['value'];
 		}
-		elseif(isset($this->controller->request->data->$id)){ //Si le champ n'a pas de valeur pré-rempli
-			$default = $this->controller->request->data->$id;
-		}
+		elseif(isset($this->controller->request->data->$field)){ //Si le champ n'a pas de valeur pré-rempli
 
+			$default = $this->controller->request->data->$field;
+		}
 
 		if(is_object($options)) $options = (array) $options;
 		
@@ -387,16 +390,18 @@ class Form{
 
 				//set checked value if exist
 				$checked = '';
+
 				if(is_array($default)){
-					if(in_array($value,$default)) $checked = 'checked="checked"';
+					if(in_array($value,$default) || (array_key_exists($value, $default) && $default[$value]==1)) $checked = 'checked="checked"';
 				}
 				elseif($value==$default) {
 					$checked = 'checked="checked"';;
 				}
 				
 				(isset($params['openwrap']))? $html .= $params['openwrap'] : $html .= '';
-				$html .= '<input type="hidden" name="'.$id.'" value="0">';
-				$html .= '<input type="checkbox" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$value.'" '.$checked.' '.$javascript.'>';
+				(isset($params['switch']))? $html .= '<input type="hidden" name="'.$id.'" value="0">' : $html .='';
+				
+				$html .= '<input type="checkbox" '.$class.' name="'.$id.'" value="'.$value.'" id="'.$field.$value.'" '.$checked.' '.$javascript.'>';
 				$html .= '<label class="checkbox" for="'.$value.'">'.$name.'</label>';
 				(isset($params['closewrap']))? $html .= $params['closewrap'] : $html .= '';
 			}
@@ -441,6 +446,11 @@ class Form{
 	public static function Months(){
 
 		return array('01'=>'Janvier','02'=>'Février','03'=>'Mars','04'=>'Avril','05'=>'Mai','06'=>'Juin','07'=>'Juillet','08'=>'Août','09'=>'Septembre','10'=>'Octobre','11'=>'Novembre','12'=>'Décembre');
+	}
+
+	public static function WeekDays(){
+
+		return array('Monday'=>'Lun','Tuesday'=>'Mar','Wednesday'=>'Mer','Thursday'=>'Jeu','Friday'=>'Ven','Saturday'=>'Sam','Sunday'=>'Dim');
 	}
 
 }

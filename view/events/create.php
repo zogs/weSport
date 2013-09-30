@@ -36,7 +36,22 @@
 					<?php echo $this->Form->input("cityID","hidden",array("value"=>$event->getCityID())) ;?>
 					<?php echo $this->Form->input("cityName","Ville",array("type"=>"text",'placeholder'=>'Ville',"required"=>"required","style"=>"width:100%;","data-autocomplete-url"=>Router::url('world/suggestCity'))) ;?>
 					<?php echo $this->Form->input('address','Adresse',array('placeholder'=>'Salle Michel Bon, 36 rue Henri Dunant, ...')) ;?>
-					<?php echo $this->Form->input('date',"Date",array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ','value'=>(($this->request->get('date'))? $this->request->get('date'):''))) ;?>
+					<div class="control-group" id="control-date">
+						<label for="" class="control-label">Date</label>
+						<div class="controls">
+							<div id="control-ocur" style=" <?php if($event->isRecurrent()) echo 'display:none;';?>">
+								<?php echo $this->Form->_input('date','Date',array("class"=>'datepicker','placeholder'=>'ex : 2013/02/26 ','value'=>(($this->request->get('date'))? $this->request->get('date'):''))) ;?>								
+							</div>
+							<div id="control-recur" style="<?php if($event->isRecurrent()) echo 'display:block';?>">
+							<?php echo $this->Form->_input('startdate','',array('class'=>'datepicker','placeholder'=>'Date de début','style'=>'float:left;width:46%;margin-right:6%')); ?>
+							<?php echo $this->Form->_input('enddate','',array('class'=>'datepicker','placeholder'=>'Date de fin','style'=>'flaot:left;width:46%')); ?>
+							<?php echo $this->Form->_checkbox('recur_day[]','',Form::WeekDays(),array('openwrap'=>'<div class="checkbox_recur_day">','closewrap'=>'</div>'));?>
+							</div>
+							<p class="help-inline"><a href="#" id="open-control-recur">Date régulière ?</a></p>
+								
+						</div>
+					</div>
+	
 					<div class="control-group " id="control-time">
 						<label class="control-label">Heure</label>
 						<div class="controls">
@@ -73,8 +88,9 @@
 				</div>					
 
 				<?php if(!empty($user_events_in_futur)):?>
-				<div class="block block-green event-to-come">
+				<div class="block block-green event-to-come events-list">
 					<h3>Mes activités à venir</h3>
+					<?php debug($user_events_in_futur); ?>
 					<div class="block-content">
 						<ul>
 							<?php foreach ($user_events_in_futur as $e):?>							
@@ -92,7 +108,7 @@
 				<?php endif; ?>		
 
 				<?php if(!empty($user_events_in_past)): ?>
-				<div class="block block-orange event-finished">
+				<div class="block block-orange event-finished events-list">
 					<h3>Activités terminés</h3>
 					<div class="block-content">
 						<ul>
@@ -119,13 +135,19 @@
 	
 </div>
 <script type="text/javascript">
-	 $(function() {
+	 $(document).ready(function(){
 		
 		$( ".datepicker" ).datepicker({
 			format : 'yyyy/mm/dd',
 			autoclose : true,
 			todayHightlight : true,
 			language : 'fr'
+		});
+
+
+		$("#open-control-recur").click(function(){
+			$("#control-recur").toggle(0);
+			$("#control-ocur").toggle(0);
 		});
 
 	});

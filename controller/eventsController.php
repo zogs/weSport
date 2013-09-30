@@ -475,9 +475,11 @@ class EventsController extends Controller{
 			}
 
 			//find states of the city, and latitude longitude
-			$states = $this->Worlds->findCityById($new->cityID,'ADM1,ADM2,ADM3,ADM4,CC1,LATITUDE as LAT,LONGITUDE as LON');
-			foreach ($states as $key => $value) {
-				if(!empty($value)) $new->$key = $value;
+			if(!empty($new->cityID)){
+				$states = $this->Worlds->findCityById($new->cityID,'ADM1,ADM2,ADM3,ADM4,CC1,LATITUDE as LAT,LONGITUDE as LON');
+				foreach ($states as $key => $value) {
+					if(!empty($value)) $new->$key = $value;
+				}				
 			}
 
 			//init var
@@ -492,7 +494,9 @@ class EventsController extends Controller{
 						//On regarde quel sont les changements , dans le but d'avertir les participants
 						$changes = array();
 						$silent_changes = array('slug','nbmin','cityID','ADM1','ADM2','ADM3','ADM4','CC1','LAT','LON');
+						
 						foreach ($new as $key => $value) {
+
 							if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
 						}
 
@@ -510,8 +514,7 @@ class EventsController extends Controller{
 						}
 
 					}
-					
-
+										
 
 					//save event
 					if($event_id = $this->Events->saveEvent($new)){
@@ -568,9 +571,9 @@ class EventsController extends Controller{
 		}
 		
 		$d['sports_available'] = $this->Events->findSportsList($this->getLang());
-		$d['user_events_in_futur'] = $this->Events->findEvents(array('date'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		$d['user_events_in_futur'] = $this->Events->findEvents(array('tempo'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_futur'] = $this->Events->joinSports($d['user_events_in_futur'],$this->getLang());
-		$d['user_events_in_past'] = $this->Events->findEvents(array('date'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		$d['user_events_in_past'] = $this->Events->findEvents(array('tempo'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$d['user_events_in_past'] = $this->Events->joinSports($d['user_events_in_past'],$this->getLang());
 		
 		if($evt->exist()) {
@@ -899,7 +902,7 @@ class EventsController extends Controller{
         }
 
         //Traduction
-        $trad = array('title'=>'Titre','sport'=>'Sport','cityName'=>'Ville','address'=>'Adresse','date'=>'Date','time'=>'Heure','description'=>'Descriptif','phone'=>'Téléphone');
+        $trad = array('title'=>'Titre','sport'=>'Sport','cityName'=>'Ville','address'=>'Adresse','date'=>'Date','time'=>'Heure','description'=>'Descriptif','phone'=>'Téléphone','recur_day'=>'Jour de la semaine :');
 
         //init variable
         $content = "";

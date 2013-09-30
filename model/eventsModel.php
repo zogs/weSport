@@ -34,7 +34,7 @@ class EventsModel extends Model{
 				),
 				array('rule'=>'notNull','message'=>"Une ville doit être renseigné1")
 			)
-		),
+		),/*
 		'date' => array(
 			"rules"=>array(
 				array(
@@ -45,7 +45,7 @@ class EventsModel extends Model{
 					'rule'=>'datefutur',
 					'message'=>'La date de l\'événement doit être dans le futur')
 			)
-		),
+		),*/
 		'hours' => array(
 			"rules"=>array(
 				array(
@@ -149,7 +149,7 @@ class EventsModel extends Model{
 		if(!empty($fields))
 			$sql .= $this->sqlfields($fields);
 		else
-			$sql .= $this->sqlfields('*');
+			$sql .= $this->sqlfields('E.*');
 
 		//add distance field
 		if(!empty($extend_zone))
@@ -173,28 +173,35 @@ class EventsModel extends Model{
 			$sql .= ' AND '.$this->sqlConditions($conditions);
 
 
-		//date
 		if(!empty($date)){
 			if(is_string($date)){
 
-				if($date=='past')
-					$sql .= ' AND E.date < CURDATE()';
-				elseif($date=='futur')
-					$sql .= ' AND E.date >= CURDATE()';
-				elseif($date=='today')
-					$sql .= ' AND E.date = CURDATE()';
-				else
-					$sql .= ' AND '.$date;
-			}				
-			elseif(is_array($date)){
-				if(isset($date['day'])){
 
-					$sql .= ' AND E.date = :date';
-					$values[':date'] = $date['day'];
-				}
 			}
-			$sql .=' ';
 		}
+
+
+		//date
+		if(!empty($tempo)){
+
+				if($tempo=='past')
+					$sql .= ' AND E.date < CURDATE()';
+				if($tempo=='futur')
+					$sql .= ' AND E.date >= CURDATE()';
+				
+		}	
+		elseif(!empty($date)){
+
+			if(is_string($date)) $day = $date;
+			if(is_array($date)) $day = $date['day'];
+
+				$sql .= ' AND E.date = :date ';
+				$values[':date'] = $day;
+
+		}			
+			
+		$sql .=' ';
+		
 		
 
 		//location
@@ -300,20 +307,44 @@ class EventsModel extends Model{
 			$sql .= ' '.$end;
 		}
 
-		   //debug($sql);
-		   //debug($values);
+
+		//debug($sql);
+		//debug($values);
+		//exit();
 		$results = $this->query($sql,$values);
 
 		$events = array();
 		foreach ($results as $event) {
 			
+			$event->author = $this->eventAuthor($event->user_id);
+			
+			if(isset($event->recur) && $event->recur==1)
+				$event->recur_day = $this->eventRecurrence($event->id);
+			
+			
 			$events[] = new Event($event);
 		}
 
-		$events = $this->joinEventsAuthor($events);
-		
+		//debug($events);
 		return $events;
 	}
+
+
+	private function eventAuthor($uid){
+
+		$sql = 'SELECT user_id,avatar,login,email,birthdate FROM users WHERE user_id=:user_id';
+		$author = $this->query($sql,array('user_id'=>$uid));
+		return new User($author[0]);
+	}
+
+	private function eventRecurrence($eid){
+
+		$sql = 'SELECT Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday FROM events_recur WHERE event_id=:event_id ';
+		$days = $this->query($sql,array('event_id'=>$eid),'fetchAll','array');		
+		return $days[0];
+	
+	}
+
 
 	public function findEventByID($event_id, $fields = '*'){
 
@@ -362,30 +393,6 @@ class EventsModel extends Model{
 		return $events;
 	}
 
-	public function joinEventsAuthor($events){
-
-		if(empty($events)) return $events;
-		if(is_array($events)){
-			foreach ($events as $key => $event) {
-				$author = $this->findFirst(array('table'=>'users',"fields"=>"user_id,avatar,login,email,birthdate",'conditions'=>array('user_id'=>$event->user_id)));
-				//if no author, remove event and jump to the next
-				if(empty($author)) {
-					unset($events[$key]);
-					continue;
-				}
-				$event->author = new User($author);
-			}
-			return $events;
-		}
-
-		if(is_object($events)){
-			$author = $this->findFirst(array('table'=>'users','conditions'=>array('user_id'=>$events->user_id)));
-			if(empty($author)) return false;
-			$events->author = new User($author);
-			return $events;
-		}
-
-	}
 
 	public function joinEventsParticipants($events, $proba = 1){
 
@@ -449,9 +456,12 @@ class EventsModel extends Model{
 			$res = $this->query($sql,$tab);
 		}		
 	
+		if(isset($res[0])){
+			$event->sport = $res[0];
+			return $event;			
+		}
 
-		$event->sport = $res[0];
-		return $event;
+		return false;
 		
 
 	}
@@ -508,15 +518,84 @@ class EventsModel extends Model{
 		return $users;
 	}
 
+	public function saveOcurrence($e){
+
+		//timestamp of the event date
+		$e->timestamp = strtotime($e->date.' '.$e->time);
+
+		//unset recurence
+		unset($e->recur_day);
+		unset($e->startdate);
+		unset($e->enddate);
+
+		if($id = $this->save($e)) {
+
+			//if new event, increment event created  statistics			
+			if(isset($e->id) && $e->id!=$id) $this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$e->user_id,'field'=>'events_created'));
+
+			return $id;
+		}
+		return false;
+	}
+
+	public function saveSerie($e){
+
+			$start = new DateTime($e->startdate);
+			$end = new DateTime($e->enddate);
+			$end->modify('+1 day');
+
+			$interval = DateInterval::createFromDateString('1 day');
+			$period = new DatePeriod($start,$interval,$end);
+
+			$occurences = array();
+			$recur_day = $e->recur_day;
+
+			foreach ($period as $dt) {
+
+				$day = $dt->format('l');
+
+				if(in_array($day, $recur_day)){
+					
+					$n = clone $e;
+					$n->date = $dt->format('Y-m-d');
+					
+					$occurences[] = $n;				
+				}
+				
+			}
+
+			//save serie
+			$serie = new stdClass();
+			$serie->table= 'events_serie';
+			$serie->startdate = $e->startdate;
+			$serie->enddate = $e->enddate;
+			$serie->count = count($occurences);
+			foreach ($recur_day as $day) {			
+				if(!empty($day)) $serie->$day = 1;
+			}		
+			if(!$serie_id = $this->save($serie)) return false;
+
+			
+			//save occurence
+			foreach ($occurences as $k => $o) {
+				
+				$o->serie_id = $serie_id;
+				$id = $this->saveOcurrence($o);
+
+				$occurences[$k] = $id;
+			}			
+
+			//return first event_id
+			return $occurences[0];
+
+	}
+
 	public function saveEvent($event){
 
 		//time of the event
 		$event->time = $event->hours.':'.$event->minutes;
 		unset($event->hours);
 		unset($event->minutes);
-
-		//timestamp of the event date
-		$event->timestamp = strtotime($event->date.' '.$event->time);
 
 		//Country of the city
 		if(empty($event->CC1)){
@@ -538,17 +617,17 @@ class EventsModel extends Model{
 			}
 		} 
 
-
+		//recureence
+		if($event->enddate!='0000-00-00' && $event->startdate!='0000-00-00' && !empty($event->recur_day)){
+			
+			return $this->saveSerie($event);
+		}		
 		
-		if($id = $this->save($event)) {
+		return $this->saveOcurrence($event);
 
-			//increment event created if new event					
-			if(isset($event->id)) $this->increment(array('table'=>'users_stat','key'=>'user_id','id'=>$event->user_id,'field'=>'events_created'));
-
-			return $id;
-		}
 		return false;
 	}
+
 
 	public function saveParticipants($users,$event,$proba = 1){
 		
@@ -971,6 +1050,9 @@ class Event{
 	public $time    = '12:00:00'; //default time
 	public $timing  = '';
 	public $confirmed = 0;
+	public $startdate = 0;
+	public $enddate = 0;
+	public $recur_day = array();
 
 	public function __construct( $fields = array() ){
 		
@@ -1188,6 +1270,12 @@ class Event{
 	public function authorReviews(){
 
 		return $this->reviews;
+	}
+
+	public function isRecurrent(){
+
+		if(!empty($this->recur_day)) return true;
+		return false;
 	}
 
 }

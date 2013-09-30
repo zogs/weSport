@@ -137,6 +137,18 @@
 						<?php endif; ?>
 					</h2>
 
+					<?php if(!empty($event->phone)): ?>
+					<h2 class="event-info">
+						<span class="ws-icon-phone" title="Téléphone"></span>
+						<?php if($this->session->user()->online()): ?>
+							<?php echo $event->phone;?>
+						<?php else: ?>
+							<?php echo substr(ucfirst($event->phone),0,5).'...';?>
+							 <small><a href="<?php echo Router::url('users/login');?>">Connectez-vous</a> pour voir la suite du téléphone</small>
+						<?php endif; ?>
+					</h2>
+					<?php endif;?>
+
 					<h2 class="event-info">
 						<span class="ws-icon-<?php echo $event->sport->slug;?>" title="Sport"></span>
 						<?php echo ucfirst($event->getSportName());?>
