@@ -15,7 +15,12 @@
 					<div class="header-left">
 						<div class="user-login">
 							<img src="<?php echo $user->getAvatar();?>" alt="">
-							<h1><?php echo $user->getLogin();?></h1>
+							<h1>
+								<?php echo $user->getLogin();?>
+								<?php if($user->getAccount()=='asso'): ?><span class="label label-important label-account tooltiptop" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>
+								<?php if($user->getAccount()=='bizness'): ?><span class="label label-important label-account tooltiptop" data-toogle="tooltip" title="Professionnel"><i>P</i></span><?php endif;?>							
+
+							</h1>
 							<span class="user-descr">
 								<?php if(!empty($user->descr)): ?>
 									<?php echo $user->descr;?>
@@ -27,7 +32,7 @@
 					</div>
 					<div class="header-right user-info">
 
-							<span><strong><?php echo $user->getAge();?> ans, inscrit depuis <?php echo date('d/m/Y',strtotime($user->date_signin));?></strong></span>
+							<span><strong><?php echo $user->getAge();?> , inscrit depuis <?php echo date('d/m/Y',strtotime($user->date_signin));?></strong></span>
 							<span><?php echo count($pastParticipation);?> participation | <?php echo count($hasOrganized);?> organisation</span>
 							<span><i><?php 
 							$loc = (array) $user->location;

@@ -28,16 +28,24 @@
 					<a class="events-link" 
 						href="<?php echo $event->getUrl();?>"						
 						data-content="Ville : <strong><?php echo $event->getCityName();?></strong><br />													
-										Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge().' ans';?>)<br />
+										Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge();?>)<br />
 										Participants : <strong><?php echo $event->getNbParticipants();?></strong><br />
 										<i><?php echo substr($event->getDescription(),0,100);?></i>
 									"
+						<?php if(!$event->confirmed):?>title="<span style='color:grey'>En attente de participants</span>"<?php endif;?>
 					>
 		
-						<div class="events-time">
-							<?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?>
-							<?php if($event->confirmed==1):?><span class="label label-success label-confirmed tooltiptop" data-toggle="tooltip" title="L'activité est confirmé!">Confirmé</span><?php endif;?>
-							<?php if(isset($event->UserParticipation)): ?><span class="label label-important label-participe tooltiptop" data-toggle="tooltip" title="Je participe"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
+						<div class="events-head">
+							<div class="events-time"><?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?></div>
+							<div class="events-label">
+								<?php if($event->confirmed==1):?>
+									<span class="label label-confirmed tooltiptop" data-toggle="tooltip" title="L'activité est confirmé!">Confirmé</span>								
+								<?php endif;?>
+								<?php if(isset($event->UserParticipation)): ?><span class="label label-important label-participe tooltiptop" data-toggle="tooltip" title="Je participe"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
+								<?php if($event->author->getAccount()=='asso'): ?><span class="label label-grey tooltiptop" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>
+								<?php if($event->author->getAccount()=='bizness'): ?><span class="label label-grey tooltiptop" data-toogle="tooltip" title="Bizness"><i>P</i></span><?php endif;?>																							
+							</div>
+
 						</div>
 						<div class="events-content">							
 							<div class="ws-sport-icon tooltipbottom" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"><span class="ws-icon-<?php echo $event->sport->slug;?>"></span></div>						

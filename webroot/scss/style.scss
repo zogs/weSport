@@ -205,8 +205,6 @@ body{
 	}
 
 	#userCounter {
-		display:none;
-
 		position:absolute;
 		right:80px;
 		top:100%;
@@ -757,46 +755,60 @@ body{
 		border:1px solid rgba(0,0,0,0.1);
 		border-bottom:4px solid rgba(0,0,0,0.2);
 		@include border-radius(20px);
+	}
 
-		.events-link{
-			display:block;
-		}
+	.events-link{
+		display:block;
+	}
 
-		.events-link:hover{
-			.events-content{
-				.events-title{
-					color:$darkblue;
-				}
-			}
-		}
-
-		.events-time {
-			font-weight:bold;
-			@include rem(18);
-			color:#d0d0d0;				
-
-			.label-confirmed { @include rem(10);}
-			.label-participe { @include border-radius(20px);}
-		}
-
+	.events-link:hover{
 		.events-content{
 			.events-title{
-				position:relative;
-				display:inline;
-				color:$deepblue;
-				@include rem(14);
-				font-weight: bold;
-				margin:2px 0 0 0;										
-			}
-			.ws-sport-icon { 
-				float:left;
-				margin-right:5px;
-				span {
-					@include rem(35); color:#000; 
-				}
+				color:$darkblue;
 			}
 		}
 	}
+
+	.events-head{
+		display: block;
+		width:100%;
+		float:left;
+		position:relative;
+	}
+
+	.events-time {
+		display: block;
+		float:left;
+		font-weight:bold;
+		@include rem(18);
+		color:#d0d0d0;						
+	}
+
+	.events-label{
+		display: block;
+		float:left;
+		margin-left:5px;
+		margin-top:-1px;
+	}
+
+	.events-content{
+		.events-title{
+			position:relative;
+			display:inline;
+			color:$deepblue;
+			@include rem(14);
+			font-weight: bold;
+			margin:2px 0 0 0;										
+		}
+		.ws-sport-icon { 
+			float:left;
+			margin-right:5px;
+			span {
+				@include rem(35); color:#000; 
+			}
+		}
+	}
+	
 
 	.events-confirmed {
 		border-bottom-width: 6px;
@@ -804,6 +816,27 @@ body{
 	}
 
 }
+
+.events-label{
+	.label{
+		@include rem(12);
+		@include border-radius(20px);
+	}
+	.label-confirmed { 
+		@include rem(10);
+		background-color:$darkgreen;	
+	}
+	.label-participe { }
+	.label-grey { 
+		background-color:#DDD; 
+		color:#FFF; 
+		font-family:Arial,sans-serif; 
+		span{
+			color:#FFFFFF;
+		}
+	}
+}
+
 
 .minified-events{
 	.colomn-date {
@@ -918,6 +951,8 @@ h1.title-sheet {
 		.select2-container:focus .select2-choice { @include box-shadow(0 0 0 3px $softred);}
 		.select2-choice {height:auto; padding:5px 0 5px 10px; border:1px solid #CCC;}
 		.select2-choice span { display:inline; margin-right:0; text-transform: capitalize;}
+
+		.geo-select{ margin-bottom:18px;}
 	}
 
 	.control-submit{ 
@@ -984,6 +1019,11 @@ h1.title-sheet {
 		padding:0;
 		padding-bottom:50px;
 		border-right:1px solid #DDD;
+
+		#control-account{
+			margin-top:0;
+			input[type=radio] { margin-top:0;}
+		}
 	}
 	.form-facebook {
 		float:left;
@@ -1384,8 +1424,10 @@ div.col_small{
 }
 
 .events-list{
-	max-height:300px;
-	overflow-y: scroll;
+	.block-content{
+		max-height:300px;
+		overflow-y: scroll;		
+	}
 }
 
 
@@ -1461,6 +1503,8 @@ div.col_small{
 				text-transform: capitalize;
 				font-family: 'Boogaloo';
 				font-weight: normal;
+
+
 			}
 			span.user-descr {
 				@include rem(12);

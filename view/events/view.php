@@ -26,7 +26,7 @@
 						<div class="orga-avatar"><img src="<?php echo $event->author->getAvatar();?>"/></div>
 						<div class="orga-info">
 							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>" rel="me nofollow"><?php echo $event->author->login;?></a></span>
-							<span class="orga-age"><?php echo $event->author->getAge();?> ans</span>
+							<span class="orga-age"><?php echo $event->author->getAge();?></span>
 							<span class="orga-link"><a href="<?php echo $event->author->getLink();?>" rel="me nofollow">Voir la fiche</a></span>
 						</div>
 					</div>				
@@ -74,7 +74,7 @@
 							<span class="label">En attente</span> <span class="nb-participant">de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
 					<?php endif;?>	
 				<?php elseif($event->timing=='past'): ?>			
-							<span class="label">Terminé</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
+							<span class="label">Cette activité est terminée</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
 				<?php endif; ?>
 				</div>
 			</div>

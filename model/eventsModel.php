@@ -332,7 +332,7 @@ class EventsModel extends Model{
 
 	private function eventAuthor($uid){
 
-		$sql = 'SELECT user_id,avatar,login,email,birthdate FROM users WHERE user_id=:user_id';
+		$sql = 'SELECT user_id,avatar,login,email,birthdate,account FROM users WHERE user_id=:user_id';
 		$author = $this->query($sql,array('user_id'=>$uid));
 		return new User($author[0]);
 	}
@@ -1092,7 +1092,7 @@ class Event{
 
 		if(isset($this->author->login)) return $this->author->login;
 		return '';
-	}
+	}	
 
 	public function getLinkAuthor(){
 		return Router::url('users/view/'.$this->user_id.'/'.$this->getAuthor());

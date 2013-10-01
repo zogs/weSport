@@ -460,6 +460,11 @@ class User {
 		return $this->role;
 	}
 
+	public function getAccount(){
+		if(!empty($this->account)) return $this->account;
+		return 'public';
+	}
+
 	public function isLog(){
 		if($this->user_id!==0) return true;
 		return false;
@@ -486,8 +491,13 @@ class User {
 	}
 
 	public function getAge(){
-		if(empty($this->birthdate)) return '??';
-		return date('Y-m-d') - date($this->birthdate);
+
+		if(!empty($this->account)){
+			if($this->account=='asso') return 'Association';
+			if($this->account=='bizness') return 'Professionnel';
+		}
+		
+		return date('Y-m-d') - date($this->birthdate). ' ans';
 	}
 	public function getBirthyear(){
 		$d = explode('-',$this->birthdate);

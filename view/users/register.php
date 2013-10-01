@@ -13,10 +13,11 @@
 
 			<form class="form form-ws label-hidden w50 form-register fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
 				<p class="intro">En 2min via le formulaire suivant:</p>
-				<?php echo $this->Form->input('login','Pseudo',array('icon'=>'icon-user','required'=>'required','placeholder'=>"Pseudo",'data-url'=>Router::url('users/check'))) ?>
-				<?php echo $this->Form->input('email',"Email",array('type'=>'email', 'icon'=>"icon-envelope","required"=>"required","placeholder"=>"Email",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->input('login',"Nom d'utilisateur",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom d'utilisateur",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->input('email',"Email de contact",array('type'=>'email', 'icon'=>"icon-envelope","required"=>"required","placeholder"=>"Email de contact",'data-url'=>Router::url('users/check'))) ?>
 				<?php echo $this->Form->input('password','Mot de passe',array('type'=>"password",'icon'=>'icon-lock','required'=>'required','placeholder'=>'Mot de passe')) ?>
 				<?php echo $this->Form->input('confirm','Confirmer', array('type'=>'password','icon'=>'icon-lock','required'=>'required','placeholder'=>'Confirmer le mot de passe')) ?>		
+				<?php echo $this->Form->radio('account','Profil',array('public'=>"Particulier",'asso'=>"Association",'bizness'=>"Professionel"),array('default'=>'public','class'=>'account_type'));?>
 				<?php echo $this->Form->select('sexe','Sexe',array('h'=>'Homme','f'=>'Femme'),array('placeholder'=>'Sexe','icon'=>'icon-star-empty')); ?>
 				<div class="control-group" id="control-birthday">
 					<label for="birthday" class="control-label">Date de naissance</label>
@@ -72,6 +73,19 @@
 
 <script type="text/javascript">
 	
+$(document).ready(function(){
 
+	$(".account_type").change(function(){
+
+		console.log($(this));
+		if($(this).attr('id')=='public'){
+			$("#control-sexe,#control-birthday").show();
+		}
+		else{
+			$("#control-sexe,#control-birthday").hide();
+		}
+	});
+
+});
 	
 </script>

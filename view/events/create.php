@@ -93,17 +93,26 @@
 					</form>					
 				</div>					
 
+
+						<?php 
+
+							$this->request('events','arrangeEventsBySerie',array($user_events_in_futur));
+						 ?>
+
 				<?php if(!empty($user_events_in_futur)):?>
 				<div class="block block-green event-to-come events-list">
 					<h3>Mes activités à venir</h3>					
 					<div class="block-content">
 						<ul>
+
 							<?php foreach ($user_events_in_futur as $e):?>							
 								<li>
 									
 									<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
 										<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
 										<?php echo $e->getTitle();?>
+										
+										
 									</a>
 								</li>
 							<?php endforeach; ?>

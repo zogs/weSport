@@ -78,7 +78,10 @@ window.onload = function() {
 			'ws-icon-fighting' : '&#xe001;',
 			'ws-icon-flying' : '&#xe000;',
 			'ws-icon-other' : '&#xe002;',
-			'ws-icon-swimming' : '&#xe003;'
+			'ws-icon-swimming' : '&#xe003;',
+			'ws-icon-busy' : '&#xe004;',
+			'ws-icon-neutral' : '&#xe005;',
+			'ws-icon-smiley-3' : '&#xe006;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;

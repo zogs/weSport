@@ -387,6 +387,9 @@ class EventsController extends Controller{
 		$this->redirect('events/view/'.$eid);
 	}
 
+
+
+
 	public function confirm($eid){
 
 		if(!isset($eid) ||!is_numeric($eid)) exit();
@@ -405,6 +408,33 @@ class EventsController extends Controller{
 
 	}
 
+
+
+	public function arrangeEventsBySerie($events){
+
+		$arr = array();
+		$series = array();
+
+		foreach ($events as $e) {
+			
+			if($e->serie_id!=0) {
+				if(!in_array($e->serie_id,$series)){
+					$e->serie = array();					
+					$arr[$e->serie_id] = $e;
+				}
+				else{
+					$es = $events[$e->serie_id];
+					$es->serie[] = $e;
+					$arr[$e->serie_id] = $es;
+				}				
+			}
+			else
+				$arr[] = $e;
+
+		}
+
+
+	}
 	public function create($event_id = 0){
 
 		$this->loadModel('Events');

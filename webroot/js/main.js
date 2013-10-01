@@ -94,11 +94,11 @@ $(document).ready(function(){
 	============================================================*/
 	$('.tooltiptop').livequery(function(){
 
-		$(this).tooltip( { delay: { show: 500, hide: 100 }} );
+		$(this).tooltip( { delay: { show: 200, hide: 100 }} );
 	});
 	$('.tooltipbottom').livequery(function(){
 
-		$(this).tooltip( { placement : 'bottom', delay: { show: 500, hide: 100 }} );
+		$(this).tooltip( { placement : 'bottom', delay: { show: 200, hide: 100 }} );
 	});
 	
 
