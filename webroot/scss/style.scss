@@ -722,13 +722,13 @@ body{
 		td.colomn-6 .colomn-date { background-color: darken($softgreen,$perCent);}
 		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}
 
-		td.colomn-1 .addEvent { color: darken($red,$perCent);}
-		td.colomn-2 .addEvent { color: darken($softred,$perCent);}
-		td.colomn-3 .addEvent { color: darken($lightred,$perCent);}
-		td.colomn-4 .addEvent { color: darken($softyellow,$perCent);}
-		td.colomn-5 .addEvent { color: darken($lightgreen,$perCent);}
-		td.colomn-6 .addEvent { color: darken($softgreen,$perCent);}
-		td.colomn-7 .addEvent { color: darken($green,$perCent);}
+		td.colomn-1 .addEvent { color: darken($red,$perCent*2);}
+		td.colomn-2 .addEvent { color: darken($softred,$perCent*2);}
+		td.colomn-3 .addEvent { color: darken($lightred,$perCent*2);}
+		td.colomn-4 .addEvent { color: darken($softyellow,$perCent*2);}
+		td.colomn-5 .addEvent { color: darken($lightgreen,$perCent*2);}
+		td.colomn-6 .addEvent { color: darken($softgreen,$perCent*2);}
+		td.colomn-7 .addEvent { color: darken($green,$perCent*2);}
 
 		td.colomn-1 .addEvent:hover { color: darken($red,10%);}
 		td.colomn-2 .addEvent:hover { color: darken($softred,10%);}
@@ -817,25 +817,25 @@ body{
 
 }
 
-.events-label{
-	.label{
-		@include rem(12);
-		@include border-radius(20px);
-	}
-	.label-confirmed { 
-		@include rem(10);
-		background-color:$darkgreen;	
-	}
-	.label-participe { }
-	.label-grey { 
-		background-color:#DDD; 
-		color:#FFF; 
-		font-family:Arial,sans-serif; 
-		span{
-			color:#FFFFFF;
-		}
+.ws-label{
+	cursor: help;
+	@include rem(12);
+	@include border-radius(20px);
+}
+.ws-label-confirmed { 
+	@include rem(10);
+	background-color:$darkgreen;	
+}
+.ws-label-participe { }
+.ws-label-grey { 
+	background-color:#DDD; 
+	color:#FFF; 
+	font-family:Arial,sans-serif; 
+	span{
+		color:#FFFFFF;
 	}
 }
+
 
 
 .minified-events{
@@ -1050,6 +1050,36 @@ h1.title-sheet {
 ==== Event Create
 ======*/
 .createEvent {
+
+	.title-event {
+		margin:0;
+		margin-left:200px;
+		padding:5px 0 15px 0;
+		position:relative;
+		text-align: left;
+
+		h1{
+			font-family:'Boogaloo',sans-serif;
+			color:#427b8b;
+			@include rem(35);					
+			margin-bottom: 0px;		
+		}
+		span.ws-icon{
+			position:absolute;
+			left:-100px;
+			top:0;
+		}
+		small{ 
+			margin-left:6px;
+			color:$deepgrey;
+			@include rem(12);
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+
+	}
+
 	.twitter-typeahead { width:100%;}
 	.col_small{
 		padding-top:30px;
@@ -1076,8 +1106,36 @@ h1.title-sheet {
 			label.checkbox{padding-left:5px;}
 		}
 	}
+	
 }
+.event-create-howto{	
+	padding:15px 0 0 0;
+	list-style:disc;
+	counter-reset: li;
+	li{
+		margin-bottom:15px;
+		@include rem(13);
+		position:relative;
+		padding-left:12px;
+		color:#666;
 
+		&:before{
+			position:absolute;
+			left:-20px;
+			height:25px;
+			width:25px;
+			background-color:white;
+			color:$darkgrey;
+			border:2px solid $darkgrey;
+			text-align:center;
+			font-weight: bold;
+			@include rem(14);
+			@include border-radius(50px);
+			content:counter(li);
+			counter-increment:li;
+		}
+	}	
+}
 /*======
 ==== Event View
 ======*/
@@ -1163,7 +1221,7 @@ h1.title-sheet {
 	@extend %clearfix;
 
 	.event-status{
-		float:right;
+		float:left;
 		.label { padding:5px 10px; @include border-radius(10px)}
 		span.nb-participant{
 			@include rem(12);
@@ -1172,7 +1230,7 @@ h1.title-sheet {
 	}
 	.event-action{
 			position:relative;
-			float:left;			
+			float:right;			
 			a.btn-ws{
 				padding:5px 10px;
 				@include rem(12);
@@ -1213,17 +1271,20 @@ h1.title-sheet {
 
 div.col_large{
 	float:left;
-	width:580px;
+	width:560px;
 	min-height: 300px;
 	padding:10px 5px 0 20px;
 
 	h2.event-info{
 		@include rem(22);
 		color:$darkblue;
+		padding-left:20px;
+		padding-top:10px;
 
 		span{
 			padding:8px;
 			background-color: #FFF;
+			@include rem(30);
 			@include border-radius(100px);
 		}
 		small{
@@ -1234,18 +1295,15 @@ div.col_large{
 
 div.col_small{
 	float:right;
-	width:340px;
+	width:360px;
 	min-height: 300px;
 	padding:10px 10px 0 5px;
 }
 
 .block{
 	margin-bottom:20px;
-	
 	ul{
-		margin:0;
-		padding:0;
-		list-style: none;
+			list-style:none;
 	}
 	h3{
 		padding:8px 0 8px 30px;
@@ -1259,8 +1317,12 @@ div.col_small{
 	.block-content{
 		padding:5px 5px 10px 10px;
 		background-color: #CCC;
+		color:#888;			
 		@include rem(14);
-		color:#888;	
+		@include box-shadow(inset 10px 0 0 0 rgba(0,0,0,0.02));
+
+		
+
 		a{
 			padding:5px;
 			line-height:14px;
@@ -1286,36 +1348,7 @@ div.col_small{
 				color:#AAA;
 			}
 		}
-		ul{
-			margin:0;
-			list-style: none;
-			li{
-
-				@include rem(14);
-				color:#AAA;
-				margin:0 0 5px 0;				
-				span{
-					display:inline-block;
-  					vertical-align:middle;
-				}
-				img {
-					width:30px;
-					height:30px;
-					padding:1px;
-					border:1px solid #AAA;
-				}
-				a{
-					display:inline-block;
-  					vertical-align:middle;
-					@include rem(12);
-					font-weight: bold;
-					color:$deepblue;
-				}
-				small.noevents{
-					@include rem(12);
-				}
-			}
-		}
+		
 		a{
 			@include rem(10);
 		}
@@ -1425,8 +1458,96 @@ div.col_small{
 
 .events-list{
 	.block-content{
+		padding:0;
 		max-height:300px;
-		overflow-y: scroll;		
+		overflow-y: scroll;	
+		ul{
+			margin:0;
+			list-style: none;
+			li{
+
+				@include rem(14);
+				position:relative;
+				color:#AAA;
+				margin:0 0 0px 0px;
+				padding:7px 0 7px 15%;
+
+				&:hover{
+					background-color:rgba(0,0,0,0.025);
+				}
+
+				span{
+					position:absolute;
+					left:15px;
+					top:10px;
+				}
+				strong{
+					display: block;
+					width:100%;
+					@include rem(12);
+					font-weight: bold;
+					color:$deepblue;
+				}
+				small{
+					@include rem(10);
+					color:$deepgrey;
+				}			
+				a{
+					margin:0;
+					padding-bottom:0;
+					padding-left:0;
+					display:block;	
+					overflow:hidden;				
+					
+				}
+				small.noevents{
+					@include rem(12);
+				}
+
+				i{
+					padding-left:10px;
+				}
+
+				.showListSerie{
+					display: inline;
+					margin-left:10px;
+					padding:0;
+					color:$deepblue;
+					border-bottom:1px dotted $deepblue;
+					&:hover{
+						border-bottom:1px solid rgba(255,255,255,0);
+					}
+				}
+				.linkclose:before{
+					content:' + ';					
+				}
+				.linkopen:before{
+					content:' - ';
+				}
+
+				ul.listserie{
+					display: none;
+					width:100%;
+					margin:0;
+					li{
+						padding:0;
+						margin:0;
+						a{
+							padding:0;
+							padding-left:5px;
+							color:$deepblue;
+							&:hover{
+								color:$darkblue;
+							}
+						}
+						&:hover{
+							background-color:rgba(0,0,0,0);
+						}
+					}
+				}
+
+			}
+		}	
 	}
 }
 
@@ -1448,11 +1569,7 @@ div.col_small{
 		padding:10px 20px;			
 	}
 }
-.event-to-come{	
-	.block-content{
-		padding:10px 20px;		
-	}
-}
+
 .event-userreview{
 	@extend .block-orange;
 	label[for=review]{ 

@@ -34,6 +34,21 @@
 			</section>
 
 			<div class="event-action-bar <?php echo ($event->confirmed==1)? 'event-confirmed' : 'event-pending';?> <?php echo ($event->timing=='past')? 'event-finished':'';?>">
+				
+				<div class="event-status">
+				<?php if($event->timing=='tocome'): ?>
+					<?php if($event->confirmed==1): ?>
+							<span class="label label-success">Confirmé</span> <span class="nb-participant"> <?php echo count($event->participants);?> participants</span>
+					<?php endif ?>
+					<?php if($event->confirmed==0): ?>
+							<span class="label">Non confirmé</span> <span class="nb-participant">En attente de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
+					<?php endif;?>	
+				<?php elseif($event->timing=='past'): ?>			
+							<span class="label">Cette activité est terminée</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
+				<?php endif; ?>
+					<div class="fb-like" data-width="450" data-layout="button_count" data-show-faces="true" data-send="false" style="position:relative;top:4px;right:-10px;"></div>
+				</div>
+
 				<div class="event-action">
 					<?php if($event->timing=='tocome'): ?>
 						<?php if($this->session->user()->online()): ?>
@@ -62,21 +77,9 @@
 							<a class="btn-ws" href="<?php echo Router::url('users/register');?>">Inscription</a>
 						<?php endif; ?>	
 					<?php endif; ?>
-					<div class="fb-like" data-width="450" data-layout="button_count" data-show-faces="true" data-send="false" style="position:relative;top:4px;right:-10px;"></div>
+					
 				</div>
 				
-				<div class="event-status">
-				<?php if($event->timing=='tocome'): ?>
-					<?php if($event->confirmed==1): ?>
-							<span class="label label-success">Confirmé</span> <span class="nb-participant"> <?php echo count($event->participants);?> participants</span>
-					<?php endif ?>
-					<?php if($event->confirmed==0): ?>
-							<span class="label">En attente</span> <span class="nb-participant">de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
-					<?php endif;?>	
-				<?php elseif($event->timing=='past'): ?>			
-							<span class="label">Cette activité est terminée</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
-				<?php endif; ?>
-				</div>
 			</div>
 
 			<?php 

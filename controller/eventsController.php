@@ -413,26 +413,24 @@ class EventsController extends Controller{
 	public function arrangeEventsBySerie($events){
 
 		$arr = array();
-		$series = array();
-
+		$serie = array();
 		foreach ($events as $e) {
 			
-			if($e->serie_id!=0) {
-				if(!in_array($e->serie_id,$series)){
-					$e->serie = array();					
-					$arr[$e->serie_id] = $e;
+			if(!empty($e->serie_id)){
+			
+				if(!in_array($e->serie_id,$serie)){
+					$serie[] = $e->serie_id;
+					$e->serie = array();
+					$arr[$e->serie_id] = $e;						
 				}
 				else{
-					$es = $events[$e->serie_id];
-					$es->serie[] = $e;
-					$arr[$e->serie_id] = $es;
-				}				
-			}
-			else
-				$arr[] = $e;
-
+					$arr[$e->serie_id]->serie[] = $e;
+				}
+			} 
+			else $arr[] = $e;
 		}
 
+		return $arr;
 
 	}
 	public function create($event_id = 0){
@@ -603,11 +601,19 @@ class EventsController extends Controller{
 		}
 		
 		$d['sports_available'] = $this->Events->findSportsList($this->getLang());
-		$d['user_events_in_futur'] = $this->Events->findEvents(array('tempo'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
-		$d['user_events_in_futur'] = $this->Events->joinSports($d['user_events_in_futur'],$this->getLang());
-		$d['user_events_in_past'] = $this->Events->findEvents(array('tempo'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
-		$d['user_events_in_past'] = $this->Events->joinSports($d['user_events_in_past'],$this->getLang());
-		
+
+		$eventfutur = $this->Events->findEvents(array('tempo'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		$eventfutur = $this->Events->joinSports($eventfutur,$this->getLang());
+		$eventfutur = $this->arrangeEventsBySerie($eventfutur);
+		$d['eventfutur'] = $eventfutur;
+
+
+		$eventpast = $this->Events->findEvents(array('tempo'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
+		$eventpast = $this->Events->joinSports($eventpast,$this->getLang());
+		$eventpast = $this->arrangeEventsBySerie($eventpast);
+		$d['eventpast'] = $eventpast;
+
+
 		if($evt->exist()) {
 			//On joint les sports dans la langue de l'utilisation
 			$evt = $this->Events->joinSport($evt,$this->getLang());

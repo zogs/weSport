@@ -10,13 +10,17 @@
 		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" rel="nofollow" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>"></a></div>	
 		<div class="fresque fresque-mini"></div>
 		<div class="white-sheet">			
-			<div class="head-sheet">							
+			<div class="head-sheet">			
 				<?php if($event->exist()): ?>
 				
-				<h1 class="title-sheet">					
+
+				<div class="title-event">	
+					<a href="<?php echo $event->getUrl();?>">				
 					<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?>"></span>
-					<?php echo '<a href="'.$event->getUrl().'">'.$event->getTitle().'</a>';?>
-				</h1>
+					<h1><?php echo $event->getTitle();?></h1>
+					</a>
+					<small><?php echo $event->getCityName();?> - <?php echo $event->getDate();?> - <a href="<?php echo $event->getUrl();?>">Voir l'annonce</a></small>					
+				</div>
 				<?php else: ?>
 				<h1 class="title-sheet">
 					Proposer une nouvelle activité !
@@ -84,7 +88,7 @@
 							<?php if(!$event->isConfirm()): ?>
 							<li><a href="<?php echo Router::url('events/confirm/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('Confirmer l\'activité même si le nombre de participants n\'est pas atteint ?')">Confirmer l'activité</a></li>
 							<?php endif; ?>
-							<li><a href="<?php echo Router::url('events/report/'.$event->getID());?>" class="btn btn-link">Reporter à la semaine suivant</a></li>
+							<li><a href="<?php echo Router::url('events/create');?>" class="btn btn-link">Proposer une nouvelle activité</a></li>
 						</ul>
 					<?php else: ?>
 						<?php echo $this->Form->input("Soumettre l'annonce",'submit',array('class'=>'btn-ws')) ;?>
@@ -93,27 +97,58 @@
 					</form>					
 				</div>					
 
+						
+				<?php if(!$event->exist()): ?>
+				<div class="block block-yellow ">
+					<h3>Comment ça marche?</h3>
+					<div class="block-content">
+						<ul class="event-create-howto">
+							<li>
+								Vous pouvez créer une activité à une <strong>date précise</strong> ou à une <strong>date régulière</strong>.<small> (ex: tous les lundis et mercredi du mois de Juin)</small>
+							</li>
+							<li>
+								L'activité est <strong>confirmé</strong> quand le nombre minimum attendu <strong>est atteint</strong>. <small>Les participants recoivent un email confirmant que l'activité a bien lieu.</small>
+							</li>
+							<li>
+								L'adresse et le téléphone ne sont <strong>visible que par</strong> les membres We-Sport inscrits.
+							</li>
+							<li>
+								Tous les champs sont <strong>obligatoires</strong>, sauf le téléphone.
+							</li>
+							<li>
+								L'annonce est <strong>modifiable</strong> jusqu'à ce que l'activité soit <strong>confirmé</strong>. <small>Les changements sont envoyés par email aux participants déjà inscrits.</small>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<?php endif;?>
 
-						<?php 
 
-							$this->request('events','arrangeEventsBySerie',array($user_events_in_futur));
-						 ?>
-
-				<?php if(!empty($user_events_in_futur)):?>
+				<?php if(!empty($eventfutur)):?>
 				<div class="block block-green event-to-come events-list">
 					<h3>Mes activités à venir</h3>					
 					<div class="block-content">
 						<ul>
 
-							<?php foreach ($user_events_in_futur as $e):?>							
-								<li>
-									
-									<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
-										<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
-										<?php echo $e->getTitle();?>
-										
-										
+							<?php foreach ($eventfutur as $e):?>							
+								<li>									
+									<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
+									<a href="<?php echo $e->getUrlCreate();?>">
+										<strong><?php echo $e->getTitle();?></strong>
 									</a>
+									<small><?php echo $e->getDate();?></small>
+									<?php if(!empty($e->serie)): ?>
+										<a class="showListSerie linkclose" href="#"><?php echo count($e->serie);?> autres dates</a>	
+									<?php endif; ?>
+										<?php if(!empty($e->serie)):?>
+										<ul class="listserie">
+											<?php foreach ($e->serie as $ev):?>
+											<li>														
+												<strong><a href="<?php echo $ev->getUrlCreate();?>"><?php echo $ev->getDate();?></a></strong>
+											</li>
+											<?php endforeach;?>
+										</ul>
+									<?php endif; ?>																		
 								</li>
 							<?php endforeach; ?>
 						</ul>
@@ -121,18 +156,30 @@
 				</div>
 				<?php endif; ?>		
 
-				<?php if(!empty($user_events_in_past)): ?>
+				<?php if(!empty($eventpast)): ?>
 				<div class="block block-orange event-finished events-list">
 					<h3>Activités terminés</h3>
 					<div class="block-content">
 						<ul>
-						<?php foreach ($user_events_in_past as $e): ?>					
-							<li>
-								
-								<a href="<?php echo Router::url('events/create/'.$e->getID());?>">
-									<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
-									<?php echo $e->getTitle();?>
+						<?php foreach ($eventpast as $e): ?>					
+							<li>								
+								<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
+								<a href="<?php echo $e->getUrlCreate();?>">
+									<strong><?php echo $e->getTitle();?></strong>
 								</a>
+								<small><?php echo $e->getDate();?></small>
+								<?php if(!empty($e->serie)): ?>
+										<a class="showListSerie linkclose" href="#"><?php echo count($e->serie);?> autres dates</a>	
+									<?php endif; ?>
+									<?php if(!empty($e->serie)):?>
+									<ul class="listserie">
+										<?php foreach ($e->serie as $ev):?>
+										<li>														
+											<strong><a href="<?php echo $ev->getUrlCreate();?>"><?php echo $ev->getDate();?></a></strong>
+										</li>
+										<?php endforeach;?>
+									</ul>
+								<?php endif; ?>	
 							</li>
 						<?php endforeach;?>
 						</ul>
@@ -163,6 +210,12 @@
 			$("#control-recur").toggle(0);
 			$("#control-ocur").toggle(0);
 		});
+
+
+		$(".showListSerie").click(function(){			
+			$(this).parent().find('.listserie').toggle();
+			return false;
+		})
 
 	});
 </script>

@@ -886,7 +886,7 @@ class EventsModel extends Model{
 
 	public function findEventsUserOrganize($uid){
 
-		$sql = "SELECT * FROM events WHERE user_id=$uid AND UNIX_TIMESTAMP() >= timestamp";
+		$sql = "SELECT * FROM events WHERE user_id=$uid AND timestamp >= UNIX_TIMESTAMP()";
 		$res = $this->query($sql);
 
 		$events = array();
@@ -901,9 +901,9 @@ class EventsModel extends Model{
 
 	public function findEventsUserHasOrganized($uid){
 
-		$sql = "SELECT * FROM events WHERE user_id=$uid AND UNIX_TIMESTAMP() < timestamp";
+		$sql = "SELECT * FROM events WHERE user_id=$uid AND timestamp < UNIX_TIMESTAMP()";
 		$res = $this->query($sql);
-
+		
 		$events = array();
 		foreach ($res as $event) {	
 
@@ -1088,6 +1088,11 @@ class Event{
 		return Router::url($this->getSportSlug().'/'.$this->getID().'/'.$this->getSlug());
 	}
 
+	public function getUrlCreate(){
+
+		return Router::url('events/create/'.$this->getID());
+	}
+
 	public function getAuthor(){
 
 		if(isset($this->author->login)) return $this->author->login;
@@ -1149,6 +1154,7 @@ class Event{
 		if($lang=='fr') return Date::datefr($this->date);
 		return $this->date;
 	}
+	
 	public function getDatetime(){
 		return $this->getRowDate().' '.$this->getTime();
 	}

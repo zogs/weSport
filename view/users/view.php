@@ -17,10 +17,10 @@
 							<img src="<?php echo $user->getAvatar();?>" alt="">
 							<h1>
 								<?php echo $user->getLogin();?>
-								<?php if($user->getAccount()=='asso'): ?><span class="label label-important label-account tooltiptop" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>
-								<?php if($user->getAccount()=='bizness'): ?><span class="label label-important label-account tooltiptop" data-toogle="tooltip" title="Professionnel"><i>P</i></span><?php endif;?>							
-
 							</h1>
+								<?php if($user->getAccount()=='asso'): ?><span class="label ws-label ws-label-grey tooltiptop" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>
+								<?php if($user->getAccount()=='bizness'): ?><span class="label ws-label ws-label-grey tooltiptop" data-toogle="tooltip" title="Professionnel"><i>P</i></span><?php endif;?>							
+
 							<span class="user-descr">
 								<?php if(!empty($user->descr)): ?>
 									<?php echo $user->descr;?>
@@ -107,19 +107,31 @@
 
 				<div class="col_small">
 
-					<div class="block block-orange">
+					<div class="block block-orange events-list">
 						<h3>Organise prochainement</h3>
 						<div class="block-content">
 							<ul>
-							<?php if(!empty($hasOrganized)): ?>
-							<?php foreach ($hasOrganized as $event): ?>
+							<?php if(!empty($organiseEvents)): ?>
+							<?php foreach ($organiseEvents as $e): ?>
 								<li>
-									<a href="<?php echo $event->getUrl();?>">
-										<span class="ws-icon ws-icon-small ws-icon-<?php echo $event->sport->slug;?>"></span>
-										<?php echo $event->getTitle();?>
-									</a>
+
+									<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
+									<a href="<?php echo $e->getUrl();?>"><strong><?php echo $e->getTitle();?></strong></a>								
+									<small><?php echo $e->getDate();?></small>
+
+									<?php if(!empty($e->serie)): ?><a class="showListSerie linkclose" href="#"><?php echo count($e->serie);?> autres dates</a>	<?php endif; ?>
+									<?php if(!empty($e->serie)):?>
+										<ul class="listserie">
+											<?php foreach ($e->serie as $ev):?>
+											<li><strong><a href="<?php echo $ev->getUrl();?>"><?php echo $ev->getDate();?></a></strong></li>
+											<?php endforeach;?>
+										</ul>
+								<?php endif; ?>	
+
+
 								</li>
 							<?php endforeach; ?>
+
 							<?php else: ?>
 								<li>
 									<small class="noevents">Pas d'activité de prévu...</small>
@@ -129,19 +141,32 @@
 						</div>
 					</div>
 
-					<div class="block block-green">
+					<div class="block block-green events-list">
 						<h3>Participe prochainement</h3>
 						<div class="block-content">
 							<ul>
 								<?php if(!empty($futurParticipation)): ?>
-								<?php foreach ($futurParticipation as $event): ?>
+								<?php foreach ($futurParticipation as $e): ?>
 								<li>
-									<a href="<?php echo $event->getUrl();?>">
-										<span class="ws-icon ws-icon-small ws-icon-<?php echo $event->sport->slug;?>"></span>
-										<?php echo $event->getTitle();?>
-									</a>
+
+									<span class="ws-icon ws-icon-small ws-icon-<?php echo $e->sport->slug;?>"></span>
+									<a href="<?php echo $e->getUrl();?>"><strong><?php echo $e->getTitle();?></strong></a>
+									<small><?php echo $e->getDate();?></small>
+
+									<?php if(!empty($e->serie)): ?><a class="showListSerie linkclose" href="#"><?php echo count($e->serie);?> autres dates</a><?php endif; ?>
+									<?php if(!empty($e->serie)):?>
+									<ul class="listserie">
+										<?php foreach ($e->serie as $ev):?>
+										<li><strong><a href="<?php echo $ev->getUrl();?>"><?php echo $ev->getDate();?></a></strong></li>
+										<?php endforeach;?>
+									</ul>
+								<?php endif; ?>	
+
+
 								</li>
 								<?php endforeach; ?>
+
+
 								<?php else:?>
 								<li>
 									<small class="noevents">Pas d'activité de prévu...</small>
@@ -157,3 +182,13 @@
 		<div class="fresque"></div>
 	</div>
 </div>
+<script type="text/javascript">
+	 $(document).ready(function(){	
+
+		$(".showListSerie").click(function(){			
+			$(this).parent().find('.listserie').toggle();
+			return false;
+		});
+
+	});
+</script>
