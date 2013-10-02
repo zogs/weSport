@@ -749,12 +749,11 @@ body{
 	.events {
 		width:96%;
 		margin:5px auto;
-		padding:10px;
-		min-height:100px;
+		padding:15px 0 20px 10px;
 		background-color:#FFF;
 		border:1px solid rgba(0,0,0,0.1);
 		border-bottom:4px solid rgba(0,0,0,0.2);
-		@include border-radius(20px);
+		@include border-radius(30px);
 	}
 
 	.events-link{
@@ -769,49 +768,60 @@ body{
 		}
 	}
 
-	.events-head{
-		display: block;
-		width:100%;
-		float:left;
-		position:relative;
-	}
-
-	.events-time {
-		display: block;
-		float:left;
-		font-weight:bold;
-		@include rem(18);
-		color:#d0d0d0;						
-	}
-
-	.events-label{
-		display: block;
-		float:left;
-		margin-left:5px;
-		margin-top:-1px;
-	}
-
 	.events-content{
-		.events-title{
+		margin-left:50px;
+		position:relative;
+
+		.events-head{
+			display: block;
+			width:100%;
+			float:left;
 			position:relative;
-			display:inline;
+		}
+
+		.events-time {
+			display: block;
+			float:left;
+			font-weight:bold;
+			@include rem(16);
+			color:#d0d0d0;						
+		}
+
+		.events-label{
+			display: block;
+			float:left;
+			margin-left:5px;
+			margin-top:-1px;
+		}
+
+		.events-logo{
+			position:absolute;
+			top:0;
+			left:-50px;
+
+			.ws-sport-icon { 					
+				margin-right:5px;
+				span {
+					@include rem(45); color:#000; 
+				}
+			}
+		}
+	
+		.events-title{			
+			display:inline-block;
 			color:$deepblue;
 			@include rem(14);
 			font-weight: bold;
 			margin:2px 0 0 0;										
 		}
-		.ws-sport-icon { 
-			float:left;
-			margin-right:5px;
-			span {
-				@include rem(35); color:#000; 
-			}
+		.events-title.title-small{
+			@include rem(13);
 		}
 	}
 	
 
 	.events-confirmed {
-		border-bottom-width: 6px;
+		border-bottom-width: 8px;
 		border-color:$darkgreen;
 	}
 
@@ -826,7 +836,9 @@ body{
 	@include rem(10);
 	background-color:$darkgreen;	
 }
-.ws-label-participe { }
+.ws-label-participe {
+	background-color:$red;
+}
 .ws-label-grey { 
 	background-color:#DDD; 
 	color:#FFF; 
@@ -861,12 +873,16 @@ body{
 	}
 	.events{
 		width:auto;
+		margin:0;
+		padding:10px;		
 		min-height:10px;
 		display:inline-block;
-		.events-time { display:none;}
-		.events-content {
-			.events-title { display:none;}
-			.ws-sport-icon { margin:0;}
+		@include border-radius(100px);
+		.events-content { margin-left:0;}
+		.events-head { display:none;}
+		.events-descr {display: none;}
+		.events-logo {display:block; position:relative; top:0; left:0;
+			.ws-sport-icon{ margin:0;}
 		}
 	}
 }
@@ -1154,17 +1170,30 @@ h1.title-sheet {
 		display: block;
 		width:70%;
 		margin:0;
-		h1.event-title{		
-			font-family: 'Boogaloo',Helvetica,Arial;
-			color:$deepblue;
-			font-weight: normal;
-			@include rem(35);
-			margin:0;
-			
-			span.ws-icon{
+		div.event-sportLogo{
+			display: inline-block;
+		
+			width:18%;
+			.ws-icon{
 				border:8px solid rgba(0,0,0,0.09);
 			}
 		}
+
+		h1.event-title{
+			
+			display: inline-block;
+			vertical-align: middle;
+			width:80%;		
+			font-family: 'Boogaloo',Helvetica,Arial;
+			color:$deepblue;
+			font-weight: normal;
+			@include rem(32);
+			margin:0;
+			&.title-big{
+				@include rem(50);
+			}
+		}
+
 	}
 
 	.header-right{

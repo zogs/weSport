@@ -15,8 +15,10 @@
 			<section>
 				<div class="content-header">
 					<div class="header-left">
-						<h1 class="event-title">
-							<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>
+						<div class="event-sportLogo">
+							<span class="ws-icon ws-icon-large ws-icon-halo ws-icon-<?php echo $event->sport->slug;?> event-sport-logo"></span>							
+						</div>
+						<h1 class="event-title <?php echo (strlen($event->getTitle())<30)? 'title-big' : '';?>">
 							<?php echo $event->getTitle();?>
 						</h1>
 					</div>
@@ -204,7 +206,9 @@
 																				'context_id'=>$event->id,
 																				'displayRenderButtons'=>true,
 																				'enableInfiniteScrolling'=>false,
-																				'levelFormReplyToDisplay'=>0
+																				'levelFormReplyToDisplay'=>0,
+																				'placeholderCommentForm'=>'Poser une question',
+																				'placeholderReplyForm'=>'Ecrire une réponse'
 																			)
 																	)
 											);
@@ -222,14 +226,14 @@
 						<div class="block-content">
 							<?php foreach ($event->participants as $participant):?>										
 								<a href="<?php echo $participant->getLink();?>" rel="me nofollow">
-									<img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans)';?>"/>
+									<img class="event-avatar event-participant-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().')';?>"/>
 									<strong><?php echo $participant->getLogin();?></strong>
 									<br />
-									<small><?php echo $participant->getAge();?> ans</small>
+									<small><?php echo $participant->getAge();?></small>
 								</a>
 							<?php endforeach;?>
 							<?php foreach ($event->uncertains as $participant):?>										
-								<a href="<?php echo $participant->getLink();?>" rel="me nofollow"><img class="event-avatar event-uncertains-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().' ans) (peut être)';?>"/></a>
+								<a href="<?php echo $participant->getLink();?>" rel="me nofollow"><img class="event-avatar event-uncertains-avatar tooltiptop" src="<?php echo $participant->getAvatar();?>" data-toggle="tooltip" title="<?php echo $participant->getLogin().' ('.$participant->getAge().') (peut être)';?>"/></a>
 							<?php endforeach;?>							
 						</div>
 					</div>

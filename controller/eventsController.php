@@ -528,7 +528,7 @@ class EventsController extends Controller{
 
 							foreach ($new as $key => $value) {
 
-								if( $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
+								if( isset($evt->$key) && $new->$key!=$evt->$key && !in_array($key,$silent_changes)) $changes[$key] = $new->$key;
 							}
 						}
 
