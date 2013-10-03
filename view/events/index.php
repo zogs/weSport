@@ -40,8 +40,10 @@
 							<div class="events-logo">
 								<span class="ws-sport-icon"><span class="ws-icon-<?php echo $event->sport->slug;?> tooltipbottom" data-toggle="tooltip" title="<?php echo $event->sport->name;?>"></span></span>													
 							</div>
-
-							<div class="events-head">
+							<div class="events-descr">
+								<span class="events-title <?php echo (strlen($event->title)>60)? 'title-small' : '';?>"><?php echo ucfirst($event->title); ?></span>																																				
+							</div>
+							<div class="events-meta">
 								<div class="events-time"><?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?></div>
 								<div class="events-label">
 									<?php if($event->confirmed==1):?>
@@ -52,10 +54,8 @@
 									<?php if($event->author->isPro()): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toogle="tooltip" title="Bizness"><i>P</i></span><?php endif;?>																							
 								</div>
 							</div>
+
 						
-							<div class="events-descr">
-								<span class="events-title <?php echo (strlen($event->title)>60)? 'title-small' : '';?>"><?php echo ucfirst($event->title); ?></span>																																				
-							</div>
 						</div>
 					</a>
 					<div class="clearfix"></div>

@@ -1,6 +1,6 @@
 <?php 
 	if(isset($error)){
-		echo 'Les données météo sont indisponibles par l\'instant ('.$error.')';
+		echo 'Les données météo sont indisponibles pour l\'instant ('.$error.')';
 		return;
 	}
 	else{
