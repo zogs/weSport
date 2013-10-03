@@ -784,8 +784,8 @@ body{
 			display: block;
 			float:left;
 			font-weight:bold;
-			@include rem(16);
-			color:#d0d0d0;						
+			@include rem(15);
+			color:#AAA;						
 		}
 
 		.events-label{
@@ -1039,7 +1039,7 @@ h1.title-sheet {
 
 		#control-account{
 			margin-top:0;
-			input[type=radio] { margin-top:0;}
+			input[type=radio] { margin:0;}
 		}
 	}
 	.form-facebook {
@@ -1829,7 +1829,8 @@ div.col_small{
 			label.checkbox{
 				width:auto;
 				float:none;
-			}			
+			}	
+			input[type=submit] { float:right;}		
 		}
 		#account-form.form-mailing{
 			.controls{ width:100%;}

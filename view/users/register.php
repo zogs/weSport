@@ -13,13 +13,17 @@
 
 			<form class="form form-ws label-hidden w50 form-register fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
 				<p class="intro">En 2min via le formulaire suivant:</p>
-				<?php echo $this->Form->input('login',"Nom d'utilisateur",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom d'utilisateur",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->radio('account','Profil',array('public'=>"Particulier",'asso'=>"Association",'pro'=>"Professionel"),array('default'=>'public','class'=>'account_type'));?>
+
+				<?php echo $this->Form->input('login',"Nom d'utilisateur",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom d'utilisateur","group-class"=>"user_field",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->input('login',"Nom de l'association",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom de l'association","group-class"=>"asso_field hide",'data-url'=>Router::url('users/check'))) ?>
+				<?php echo $this->Form->input('login',"Nom de l'entreprise",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom de l'entreprise","group-class"=>"pro_field hide",'data-url'=>Router::url('users/check'))) ?>
+
 				<?php echo $this->Form->input('email',"Email de contact",array('type'=>'email', 'icon'=>"icon-envelope","required"=>"required","placeholder"=>"Email de contact",'data-url'=>Router::url('users/check'))) ?>
 				<?php echo $this->Form->input('password','Mot de passe',array('type'=>"password",'icon'=>'icon-lock','required'=>'required','placeholder'=>'Mot de passe')) ?>
 				<?php echo $this->Form->input('confirm','Confirmer', array('type'=>'password','icon'=>'icon-lock','required'=>'required','placeholder'=>'Confirmer le mot de passe')) ?>		
-				<?php echo $this->Form->radio('account','Profil',array('public'=>"Particulier",'asso'=>"Association",'bizness'=>"Professionel"),array('default'=>'public','class'=>'account_type'));?>
-				<?php echo $this->Form->select('sexe','Sexe',array('h'=>'Homme','f'=>'Femme'),array('placeholder'=>'Sexe','icon'=>'icon-star-empty')); ?>
-				<div class="control-group" id="control-birthday">
+				<?php echo $this->Form->select('sexe','Sexe',array('h'=>'Homme','f'=>'Femme'),array('placeholder'=>'Sexe','icon'=>'icon-star-empty',"group-class"=>"user_field",)); ?>
+				<div class="control-group user_field" id="control-birthday">
 					<label for="birthday" class="control-label">Date de naissance</label>
 					<div class="controls">
 						<?php echo $this->Form->_select('day',Form::MonthDays(),array('default'=>'1','style'=>'width:24%;float:left;margin-right:4%','icon'=>'icon-gift')); ?>
@@ -77,12 +81,17 @@ $(document).ready(function(){
 
 	$(".account_type").change(function(){
 
-		console.log($(this));
 		if($(this).attr('id')=='public'){
-			$("#control-sexe,#control-birthday").show();
+			$(".user_field").show().find('input,select').prop('disabled',false);
+			$(".asso_field,.pro_field").hide().find('input,select').attr('disabled',true);
 		}
-		else{
-			$("#control-sexe,#control-birthday").hide();
+		if($(this).attr('id')=='asso'){
+			$(".asso_field").show().find('input,select').prop('disabled',false);
+			$(".user_field,.pro_field").hide().find('input,select').attr('disabled',true);
+		}
+		if($(this).attr('id')=='pro'){
+			$(".pro_field").show().find('input,select').prop('disabled',false);
+			$(".user_field,.asso_field").hide().find('input,select').attr('disabled',true);
 		}
 	});
 

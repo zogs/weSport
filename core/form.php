@@ -29,6 +29,9 @@ class Form{
 			$classError = 'control-error'; // défini la class css d'une erreur
 		}
 
+		$groupclass = '';
+		if(isset($params['group-class'])) $groupclass = $params['group-class'];
+
 		//If hidden input only return input
 		if($label=='hidden') return $input;
 
@@ -36,7 +39,7 @@ class Form{
 		if($label=='submit') return $input;
 
 		//Bootstrap html
-		$html = '<div class="control-group '.$classError.'" id="control-'.$id.'">';
+		$html = '<div class="control-group '.$groupclass.' '.$classError.'" id="control-'.$id.'">';
 
 		//add label if different of NULL
 		if($label!='NULL')

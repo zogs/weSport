@@ -621,7 +621,7 @@ class EventsModel extends Model{
 
 		//nombre minimum
 		if(isset($event->nbmin)){			
-			if($event->nbmin<=0) {
+			if($event->nbmin<=1) {
 				$event->nbmin = 1;
 				$event->confirmed = 1;
 			}

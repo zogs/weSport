@@ -25,7 +25,11 @@
 								<?php if(!empty($user->descr)): ?>
 									<?php echo $user->descr;?>
 								<?php else: ?>
+									<?php if($user->getID()==$this->session->user()->getID()):?>
+										<a href="<?php echo Router::url('users/account/profil');?>">- ajouter votre description ici -</a>
+									<?php else:?>
 									- pas encore de description -
+									<?php endif;?>
 								<?php endif;?>
 							</span>
 						</div>						

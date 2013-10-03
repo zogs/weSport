@@ -48,8 +48,8 @@
 										<span class="label ws-label-confirmed tooltipbottom" data-toggle="tooltip" title="L'activité est confirmé!">Confirmé</span>								
 									<?php endif;?>
 									<?php if(isset($event->UserParticipation)): ?><span class="label ws-label ws-label-important ws-label-participe tooltipbottom" data-toggle="tooltip" title="Je participe"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
-									<?php if($event->author->getAccount()=='asso'): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>
-									<?php if($event->author->getAccount()=='bizness'): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toogle="tooltip" title="Bizness"><i>P</i></span><?php endif;?>																							
+									<?php if($event->author->isAsso()): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>
+									<?php if($event->author->isPro()): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toogle="tooltip" title="Bizness"><i>P</i></span><?php endif;?>																							
 								</div>
 							</div>
 						
@@ -67,7 +67,7 @@
 
 				?>
 
-				<a class="addEvent tooltipbottom" data-toggle="tooltip" title="Poster ce <?php echo Date::dayoftheweek(date('D',strtotime($date)));?>" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
+				<a class="addEvent tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
 			</td>
 		<?php
 			$cdate = $date;

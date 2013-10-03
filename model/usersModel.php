@@ -464,6 +464,18 @@ class User {
 		if(!empty($this->account)) return $this->account;
 		return 'public';
 	}
+	public function isPerso(){
+		if(isset($this->account) && $this->account=='public') return true;
+		return false;
+	}
+	public function isAsso(){
+		if(isset($this->account) && $this->account=='asso') return true;
+		return false;
+	}
+	public function isPro(){
+		if(isset($this->account) && ($this->account=='pro' || $this->account=='bizness')) return true;
+		return false;
+	}
 
 	public function isLog(){
 		if($this->user_id!==0) return true;
