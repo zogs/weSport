@@ -13,7 +13,7 @@ window.onload = function() {
 			'ws-icon-tree' : '&#x26;',
 			'ws-icon-tennis' : '&#x27;',
 			'ws-icon-surf' : '&#x28;',
-			'ws-icon-squach' : '&#x29;',
+			'ws-icon-squash' : '&#x29;',
 			'ws-icon-ski' : '&#x2a;',
 			'ws-icon-skate' : '&#x2b;',
 			'ws-icon-running' : '&#x2c;',
