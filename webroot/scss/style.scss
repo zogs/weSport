@@ -822,7 +822,7 @@ body{
 	
 
 	.events-confirmed {
-		border-bottom-width: 5px;
+		border-bottom-width: 7px;
 		border-color:$darkgreen;
 	}
 
@@ -880,7 +880,7 @@ body{
 		display:inline-block;
 		@include border-radius(100px);
 		.events-content { margin-left:0;}
-		.events-meta { display:none;}
+		.events-head { display:none;}
 		.events-descr {display: none;}
 		.events-logo {display:block; position:relative; top:0; left:0;
 			.ws-sport-icon{ margin:0;}

@@ -62,9 +62,9 @@ body {
   background-color: #a3caea;
   font-family: 'Boogaloo';
   padding: 0 5%;
-  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
-  -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 /* line 130, ../scss/style.scss */
 .navbar .weSport li a,
@@ -311,7 +311,7 @@ body {
   -o-border-radius: 15px;
   border-radius: 15px;
   border-bottom: 5px solid #FFF;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 /* line 306, ../scss/style.scss */
 .alert p {
@@ -490,7 +490,7 @@ body {
   font-size: 35px;
   font-size: 3.5rem;
   color: #DDD;
-  color: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.5);
   margin-left: -6px;
   margin-bottom: 0;
 }
@@ -516,9 +516,9 @@ body {
   border: 14px solid #275e6d;
   border-radius: 100px;
   padding: 15px;
-  -webkit-transition: 0s ease;
-  -moz-transition: 0s ease;
-  -o-transition: 0s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
   transition: 0.2s ease;
 }
 /* line 422, ../scss/style.scss */
@@ -526,7 +526,7 @@ body {
   color: #FFF;
   font-size: 65px;
   font-size: 6.5rem;
-  text-shadow: -1px 1px rgba(0, 0, 0, 0), -2px 2px rgba(0, 0, 0, 0), -3px 3px rgba(0, 0, 0, 0);
+  text-shadow: -1px 1px rgba(0, 0, 0, 0.2), -2px 2px rgba(0, 0, 0, 0.2), -3px 3px rgba(0, 0, 0, 0.2);
 }
 /* line 431, ../scss/style.scss */
 #formSearch .cityRounded .citySubmit:hover {
@@ -569,9 +569,9 @@ body {
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
   border-radius: 100px;
-  -webkit-transition: 0s ease;
-  -moz-transition: 0s ease;
-  -o-transition: 0s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
   transition: 0.2s ease;
   /*@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
 }
@@ -580,12 +580,12 @@ body {
   font-size: 35px;
   font-size: 3.5rem;
   margin: 2px;
-  -webkit-transition: 0s ease;
-  -moz-transition: 0s ease;
-  -o-transition: 0s ease;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
   transition: 0.2s ease;
-  opacity: 0;
-  filter: alpha(opacity=0);
+  opacity: 0.2;
+  filter: alpha(opacity=20);
 }
 /* line 473, ../scss/style.scss */
 #formSearch .sportCheckboxs .sportChoice label:hover {
@@ -826,7 +826,7 @@ body {
   width: 100%;
   padding: 15px 0;
   text-align: center;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   color: white;
 }
 /* line 690, ../scss/style.scss */
@@ -1002,8 +1002,8 @@ body {
   margin: 5px auto;
   padding: 15px 0 20px 10px;
   background-color: #FFF;
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-bottom: 4px solid rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
@@ -1078,7 +1078,7 @@ body {
 }
 /* line 824, ../scss/style.scss */
 .calendar .events-confirmed {
-  border-bottom-width: 5px;
+  border-bottom-width: 7px;
   border-color: #006837;
 }
 
@@ -1139,7 +1139,7 @@ body {
 }
 /* line 868, ../scss/style.scss */
 .minified-events .events-week {
-  border-bottom: 10px solid rgba(0, 0, 0, 0);
+  border-bottom: 10px solid rgba(0, 0, 0, 0.04);
 }
 /* line 870, ../scss/style.scss */
 .minified-events .events-week:last-child {
@@ -1167,7 +1167,7 @@ body {
   margin-left: 0;
 }
 /* line 883, ../scss/style.scss */
-.minified-events .events .events-meta {
+.minified-events .events .events-head {
   display: none;
 }
 /* line 884, ../scss/style.scss */
@@ -1208,9 +1208,9 @@ body {
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  -webkit-transition: all 0s ease-in-out;
-  -moz-transition: all 0s ease-in-out;
-  -o-transition: all 0s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 /* line 908, ../scss/style.scss */
@@ -1631,7 +1631,7 @@ h1.title-sheet {
 }
 /* line 1179, ../scss/style.scss */
 .content-header .header-left div.event-sportLogo .ws-icon {
-  border: 8px solid rgba(0, 0, 0, 0);
+  border: 8px solid rgba(0, 0, 0, 0.09);
 }
 /* line 1184, ../scss/style.scss */
 .content-header .header-left h1.event-title {
@@ -1710,7 +1710,7 @@ h1.title-sheet {
 .content-header .header-right div.orga-avatar img {
   width: 100%;
   padding: 2px;
-  border: 7px solid rgba(0, 0, 0, 0);
+  border: 7px solid rgba(0, 0, 0, 0.1);
   background-color: #FFF;
 }
 
@@ -1837,9 +1837,9 @@ div.col_small {
   line-height: 100%;
   margin: 0;
   background-color: #BBB;
-  -webkit-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
-  -moz-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
-  box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 10px 0 0 0px rgba(0, 0, 0, 0.05);
 }
 /* line 1340, ../scss/style.scss */
 .block .block-content {
@@ -1848,9 +1848,9 @@ div.col_small {
   color: #888;
   font-size: 14px;
   font-size: 1.4rem;
-  -webkit-box-shadow: inset 10px 0 0 0 rgba(0, 0, 0, 0);
-  -moz-box-shadow: inset 10px 0 0 0 rgba(0, 0, 0, 0);
-  box-shadow: inset 10px 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 10px 0 0 0 rgba(0, 0, 0, 0.02);
+  -moz-box-shadow: inset 10px 0 0 0 rgba(0, 0, 0, 0.02);
+  box-shadow: inset 10px 0 0 0 rgba(0, 0, 0, 0.02);
 }
 /* line 1349, ../scss/style.scss */
 .block .block-content a {
@@ -2064,7 +2064,7 @@ div.col_small {
 }
 /* line 1520, ../scss/style.scss */
 .events-list .block-content ul li:hover {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.025);
 }
 /* line 1524, ../scss/style.scss */
 .events-list .block-content ul li span {
@@ -2212,7 +2212,7 @@ div.col_small {
   width: 90px;
   height: 90px;
   padding: 2px;
-  border: 6px solid rgba(0, 0, 0, 0);
+  border: 6px solid rgba(0, 0, 0, 0.04);
 }
 /* line 1660, ../scss/style.scss */
 .viewuser .content-header .user-login h1 {
@@ -2316,7 +2316,7 @@ div.col_small {
   float: left;
   width: 30%;
   margin: 5px 1%;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.08);
 }
 /* line 1756, ../scss/style.scss */
 .indexuser .col_large .userlist .user img {
@@ -2591,9 +2591,9 @@ div.col_small {
 .footer {
   width: 100%;
   border-top: 15px solid #a3caea;
-  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
-  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
-  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0);
+  -webkit-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  -moz-box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
+  box-shadow: 0 -35px 60px rgba(163, 202, 234, 0.7);
   background-color: #1b3a43;
   padding: 20px 5%;
 }
@@ -2652,9 +2652,9 @@ TYPEAHEAD CUSTOM STYLE
   padding: 8px 0;
   text-align: left;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* line 2017, ../scss/style.scss */
