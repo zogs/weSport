@@ -1203,6 +1203,7 @@ h1.title-sheet {
 
 		div.orga-info{
 			float:right;
+			width:60%;
 			text-align: right;
 			margin-right:10px;
 			padding-top: 10px;
@@ -1217,6 +1218,7 @@ h1.title-sheet {
 				font-family: 'Boogaloo';
 				@include rem(24);
 				text-transform: capitalize;
+				word-wrap:break-word;
 				a {color:$deepblue;}
 			}
 			span.orga-link{
@@ -1238,7 +1240,8 @@ h1.title-sheet {
 
 		div.orga-avatar{			
 			float:right;
-			img { height:100px; width:100px; padding:2px; border:7px solid rgba(0,0,0,0.1); background-color:#FFF;}
+			width:35%;
+			img { width:100%; padding:2px; border:7px solid rgba(0,0,0,0.1); background-color:#FFF;}
 		}
 	}
 }
