@@ -892,10 +892,13 @@ body{
 		display:inline-block;
 		@include border-radius(100px);
 		.events-content { margin-left:0;}
-		.events-head { display:none;}
+		.events-meta { display:none;}
 		.events-descr {display: none;}
 		.events-logo {display:block; position:relative; top:0; left:0;
-			.ws-sport-icon{ margin:0;}
+			.ws-sport-icon{ 
+				margin:0;
+				span { @include rem(36);}
+			}
 		}
 	}
 }
