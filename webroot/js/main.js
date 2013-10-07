@@ -863,7 +863,7 @@ $(document).ready(function(){
 		CHECK DUPLICATE MAIL AND LOGIN
 	============================================================*/
 
-	$("form#form_register input#login,form#form_register input#email").bind('change',function(){
+	$("#form_register .inputLogin,#form_register #email").bind('change',function(){
 
 		var input = $(this);
 		var control = input.parent().parent();
