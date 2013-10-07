@@ -54,6 +54,7 @@
 									<?php if($event->author->isPro()): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toogle="tooltip" title="Bizness"><i>P</i></span><?php endif;?>																							
 								</div>
 							</div>
+							<div class="events-city"><?php echo $event->getCityName();?></div>
 
 						
 						</div>
