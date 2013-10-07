@@ -860,6 +860,29 @@ $(document).ready(function(){
 
 
 	/*===========================================================
+		VALIDATE PASSWORD FORM
+	============================================================*/
+	$("#form_register input#password").bind('change',function(){
+			
+			$("#control-password").removeClass('control-error').addClass('control-success');
+	});
+
+	$("#form_register input#confirm").bind('change',function(){
+
+			if($(this).val()==$('#form_register input#password').val()){
+				$('#control-password, #control-confirm').removeClass('control-error').addClass('control-success');
+				$('#control-confirm .controls').find('p.help-inline').addClass('hide').empty();					
+			}
+			else{
+				$('#control-password, #control-confirm').removeClass('control-success').addClass('control-error');
+				$('#control-confirm .controls').find('p.help-inline').removeClass('hide').empty().html('Les mots de passe ne sont pas identique');				
+			}
+	});
+
+	
+
+
+	/*===========================================================
 		CHECK DUPLICATE MAIL AND LOGIN
 	============================================================*/
 
@@ -887,15 +910,14 @@ $(document).ready(function(){
 				url: url,
 				data: {type : type, value : value},
 				success: function(data){					
-					if(data.error){	
+					if(data.error){						
 						control.removeClass('control-success');					
 						control.addClass('control-error');
 						help.removeClass('hide').empty().html( data.error );
 					}
-					if(data.available) {;
+					else {
 						control.removeClass('control-error');
-						control.removeClass('control-success');
-						help.removeClass('hide').empty().html( data.available );
+						control.addClass('control-success');						
 					}
 				},
 				dataType: 'json'
@@ -909,7 +931,10 @@ $(document).ready(function(){
 
 		var carac = new RegExp("[ \'\"@,\.;:/!&$£*§~#|)(}{ÀÂÇÈÉÊËÎÔÙÛàâçèéêëîôöùû]","g");
 		var c = string.match(carac);
-		if(c) return c;
+		if(c){
+			if(c==' ') return '-espace-';
+			return c;	
+		} 
 	}
 
 	/*===========================================================

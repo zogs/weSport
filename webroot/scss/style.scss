@@ -972,6 +972,17 @@ h1.title-sheet {
 		.geo-select{ margin-bottom:18px;}
 	}
 
+	.control-error .controls input,
+	.control-error .controls select,
+	.control-error .controls textarea {
+		border-color: #820200; box-shadow:0 0 0 4px rgba(130, 2, 0, 0.2);
+	}
+	.control-success .controls input,
+	.control-success .controls select,
+	.control-success .controls textarea {
+		border-color: rgb(35,135,77); box-shadow:0 0 0 4px rgba(35,135,77, 0.2);
+	}
+
 	.control-submit{ 
 			text-align: center;
 			width:100%;
