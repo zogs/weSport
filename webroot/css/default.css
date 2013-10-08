@@ -47,7 +47,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24050101', e
 /*=========
 MAIN SECTION
 ==========*/
-.mainContainer {margin-top:42px; padding-top:5px; min-height: 800px;}
+.mainContainer {overflow:hidden; margin-top:42px; padding-top:5px; min-height: 800px;}
 
 
 /*
@@ -216,7 +216,7 @@ Commentaires
 .post .logo { float:left; width:9%; margin-right:1%}
 .post .logo img { width:35px; height:35px;}
 .post .content { float:left; width:90%;}
-.post .actions { float:left; visibility: hidden; margin-top:10px; width:100%;}
+.post .actions { float:left; visibility: hidden; margin-top:5px; width:100%;}
 .post .actions a, .post .actions span{ color:darkgrey; font-size:90%;}
 .post .actions a:hover { text-decoration: none; color:#4F88D8; cursor: pointer;}
 .post .actions a:after {content:' - '; }

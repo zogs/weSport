@@ -109,10 +109,10 @@
                             <form class="formCommentReply" action="<?php echo Router::url('comments/reply'); ?>" method="POST">                
                                 <img class="userAvatarCommentForm" src="<?php echo $this->session->user()->getAvatar(); ?>" />
                                 <?php if($this->session->user()->isLog()):?>
-                                <textarea name="content" class="formComment" placeholder="<?php echo $this->placeholderReplyForm;?>"></textarea> 
+                                <textarea name="content" class="formComment" rows="1" placeholder="<?php echo $this->placeholderReplyForm;?>"></textarea> 
                                 <input class="btn btn-small" type="submit" name="" value="Send">
                                 <?php else: ?>
-                                 <textarea disabled='disabled' name="content" placeholder="<?php echo $this->placeholderNeedLog;?>"></textarea> 
+                                 <textarea disabled='disabled' name="content" rows="1" placeholder="<?php echo $this->placeholderNeedLog;?>"></textarea> 
                                 <input disabled='disabled' class="btn btn-small" type="submit" name="" value="Send">
                                 <?php endif;?>
                                 <input type="hidden" name="context" value="<?php echo $context; ?>"  />

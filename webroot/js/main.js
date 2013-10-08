@@ -175,6 +175,14 @@ $(document).ready(function(){
     }
 
 
+    /*==================================
+    	TOGGLE SERIE OF EVENTS
+    ===================================*/
+    $(".showListSerie").click(function(){			
+			$(this).parent().find('.listserie').toggle();
+			return false;
+	});
+
 	/*===========================================================
 		COMMENT SYSTEM
 	============================================================*/

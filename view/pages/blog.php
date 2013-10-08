@@ -84,17 +84,30 @@
 					</div>
 				</div>
 
-				<div class="block block-orange events-to-come">
+				<div class="block block-orange events-to-come events-list">
 					<h3>10 sports à venir</h3>
 					<div class="block-content">
 						<ul>
 							<?php foreach ($eventsToCome as $e):?>							
 								<li>
 									
+									<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
 									<a href="<?php echo $e->getUrl();?>" title="<?php echo $e->getTitle();?>">
-										<span class="ws-icon ws-icon-small ws-icon ws-icon-<?php echo $e->sport->slug;?>"></span>
-										<?php echo $e->getTitle();?>
+										<strong><?php echo $e->getTitle();?></strong>
 									</a>
+									<small><?php echo $e->getDate();?></small>
+									<?php if(!empty($e->serie)): ?>
+										<a class="showListSerie linkclose" href="#"><?php echo count($e->serie);?> autres dates</a>	
+									<?php endif; ?>
+										<?php if(!empty($e->serie)):?>
+										<ul class="listserie">
+											<?php foreach ($e->serie as $ev):?>
+											<li>														
+												<strong><a href="<?php echo $ev->getUrlCreate();?>"><?php echo $ev->getDate();?></a></strong>
+											</li>
+											<?php endforeach;?>
+										</ul>
+									<?php endif; ?>
 								</li>
 							<?php endforeach; ?>
 						</ul></div>

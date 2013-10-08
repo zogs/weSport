@@ -410,7 +410,7 @@ class EventsController extends Controller{
 
 
 
-	public function arrangeEventsBySerie($events){
+	public static function arrangeEventsBySerie($events){
 
 		$arr = array();
 		$serie = array();
@@ -604,13 +604,13 @@ class EventsController extends Controller{
 
 		$eventfutur = $this->Events->findEvents(array('tempo'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$eventfutur = $this->Events->joinSports($eventfutur,$this->getLang());
-		$eventfutur = $this->arrangeEventsBySerie($eventfutur);
+		$eventfutur = EventsController::arrangeEventsBySerie($eventfutur);
 		$d['eventfutur'] = $eventfutur;
 
 
 		$eventpast = $this->Events->findEvents(array('tempo'=>'past','order'=>'E.date DESC','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$eventpast = $this->Events->joinSports($eventpast,$this->getLang());
-		$eventpast = $this->arrangeEventsBySerie($eventpast);
+		$eventpast = EventsController::arrangeEventsBySerie($eventpast);
 		$d['eventpast'] = $eventpast;
 
 

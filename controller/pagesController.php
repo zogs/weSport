@@ -465,6 +465,7 @@ class PagesController extends Controller {
 
 			//EVENTS TO COME
 			$eventsToCome = $this->Events->getEventsToCome($this->getCountryCode(),10);
+			$eventsToCome = EventsController::arrangeEventsBySerie($eventsToCome);
 
 
 			//CREATE GOOGLE MAP

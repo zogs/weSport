@@ -1126,14 +1126,14 @@ class UsersController extends Controller{
 
     	//find events
     	$futurParticipation = $this->Events->findUserFuturParticipations($uid);
-    	$futurParticipation = $this->request('events','arrangeEventsBySerie',array($futurParticipation));
+    	$futurParticipation = EventsController::arrangeEventsBySerie($futurParticipation);
     	$d['futurParticipation'] = $futurParticipation;
 
     	$pastParticipation = $this->Events->findUserPastParticipations($uid);
     	$d['pastParticipation'] = $pastParticipation;
     	
     	$organiseEvents = $this->Events->findEventsUserOrganize($uid);
-    	$organiseEvents = $this->request('events','arrangeEventsBySerie',array($organiseEvents));
+    	$organiseEvents = EventsController::arrangeEventsBySerie($organiseEvents);
     	$d['organiseEvents'] = $organiseEvents;
 
     	$hasOrganized = $this->Events->findEventsUserHasOrganized($uid);

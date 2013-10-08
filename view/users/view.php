@@ -186,13 +186,3 @@
 		<div class="fresque"></div>
 	</div>
 </div>
-<script type="text/javascript">
-	 $(document).ready(function(){	
-
-		$(".showListSerie").click(function(){			
-			$(this).parent().find('.listserie').toggle();
-			return false;
-		});
-
-	});
-</script>

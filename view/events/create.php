@@ -219,12 +219,7 @@
 			$("#control-recur").toggle(0);
 			$("#control-ocur").toggle(0);
 		});
-
-
-		$(".showListSerie").click(function(){			
-			$(this).parent().find('.listserie').toggle();
-			return false;
-		})
+		
 
 	});
 </script>
