@@ -13,7 +13,7 @@
 
 			<form class="form form-ws label-hidden w50 form-register fleft" id="form_register" autocomplete="on" action="<?php echo Router::url('users/register'); ?>" method="post" <?php echo (isset($Success))? 'class="hide"':''; ?>>
 				<p class="intro">En 2min via le formulaire suivant:</p>
-				<?php echo $this->Form->radio('account','Profil',array('public'=>"Particulier",'asso'=>"Association",'pro'=>"Professionel"),array('default'=>'public','class'=>'account_type'));?>
+				<?php echo $this->Form->radio('account','Profil',array('public'=>"Particulier",'asso'=>"Association",'pro'=>"Professionel"),array('default'=>'public','class'=>'account_type','openwrap'=>"<span class='control-radio'>",'closewrap'=>"</span>"));?>
 
 				<?php echo $this->Form->input('login',"Nom d'utilisateur",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom d'utilisateur","group-class"=>"user_field","class"=>"inputLogin",'data-url'=>Router::url('users/check'))) ?>
 				<?php echo $this->Form->input('login',"Nom de l'association",array('icon'=>'icon-user','required'=>'required','placeholder'=>"Nom de l'association","group-class"=>"asso_field hide","class"=>"inputLogin",'data-url'=>Router::url('users/check'))) ?>

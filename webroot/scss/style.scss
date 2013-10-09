@@ -118,18 +118,24 @@ body{
 .container-fluid { padding-right:0; padding-left:0;}
 .container { position:relative;}
 
+
+.weSport{
+	i{font-style: normal; color:#0d83af}
+	strong { font-weight:normal; color:$darkblue;}
+	img{width:30px;}
+}
+
 .navbar {
 	background-color:$lightblue;
 	font-family: 'Boogaloo';
 	padding:0 5%;
 	@include box-shadow(0 10px 15px rgba(0,0,0,0.1));
 
-	.weSport, 
 	.nav {
 		li {
 			a {
 			@include rem(28);
-			color:$deepblue;
+			color:rgb(39, 94, 109);
 			line-height: 150%;
 			padding:0 20px;
 			margin:5px 0;
@@ -141,68 +147,51 @@ body{
 			color:$lightblue;
 			@include border-radius(5px);			
 			}
+
+			a.weSport{
+				float:left;
+				color:$darkblue;
+				margin:0 10px 0 0;
+				@include rem(28);
+				padding:0 30px;
+				line-height: 150%;				
+			}
 		}
 
 	}
-
-	.weSport{
-		float:left;
-		color:$darkblue;
-		margin:5px 50px 0 0;
-		@include rem(28);
-		padding:0 30px;
-		line-height: 150%;
-		i{font-style: normal; color:#0d83af}
-		img{width:30px;}
-	}
-
-	
 
 	.nav.pull-right { 
 		
 		.nav-avatar { position:relative; height:36px;}
 		form { display:none;}
-
+		li a { padding:0 4px 0 25px;}
 		li.dropdown {
 			ul li { }
 			ul li a { @include rem(18); margin:0; padding:20px 15px;}
 			ul li a:hover { color: #FFF}
 			li.divider { margin:0; border-bottom: 1px solid #DDD;}
 			a.dropdown-toggle { padding:0;}
-			b.caret { vertical-align: middle; border-top:10px solid $darkblue; border-right:10px solid transparent; border-left:10px solid transparent;}
+			b.caret { margin-top:-3px; vertical-align: middle; border-top:8px solid $deepblue; border-right:8px solid transparent; border-left:8px solid transparent;}
 		}
 	}
 
-	.mobileMenu{
-		display:none;
-		float:left;
-		li.dropdown{
-			a.dropdown-toggle{				
-				.caret { margin-top:18px;}
-			}
+	.mobileMenus{display:none;}
+	.mobileHead{
+		padding:10px 40px;
+		text-align:center;
+		@include rem(28);				
+		position:relative;
+		a{color:$darkblue;}
+		a:first-child{
+			position:absolute;
+			left:10px;
 		}
-		li{
-			ul{
-				li {
-					text-align: center;
-					a{ 
-						@include rem(26);
-						margin:0;
-						padding:10px 0;
-
-						&:hover{
-							color:#FFF;
-						}
-					}					
-				}
-				li.divider{
-					margin:0;
-					border-bottom:1px solid #DDD;
-				}				
-			}		
+		a:last-child{
+			position:absolute;
+			right:10px;
 		}
+	}	
 
-	}
 
 	#userCounter {
 		display: none;
@@ -412,7 +401,8 @@ body{
 			right:-20px;
 			top:-20px;
 			width:130px;
-			height:130px;			
+			height:130px;
+			z-index:10;			
 			background-color:$lightblue;
 			border:14px solid #275e6d; 
 			border-radius: 100px;
@@ -1061,21 +1051,13 @@ h1.title-sheet {
 	.form-register{
 		margin:0;
 		padding:0;
-		padding-bottom:50px;
+		padding-bottom:15px;
 		border-right:1px solid #DDD;
 
 		#control-account{
 			margin-top:0;
 			input[type=radio] { margin:0;}
 		}
-	}
-	.form-facebook {
-		float:left;
-		width:49%;
-		border:0;
-		padding-bottom:50px;
-		text-align: center;
-		img{ width:185px;}
 	}
 
 	p.intro {
@@ -1089,6 +1071,14 @@ h1.title-sheet {
 	}
 }
 
+.form-facebook {
+		float:left;
+		width:49%;
+		border:0;
+		padding-bottom:50px;
+		text-align: center;
+		img{ width:185px;}
+}
 
 /*======
 ==== Event Create
@@ -1128,6 +1118,7 @@ h1.title-sheet {
 	.col_small{
 		padding-top:30px;
 		.form-submit{
+			margin-bottom:30px;
 			text-align: center;
 			input[type=submit]{
 				display: inline;
@@ -1240,29 +1231,29 @@ h1.title-sheet {
 				width: 100%;
 				color:#AAA;
 			}
-			span.orga-name{
-				font-weight: normal;
-				font-family: 'Boogaloo';
-				@include rem(24);
-				text-transform: capitalize;
-				word-wrap:break-word;
-				a {color:$deepblue;}
-			}
-			span.orga-link{
-				text-align: right;
-				a{
-					@include rem(12);
-					color:#AAA;
-					border-bottom:1px dotted #AAA;					
-					&:hover{
-						border-bottom:0px dotted #AAA;	
-					}
-				}
-
-			}
 			small{				
 				border-bottom:1px solid #CCC;				
 			}
+		}
+		span.orga-name{
+			font-weight: normal;
+			font-family: 'Boogaloo';
+			@include rem(24);
+			text-transform: capitalize;
+			word-wrap:break-word;
+			a {color:$deepblue;}
+		}
+		span.orga-link{
+			text-align: right;
+			a{
+				@include rem(12);
+				color:#AAA;
+				border-bottom:1px dotted #AAA;					
+				&:hover{
+					border-bottom:0px dotted #AAA;	
+				}
+			}			
+			
 		}
 
 		div.orga-avatar{			
@@ -1288,10 +1279,9 @@ h1.title-sheet {
 			margin-left:5px;
 		}		
 	}
-	.event-action{
-			position:relative;
+	.event-action{		
 			float:left;
-			margin:-3px 0 0 30px;
+			margin:0 0 0 30px;
 
 	}
 }
@@ -1541,7 +1531,7 @@ div.col_small{
 				position:relative;
 				color:#AAA;
 				margin:0 0 0px 0px;
-				padding:7px 0 7px 15%;
+				padding:7px 0 7px 50px;
 
 				&:hover{
 					background-color:rgba(0,0,0,0.025);
@@ -1998,7 +1988,7 @@ div.col_small{
 		display: block;
 		display:none;
 		text-align: center;
-		background-color: $lightgrey;
+		background-color: white;
 		color:$deepgrey;
 	}
 }
@@ -2076,8 +2066,8 @@ TYPEAHEAD CUSTOM STYLE
   
   .navbar { padding:0 1%;}
   .navbar .weSport { margin:5px 5px 0 5px; padding:0;}
-  .navbar .desktopMenu{ display:none;}
-  .navbar .mobileMenu{ 
+  .navbar .desktopMenus{ display:none;}
+  .navbar .mobileMenus{ 
   	display:block;
   	li{
   		a{
@@ -2087,13 +2077,16 @@ TYPEAHEAD CUSTOM STYLE
   	}
   }
 
+  .container{ width:100%;}
+
   #formSearch{
   	width:100%;
   	margin:20px 0 0 0;
 
   	.cityRounded{
-  		width:100%;
-  		margin:0;
+  		width:90%;
+  		margin:0 5%;
+  		height:50px;  		
   		@include border-radius(50px);
   		@include box-shadow(0 0 0 #000);
 
@@ -2106,23 +2099,23 @@ TYPEAHEAD CUSTOM STYLE
   				#cityName{ 
   					height:40px;
   					padding-left:15px;				
-  					@include rem(28);
+  					@include rem(20);
   				}
   				.twitter-typeahead .tt-hint {
-  					@include rem(28);
+  					@include rem(20);
   				}
   			}
   			.containerExtend{
-  				width:25%;
-  				top:30%;
+  				display: none;
   			}
   		}
   		.citySubmit{
-  			top:-5px;
-			width:100px;
-			height:100px;			
+  			top:-15px;
+  			right:-5px;
+			width:80px;
+			height:80px;			
 			border-width:10px;
-  			.ws-icon-loupe { @include rem(30);}
+  			.ws-icon-loupe { @include rem(25);}
   		}
   		.cityAriane{
   			display:none;
@@ -2135,7 +2128,7 @@ TYPEAHEAD CUSTOM STYLE
   		display:block;
   		width:100%;
   		padding:0 10%;
-  		margin:30px 0 0 0;
+  		margin:10px 0 0 0;
 
   		label {
   			@include rem(14);
@@ -2146,147 +2139,147 @@ TYPEAHEAD CUSTOM STYLE
   	}
   }
 
-	.connexion{
-		.container{
-			width:100%;
-			.form-ws{
-				width:100%;
-				.control-submit{
-					width: 100%;				
-				}
+.calendar{
+	.calendar-header{
+		height:8px;
+		margin-bottom:20px;
+	}	
+}
+
+h1.title-sheet{
+	@include rem(14);
+}
+
+.container { width:100%;}
+
+
+
+.form-ws{
+	width:100%;
+	float:left;
+	.control-submit{
+		width: 100%;				
+	}
+}
+
+.form-register{
+	.control-radio{
+		display: block;
+		width:100%;
+	}
+}
+
+.form-facebook{
+	width:100%;
+	float:left;
+}
+
+.createEvent{
+	.col_large{
+		width:100%;
+		padding:0;
+		.control-group{
+			.control-label{
+				width:25%;
+			}
+			.controls{						
 			}
 		}
 	}
+	.col_small{
+		width: 100%;
+		padding:0;
+	}
+}
 
-	.register{
-		.container{
-			width: 100%;
-			.form-ws{
+.viewevent{
+	.container{
+		width:100%;
+		.content-header{
+			.header-left{
+				width:100%;				
+			}
+			.event-sportLogo{
+				width:100%;
+				text-align: center;
+			}
+			h1.event-title{
+				width:100%;
+				text-align: center;
+				.fb-like{display:none;}
+			}
+
+			.header-right{ width:100%;}
+			.orga-avatar{ width:20%}
+			.orga-info { width:70%;}	
+			.orga-name { @include rem(18);}		
+		}
+
+		.event-action-bar{
+			.event-action{					
 				width: 100%;
-				float:right;
+				margin:10px 0;
+				text-align: center;
+				.btn-ws{
+					padding:10px 20px;
+				}
 			}
-			.form-facebook{
-				width: 100%;
-				float:left;
+			.event-status{
+				width:100%;
+				margin:10px 0;
+				text-align: center;
+				margin-top:2px;
 			}
 		}
-	}
 
-	.createEvent{
-		.container{
+		.col_large{
 			width:100%;
-			.col_large{
-				width:100%;
-				padding:0;
-				.control-group{
-					.control-label{
-						width:25%;
-					}
-					.controls{						
-					}
-				}
-			}
-			.col_small{
-				width: 100%;
-				padding:0;
+			padding:10px 1%;
+			.event-info{
+				padding:5px 2px;
+				margin-bottom:0;
+				line-height:150%;
+				@include rem(20);
 			}
 		}
-	}
 
-	.viewevent{
-		.container{
+	
+
+		.col_small{
 			width:100%;
-			.event-header{
-				.event-title{					
-					width:auto;
-					h1{
-						@include rem(26);
-						.event-sport-logo{
-							padding:0;
-							@include rem(40);
-						}
-					}
-				}
-				.event-orga{
-					float:left;
-					width:100%;
-					.orga-avatar{
-						display:none;
-					}
-					.orga-info{
-						float:left;
-						text-align: left;
-						span {
-							display: inline-block;
-							width: auto;							
-						}
-						span.orga-name{
-							@include rem(12);
-						}
-						span.orga-age{
-							@include rem(10);
-						}
-						.orga-link a{
-							@include rem(10);
-						}
-
-					}
-				}
-			}
-			.event-action-bar{
-				.event-action{					
-					margin-bottom:10px;
-					margin-top:10px;
-					margin-right:5px;
-					.btn-ws{
-						padding:10px 20px;
-					}
-				}
-				.event-status{
-					float:left;
-					margin-top:2px;
-				}
-			}
-
-			.col_large{
+			padding:0;
+			margin-top:50px;
+			#eventmap{
 				width:100%;
-				padding:10px 1%;
-				.event-info{
-					margin-bottom:0;
-					line-height:150%;
-					@include rem(20);
-				}
-			}
-
-			.col_small{
-				width:100%;
-				padding:0;
-				margin-top:50px;
-				#eventmap{
-					width:100%;
-				}
 			}
 		}
 	}
+}
 	
 
 	.viewuser{
 		.container{
 			width:100%;
-			.user-header{
-				.user-avatar{
-					width: 100px;
+			.content-header{
+				.header-left{
+					width:100%;
+				}
+
+				.header-right{
+					width:100%;
 				}
 				.user-login{
-					h1{
-						@include rem(20);
-						margin-bottom:0;
-					}
-					span{
-						@include rem(10);
-					}
+					img{ width:60px; height:60px;}
+					h1 { display: inline-block; @include rem(25); white-space: nowrap;}	
+				} 
+				.user-descr{
+					display: block;
+				}
+				.user-info{
+					span { text-align: left;}
 				}
 			}
+			
 			.user-status{
 				.count_activity{
 					float:left;	
@@ -2371,14 +2364,17 @@ TYPEAHEAD CUSTOM STYLE
 			.citySubmit{
 				.ws-icon-loupe { }
 			}
-			.cityAriane{
-				width:60%;
-			}
+
 		}
 	}
 	.calendar {
 		.calendar-period{
 	  		visibility: hidden;
+	  	}
+
+	  	.calendar-header{
+	  		height:5px;
+	  		margin-bottom:10px;
 	  	}
 		.calendar-nav{
 			.colomn-nav {
@@ -2386,6 +2382,12 @@ TYPEAHEAD CUSTOM STYLE
 			}			
 		}
 	}
+	.form-register{
+	.control-radio{
+		display: block;
+		width:100%;
+	}
+}
 	
 }
 
@@ -2396,8 +2398,8 @@ TYPEAHEAD CUSTOM STYLE
    .navbar{
    		padding:0 1%;
 		.weSport { padding:0 ; margin-right:20px;}
-   		.desktopMenu { display:none;}
-   		.mobileMenu { display:block;}
+   		.desktopMenus { display:none;}
+   		.mobileMenus { display:block;}
    }
 	#formSearch{
 		width:100%;
@@ -2407,9 +2409,31 @@ TYPEAHEAD CUSTOM STYLE
 			margin:0 10%;
 			.cityInputs{
 				width: 70%;
+				left:5px;
+				.containerCityName{
+					#cityName{
+						@include rem(25);
+					}					
+				}
+				.containerExtend{
+					#extend{
+						@include rem(14);
+					}
+				}
 			}
+
+		.citySubmit{
+			right:-40px;
+			top:-15px;
+			width:120px;
+			height:120px;			
+			.ws-icon-loupe{
+				@include rem(55);
+			}
+		}
 		.cityAriane{
-			width:69%;
+			width:100%;
+			white-space:nowrap;
 		}
 
 		}
@@ -2423,8 +2447,8 @@ TYPEAHEAD CUSTOM STYLE
 		.sportSelect{
 			display: block;
 			width:100%;
-			padding:0 30%;
-			margin-top:30px;
+			padding:0 20%;
+			margin-top:20px;
 			label.control-label {
 				@include rem(14);
 			}
@@ -2435,10 +2459,17 @@ TYPEAHEAD CUSTOM STYLE
   		}
 	}
 	
+	.calendar{
+		.calendar-header{
+			height: 10px;
+			margin-bottom:25px;
+		}
+	}
+
+
 	.connexion{
 		.container{
-			width:90%;
-			margin:0 5%;
+			width:100%;			
 			.form-ws{
 				width:70%;
 				margin-left:15%; margin-right:15%;
@@ -2451,8 +2482,15 @@ TYPEAHEAD CUSTOM STYLE
 
 	.register{
 		.container{
-			width: 90%;
-			margin:0 5%;
+			width: 100%;
+		}
+
+	}
+
+	.form-register{
+		.control-radio{
+			display: block;
+			width:100%;
 		}
 	}
 
@@ -2472,60 +2510,52 @@ TYPEAHEAD CUSTOM STYLE
 				}
 			}
 			.col_small{
-				width: 60%;
-				margin:0 20%;
+				width: 90%;
+				margin:0 5%;
 				padding:0;
 			}
 		}
 	}
 	.viewevent{
 		.container{
-			width:94%;
-			margin:0 3%;
-			.event-header{
-				.event-orga{
-					.orga-avatar{
-						img{ height:70px;}
-					}
-				}
+			width:100%;			
+			.content-header{
+				.header-left{ width:100%;}
+				.event-sportLogo { width:100%; text-align: center;}
+				.event-title { width:100%; text-align: center;
+					.fb-like{ float:right; height:40px;}}
+				
+				.header-right{ width:100%;}
+				.orga-avatar{ width:20%}
+				.orga-info { width:70%;}	
+				.orga-name { @include rem(18);}	
 			}
 
 			.col_small{				
 				width:100%;
-				padding:50px 10% 50px 10%;
+				padding:50px 0;
 
 				.block{
 					.block-content{
 						padding:15px;
 					}					
 				}
-				.event-participants{
-					.event-participant-avatar{
-							width:70px;
-							height:70px;
-						}
-						strong{
-							@include rem(17);
-						}
-						small{
-							@include rem(14);
-						}
-					}
-					.event-reviews{
-						ul{
-							li{
-								@include rem(18);
-								img{
-									width:60px;
-									height:60px;
-									
-								}
+				
+				.event-reviews{
+					ul{
+						li{
+							@include rem(18);
+							img{
+								width:60px;
+								height:60px;
+								
 							}
 						}
-						a{
-							@include rem(16);
-						}
 					}
+					a{
+						@include rem(16);
+					}
+				}
 
 			}
 		}
@@ -2533,18 +2563,34 @@ TYPEAHEAD CUSTOM STYLE
 
 	.viewuser{
 		.container{
-			width: 94%;
-			padding:0 3%;
-
+			width: 100%;
 		}
+		.content-header{
+			.header-left{
+				width:100%;
+			}
 
+			.header-right{
+				width:100%;
+			}
+			.user-login{
+				img{ width:60px; height:60px;}
+				h1 { display: inline-block; @include rem(25); white-space: nowrap;}	
+			} 
+			.user-descr{
+				display: block;
+			}
+			.user-info{
+				span { text-align: left;}
+			}
+		}
 		.col_large{
 			width: 100%;
-			padding:20px 10%;
+			padding:20px 2%;
 		}
 		.col_small{
 			width: 100%;
-			padding:20px 10%;
+			padding:20px 2%;
 		}
 	}
 
@@ -2590,10 +2636,14 @@ TYPEAHEAD CUSTOM STYLE
    			margin-top:0px;
 
    		}
-   		.nav li a {
-   			padding:0 15px;
+   		.nav li{
+   			a {
+   			padding:0 10px;
    			@include rem(24);
-
+   			}
+   			a.weSport{
+   				padding:0 10px;
+   			}
    		}
    }
    #formSearch{
@@ -2611,6 +2661,26 @@ TYPEAHEAD CUSTOM STYLE
 	  		visibility: hidden;
 	  	}
    }
+	
+	div.col_large{
+		width:60%
+	}
+	div.col_small{
+		width:40%;
+	}
+
+	.createEvent{
+		.container{
+			width:100%;
+		}
+	}
+	.calendar{
+		.calendar-header{
+			height:10px;
+			margin-bottom:25px;
+		}
+	}
+
 	.connexion{
 		.container{
 			width:100%;

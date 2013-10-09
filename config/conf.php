@@ -84,7 +84,9 @@ class Conf {
 						'css/style.css',
 						'css/font-icons/style.css',
 						'js/jquery/select2-2.1/select2.css',
-						'js/jquery/datepicker/css/datepicker.css'
+						'js/jquery/datepicker/css/datepicker.css',
+						'js/jquery/mmenu/mmenu.css',
+						'js/jquery/mmenu/mmenu-positioning.css'
 						);
 
 	//Js to load
@@ -101,7 +103,7 @@ class Conf {
 									'js/jquery/jquery.expander.min.js',
 									'js/jquery/datepicker/js/bootstrap-datepicker.js',
 									'js/jquery/datepicker/js/locales/bootstrap-datepicker.fr.js',
-
+									'js/jquery/mmenu/jquery.mmenu.js'
 								);
 
 

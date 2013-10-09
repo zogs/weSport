@@ -11,17 +11,18 @@
 <body class="backend_admin">
 
         <div class="navbar navbar-fixed-top">
-                <a class="weSport" href="<?php echo Router::url('home');?>">
-                                <img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
-                                <i>we</i>Sport
-                                <small style="font-size:16px;font-style:italic;color:#555;">Administration</small>
-                </a>
+                
 
                 <ul class="nav">
-                        <li><a href="<?php echo Router::url('/'); ?>">Site</a></li>                             
-                        <li><a href="<?php echo Router::url('admin/pages/index'); ?>">Pages</a></li>
-                        <li><a href="<?php echo Router::url('admin/pages/request');?>">Req.</a></li>
-                        <li><a href="<?php echo Router::url('users/logout'); ?>">Deconnexion</a></li>
+                        <li><a class="weSport" href="<?php echo Router::url('home');?>">
+                                <img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
+                                <i>we</i><strong>Sport</strong>                                
+                           </a>
+                        </li>
+                        <li><a href="<?php echo Router::url('/'); ?>"><span class="ws-icon-home"></span> Site</a></li>                             
+                        <li><a href="<?php echo Router::url('admin/pages/index'); ?>"><span class="ws-icon-menu"></span> Pages</a></li>
+                        <li><a href="<?php echo Router::url('admin/pages/request');?>"><span class="ws-icon-cog"></span> Requete</a></li>
+                        <li><a href="<?php echo Router::url('users/logout'); ?>"><span class="ws-icon-exit"></span> Deconnexion</a></li>
                 </ul>
 
         </div>

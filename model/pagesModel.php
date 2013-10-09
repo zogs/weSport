@@ -187,6 +187,7 @@ class PagesModel extends Model {
 		$p = new stdClass();
 		$p->online = $data->online;
 		$p->menu = $data->menu;
+		$p->icon = $data->icon;
 		$p->position = $data->position;
 		$p->type = 'page';
 

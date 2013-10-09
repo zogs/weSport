@@ -81,7 +81,18 @@ window.onload = function() {
 			'ws-icon-swimming' : '&#xe003;',
 			'ws-icon-busy' : '&#xe004;',
 			'ws-icon-neutral' : '&#xe005;',
-			'ws-icon-smiley-3' : '&#xe006;'
+			'ws-icon-smiley-3' : '&#xe006;',
+			'ws-icon-menu' : '&#xe007;',
+			'ws-icon-cog' : '&#xe008;',
+			'ws-icon-exit' : '&#xe009;',
+			'ws-icon-lightning' : '&#xe00a;',
+			'ws-icon-envelop' : '&#xe00b;',
+			'ws-icon-library' : '&#xe00c;',
+			'ws-icon-book' : '&#xe00d;',
+			'ws-icon-pacman' : '&#xe00e;',
+			'ws-icon-enter' : '&#xe00f;',
+			'ws-icon-quill' : '&#xe010;',
+			'ws-icon-home' : '&#xe011;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;

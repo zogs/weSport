@@ -23,7 +23,7 @@
 				</div>
 				<?php else: ?>
 				<h1 class="title-sheet">
-					Proposer une nouvelle activité !
+					Proposer une activité !
 				</h1>
 				<?php endif; ?>
 			</div>

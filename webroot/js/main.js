@@ -8,7 +8,7 @@ var ajaxLoader = "#ajaxLoader";
 ============================================================*/
 $(document).ready(function(){
 	
-	
+
 	/*===========================================================
 		Autocomplete cityName input
 	============================================================*/
@@ -162,6 +162,25 @@ $(document).ready(function(){
     	$(this).select2({ formatResult: addCountryFlagToSelectState, formatSelection: addCountryFlagToSelectState});
     });
 
+
+
+    /*==================================
+    	MOBILE MENU
+    ===================================*/
+
+    if($("#mobileMenus").length!=0 && $("#mobileMenus").css('display')!='none'){
+    	
+		$("#mobMenuLeft").mmenu({
+
+		});	
+
+		$("#mobMenuRight").mmenu({
+			position: "right",
+			zposition: "front",
+			slidingSubmenus: false
+		});
+    	
+    }
 
 
     /*==================================

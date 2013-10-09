@@ -34,6 +34,7 @@
 <?php echo $this->Form->input('online','Publié',array("type"=>"checkbox")) ;?>
 <?php echo $this->Form->input('valid','Traduction valide',array("type"=>"checkbox")) ;?>
 <?php echo $this->Form->input('menu','Menu',array()); ?>
+<?php echo $this->Form->input('icon','Icon',array()); ?>
 <?php echo $this->Form->input('type','type de contenu') ;?>
 <?php echo $this->Form->input('position','Position',array()) ;?>
 
