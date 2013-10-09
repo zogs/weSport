@@ -421,6 +421,7 @@ body {
   line-height: 100%;
   border: 0;
   vertical-align: middle;
+  background-image: none;
   background: transparent;
   -webkit-appearance: none;
   -moz-appearance: window;
@@ -448,6 +449,7 @@ body {
   font-size: 3.5rem;
   line-height: 100%;
   border: 0;
+  background-image: none;
   background-color: transparent;
 }
 /* line 378, ../scss/style.scss */

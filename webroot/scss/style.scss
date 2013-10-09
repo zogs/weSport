@@ -369,12 +369,12 @@ body{
 				left:80%;				
 				width:20%; 
 				overflow:hidden;				
-				#extend { height: 100%; width: 150%; @include rem(18); font-family:'Alba'; color:#FFF; line-height: 100%; border:0; vertical-align:middle;  background:transparent; -webkit-appearance: none; -moz-appearance: window; }
+				#extend { height: 100%; width: 150%; @include rem(18); font-family:'Alba'; color:#FFF; line-height: 100%; border:0; vertical-align:middle; background-image:none;  background:transparent; -webkit-appearance: none; -moz-appearance: window; }
 				#extend option { background-color:$darkblue; @include rem(14); padding:10px; font-weight: bold;}
 			}
 			.containerCityName { 
 				float:left; width:80%;
-				#cityName { width:100%; height:60px; margin:0; padding:0; @include rem(35); line-height:100%; border:0; background-color:transparent; }
+				#cityName { width:100%; height:60px; margin:0; padding:0; @include rem(35); line-height:100%; border:0; background-image:none; background-color:transparent; }
 				.resetCity { position:absolute; top:25%; left:10px; font-family:Helvetica,Arial,sans-serif; @include rem(20); font-weight: bold; color:$deepblue;}
 				.resetCity:hover { text-decoration: none; color:$darkred;}
 				.twitter-typeahead {width:100%;}
