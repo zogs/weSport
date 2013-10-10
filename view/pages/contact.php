@@ -1,4 +1,3 @@
-<?php echo $this->session->flash(); ?>
 <div class="contact">
 	<div class="top-banner">
 		<div class="void"></div>

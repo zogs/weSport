@@ -97,6 +97,7 @@ class Conf {
 									'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
 									'js/jquery/jquery.livequery.min.js',
 									'bootstrap/js/bootstrap.js',
+									'js/jquery/jquery.flowslider.js',
 									'js/jquery/jquery.typeahead.js',
 									'js/jquery/hogan.mustache.js',
 									'js/phpfunctions.js',

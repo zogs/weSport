@@ -21,8 +21,8 @@ class zHandlingErrors {
 				self::alertError();
 		}
 
-
-		self::emailError($error);
+		if($_SERVER['REMOTE_ADDR']!='127.0.0.1')
+			self::emailError($error);
 	
 	}
 

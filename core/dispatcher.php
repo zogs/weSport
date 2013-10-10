@@ -29,6 +29,7 @@ class Dispatcher{
 				
 		//Appel de la methode demandé sur le controller demandé
 		call_user_func_array(array($controller,$action),$this->request->params);
+
 		//Appel le rendu du controlleur Auto rendering
 		$controller->render($action);
 		
@@ -42,7 +43,11 @@ class Dispatcher{
 		$name = ucfirst($this->request->controller).'Controller'; //On recupere le nom du controller ( en lui mettant une majuscule ^^)
 
 		//autoload du controller
-		$controller =  new $name($this->request); //retourne une instance du bon controleur ( representé par le $name ! )
+		try{ //try to get the controller
+			$controller =  new $name($this->request); //retourne une instance du bon controleur ( representé par le $name ! )			
+		} catch(Exception $e){ //if controller class dont exist
+			$this->error("La page est introuvable"); //error 404
+		}
 		
 		return $controller;
 	}

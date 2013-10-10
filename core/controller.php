@@ -197,7 +197,7 @@ class Controller {
 	//Rend la vue Erreur 404
 	//@param string $message 
 	//@param string $oups 
-	public function e404($message, $oups = 'Oups'){
+	public function e404($message, $oups = '404'){
 
 		header("HTTP/1.0 404 Not Found"); 
 		$this->set('message',$message);
@@ -220,6 +220,20 @@ class Controller {
 		$c = new $controller;
 		$c->request = $this->request;
 		$c->Form = $this->Form;
+		
+		return call_user_func_array(array($c,$action),$params);
+
+	}
+
+	//Permet d'appeler un model depuis une vue
+	// @params 
+	// $controller prefixe du Controller .ex: users
+	// $action action à appeler
+	public function requestModel($model,$action, $params = array() ){
+
+		$model .= 'Model';
+		//require_once ROOT.DS.'controller'.DS.$controller.'.php';
+		$c = new $model;
 		
 		return call_user_func_array(array($c,$action),$params);
 

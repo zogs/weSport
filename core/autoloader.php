@@ -187,7 +187,7 @@ class Autoloader {
 			$this->includes []	= $path;
 			return true;
 		} else {
-			throw new UnfoundClass( $classname );
+			throw new Exception( $classname );
 		}
 	}
 
@@ -245,15 +245,5 @@ class JsonFileCache implements AutoloadCacheManager {
 	}
 }
 
-
-//Exceptions
 //Exceptions
 class NotStandardInclude extends Exception {}
-class UnfoundClass extends zException {
-	public function __construct($classname){
-
-		$msg = 'Class -'.$classname.'- has not been found';
-		parent::__construct($msg,'00009998');
-	}
-}
-

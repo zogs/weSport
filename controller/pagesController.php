@@ -35,8 +35,7 @@ class PagesController extends Controller {
 			$this->loadModel('Events');
 			$this->loadModel('Worlds');
 			$this->loadJS = array(
-				'js/jquery/jquery.touchSwipe.min.js',
-				'js/jquery/jquery.flowslider.js',
+				'js/jquery/jquery.touchSwipe.min.js',				
 				'js/jquery/tourbus/jquery.tourbus.min.js',
 				'js/jquery/jquery.scrollTo-min.js',
 				);

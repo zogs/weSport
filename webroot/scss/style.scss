@@ -481,110 +481,112 @@ div.mm-is-menu * {
 		}
 		
 	}
+}
 
-	.sportCheckboxs {
-		width:100%;
-		margin:40px 0 10px 0;
-		@extend %clearfix;
+.sportCheckboxs {
+	width:100%;
+	margin:40px 0 10px 0;
+	@extend %clearfix;
 
-		.sportChoice {
-			float: left;
-			position:relative;
-			margin:0 6px 2px 6px;
-			input { 
-				z-index:2; 
-				position:absolute; 
-				left:30%; 
-				top:30%; 
-				visibility: hidden;
-			 }
-			label { 
-				z-index:1; 
-				position:relative; 
-				left:0; 
-				top:0; 
-				margin-top:0;				
-				background-color: #FFF; 
-				border:10px solid #FFF; 
-				@include border-radius(100px);
-				@include transition(0.2s ease);				
-				/*@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
-			}
-			label span {
-				@include rem(35); 
-				margin:2px;
-				@include transition(0.2s ease);
-				@include opacity(0.2);
-			}
+	.sportChoice {
+		float: left;
+		position:relative;
+		margin:0 6px 2px 6px;
+		input { 
+			z-index:2; 
+			position:absolute; 
+			left:30%; 
+			top:30%; 
+			visibility: hidden;
+		 }
+		label { 
+			z-index:1; 
+			position:relative; 
+			left:0; 
+			top:0; 
+			margin-top:0;				
+			background-color: #FFF; 
+			border:10px solid #FFF; 
+			@include border-radius(100px);
+			@include transition(0.2s ease);				
+			/*@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
+		}
+		label span {
+			@include rem(35); 
+			margin:2px;
+			@include transition(0.2s ease);
+			@include opacity(0.2);
+		}
 
-			label:hover {
-				margin-top:-15%;				
-				@include rotate(360deg);
-				span.ws-icon{
-					@include rem(60);
-				}
-			}
-			input:checked ~ label {
-				margin-top:-15%;
-				@include rotate(360deg);
-				span.ws-icon{
-					@include opacity(1);
-					@include rem(60);
-
-				}
-			}
-			a{
-				display: none;
+		label:hover {
+			margin-top:-15%;				
+			@include rotate(360deg);
+			span.ws-icon{
+				@include rem(60);
 			}
 		}
-	}
-	.sportCheckboxs.allSportDisplayed{
-		.sportChoice{
-			label span {
+		input:checked ~ label {
+			margin-top:-15%;
+			@include rotate(360deg);
+			span.ws-icon{
 				@include opacity(1);
+				@include rem(60);
+
 			}
 		}
-	}
-
-	.sportSelect {
-		display: none;
-		width:100%;
-		label{
-			text-align:center;
-			color:$darkblue;
-			font-weight: bold;
-			@include rem(20);
+		a{
+			display: none;
 		}
-	}
-
-	.calendar-period{
-		float:left;
-		margin-left:5%;
-		padding:2px 0 0 0;
-		.periodChoice{
-			display:inline-block;
-			margin:0 5px;
-			position:relative;
-			input[type=radio]{
-				position: absolute;
-				top:0;
-				left:0;
-				visibility: hidden;
-			}
-			label { 
-				padding:0 15px;
-				background-color:#45585d;
-				@include border-radius(10px);
-				@include rem(10);
-				color:#838382;
-			}
-			label:hover,input.periodRadio:checked ~ label{
-				background-color: $deepblue;
-				color:white;
-			}
-		}		
 	}
 }
+
+.sportCheckboxs.allSportDisplayed{
+	.sportChoice{
+		label span {
+			@include opacity(1);
+		}
+	}
+}
+
+.sportSelect {
+	display: none;
+	width:100%;
+	label{
+		text-align:center;
+		color:$darkblue;
+		font-weight: bold;
+		@include rem(20);
+	}
+}
+
+.calendar-period{
+	float:left;
+	margin-left:5%;
+	padding:2px 0 0 0;
+	.periodChoice{
+		display:inline-block;
+		margin:0 5px;
+		position:relative;
+		input[type=radio]{
+			position: absolute;
+			top:0;
+			left:0;
+			visibility: hidden;
+		}
+		label { 
+			padding:0 15px;
+			background-color:#45585d;
+			@include border-radius(10px);
+			@include rem(10);
+			color:#838382;
+		}
+		label:hover,input.periodRadio:checked ~ label{
+			background-color: $deepblue;
+			color:white;
+		}
+	}		
+}
+
 
 //intro tourbus
 .tourbus-leg-inner{
@@ -2052,6 +2054,84 @@ div.col_small{
 #hiddenFormReply{
 	display:none;
 }
+
+
+/*
+============
+=== ERROR ==
+============
+*/
+
+.ws-error-page{
+	.white-sheet{
+		overflow:hidden;
+	}
+	.title{
+		margin-top:20px;	
+		color:$darkblue;
+		font-family:'Boogaloo';
+		text-align: center;
+		h1{
+			@include rem(100);
+			color: $darkblue;
+			
+		}		
+	}
+	.message{
+		margin-top:30px;
+		color:$darkblue;
+		font-family:'Boogaloo';
+		@include rem(35);
+		text-align: center;
+	}
+	.forgive{
+		text-align: center;
+		margin-top:30px;
+		@include rem(16);
+		font-weight:bold;
+	}
+	.action{
+		padding-top:60px;
+		padding-left:30px;
+		@include rem(12);
+		strong{}
+		ul{
+			list-style:none;
+			li{
+				a{font-weight:bold;}
+			}
+			li:nth-child(2) { margin-left:20px;}
+			li:nth-child(3) { margin-left:40px;}
+			li:nth-child(4) { margin-left:60px;}
+			li:nth-child(5) { margin-left:80px;}
+		}
+	}
+	.image{
+		text-align: left;
+		img{
+			border:15px solid #EFEFEF;
+			box-shadow:0 0 0 1px #DFDFDF;
+			max-width:100%;
+		}
+	}
+	.bottom{
+		float:left;
+		width:100%;
+		padding-top:30px;		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 ============
 === FOOTER ==

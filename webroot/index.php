@@ -50,6 +50,7 @@ $loader = Autoloader::getInstance()
 ->addDirectory(ROOT.'/controller')
 ->addDirectory(ROOT.'/core')
 ->addDirectory(ROOT.'/model')
+->addEntireDirectory(ROOT.'/module')
 ->addEntireDirectory(ROOT.'/lib');
 
 

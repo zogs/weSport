@@ -50,7 +50,10 @@ class String {
 	static function parse_url($_url = null){
     
 	    try{
-
+	    	
+	    	//add http if missing
+	    	if(strpos($_url,'http://')!==0) $_url = 'http://'.$_url;	    	
+	    	
 			$parsed = parse_url($_url);
 			
 			$arr = array();
