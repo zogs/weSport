@@ -119,6 +119,58 @@ body{
 .container { position:relative;}
 
 
+/* Mobile menu style */
+/* Colors */
+div.mm-is-menu {
+    background-color: rgb(51,51,51);
+}
+/* Sizes */
+div.mm-is-menu li > a,
+div.mm-is-menu li > span {
+    line-height: 60px;
+}
+div.mm-menu a.mm-subopen {
+    width: 60px;
+    height: 60px;
+}
+div.mm-menu a.mm-subopen + a,
+div.mm-menu a.mm-subopen + span {
+    padding-right: 65px; /* += 5 */
+}
+div.mm-menu.mm-vertical ul ul {
+    padding: 20px 0 20px 20px;
+}
+div.mm-menu.mm-vertical li.mm-opened.mm-selected > a.mm-subopen + a,
+div.mm-menu.mm-vertical li.mm-opened.mm-selected > a.mm-subopen + span {
+    margin-right: 60px;
+}
+div.mm-menu.mm-vertical li.mm-opened.mm-selected > em.mm-counter + a.mm-subopen + a,
+div.mm-menu.mm-vertical li.mm-opened.mm-selected > em.mm-counter + a.mm-subopen + span {
+    margin-right: 95px; /* += 35 */
+}
+div.mm-menu li.mm-label {
+    line-height: 35px; /* /= 2 + 5 */
+}
+div.mm-menu em.mm-counter {
+    right: 60px;
+    top: 20px; /* centered */
+}
+div.mm-menu em.mm-counter + a.mm-subopen + a,divmm-menu em.mm-counter + a.mm-subopen + span {
+    padding-right: 105px; /* += 45 */
+}
+div.mm-menu em.mm-counter + a.mm-fullsubopen + a,
+div.mm-menu em.mm-counter + a.mm-fullsubopen + span {
+    padding-right: 100px; /* += 40 */
+}
+div.mm-menu a.mm-subopen:after {
+    right: 26px;
+}
+div.mm-is-menu * {
+    font-size: 18px;
+}
+
+
+
 .weSport{
 	i{font-style: normal; color:#0d83af}
 	strong { font-weight:normal; color:$darkblue;}
@@ -183,7 +235,9 @@ body{
 		text-align:center;
 		@include rem(28);				
 		position:relative;
-		a{color:$darkblue;}
+		a {color:$darkblue;}
+		a:hover, a:hover span { color:$deepblue;}
+		a:active, a:active span { color:#0d83af};
 		a:first-child{
 			position:absolute;
 			left:10px;
@@ -194,6 +248,7 @@ body{
 		}
 	}	
 
+	
 
 	#userCounter {
 		display: none;
