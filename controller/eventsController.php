@@ -190,7 +190,7 @@ class EventsController extends Controller{
 
 		//review
 		$event->reviews = $this->Events->findReviewByOrga($event->user_id);
-		$event->reviews = $this->Users->joinUser($event->reviews,'login,user_id,avatar');
+		$event->reviews = $this->Users->joinUser($event->reviews,'login,user_id,avatar,birthdate');
 	
 		//google map API
 		require(LIB.DS.'GoogleMap'.DS.'GoogleMapAPIv3.class.php');

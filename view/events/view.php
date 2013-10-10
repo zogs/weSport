@@ -31,9 +31,9 @@
 					<div class="header-right">
 						<div class="orga-avatar"><img src="<?php echo $event->author->getAvatar();?>"/></div>
 						<div class="orga-info">
-							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>" rel="me nofollow"><?php echo $event->author->login;?></a></span>
+							<span class="orga-name"><a href="<?php echo $event->getLinkAuthor();?>" rel="me author nofollow"><?php echo $event->author->login;?></a></span>
 							<span class="orga-age"><?php echo $event->author->getAge();?></span>
-							<span class="orga-link"><a href="<?php echo $event->author->getLink();?>" rel="me nofollow">Voir la fiche</a></span>
+							<span class="orga-link"><a href="<?php echo $event->author->getLink();?>" rel="me author nofollow">Voir la fiche</a></span>
 						</div>
 					</div>				
 				</div>

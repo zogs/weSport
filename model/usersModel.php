@@ -508,8 +508,8 @@ class User {
 			if($this->account=='asso') return 'Association';
 			if($this->account=='bizness') return 'Professionnel';
 		}
-		
-		return date('Y-m-d') - date($this->birthdate). ' ans';
+		if(!empty($this->birthdate))
+			return date('Y-m-d') - date($this->birthdate). ' ans';		
 	}
 	public function getBirthyear(){
 		$d = explode('-',$this->birthdate);
