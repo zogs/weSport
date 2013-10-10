@@ -286,10 +286,10 @@ class Page {
 		return false;
 	}
 
-	public function isCurrentPage($controller){
+	public function isCurrentPage($request){
 		
-		if(isset($controller->request->action) && $controller->request->action==$this->slug) return true;
-		if(isset($controller->request->controller) && isset($controller->request->action) && $controller->request->controller.'/'.$controller->request->action==$this->slug) return true;		
+		if(isset($request->action) && $request->action==$this->slug) return true;
+		if(isset($request->controller) && isset($request->action) && $request->controller.'/'.$request->action==$this->slug) return true;		
 		return false;		
 	}
 }
