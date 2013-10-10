@@ -93,7 +93,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 					<ul class="nav">
 						<li>
-							<a class="weSport" href="<?php echo Router::url('');?>">
+							<a class="weSport" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
 				      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
 					      	  	<i>we</i><strong>Sport</strong>
 							</a>

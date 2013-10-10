@@ -31,11 +31,11 @@ date_default_timezone_set('Europe/Paris');
 //Errors gestion
 include CORE.'/errors.php';
 function uncatchError($errno, $errstr, $errfile, $errline ) {
-	echo 'uncatchError';
+	
     new zErrorException($errno, $errstr, $errfile, $errline);
 }
 function uncatchException($exception){
-	echo 'uncatchException';
+	
 	new zException($exception);
 }
 set_error_handler('uncatchError');

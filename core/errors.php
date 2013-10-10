@@ -3,40 +3,82 @@ class zHandlingErrors {
 
 	public static function handler($Exception){
 
+		$error = self::objectError($Exception);
+
 		if(DEBUG==0){
 			$controller = new Controller();
-			$controller->e404('un pti bout de code est surement mal écrit...','Oups une erreur !');
+			$controller->e404('Veuillez nous excusez pour cet erreur...','Oups une erreur !');
 		}
 
 		if(DEBUG==1){
-			
+			self::alertError();
 		}
 
-		if(DEBUG==2){
-			
-			self::display($Exception);
+		if(DEBUG==2){			
+			if(in_array($_SERVER['REMOTE_ADDR'],Conf::$debugIpAddress))
+				self::showError($error);			
+			else
+				self::alertError();
 		}
 
-		
+
+		self::emailError($error);
+	
 	}
 
-	public static function display($e){
-
-		// echo '<pre>';
-		// print_r($e);
-		// echo '</pre>';
-		
+	private static function objectError(Exception $e){
 		$error = new stdClass();
 		$error->msg = $e->getMessage();
 		$error->code = $e->getCode();
 		$error->line = $e->getLine();
 		$error->file = $e->getFile();
 		$error->context = $e->getTraceAsString();
+		return $error;
+	}
 
-		$controller = new Controller();
-		$controller->exception($error);
+	public static function emailError($error){
 
+		//Si il ny a pas d'email retourne vrai
+		if(empty(Conf::$debugErrorEmails)) return true;
 
+        $body = file_get_contents('../view/errors/debugmail.html');
+        $body = preg_replace("~{site}~i", Conf::$website, $body);
+        $body = preg_replace("~{msg}~i", $error->msg, $body);
+        $body = preg_replace("~{code}~i", $error->code, $body);
+        $body = preg_replace("~{line}~i", $error->line, $body);
+        $body = preg_replace("~{file}~i", $error->file, $body);
+        $body = preg_replace("~{date}~i", date("Y-m-d H:i:s"), $body);
+        $body = preg_replace("~{context}~i", $error->context, $body);
+
+		//Création d'une instance de swift mailer
+		$mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+
+        //Création du mail
+        $message = Swift_Message::newInstance()
+          ->setSubject(date('Y-m-d').' '.$error->msg)
+          ->setFrom(Conf::$contactEmail, Conf::$website)
+          ->setTo(Conf::$debugErrorEmails)
+          ->setBody($body, 'text/html', 'utf-8');          
+       
+        //Envoi du message et affichage des erreurs éventuelles si échoue 
+        if (!$mailer->send($message, $failures))
+        {                       
+            return false;
+        }
+
+        return true;
+
+	}
+
+	public static function showError($error){
+
+		include '../view/errors/exception.php';
+
+	}
+
+	public static function alertError(){
+
+		echo '<div class="zerror"><strong>Attention, une erreur a lieu !</strong> Le reste de la page est peut être cassée...</div>';
 	}
 }
 
@@ -45,7 +87,7 @@ class zErrorException extends ErrorException {
 
 
 	public function __construct($errno, $errstr, $errfile, $errline){
-		
+			
 		$this->message = $errstr;
 		$this->code = $errno;
 		$this->line = $errline;

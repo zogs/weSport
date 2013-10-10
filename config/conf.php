@@ -23,6 +23,8 @@ class Conf {
 	static $parsed_url;
 	static $websiteDOT = 'we-sport.fr';
 	static $contactEmail = 'contact@we-sport.fr';
+	static $debugIpAddress = array('127.0.0.1','193.52.250.230','88.162.98.17');
+	static $debugErrorEmails = array('guichardsim@gmail.com');
 	static $lang = 'fr';
 	static $pays = 'FR';
 

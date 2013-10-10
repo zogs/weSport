@@ -208,14 +208,6 @@ class Controller {
 		
 	}
 
-	//Rend la vue exception
-	// $params obj $error ->msg|code|line|file|context
-	public function exception($error){
-
-		$this->set('error',$error);
-		$this->render('/errors/exception');
-	}
-
 	//Permet d'appeler un controller depuis une vue
 	// @params 
 	// $controller prefixe du Controller .ex: users
@@ -372,7 +364,7 @@ class Controller {
         //Création du mail
         $message = Swift_Message::newInstance()
           ->setSubject($subject)
-          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+          ->setFrom(Conf::$contactEmail, Conf::$website)
           ->setTo($emails)
           ->setBody($body, 'text/html', 'utf-8');          
        

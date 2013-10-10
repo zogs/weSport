@@ -150,12 +150,14 @@ body{
 
 			a.weSport{
 				float:left;
-				color:$darkblue;
-				margin:0 10px 0 0;
 				@include rem(28);
 				padding:0 30px;
 				line-height: 150%;				
 			}
+
+			a:hover { color:$darkblue; }
+			a:active { color:#0d83af; }
+
 		}
 
 	}
