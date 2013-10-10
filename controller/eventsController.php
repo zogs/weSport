@@ -162,14 +162,14 @@ class EventsController extends Controller{
 
 
 	public function view($id = null,$slug = null,$sport = null){
-
+	
 		$this->view = 'events/view';
 
 		$this->loadModel('Events');
 		$this->loadModel('Worlds');	
 		$this->loadModel('Users');	
 
-		if(!isset($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");
+		if(empty($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");
 
 		$event = $this->Events->findEventById($id);	
 		$sport = $event->sport;

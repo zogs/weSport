@@ -202,7 +202,8 @@ class Controller {
 		header("HTTP/1.0 404 Not Found"); 
 		$this->set('message',$message);
 		$this->set('oups',$oups);
-		$this->render('/errors/404');
+		$this->view = 'errors/404';
+		$this->render();
 		
 		die();
 		
