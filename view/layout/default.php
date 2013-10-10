@@ -61,7 +61,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 							$mobmenu = array_merge($menu,$bottommenu);
 							foreach($mobmenu as $page):
 							 ?>
-							<li class="<?php echo ($page->isCurrentPage($this))? 'selected' : '';?>"><a href="<?php echo Router::url($page->slug);?>" ><span class="mm-icon ws-icon-<?php echo $page->icon;?>"></span> <?php echo $page->title;?></a></li>
+							<li class="<?php echo ($page->isCurrentPage($this->request))? 'selected' : '';?>"><a href="<?php echo Router::url($page->slug);?>" ><span class="mm-icon ws-icon-<?php echo $page->icon;?>"></span> <?php echo $page->title;?></a></li>
 
 						<?php endforeach; ?>																
 						</ul>
@@ -103,7 +103,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 							foreach ($menu as $page):
 						 ?>
 						 <li>
-						 	<a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage($this))? 'currentPage':'';?>"><?php echo $page->title;?></a>
+						 	<a href="<?php echo Router::url($page->slug);?>" class="<?php echo ($page->isCurrentPage($this->request))? 'currentPage':'';?>"><?php echo $page->title;?></a>
 						 </li>
 						<?php endforeach;
 

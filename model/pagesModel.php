@@ -288,6 +288,7 @@ class Page {
 
 	public function isCurrentPage($request){
 		
+		if($this->slug=='/') $this->slug = 'home';		
 		if(isset($request->action) && $request->action==$this->slug) return true;
 		if(isset($request->controller) && isset($request->action) && $request->controller.'/'.$request->action==$this->slug) return true;		
 		return false;		
