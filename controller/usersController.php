@@ -311,7 +311,7 @@ class UsersController extends Controller{
 			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('login'=>$fbuser->username)));							
 			if(!empty($check)) {
 				$this->session->setFlash("Ce nom d'utilisateur est déjà pris !","error");
-				$this->e404('Inscription avec facebook impossible, nous sommes désolé mais ce nom est déjà pris...');
+				$this->e404('Inscription avec facebook impossible, ce nom est déjà pris...');
 			}				
 			//on vérifie que ce mail n'exsite pas déjà
 			$check = $this->Users->findFirst(array("table"=>"users",'fields'=>'user_id','conditions'=>array('email'=>$fbuser->email)));
@@ -1033,7 +1033,7 @@ class UsersController extends Controller{
 				}
 			}
 			else{
-				$this->e404();
+				$this->e404('Erreur inconnue','Error');
 			}
 		}
 
@@ -1115,7 +1115,7 @@ class UsersController extends Controller{
     	$user = $this->Users->findUsers(array('conditions'=>array('user_id'=>$uid)));
     	$user = $user[0];
     	//404 is not exist
-    	if(!$user->exist()) $this->e404('User does not exist');
+    	if(!$user->exist()) $this->e404('Cette page n\'existe pas !');
 
     	//Locate user
     	$user->location =  $this->Worlds->findStatesNames($user);

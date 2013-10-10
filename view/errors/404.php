@@ -19,7 +19,7 @@
 			<div class="head-sheet"></div>
 			<div class="col_large">	
 				<div class="title">
-					<h1><?php echo $oups ?></h1>
+					<h1><?php echo $title; ?></h1>
 				</div>
 				<div class="message">
 					Désolé... <?php echo $message; ?>		
@@ -33,7 +33,7 @@
 						<li><a href="<?php echo Router::url('/');?>">d'allez au calendrier,</a></li>
 						<li><a href="<?php echo Router::url('blog');?>">de faire un tour sur le blog,</a></li>
 						<li><a href="<?php echo Router::url('users/register');?>">de t'inscrire !</a></li>
-						<li>ou de choisir un sport ci-desous...</li>
+						<li><strong>ou de choisir un sport ci-desous...</strong></li>
 					</ul>
 				</div>
 			</div>	

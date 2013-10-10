@@ -159,7 +159,7 @@
 		$com = $this->Comments->getComments($comment_id);
 		$com = $com[0];
 
-		if(empty($com)) $this->e404('This comment does not exist anymore');
+		if(empty($com)) $this->e404('Cette page n\'existe pas');
 
 		if(isset($com->context) && $com->context != ''){
 

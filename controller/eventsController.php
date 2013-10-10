@@ -634,7 +634,7 @@ class EventsController extends Controller{
 	public function delete($eid,$token){
 
 		//tcheck token
-		if($token!=$this->session->token()) $this->e404('Merci de vous reconnecter avant d\'effectuer cet opération');
+		if($token!=$this->session->token()) $this->e404('Vous devez vous connecter avant de faire cette opération','Error');
 
 		//find Event
 		$this->loadModel('Events');
@@ -645,7 +645,7 @@ class EventsController extends Controller{
 		if(!$evt->exist()) $this->e404('Cette activité n\'existe pas');
 
 		//check if user is admin
-		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cette activité');
+		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cette activité','Error');
 
 		//delete the event
 		if($this->Events->deleteEvent($evt)){

@@ -197,11 +197,11 @@ class Controller {
 	//Rend la vue Erreur 404
 	//@param string $message 
 	//@param string $oups 
-	public function e404($message, $oups = '404'){
+	public function e404($message, $title = '404'){
 
 		header("HTTP/1.0 404 Not Found"); 
 		$this->set('message',$message);
-		$this->set('oups',$oups);
+		$this->set('title',$title);
 		$this->view = 'errors/404';
 		$this->render();
 		
