@@ -31,7 +31,9 @@ if($type!='404'){
 		$html .='</div>';
 	$html .='</div>';
 }
-
+else{
+	$html = 'Le lien est inaccessible...';
+}
 
 
 // $html = utf8_decode($html); // json_encode ne fonctionne qu'avec des donnees utf8
