@@ -349,15 +349,15 @@ class Controller {
 
 			if(!$request->post('token')){
 
-				$this->session->setFlash("Warning security token is missing!!!","error");
-				$this->e404('Please log in again');
+				$this->session->setFlash("Votre session a expiré... Veuillez vous reconnecter","error");
+				$this->redirect('users/login');
 			}
 			else {
 
 				if($request->post('token')!=$this->session->read('token')){
 					
-					$this->session->setFlash("Your security token is outdated, please log in again","error");
-					$this->e404('Your security token is outdated, please log in again');
+					$this->session->setFlash("Votre session a expiré... Veuillez vous reconnecter","error");
+					$this->redirect('users/login');
 					
 				}
 				if($request->post('token')==$this->session->read('token')){
