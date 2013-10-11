@@ -468,14 +468,34 @@
 					return $destination;
 				}
 				else {
-					throw new zException("Impossible to move the uploaded file : Error n°".$_FILES[$name]['error'], 1);
+					$error = $_FILES[$name]['error'];
+
+					switch($error)
+					{
+					case 1:
+					$msg = "The file is bigger than this PHP installation allows";
+					break;
+
+					case 2:
+					$msg = "The file is bigger than this form allows";
+					break;
+
+					case 3:
+					$msg = "Only part of the file was uploaded";
+					break;
+
+					case 4:
+					$msg = "No file was uploaded";
+					break;
+					}
 					
+					throw new zException("Impossible to move the uploaded file : Error n°".$error.' '.$msg, 1);					
 				}
 				
 			}
  			
  		}
- 		return false;
+ 		return true;
  	}
 
 

@@ -640,6 +640,10 @@ class UsersController extends Controller{
 				 			$this->session->write('user', $u);
 				 			$this->reload();
 	    				}
+	    				else{
+	    					$this->session->setFlash('Une erreur a eu lieu lors de la sauvegarde. Merci de réessayer plus tard.','error');
+	    					$this->reload();
+	    				}
 	    			}	    			
 	    			else
 	    				$this->session->setFlash('Veuillez revoir votre fichier','error');
