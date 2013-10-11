@@ -70,7 +70,7 @@ relative_urls:false,
 remove_script_host:false,
 
         // Example content CSS (should be your site CSS)
-        content_css : "css/example.css",
+        //content_css : "css/example.css",
 
         // Drop lists for link/image/media/template dialogs
         template_external_list_url : "js/template_list.js",
