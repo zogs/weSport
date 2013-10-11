@@ -52,7 +52,7 @@ class String {
 	    try{
 	    	
 	    	//add http if missing
-	    	if(strpos($_url,'http://')!==0) $_url = 'http://'.$_url;	    	
+	    	if(strpos($_url,'http://')!==0 && strpos($_url,'https://'!==0)) $_url = 'http://'.$_url;	    	
 	    	
 			$parsed = parse_url($_url);
 			

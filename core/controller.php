@@ -349,8 +349,8 @@ class Controller {
 
 			if(!$request->post('token')){
 
-				$this->session->setFlash("Votre session a expiré... Veuillez vous reconnecter","error");
-				$this->redirect('users/login');
+				$this->session->setFlash("Le jeton de validation est manquant","error");
+				$this->reload();
 			}
 			else {
 
