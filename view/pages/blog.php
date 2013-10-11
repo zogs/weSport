@@ -29,11 +29,10 @@
 																		'allowComment'=>$allowComment,
 																		'allowReply'=>true,
 																		'displayRenderButtons'=>false,
-																		'showFormReply'=>true,
 																		'enablePreview'=>true,
 																		'enableInfiniteScrolling'=>true,
-																		'textareaPlaceholder'=>'Ecrire le message',
-																		'titlePlaceholder' => 'Ecrire un titre'
+																		'placeholderCommentForm'=>'Laisser un commentaire',
+																		'placeholderTitleForm' => 'Ecrire un titre'
 																		),
 																	)
 											);
@@ -49,11 +48,10 @@
 																		'allowComment'=>$allowComment,
 																		'allowReply'=>true,
 																		'displayRenderButtons'=>false,
-																		'showFormReply'=>true,
 																		'enablePreview'=>true,
 																		'enableInfiniteScrolling'=>false,
-																		'textareaPlaceholder'=>'Ecrire le message',
-																		'titlePlaceholder' => 'Ecrire un titre'
+																		'placeholderCommentForm'=>'Laisser un commentaire',
+																		'placeholderTitleForm' => 'Ecrire un titre'
 																		),
 																	)
 											);

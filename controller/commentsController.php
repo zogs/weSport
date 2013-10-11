@@ -18,13 +18,13 @@
  	public $repliesDisplayPerComment = 3;
  	public $allowComment = true;
  	public $allowReply = true;
- 	public $displayReply = true;
  	public $allowVoting = false;
- 	public $enablePreview = true;
- 	public $levelFormReplyToDisplay = 1;
  	public $allowTitle = false; 
- 	public $displayRenderButtons = false;
+ 	public $displayReply = true;
+ 	public $enablePreview = true;
  	public $enableInfiniteScrolling = false;
+ 	public $levelFormReplyToDisplay = 1;
+ 	public $displayRenderButtons = false;
 
  	//Default text value
  	public $placeholderTitleForm = "Ecrire un titre";

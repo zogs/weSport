@@ -2621,12 +2621,14 @@ div.col_small {
   background-color: #fee08b;
   border: 10px solid #fed86d;
   border-right: 0;
+  border-bottom: 0;
 }
 /* line 1964, ../scss/style.scss */
 .blog #comments .post:nth-child(even) {
   background-color: #d9ef8b;
   border: 10px solid #d0eb70;
   border-right: 0;
+  border-bottom: 0;
 }
 /* line 1966, ../scss/style.scss */
 .blog #comments .type-news .title a {
@@ -2639,9 +2641,15 @@ div.col_small {
 }
 /* line 1969, ../scss/style.scss */
 .blog #comments .formCommentReply {
-  padding-bottom: 20px;
-  background: #ffffa6;
-  border-bottom: 0px solid #ffff91;
+  padding-bottom: 0px;
+}
+/* line 1972, ../scss/style.scss */
+.blog #comments .formCommentReply:nth-child(even) {
+  background: #fed86d;
+}
+/* line 1973, ../scss/style.scss */
+.blog #comments .formCommentReply:nth-child(odd) {
+  background: #d0eb70;
 }
 /* line 1974, ../scss/style.scss */
 .blog #comments .showHiddenReplies {

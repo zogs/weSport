@@ -1948,7 +1948,7 @@ div.col_small{
 
 		}
 		.post.reply:nth-child(odd){
-			padding:10px;			
+			padding:10px;					
 			background-color: $softyellow; 
 			border:10px solid $softyellow;
 			border-left:10px solid darken($softyellow,5%); 
@@ -1960,17 +1960,17 @@ div.col_small{
 			padding:0;
 
 		}
-		.post:nth-child(odd){ background-color:$lightred; border:10px solid darken($lightred,6%);border-right:0;}
-		.post:nth-child(even){ background-color:$lightgreen; border:10px solid darken($lightgreen,6%);border-right:0;}
+		.post:nth-child(odd){ background-color:$lightred; border:10px solid darken($lightred,6%); border-right:0; border-bottom:0}
+		.post:nth-child(even){ background-color:$lightgreen; border:10px solid darken($lightgreen,6%); border-right:0; border-bottom:0}
 		.type-news {
 			.title a { color:rgb(40, 111, 146);}
 			.logo { width:60px; height:60px;}
 		}
 		.formCommentReply{ 
-			padding-bottom:20px;
-			background:darken($softyellow,5%); 
-			border-bottom:0px solid darken($softyellow,9%); 			
+			padding-bottom:0px; 				
 		}
+		.formCommentReply:nth-child(even) { 	background:darken($lightred,6%);}
+		.formCommentReply:nth-child(odd) { background:darken($lightgreen,6%);}
 		.showHiddenReplies{ 
 			padding:10px 5%; 
 			background:darken($softyellow,5%); 
