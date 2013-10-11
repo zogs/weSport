@@ -2,8 +2,8 @@
 	<div class="top-banner">
 		<div class="void"></div>
 		<div class="fresque"></div>
+		<?php echo $this->session->flash(); ?>
 	</div>
-	<?php echo $this->session->flash(); ?>
 
 	<div class="container">		
 		<div class="blog-banner">
