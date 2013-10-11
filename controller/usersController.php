@@ -638,6 +638,7 @@ class UsersController extends Controller{
 				 			$u = $this->session->user();
 				 			$u->avatar = $destination;
 				 			$this->session->write('user', $u);
+				 			$this->reload();
 	    				}
 	    			}	    			
 	    			else
