@@ -67,22 +67,7 @@
 			<div class="col_small">
 
 					
-				<div class="block block-red">
-					<h3>Publicité</h3>
-					<div class="block-content">
-						<script type="text/javascript"><!--
-							google_ad_client = "ca-pub-5083969946680628";
-							/* WeSport big rectangle */
-							google_ad_slot = "1932113308";
-							google_ad_width = 336;
-							google_ad_height = 280;
-							//-->
-							</script>
-							<script type="text/javascript"
-							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-						</script>
-					</div>
-				</div>
+				
 
 				<div class="block block-orange events-to-come events-list">
 					<h3>10 sports à venir</h3>
@@ -120,7 +105,22 @@
 					</div>
 				</div>
 				
-							
+				<div class="block block-red">
+					<h3>Publicité</h3>
+					<div class="block-content">
+						<script type="text/javascript"><!--
+							google_ad_client = "ca-pub-5083969946680628";
+							/* WeSport big rectangle */
+							google_ad_slot = "1932113308";
+							google_ad_width = 336;
+							google_ad_height = 280;
+							//-->
+							</script>
+							<script type="text/javascript"
+							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+						</script>
+					</div>
+				</div>		
 			</div>
 
 			<div class="clearfix"></div>

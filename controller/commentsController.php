@@ -15,7 +15,7 @@
  	
  	//Options parameters
  	public $commentsPerPage = 6;
- 	public $repliesDisplayPerComment = 5;
+ 	public $repliesDisplayPerComment = 3;
  	public $allowComment = true;
  	public $allowReply = true;
  	public $displayReply = true;

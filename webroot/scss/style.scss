@@ -1945,19 +1945,44 @@ div.col_small{
 			padding:25px;
 			color:rgba(0,0,0,0.8);		
 			text-shadow:1px 1px 0px #FFF;
+
 		}
 		.post.reply:nth-child(odd){
-			padding:10px;
-			background-color: $softyellow; border:10px solid darken($softyellow,5%);
+			padding:10px;			
+			background-color: $softyellow; 
+			border:10px solid $softyellow;
+			border-left:10px solid darken($softyellow,5%); 
+
 		}
+		.replies{
+			float:left;
+			margin:0;
+			padding:0;
 
-		.post:nth-child(odd){ background-color:$lightred; border:10px solid darken($lightred,6%);}
-		.post:nth-child(even){ background-color:$lightgreen; border:10px solid darken($lightgreen,6%);}
-
-		.type-news .title a { color:rgb(40, 111, 146);}
+		}
+		.post:nth-child(odd){ background-color:$lightred; border:10px solid darken($lightred,6%);border-right:0;}
+		.post:nth-child(even){ background-color:$lightgreen; border:10px solid darken($lightgreen,6%);border-right:0;}
+		.type-news {
+			.title a { color:rgb(40, 111, 146);}
+			.logo { width:60px; height:60px;}
+		}
+		.formCommentReply{ 
+			padding-bottom:20px;
+			background:darken($softyellow,5%); 
+			border-bottom:0px solid darken($softyellow,9%); 			
+		}
+		.showHiddenReplies{ 
+			padding:10px 5%; 
+			background:darken($softyellow,5%); 
+			a.showReplies{
+				font-weight: bold;
+				@include rem(12);
+			}
+		}
 	}
 
 	.col_small{
+		padding:0;
 		.block{
 			.block-content { padding:0;}
 		}
