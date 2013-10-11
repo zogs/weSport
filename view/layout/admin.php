@@ -42,7 +42,7 @@ tinyMCE.init({
         plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
         //Valid element that will be not removed
-        valid_elements : "em/i,strike,u,strong/b,div[align],br,#p[align],-ol[type|compact],-ul[type|compact],-li",
+        valid_elements : "em/i,strike,u,span,strong/b,h1[id|dir|class|align|style],h2[id|dir|class|align|style],h3[id|dir|class|align|style],h4[id|dir|class|align|style],h5[id|dir|class|align|style],div[align],br,#p[align],-ol[type|compact],-ul[type|compact],-li",
         // plugins : "paste",
         // paste_text_sticky : true,
         // setup : function(ed) {

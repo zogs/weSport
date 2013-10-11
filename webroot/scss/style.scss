@@ -993,9 +993,10 @@ h1.title-sheet {
 	margin:0;
 	padding:0;
 	font-family:Verdana,sans-serif;
-	@include rem(25);
-	color:$darkblue;
+	@include rem(20);
 	text-transform: uppercase;
+	color:#CCC;
+	text-shadow:1px 2px 0 #FFF;
 }
 
 
@@ -1862,8 +1863,77 @@ div.col_small{
 		}
 	}
 }
+/*=======
+== PAGE
+=======*/
+
+.page-content{ 
+	width:100%;
+	padding:10px 25% 100px 25%;
+
+	p{
+		@include rem(13);
+	}
+	strong,b{		
+		color:$darkblue;
+	}
+	h1,h2,h3,h4,h5{
+		color:$darkblue;
+		font-family: 'Boogaloo';
+		em{
+			font-size:60%;
+			font-family: 'Arial',sans-serif;
+			margin:0 5px;
+		}
+	}
+	h1{ @include rem(42); color:$lightblue; text-shadow:1px 1px 0 $deepblue, 2px 2px 0 $deepblue, 3px 3px 0 $deepblue;}
+	h2{ 
+		margin-bottom:40px;
+		margin-top:20px;
+		@include rem(28);
+		background:$deepblue;
+		@include border-radius(20px);
+		box-shadow:0 3px 0 $darkblue;
+		span { text-shadow:1px 2px 0 rgba(0,0,0,0.3),-1px -1px 0 rgba(0,0,0,0.3);}
+		span:nth-child(1) { color:$deepred;}
+		span:nth-child(2) { color:$red;}
+		span:nth-child(3) { color:$softred;}
+		span:nth-child(4) { color:$lightred;}
+		span:nth-child(5) { color:$softyellow;}
+		span:nth-child(6) { color:$lightgreen;}
+		span:nth-child(7) { color:$softgreen;}
+		span:nth-child(8) { color:$green;}
+		span:nth-child(9) { color:$deepgreen;}
+	}
+
+	h6{ 
+		display:inline-block;
+		em{ 
+			color:$deepblue;			
+			font-style:italic;			
+		}
+	}
+}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=======
+== BLOG
+=======*/
 .blog{
 
 	#comments{
@@ -2285,6 +2355,7 @@ TYPEAHEAD CUSTOM STYLE
 
 h1.title-sheet{
 	@include rem(14);
+
 }
 
 .container { width:100%;}
