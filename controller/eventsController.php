@@ -84,14 +84,15 @@ class EventsController extends Controller{
 
 				//find latitude longitude of the city
 				$city = $this->Worlds->findFirst(array('table'=>'world_cities','fields'=>array('LATITUDE','LONGITUDE'),'conditions'=>array('UNI'=>$params['cityID'])));
-				//and set params for the model
-				$query['cityLat'] = $city->LATITUDE;
-				$query['cityLon'] = $city->LONGITUDE;
-				$query['extend'] = $extend;
-				$query['extend_metric'] = 'km';
-
-				//set extend cookie
-				$cookie['extend'] = $extend;
+				if(!empty($city)){
+					//and set params for the model
+					$query['cityLat'] = $city->LATITUDE;
+					$query['cityLon'] = $city->LONGITUDE;
+					$query['extend'] = $extend;
+					$query['extend_metric'] = 'km';
+					//set extend cookie
+					$cookie['extend'] = $extend;					
+				}
 			}			
 		}
 		else{

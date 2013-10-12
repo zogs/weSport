@@ -5,94 +5,6 @@ class CommentsModel extends Model
 {
 	public $table = 'comments';	
 	public $table_vote = 'comments_voted';
-
-
-	public function findComments($req){
-
-
-		foreach ($req as $k => $v) {
-			
-			$$k = $v;
-		}
-
-		if(isset($order)){
-
-        	if ($order == "datedesc" || $order == '' || $order == '0')
-            	$order=" date DESC ";
-	        elseif ($order == "dateasc")
-	            $order=" date ASC ";
-	        elseif ($order == "noteasc")
-	            $order=" note ASC ";
-	        elseif ($order == "notedesc")
-            	$order=" note DESC ";
-        }
-        else {
-        	$order= " date DESC ";
-        }
-
-		if(isset($limit) && !empty($limit)){
-			
-			 $limit = (($page-1)*$limit).','.$limit;
-
-		}
-		else $limit = 165131654;
-        
-        if (isset($rch) && $rch != "0") {
-        	if( trim( $rch != "" ) ) {
-        		$rch =" ( U.login LIKE '%" . $rch . "%' OR X.content LIKE '%" . $rch . "%' )";
-        	}           
-        }
-
-        $user_id = $this->session->user()->getID();
-        
-
-		$q = " SELECT C.*, U.user_id, U.login, U.avatar, V.id as voted 
-				FROM $this->table as C
-				LEFT JOIN users as U ON U.user_id = C.user_id
-				LEFT JOIN $this->table_vote as V ON (V.comment_id = C.id AND V.user_id = ".$user_id." )
-				WHERE ";
-				if(isset($comment_id)) {
-							$q .= "
-								C.id=".$comment_id." ";	
-				} else {
-							$q .= "
-								C.context='".$context."'
-								AND
-								C.context_id=".$context_id." 
-								AND 
-								C.reply_to=0 ";
-				}			
-				if (isset($type) && $type != "all" && $type != "0" )
-								$q .='
-								AND C.type="'.$type.'"';
-				if (isset($start) && $start!="0")
-								$q .='
-								AND C.id <= "'.$start.'"';
-				if( isset($newest) && $newest!="0")
-								$q .='
-								AND C.id > "'.$newest.'"';
-				if(isset($lang) && !empty($lang))
-								$q .=' AND lang="'.$lang.'" ';
-
-				$q.=" 
-				ORDER BY ".$order."
-				LIMIT ".$limit."
-			";
-
-	
-		$res = $this->db->prepare($q);
-		$res->execute();
-
-		if($res->rowCount()>1)
-			$coms = $res->fetch(PDO::FETCH_OBJ);
-		else
-			$coms = $res->fetchAll(PDO::FETCH_OBJ);
-
-		$coms = $this->findReplies($coms);
-
-		// debug($array);
-		return $coms;
-	}
 	
 	public function findCommentsWithoutJOIN($req){
 
@@ -120,7 +32,7 @@ class CommentsModel extends Model
         	$order = "date DESC";
         }
 
-		if(!empty($limit) && is_numeric($limit)){
+		if(!empty($limit) && is_int($limit) && !empty($page) && is_int($page)){
 
 			if(!isset($page) || empty($page)) $page = 1;
 				$limit = (($page-1)*$limit).','.$limit;
@@ -130,8 +42,7 @@ class CommentsModel extends Model
 
 
         if (isset($rch) && $rch != "0") {
-        	if( trim( $rch != "" ) ) {
-        		$rch =" ( U.login LIKE '%" . $rch . "%' OR X.content LIKE '%" . $rch . "%' )";
+        	if( trim( $rch != "" ) ) {        		
         		$rch =" ( U.login LIKE '%:rch%' OR X.content LIKE '%:rch%' )";
         	}           
         }
@@ -142,11 +53,11 @@ class CommentsModel extends Model
 				FROM $this->table as C
 				
 				WHERE ";
-				if(isset($comment_id) && is_numeric($comment_id)) {
+				if(isset($comment_id) && is_int($comment_id)) {
 							$sql .= " C.id=$comment_id ";	
 							
 				} 
-				elseif(isset($reply_to) && is_numeric($reply_to)){
+				elseif(isset($reply_to) && is_int($reply_to)){
 							$sql .= " C.reply_to=$reply_to ";							
 				}
 				else {
@@ -160,11 +71,11 @@ class CommentsModel extends Model
 							$val['type'] = $type;
 
 				}
-				if (!empty($start) && is_numeric($start)){
+				if (!empty($start) && is_int($start)){
 
 							$sql .=' AND C.id <= '.$start.' ';			
 				}
-				if( !empty($newest) && is_numeric($newest)){
+				if( !empty($newest) && is_int($newest)){
 
 							$sql .=' AND C.id > '.$newest.' ';
 					
@@ -236,7 +147,7 @@ class CommentsModel extends Model
 				$array[] = $res[0];
 			}					
 		}
-		elseif(is_numeric($comments_id)){
+		elseif(is_int($comments_id)){
 
 			$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comments_id));
 			$array[] = $res[0];					
@@ -270,7 +181,7 @@ class CommentsModel extends Model
 			$c->type = 'news';
 		}
 
-		if(!empty($c->reply_to) && is_numeric($c->reply_to)){
+		if(!empty($c->reply_to) && is_int($c->reply_to)){
 
 			$this->increment(array('field'=>'replies','id'=>$c->reply_to));
 		}
