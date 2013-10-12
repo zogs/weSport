@@ -80,8 +80,8 @@
  	public function index($context, $context_id, $comment_id = null) {
 
 		$context         = (strlen($context)<=10)? $context : exit('wrong url context parameter');
-		$context_id      = (is_int($context_id))? $context_id : exit('wrong url id parameter');
-		$comment_id      = (isset($comment_id) && is_int($comment_id))? $comment_id : null;
+		$context_id      = (is_numeric($context_id))? $context_id : exit('wrong url id parameter');
+		$comment_id      = (isset($comment_id) && is_numeric($comment_id))? $comment_id : null;
 		
 		$d['context']    = $context;
 		$d['context_id'] = $context_id;

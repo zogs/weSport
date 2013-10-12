@@ -32,7 +32,7 @@ class CommentsModel extends Model
         	$order = "date DESC";
         }
 
-		if(!empty($limit) && is_int($limit) && !empty($page) && is_int($page)){
+		if(!empty($limit) && is_numeric($limit) && !empty($page) && is_numeric($page)){
 
 			if(!isset($page) || empty($page)) $page = 1;
 				$limit = (($page-1)*$limit).','.$limit;
@@ -53,11 +53,11 @@ class CommentsModel extends Model
 				FROM $this->table as C
 				
 				WHERE ";
-				if(isset($comment_id) && is_int($comment_id)) {
+				if(isset($comment_id) && is_numeric($comment_id)) {
 							$sql .= " C.id=$comment_id ";	
 							
 				} 
-				elseif(isset($reply_to) && is_int($reply_to)){
+				elseif(isset($reply_to) && is_numeric($reply_to)){
 							$sql .= " C.reply_to=$reply_to ";							
 				}
 				else {
@@ -71,11 +71,11 @@ class CommentsModel extends Model
 							$val['type'] = $type;
 
 				}
-				if (!empty($start) && is_int($start)){
+				if (!empty($start) && is_numeric($start)){
 
 							$sql .=' AND C.id <= '.$start.' ';			
 				}
-				if( !empty($newest) && is_int($newest)){
+				if( !empty($newest) && is_numeric($newest)){
 
 							$sql .=' AND C.id > '.$newest.' ';
 					
@@ -147,7 +147,7 @@ class CommentsModel extends Model
 				$array[] = $res[0];
 			}					
 		}
-		elseif(is_int($comments_id)){
+		elseif(is_numeric($comments_id)){
 
 			$res = $this->findCommentsWithoutJOIN(array('comment_id'=>$comments_id));
 			$array[] = $res[0];					
@@ -181,7 +181,7 @@ class CommentsModel extends Model
 			$c->type = 'news';
 		}
 
-		if(!empty($c->reply_to) && is_int($c->reply_to)){
+		if(!empty($c->reply_to) && is_numeric($c->reply_to)){
 
 			$this->increment(array('field'=>'replies','id'=>$c->reply_to));
 		}
