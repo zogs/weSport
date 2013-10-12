@@ -48,6 +48,7 @@ class zHandlingErrors {
         $body = preg_replace("~{line}~i", $error->line, $body);
         $body = preg_replace("~{file}~i", $error->file, $body);
         $body = preg_replace("~{uri}~i", $_SERVER['REQUEST_URI'], $body);
+        $body = preg_replace("~{useragent}~i", $_SERVER['HTTP_USER_AGENT'] . ' IP:'.$_SERVER['REMOTE_ADDR'], $body);
         $body = preg_replace("~{date}~i", date("Y-m-d H:i:s"), $body);
         $body = preg_replace("~{context}~i", $error->context, $body);
 
