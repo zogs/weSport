@@ -177,7 +177,7 @@ class EventsController extends Controller{
 		
 		if(empty($event)) $this->e404("Cet événement n'existe pas");
 
-		if($event->slug != $slug) $this->redirect('events/view/'.$event->id.'/'.$event->slug);
+		if($event->slug != $slug) $this->redirect($event->getUrl());
 
 		//events
 		$event = $this->Worlds->JOIN_GEO($event);
@@ -291,7 +291,7 @@ class EventsController extends Controller{
 				throw new zException('Unknown error while saving user participation',1);
 				
 		
-			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
+			$this->redirect($event->getUrl());		
 		}
 	}
 
@@ -317,8 +317,8 @@ class EventsController extends Controller{
 			if($data->user_id!=$this->session->user()->getID()) throw new zException("user is different from session's user", 1);
 				
 			//On vérifie si l'événement existe bien
-			$event = $this->Events->findFirst(array('conditions'=>array('id'=>$data->event_id)));
-			if(empty($event)) throw new zException("L'évenement n'existe pas",1);
+			$event = $this->Events->findEventById($data->event_id);
+			if(!$event->exist()) throw new zException("L'évenement n'existe pas",1);
 
 			//On vérifie si l'user existe bien
 			$user = $this->Users->findFirstUser(array('fields'=>'user_id,facebook_id,facebook_token','conditions'=>array('user_id'=>$data->user_id)));
@@ -360,7 +360,7 @@ class EventsController extends Controller{
 						
 			}			
 						
-			$this->redirect('events/view/'.$event->id.'/'.$event->slug);		
+			$this->redirect($event->getUrl());		
 		}
 	}
 
@@ -368,6 +368,8 @@ class EventsController extends Controller{
 	public function review($eid){
 
 		$this->loadModel('Events');
+
+		$event = $this->Events->findEventById($eid);
 
 		if($this->request->post()){
 
@@ -385,7 +387,7 @@ class EventsController extends Controller{
 				
 			}
 		}
-		$this->redirect('events/view/'.$eid);
+		$this->redirect($event->getUrl());
 	}
 
 
@@ -396,16 +398,17 @@ class EventsController extends Controller{
 		if(!isset($eid) ||!is_numeric($eid)) exit();
 
 		$this->loadModel('Events');
-		$evt = $this->Events->findEventById($eid);
 
-		if($evt->isAdmin($this->session->user()->getID())){
+		$e = $this->Events->findEventById($eid);
+
+		if($e->isAdmin($this->session->user()->getID())){
 			//Confirm event
 			$this->Events->confirmEvent($eid);			
 			//set Flash
 			$this->session->setFlash("L'activité est confirmée ! Amusez-vous bien !");
 		}
 
-		$this->redirect('events/view/'.$evt->id.'/'.$evt->slug);
+		$this->redirect($e->getUrl());
 
 	}
 
@@ -580,17 +583,12 @@ class EventsController extends Controller{
 							}
 							
 						}
-					
-						//redirect
-						//$this->redirect('events/create/'.$event_id);
+
 					}
 					else{
 						$this->session->setFlash("Il ya une erreur lors de la sauvegarde. Essaye encore","error");
 					}
 
-					
-					
-					//$this->redirect('events/view/'.$event_id);
 				}
 				else{
 					//if not validate , return a incomplete event fill with the data
@@ -948,7 +946,7 @@ class EventsController extends Controller{
         foreach ($changes as $key => $value) {
         	$content .= $trad[$key]." : <strong>".$value."</strong><br />";
         }        		
-        $lien = Conf::getSiteUrl()."/events/view/".$event->id;
+        $lien = Conf::getSiteUrl()."/".$event->getUrl();
 
         //remplace les variables dans la template
         $body = preg_replace("~{site}~i", Conf::$website, $body);
@@ -990,7 +988,7 @@ class EventsController extends Controller{
 
     	$body = file_get_contents('../view/email/eventNewComment.html');
 
-    	$lien = Conf::getSiteUrl()."/events/view/".$event->id."/".$event->slug;
+    	$lien = Conf::getSiteUrl()."/".$event->getUrl();
 
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
@@ -1040,7 +1038,7 @@ class EventsController extends Controller{
 
     	$body = file_get_contents('../view/email/eventNewReply.html');
 
-    	$lien = Conf::getSiteUrl()."/events/view/".$event->id."/".$event->slug;
+    	$lien = Conf::getSiteUrl()."/".$event->getUrl();
 
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
@@ -1062,7 +1060,7 @@ class EventsController extends Controller{
 
     	$body = file_get_contents('../view/email/eventConfirmation.html');
 
-    	$lien = Conf::getSiteUrl()."/events/view/".$event->id;
+    	$lien = Conf::getSiteUrl()."/".$event->getUrl();
 
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
@@ -1085,7 +1083,7 @@ class EventsController extends Controller{
 
     	$body = file_get_contents('../view/email/eventAnnulation.html');
 
-    	$lien = Conf::getSiteUrl()."/events/view/".$event->id;
+    	$lien = Conf::getSiteUrl()."/".$event->getUrl();
 
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{title}~i", $event->title, $body);
@@ -1114,7 +1112,7 @@ class EventsController extends Controller{
 
     	$body = file_get_contents('../view/email/eventNewParticipant.html');
 
-    	$eventLink = Conf::getSiteUrl()."/events/view/".$event->id;
+    	$eventLink = Conf::getSiteUrl()."/".$event->getUrl();
     	$userLink = Conf::getSiteUrl()."/users/view/".$user->getID().'/'.$user->getLogin();
 
         $body = preg_replace("~{site}~i", Conf::$website, $body);
@@ -1181,7 +1179,7 @@ class EventsController extends Controller{
 
     		//emailing
 	    	$subject = 'Alors c\'était comment ?!';
-	    	$eventLink = Conf::getSiteUrl()."/events/view/".$sporter->event->id.'/'.$sporter->event->title;
+	    	$eventLink = Conf::getSiteUrl()."/".$sporter->event->getUrl();
 	    	$userLink = Conf::getSiteUrl()."/users/view/".$sporter->user->getID().'/'.$sporter->user->getLogin();
 	    	$body = $mail_content;
 	    	$body = preg_replace("~{site}~i", Conf::$website, $body);
