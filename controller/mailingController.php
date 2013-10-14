@@ -185,7 +185,7 @@ class MailingController extends Controller {
 		//Envoi du message et affichage des erreurs éventuelles
 		if (!$mailer->send($message, $failures))
 		{
-		   return $dest;
+		   return true;
 		}
 
 		return false;
