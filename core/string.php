@@ -89,4 +89,11 @@ class String {
 	    }
 	}
 
+	static function findEmailsInString($str){
+
+		$pattern = '/[a-zA-Z0-9\._%+-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}/';
+	 	$mail = preg_match_all($pattern, $str,$matches);
+	 	return $matches[0];
+	}
+
 } ?>

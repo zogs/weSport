@@ -130,20 +130,23 @@ class Conf {
 		 */
 	    public static function getTransportSwiftMailer(){
 
-	    	//SMTP configuration
-	    	// $transport = Swift_SmtpTransport::newInstance()
-	    	// 	->setHost('smtp.manifeste.info')
-	    	// 	->setPort(25)
-	    	// 	->setUsername('admin@manifeste.info')
-	    	// 	->setPassword('XSgvEPbG');
+		//Local SMTP Config
+	    	$transport = Swift_SmtpTransport::newInstance('smtp.u-bourgogne.fr', 25)
+		->setUsername('si3804gu')
+		->setPassword('f4tb0ysl/m');
 
+		//Server SMTP Confif
+		$host = self::getHost();
+	    	if($host=='http://we-sport.fr'){
 
-			$transport = Swift_SmtpTransport::newInstance('mail.gandi.net',465,"ssl")
+		    	//SMTP configuration
+		    	$transport = Swift_SmtpTransport::newInstance('mail.gandi.net',465,"ssl")
 				->setUsername('contact@we-sport.fr')
 				->setPassword('justdoit');
+		}					
 
-			//PHP mail() function
-			//$transport = Swift_SendmailTransport::newInstance(); 
+		//PHP mail() function
+		//$transport = Swift_SendmailTransport::newInstance(); 
 
 	    	return $transport;
 	    }
