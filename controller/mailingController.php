@@ -172,7 +172,7 @@ class MailingController extends Controller {
 		//Création du mail
 		$message = Swift_Message::newInstance()
 		 ->setSubject($title)
-		 ->setFrom(Conf::$contactEmail,Conf::getSiteUrl())
+		 ->setFrom(Conf::$contactEmail, Conf::$website)
 		 ->setTo($dest)
 		 ->setBody($body, 'text/html', 'utf-8');
 
