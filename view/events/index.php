@@ -1,3 +1,9 @@
+<?php
+
+	$nbevents=0;
+
+?>
+
 <table class="events-weeks <?php if($numWeeks>=3) echo 'minified-events';?>" data-first-day="<?php echo $firstday;?>">
 	<?php
 		foreach ($weeks as $week):
@@ -63,7 +69,8 @@
 				</div>
 
 				<?php	
-								
+					$nbevents++;
+
 				endforeach;
 
 				?>
@@ -79,4 +86,3 @@
 	endforeach;
 	?>
 </table>
-

@@ -29,11 +29,11 @@
 				</div>
 				<div class="action">					
 					<ul>
-						<li><strong>Sinon tu peux toujours essayer:</strong></li>
+						<li><strong>Sinon tu peux essayer :</strong></li>
 						<li><a href="<?php echo Router::url('/');?>">d'allez au calendrier,</a></li>
-						<li><a href="<?php echo Router::url('blog');?>">de faire un tour sur le blog,</a></li>
-						<li><a href="<?php echo Router::url('users/register');?>">de t'inscrire !</a></li>
-						<li><strong>ou de choisir un sport ci-desous...</strong></li>
+						<li><a href="<?php echo Router::url('blog');?>">d'allez trainer sur le blog,</a></li>
+						<li><a href="<?php echo Router::url('users/register');?>">de t'inscrire ( ah oui tiens bonne idée !)</a></li>
+						<li><strong>ou encore de choisir un sport ci-desous...</strong></li>
 					</ul>
 				</div>
 			</div>	

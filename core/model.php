@@ -516,6 +516,7 @@
 
  	public function increment($data){
 
+ 		if(is_object($data)) $data = (array) $data;
 		$table  = (isset($data['table']))? $data['table'] : $this->table;
 		$key    = (isset($data['key']))? $data['key'] : $this->primaryKey;
 		$number = (isset($data['number']))? $data['number'] : 1;
@@ -534,6 +535,7 @@
 
  	public function decrement($data){
 
+ 		if(is_object($data)) $data = (array) $data;
 		$table  = (isset($data['table']))? $data['table'] : $this->table;
 		$key    = (isset($data['key']))? $data['key'] : $this->primaryKey;
 		$number = (isset($data['number']))? $data['number'] : 1;
@@ -619,6 +621,11 @@ public function validates($data, $rules = null, $field = null){
 						elseif($rule['rule']=='notNull'){
 
 	 						if($data->$field===0) $errors[$field] = $rule['message'];
+
+	 					}
+	 					elseif($rule['rule']=='isNumeric'){
+
+	 						if(isset($data->$field) && !is_numeric($data->$field)) $errors[$field] = $rule['message'];
 
 	 					}
 	 					elseif($rule['rule']=='email'){

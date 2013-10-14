@@ -1,5 +1,11 @@
 #perso
 webroot/cache/*
+webroot/autoloader/*
+webroot/cache/location/*
+webroot/cache/statistics/*
+webroot/cache/statistics/nbUserByCity/*
+webroot/cache/events_weather_forecast/*
+webroot/cache/users_location/*
 webroot/media/*
 .sass-cache/*
 
