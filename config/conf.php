@@ -137,7 +137,8 @@ class Conf {
 
 		//Server SMTP Confif
 		$host = self::getHost();
-	    	if($host=='http://we-sport.fr'){
+
+    	if($host=='we-sport'){
 
 		    	//SMTP configuration
 		    	$transport = Swift_SmtpTransport::newInstance('mail.gandi.net',465,"ssl")
@@ -146,7 +147,7 @@ class Conf {
 		}					
 
 		//PHP mail() function
-		//$transport = Swift_SendmailTransport::newInstance(); 
+		$transport = Swift_SendmailTransport::newInstance(); 
 
 	    	return $transport;
 	    }

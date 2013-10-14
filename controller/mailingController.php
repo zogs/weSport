@@ -142,7 +142,7 @@ class MailingController extends Controller {
 				}
 
 				if(!empty($results['errors'])){
-					$this->session->setFlash(count($results['errors']). ' erreurs d\'envoi... ('.implode(' ; ',$results['errors']).')');
+					$this->session->setFlash(count($results['errors']). ' erreurs d\'envoi... <small>('.implode(' ; ',$results['errors']).') </small>','error');
 				}
 				
 			}
