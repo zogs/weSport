@@ -176,7 +176,7 @@ class MailingController extends Controller {
 		 ->setTo($dest)
 		 ->setBody($body, 'text/html', 'utf-8');
 
-		  if(isset($pj)){
+		  if(!empty($pj)){
 		  	$pj = Swift_Attachment::FromPath($pj);
 		  	$message->attach($pj);
 		  }
@@ -185,10 +185,10 @@ class MailingController extends Controller {
 		//Envoi du message et affichage des erreurs éventuelles
 		if (!$mailer->send($message, $failures))
 		{
-		   return true;
+		   return false;
 		}
 
-		return false;
+		return true;
 
 	}
 
