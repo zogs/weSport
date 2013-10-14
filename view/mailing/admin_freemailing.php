@@ -2,7 +2,7 @@
 
 
 <div class="clearfix">
-	<a href="<?php echo Router::url('admin/mailing/index');?>">Retour</a>
+	<a href="<?php echo Router::url('admin/mailing/index');?>">Retour au menu Mailing</a>
 	<h3>Envoi de mailing</h3>
 	<p>Cet outil permet d'envoyer un par un des emails à une mailing list depuis l'adresse de contact du congrès</p>
 
