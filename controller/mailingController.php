@@ -187,7 +187,8 @@ class MailingController extends Controller {
 		{
 		   return $dest;
 		}
-		else return true;
+
+		return false;
 
 	}
 
