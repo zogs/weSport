@@ -22,7 +22,7 @@ class MailingController extends Controller {
 		$this->loadModel('Mailing');
 
 		if($this->Mailing->deleteEmail($eid)){
-			Session::setFlash('Email supprimé');
+			$this->session->setFlash('Email supprimé');
 		}
 
 		$this->redirect('admin/mailing/editlist/'.$lid);
@@ -33,7 +33,7 @@ class MailingController extends Controller {
 		$this->loadModel('Mailing');
 
 		if($this->Mailing->deleteList($lid)){
-			Session::setFlash('Liste supprimé');
+			$this->session->setFlash('Liste supprimé');
 		}
 
 		$this->redirect('admin/mailing/listmailing');
@@ -49,11 +49,11 @@ class MailingController extends Controller {
 
 				if($lid = $this->Mailing->saveMailing($data)){
 
-					Session::setFlash('La mailing list a bien été enregistré !');
+					$this->session->setFlash('La mailing list a bien été enregistré !');
 					$this->redirect('admin/mailing/editlist/'.$lid);
 				}
 				else {
-					Session::setFlash('Error save mailing list','error');
+					$this->session->setFlash('Error save mailing list','error');
 				}
 			}
 		}
@@ -138,11 +138,11 @@ class MailingController extends Controller {
 				}
 
 				if(!empty($results['sended'])){
-					Session::setFlash(count($results['sended']).' emails envoyés ! ','success');
+					$this->session->setFlash(count($results['sended']).' emails envoyés ! ','success');
 				}
 
 				if(!empty($results['errors'])){
-					Session::setFlash(count($results['errors']). ' erreurs d\'envoi... ('.implode(' ; ',$results['errors']).')');
+					$this->session->setFlash(count($results['errors']). ' erreurs d\'envoi... ('.implode(' ; ',$results['errors']).')');
 				}
 				
 			}
