@@ -147,7 +147,7 @@ class Conf {
 		}					
 
 		//PHP mail() function
-		$transport = Swift_SendmailTransport::newInstance(); 
+		//$transport = Swift_SendmailTransport::newInstance(); 
 
 	    	return $transport;
 	    }
