@@ -1,7 +1,7 @@
 {
 "_comment": "IMPORTANT : go to the wiki page to know about options configuration https://github.com/simogeo/Filemanager/wiki/Filemanager-configuration-file",
     "options": {
-        "culture": "en",
+        "culture": "fr",
         "lang": "php",
         "defaultViewMode": "grid",
         "autoload": true,
@@ -15,7 +15,7 @@
         "fileSorting": "default",
         "chars_only_latin": true,
         "dateFormat": "d M Y H:i",
-        "serverRoot": true,
+        "serverRoot": false,
         "fileRoot": "webroot/media/images/",
         "relPath": false,
         "logger": false,
