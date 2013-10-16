@@ -72,10 +72,10 @@
 									<?php if(!empty($review->event)):?>
 									<li>
 											<a href="<?php echo Router::url('users/view/'.$review->user->getID().'/'.$review->user->getLogin());?>" rel="me nofollow">
-												<img class="event-avatar tooltiptop" src="<?php echo $review->user->getAvatar();?>" alt="" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?> ans)">
+												<img class="event-avatar tooltiptop" src="<?php echo $review->user->getAvatar();?>" alt="" data-toggle="tooltip" data-original-title="<?php echo $review->user->getLogin();?> (<?php echo $review->user->getAge();?>)">
 											</a>
 											<span><?php echo $review->review; ?></span>				
-											<small><a href="<?php echo Router::url('events/view/'.$review->event->id.'/'.$review->event->slug);?>"><?php echo $review->event->title; ?></a></small>						
+											<small><a href="<?php echo Router::url($review->event->getUrl());?>"><?php echo $review->event->getTitle(); ?></a></small>						
 									</li>
 									<?php endif; ?>
 									<?php endforeach; ?>
