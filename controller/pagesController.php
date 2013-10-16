@@ -565,6 +565,22 @@ class PagesController extends Controller {
 			        }
 			        else return true;
 		}
+
+		public function testEmail($m = null){
+
+			if(!$this->session->user()->isAdmin()) $this->e404('This method is reserved for admin user','No');
+
+			if(!isset($m)) $m = Conf::$debugErrorEmails;
+
+			if($this->sendEmails($m,'Test d\'envoi d\'email','Cet email est un test de la configuration d\'envoi de mail par le server.')){
+				$this->session->setFlash('Email envoyé avec succès');
+				$this->redirect('/');
+			}
+			else {
+				exit();
+			}
+		}
+
 }
 
 ?>
