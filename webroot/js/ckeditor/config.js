@@ -24,7 +24,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbar = [
 		['Undo','Redo'],'-',['Scayt'],'-',['Link','Unlink','Image','Flash','Smiley','SpecialChar'],
 		'/',
-		['FontSize'],'-',['Bold','Italic','Underline','Strike'],['NumberedList','BulletedList','Blockquote','CreateDiv'],['JustifyLeft','JustifyRight','JustifyBlock'],
+		['FontSize'],'-',['Bold','Italic','Underline','Strike'],'-',['NumberedList','BulletedList','Blockquote','CreateDiv'],'-',['JustifyLeft','JustifyRight','JustifyBlock'],
 		'/',
 		['oembed','MediaEmbed']
 	]

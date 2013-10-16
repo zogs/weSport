@@ -8,6 +8,7 @@
  *	@author		Simon Georget <simon (at) linea21 (dot) com>
  *	@copyright	Authors
  */
+ 
 
 (function($) {
  
