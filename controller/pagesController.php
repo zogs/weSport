@@ -448,6 +448,11 @@ class PagesController extends Controller {
 			$this->set($d);
 		}
 
+		public function admin_blog($post_id=null, $slug=null){
+
+			
+		}
+
 		public function blog($post_id=null, $slug=null){
 
 			$this->loadModel('Events');

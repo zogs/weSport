@@ -385,15 +385,30 @@ $(document).ready(function(){
         });
 
 
+        function CKupdate(){
+
+        	if(CKEDITOR=='undefined') return true;
+		    for ( instance in CKEDITOR.instances )
+		        CKEDITOR.instances[instance].updateElement();
+		}
 
 
 	    /*===========================================================	        
 	    	Save comment in ajax request
 	    ============================================================*/
-	    $("#submitComment").on('click',function(){
+	    $("#submitComment").on('click',function(e){
 
 
+	    	//Stop event propagation
+	    	e.preventDefault();
+
+	    	//Update the CKeditor field
+	    	CKupdate();
+	    	
+	        //get the data from the form
 	        var form = $("#commentForm");		        
+	        var data = form.serialize();
+	    	
 	        var url = form.attr('action');
 	        var textarea = $("#commentTextarea");
 	        var text = textarea.val();
@@ -415,9 +430,6 @@ $(document).ready(function(){
 	            //set media_url with currentUrlPreview
 	            media_url.val(CurrentUrlPreview);           
 	        }
-
-	        //get the data from the form
-	        var data = form.serialize();
 
 	        //if comment not empty
 	        if( trim(text) != "") {

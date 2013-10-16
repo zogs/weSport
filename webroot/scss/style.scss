@@ -116,7 +116,7 @@ body{
 }
 
 .container-fluid { padding-right:0; padding-left:0;}
-.container { position:relative;}
+.container { position:relative; @include box-shadow(0 0 30px 0 rgba(0,0,0,0.4));}
 
 
 /* Mobile menu style */
@@ -954,6 +954,7 @@ div.mm-is-menu * {
 
 .white-sheet {
 	background-color:#FFF;
+	@include box-shadow(inset 0 0 200px 0 rgba(0,0,0,0.2));
 	position:relative;
 	@extend %clearfix;
 }
@@ -1940,28 +1941,65 @@ div.col_small{
 		padding:0;
 	}
 
+
+	#commentForm{
+		padding:20px;
+
+		.commentFormFields{
+			overflow:visible;
+			input[type=text] { height:30px;}
+			input[type=text],textarea { width:100%;}	
+			textarea{ height:500px;}		
+		}
+
+	}
+
 	#comments{
 		.post{
 			padding:25px;
 			color:rgba(0,0,0,0.8);		
 			text-shadow:1px 1px 0px #FFF;
+			margin-top:75px;	
+			@include box-shadow(2px 3px 10px 0 rgba(0,0,0,0.1));			
 
 		}
+		.post:nth-child(1){
+			margin-top:0;
+		}
 		.post.reply:nth-child(odd){
-			padding:10px;					
+			padding:0px 10px;			
 			background-color: $softyellow; 
-			border:10px solid $softyellow;
-			border-left:10px solid darken($softyellow,5%); 
+			border:10px solid $softyellow;			
+			margin: 0%;			
+			width:100%;
+			@include box-shadow(0 0 0 0 rgba(0,0,0,0.0));
+
 
 		}
 		.replies{
 			float:left;
 			margin:0;
 			padding:0;
+			width:100%;
+			border-left:20px solid darken($softyellow,5%);
+			@include box-shadow(0 0 20px 0 rgba(0,0,0,0.2));
 
+			.post{			
+				padding-top:0;			
+			}
 		}
-		.post:nth-child(odd){ background-color:$lightred; border:10px solid darken($lightred,6%); border-right:0; border-bottom:0}
-		.post:nth-child(even){ background-color:$lightgreen; border:10px solid darken($lightgreen,6%); border-right:0; border-bottom:0}
+		.replies .replies{
+			@include box-shadow(0 0 0 0 rgb(0,0,0));
+		}
+
+		.type_news{
+			.context_txt{
+				padding-top:20px;
+			}
+		}
+
+		.post:nth-child(odd){ background-color:#fff4d4; border:10px solid $lightred; border-bottom:0}
+		.post:nth-child(even){ background-color:$lightgreen; border:10px solid darken($lightgreen,6%); border-bottom:0}
 		.type-news {
 			.title a { color:rgb(40, 111, 146);}
 			.logo { width:60px; height:60px;}
@@ -2163,7 +2201,7 @@ div.col_small{
 
 .ws-error-page{
 	.white-sheet{
-		overflow:hidden;
+		overflow:hidden;		
 	}
 	.title{
 		margin-top:20px;	
