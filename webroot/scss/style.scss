@@ -2182,6 +2182,7 @@ div.col_small{
 		font-family:'Boogaloo';
 		@include rem(35);
 		text-align: center;
+		line-height:100%;
 	}
 	.forgive{
 		text-align: center;

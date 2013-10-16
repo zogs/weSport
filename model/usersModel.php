@@ -498,7 +498,7 @@ class User {
 
 	public function isAdmin(){
 
-		if($this->statut=='admin') return true;
+		if($this->role=='admin') return true;
 		else return false;
 	}
 
