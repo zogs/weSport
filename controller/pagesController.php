@@ -300,7 +300,7 @@ class PagesController extends Controller {
 			if(get_class($this->request)!='Cron') exit('only cron job can access this method {pages:sendMailDailyStatToAdmins}');
 
 			$this->view = 'none';
-    		$this->layout = 'none';
+    			$this->layout = 'none';
 			$this->loadModel('Events');
 			$this->loadModel('Users');
 
@@ -317,32 +317,32 @@ class PagesController extends Controller {
 			$emails = Conf::$emailsAdmins;			
 			
 			//Création d'une instance de swift mailer
-	        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
+			 $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
 
-	        //Récupère le template et remplace les variables
-	        $body = file_get_contents(ROOT.'/view/email/admin/daily.html');
-	        $body = preg_replace("~{events_planned}~i", $events_planned, $body);
-	        $body = preg_replace("~{events_deposed}~i", $events_deposed, $body);
-	        $body = preg_replace("~{events_confirmed}~i", $events_confirmed, $body);
-	        $body = preg_replace("~{registration}~i", $registration, $body);
+			//Récupère le template et remplace les variables
+			$body = file_get_contents(ROOT.'/view/email/admin/daily.html');
+			$body = preg_replace("~{events_planned}~i", $events_planned, $body);
+			$body = preg_replace("~{events_deposed}~i", $events_deposed, $body);
+			$body = preg_replace("~{events_confirmed}~i", $events_confirmed, $body);
+			$body = preg_replace("~{registration}~i", $registration, $body);
 
-	        //Création du mail
-	        $message = Swift_Message::newInstance()
-	          ->setSubject("Daily stat")
-	          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
-	          ->setTo($emails)
-	          ->setBody($body, 'text/html', 'utf-8');          
-	       
-	        //Envoi du message et affichage des erreurs éventuelles
-	        if (!$mailer->send($message, $failures))
-	        {
-	            $log = 'Fail: Mail daily stat.';
-	        }
-	        else $log = 'Daily stat. sended: registration'.$registration.', events planned:'.$events_planned.' , confirmed:'.$events_confirmed.'  events deposed:'.$events_deposed;
+			//Création du mail
+			$message = Swift_Message::newInstance()
+			  ->setSubject("Daily stat")
+			  ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+			  ->setTo($emails)
+			  ->setBody($body, 'text/html', 'utf-8');          
+			       
+			 //Envoi du message et affichage des erreurs éventuelles
+			 if (!$mailer->send($message, $failures))
+			 {
+			     $log = 'Fail: Mail daily stat.';
+			 }
+			 else $log = 'Daily stat. sended: registration'.$registration.', events planned:'.$events_planned.' , confirmed:'.$events_confirmed.'  events deposed:'.$events_deposed;
 
-	       
-    		$this->Events->saveLog('admin mail','pages/admin_dailyMail',$log);
-    		exit($log);
+			       
+		   	$this->Events->saveLog('admin mail','pages/admin_dailyMail',$log);
+		   	exit($log);
 
 		}
 

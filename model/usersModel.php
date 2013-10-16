@@ -496,7 +496,7 @@ class User {
 		else return Conf::$languageDefault;
 	}
 
-	public function isMrZ(){
+	public function isAdmin(){
 
 		if($this->statut=='admin') return true;
 		else return false;

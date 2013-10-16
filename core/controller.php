@@ -367,7 +367,17 @@ class Controller {
 		}
 	}
 
-	public function sendEmails($emails,$subject,$body){
+	public function sendTestMail($m = null){
+
+		if(!$this->session->user()->isAdmin()) $this->e404('This method is reserved for admin user','No');
+
+		if(!isset($m)) $m = Conf::$debugErrorEmails;
+
+		$this->sendEmails($m,'Test d\'envoi d\'email','Cet email est un test de la configuration d\'envoi de mail par le server.');
+	}
+
+
+	protected function sendEmails($emails,$subject,$body){
 
 		//Si il ny a pas d'email retourne vrai
 		if(empty($emails)) return true;
@@ -376,22 +386,22 @@ class Controller {
 		if(!isset($mailer))
 			$mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
 
-        //Création du mail
-        $message = Swift_Message::newInstance()
-          ->setSubject($subject)
-          ->setFrom(Conf::$contactEmail, Conf::$website)
-          ->setTo($emails)
-          ->setBody($body, 'text/html', 'utf-8');          
-       
-        //Envoi du message et affichage des erreurs éventuelles si échoue 
-        if (!$mailer->send($message, $failures))
-        {
-            debug("Erreur lors de l'envoi du email à :");
-            debug($failures);            
-            return false;
-        }
+		//Création du mail
+		$message = Swift_Message::newInstance()
+		  ->setSubject($subject)
+		  ->setFrom(Conf::$contactEmail, Conf::$website)
+		  ->setTo($emails)
+		  ->setBody($body, 'text/html', 'utf-8');          
+		       
+		//Envoi du message et affichage des erreurs éventuelles si échoue 
+		if (!$mailer->send($message, $failures))
+		{
+		    debug("Erreur lors de l'envoi du email à :");
+		    debug($failures);            
+		    return false;
+		}
 
-        return true;
+		return true;
 	}
 }
 ?>
