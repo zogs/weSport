@@ -113,10 +113,11 @@ body{
 .mainContainer {
 	background-color:$deepblue;
 	padding-bottom:200px;
+	@include box-shadow(0 0 30px 0 rgba(0,0,0,0.4));
 }
 
 .container-fluid { padding-right:0; padding-left:0;}
-.container { position:relative; @include box-shadow(0 0 30px 0 rgba(0,0,0,0.4));}
+.container { position:relative;}
 
 
 /* Mobile menu style */
@@ -1955,13 +1956,13 @@ div.col_small{
 	}
 
 	#comments{
+
 		.post{
 			padding:25px;
 			color:rgba(0,0,0,0.8);		
 			text-shadow:1px 1px 0px #FFF;
 			margin-top:75px;	
 			@include box-shadow(2px 3px 10px 0 rgba(0,0,0,0.1));			
-
 		}
 		.post:nth-child(1){
 			margin-top:0;
@@ -1973,8 +1974,6 @@ div.col_small{
 			margin: 0%;			
 			width:100%;
 			@include box-shadow(0 0 0 0 rgba(0,0,0,0.0));
-
-
 		}
 		.replies{
 			float:left;
@@ -1983,19 +1982,9 @@ div.col_small{
 			width:100%;
 			border-left:20px solid darken($softyellow,5%);
 			@include box-shadow(0 0 20px 0 rgba(0,0,0,0.2));
-
-			.post{			
-				padding-top:0;			
-			}
 		}
 		.replies .replies{
 			@include box-shadow(0 0 0 0 rgb(0,0,0));
-		}
-
-		.type_news{
-			.context_txt{
-				padding-top:20px;
-			}
 		}
 
 		.post:nth-child(odd){ background-color:#fff4d4; border:10px solid $lightred; border-bottom:0}
@@ -2003,11 +1992,16 @@ div.col_small{
 		.type-news {
 			.title a { color:rgb(40, 111, 146);}
 			.logo { width:60px; height:60px;}
+			.content{
+				.content_txt{
+					padding-top:20px;
+				}
+			}
 		}
 		.formCommentReply{ 
 			padding-bottom:0px; 				
 		}
-		.formCommentReply:nth-child(even) { 	background:darken($lightred,6%);}
+		.formCommentReply:nth-child(even) { background:darken($lightred,6%);}
 		.formCommentReply:nth-child(odd) { background:darken($lightgreen,6%);}
 		.showHiddenReplies{ 
 			padding:10px 5%; 
