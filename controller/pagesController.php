@@ -297,7 +297,12 @@ class PagesController extends Controller {
 
 		public function sendMailDailyStatToAdmins(){			
 
-			if(get_class($this->request)!='Cron') exit('only cron job can access this method {pages:sendMailDailyStatToAdmins}');
+			//security
+			//exit if is not a cron request BUT continue if user is an admin
+			if(get_class($this->request)!='Cron') {
+				if($this->session->user() && !$this->session->user()->isAdmin())
+					exit('only cron job can access this method {pages:sendMailDailyStatToAdmins}');
+			}
 
 			$this->view = 'none';
     			$this->layout = 'none';
