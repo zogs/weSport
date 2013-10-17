@@ -334,7 +334,8 @@ class EventsModel extends Model{
 
 		$sql = 'SELECT user_id,avatar,login,email,birthdate,account FROM users WHERE user_id=:user_id';
 		$author = $this->query($sql,array('user_id'=>$uid));
-		return new User($author[0]);
+		if(!empty($author[0])) return new User($author[0]);
+		else return new User();
 	}
 
 	private function eventRecurrence($eid){
@@ -1181,7 +1182,7 @@ class Event{
 	public function getSportSlug(){
 		if(!$this->exist()) return '';
 		if(is_string($this->sport)) return $this->sport;
-		if(isset($this->sport->slug) && is_string($this->sport->slug)) return $this->sport->slug;
+		if(is_object($this->sport) && is_string($this->sport->slug)) return $this->sport->slug;
 		
 	}
 	public function getSportAction(){

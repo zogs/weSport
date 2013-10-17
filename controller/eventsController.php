@@ -170,7 +170,7 @@ class EventsController extends Controller{
 		$this->loadModel('Worlds');	
 		$this->loadModel('Users');	
 
-		if(empty($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");
+		if(empty($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");		
 
 		$event = $this->Events->findEventById($id);	
 		$sport = $event->sport;
