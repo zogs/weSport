@@ -170,18 +170,21 @@ class EventsController extends Controller{
 		$this->loadModel('Worlds');	
 		$this->loadModel('Users');	
 
+		//check if id is numeruc
 		if(empty($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");
 
+		//get event
 		$event = $this->Events->findEventById($id);	
-		$sport = $event->sport;
 		
-		if(empty($event)) $this->e404("Cet événement n'existe pas");
+		//check if event exist
+		if(!$event->exist()) $this->e404("Cet événement n'existe pas");
 
+		//check if slug is correct, if not redirect to correct url
 		if($event->slug != $slug) $this->redirect($event->getUrl());
 
 		//events
 		$event = $this->Worlds->JOIN_GEO($event);
-		$event->sport = $this->Events->findSport(array('slug'=>$sport,$this->getLang()));
+		$event->sport = $this->Events->findSport(array('slug'=>$event->sport,$this->getLang()));
 		$event->sport_en = $this->Events->findSport(array('slug'=>$sport,'lang'=>'en'));	
 		$event = $this->Events->joinUserParticipation($event,$this->session->user()->getID());		
 		

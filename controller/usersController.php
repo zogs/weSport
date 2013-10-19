@@ -268,6 +268,7 @@ class UsersController extends Controller{
 		$response = file_get_contents($token_url);
 		$params = null;
 		parse_str($response, $params);
+		if(!isset($params['access_token'])) $this->e404("Il semble que la connexion facebook n'a pas pu être récupérée... Veuillez réessayer.","Oups");
 		$access_token = $params['access_token'];
 		    	 
 
