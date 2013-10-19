@@ -42,7 +42,7 @@ class Controller {
 		$this->facebook->setAccessToken($this->session->user()->getFacebookToken());
 		
 		//redirect on facebook connect method if its a facebook log in request
-		if(isset($_GET['fb_source']) || isset($_GET['fb_connect']) && isset($_GET['code'])) $this->redirect('users/facebook_connect?code='.$_GET['code'].'&source='.(isset($_GET['fb_source'])? $_GET['fb_source'] : ''));		
+		if((isset($_GET['fb_source']) || isset($_GET['fb_connect'])) && isset($_GET['code'])) $this->redirect('users/facebook_connect?code='.$_GET['code'].'&source='.(isset($_GET['fb_source'])? $_GET['fb_source'] : ''));		
 		
 
 		
