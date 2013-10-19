@@ -170,8 +170,12 @@ class EventsController extends Controller{
 		$this->loadModel('Worlds');	
 		$this->loadModel('Users');	
 
+<<<<<<< HEAD
 		//check if id is numeruc
 		if(empty($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");
+=======
+		if(empty($id) || !is_numeric($id)) $this->e404("Cet événement n'existe pas");		
+>>>>>>> f30b71d6b259e46ba30b4acf4cc1bfc9228c28e3
 
 		//get event
 		$event = $this->Events->findEventById($id);	
