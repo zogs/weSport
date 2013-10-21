@@ -59,10 +59,9 @@
 
  	}
 
- 	private function overrideConfig( $config ){
+ 	private function overrideConfig( $config = array() ){ 		
 
- 		foreach ($config as $key => $value) {
-			
+ 		foreach ($config as $key => $value) {			
  			if(isset($this->$key)) {
  				$this->$key = $value;
  				$this->config[$key] = $value;
