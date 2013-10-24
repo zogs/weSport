@@ -11,8 +11,14 @@ class UsersModel extends Model{
 				'message' => 'Vous devez choisir un pseudo'		
 				),
 			'email' => array(
-				'rule' => '[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})',
-				'message' => "L'adresse email n'est pas valide"
+				'rules'=>array(
+							array(
+								'rule' => '[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})',
+								'message' => "L'adresse email n'est pas valide"),
+							array(
+								'rule' => 'notEmpty',
+								'Vous devez remplir une adresse email')
+							)
 				),
 			'password' => array(
 				'rule' => '.{5,20}',

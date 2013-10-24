@@ -292,6 +292,7 @@ class UsersController extends Controller{
 		  	else {
 		  		throw new zException("Facebook connect : other error append", 1);		  		
 		  	}
+
 		  }
 		  
 
@@ -300,6 +301,10 @@ class UsersController extends Controller{
 		  
 			  //(fix) set a name for the og: Test User
 			  if(empty($fbuser->username) && !empty($fbuser->name)) $fbuser->username = $fbuser->name;
+
+			  //(debug) throw error if fuser id/email are missing
+			  if(empty($fbuser->id) || empty($fbuser->email)) throw new zException("Missing id/email for facebook user {".serialize($fbuser)."}", 1);
+			  
 		  
 
 		  //On vérifie si il existe dans la base
