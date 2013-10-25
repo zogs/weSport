@@ -92,7 +92,16 @@ window.onload = function() {
 			'ws-icon-pacman' : '&#xe00e;',
 			'ws-icon-enter' : '&#xe00f;',
 			'ws-icon-quill' : '&#xe010;',
-			'ws-icon-home' : '&#xe011;'
+			'ws-icon-home' : '&#xe011;',
+			'ws-icon-blocked' : '&#xe012;',
+			'ws-icon-cancel-circle' : '&#xe013;',
+			'ws-icon-checkmark-circle' : '&#xe014;',
+			'ws-icon-spam' : '&#xe015;',
+			'ws-icon-close' : '&#xe016;',
+			'ws-icon-checkmark' : '&#xe017;',
+			'ws-icon-checkmark-2' : '&#xe018;',
+			'ws-icon-info' : '&#xe019;',
+			'ws-icon-info-2' : '&#xe01a;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;

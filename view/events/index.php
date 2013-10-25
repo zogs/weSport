@@ -53,7 +53,9 @@
 								<div class="events-time"><?php echo str_replace(':','h',substr($event->getTime(),0,5)); ?></div>
 								<div class="events-label">
 									<?php if($event->confirmed==1):?>
-										<span class="label ws-label-confirmed tooltipbottom" data-toggle="tooltip" title="L'activité est confirmé!">Confirmé</span>								
+										<span class="ws-icon ws-icon-checkmark-circle ws-icon-confirm tooltipbottom" data-toggle="tooltip" title="L'activité est confirmé!"></span>										
+									<?php else:?>
+										<span class="ws-icon ws-icon-checkmark-circle tooltipbottom" data-toggle="tooltip" title="L'activité n'est pas encore confirmé."></span>
 									<?php endif;?>
 									<?php if(isset($event->UserParticipation)): ?><span class="label ws-label ws-label-important ws-label-participe tooltipbottom" data-toggle="tooltip" title="Je participe"><i class="icon icon-white icon-thumbs-up"></i></span><?php endif; ?>
 									<?php if($event->author->isAsso()): ?><span class="label ws-label ws-label-grey tooltipbottom" data-toggle="tooltip" title="Association"><i>A</i></span><?php endif;?>

@@ -1117,7 +1117,7 @@ class Event{
 
 	public function getTitle(){
 
-		return $this->title;
+		return ucfirst($this->title);
 	}
 	public function getDescription(){
 

@@ -44,10 +44,12 @@
 				<div class="event-status">
 				<?php if($event->timing=='tocome'): ?>
 					<?php if($event->confirmed==1): ?>
-							<span class="label label-success">Confirmé</span> <span class="nb-participant"> <?php echo count($event->participants);?> participants</span>
+							<span>Evénement confirmé <input type="checkbox" id="checkbox-confirmed" checked disabled/><label for="checkbox-confirmed"></label></span>
+							<?php echo count($event->participants);?> participants</span>
 					<?php endif ?>
 					<?php if($event->confirmed==0): ?>
-							<span class="label">Non confirmé</span> <span class="nb-participant">En attente de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
+							<span>En attente <input type="checkbox" id="checkbox-confirmed" disabled/><label for="checkbox-confirmed"></label></span>
+							<span class="nb-participant">de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
 					<?php endif;?>	
 				<?php elseif($event->timing=='past'): ?>			
 							<span class="label">Cette activité est terminée</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
@@ -267,7 +269,7 @@
 						<h3>Prévision météo</h3>
 						<div class="block-content">
 							<div id="weather-content"><small>En attende des données météo...</small></div>							
-							<div class="mention"><small>Powered by <a href="http://worldweatheronline.com" target="_blank" title="Worldweatheronline.com">Worldweatheronline.com</strong></small></div>
+							<div class="mention"><small>Powered by <a href="http://worldweatheronline.com" target="_blank" title="Worldweatheronline.com">Worldweatheronline.com</a></small></div>
 						</div>
 					</div>
 					<?php endif; ?>
