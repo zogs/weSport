@@ -141,9 +141,9 @@ class Conf {
 		if($host=='we-sport'){
 
 		    	//SMTP configuration
-		    	$transport = Swift_SmtpTransport::newInstance('mail.gandi.net',465,"ssl")
-				->setUsername('contact@we-sport.fr')
-				->setPassword('justdoit');
+		    	$transport = Swift_SmtpTransport::newInstance('localhost',25)
+				->setUsername('contact@wesport.zogs.org')
+				->setPassword('fatboy');
 		}					
 
 		//PHP mail() function
