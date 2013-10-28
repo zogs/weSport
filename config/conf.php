@@ -141,7 +141,7 @@ class Conf {
 		if($host=='we-sport'){
 
 		    	//SMTP configuration
-		    	$transport = Swift_SmtpTransport::newInstance('127.0.0.1',25)
+		    	$transport = Swift_SmtpTransport::newInstance('localhost', 25)
 				->setUsername('contact@wesport.zogs.org')
 				->setPassword('fatboy');
 		}					
