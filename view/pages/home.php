@@ -176,30 +176,89 @@
 
 <script type="text/javascript">
 
-var current_date = '<?php echo date("Y-m-d");?>';
-
 $(document).ready(function(){
-
-
-	//Drag calendar
-	var cal = $('#calendar-content');
-	var _xOrigin;
-	var _yOrigin;
-
-	$('#calendar-content').draggable({
-		axis:'x',
-		revert:true,
-		cancel: "div.events",
-		zIndex:0,
-	});
-
-	$('#calendar-content').on('drag',function(e,ui){
-		console.log(ui.position);
-
-	});
 
 	//Appel la semaine courante
 	callThisWeek();
+
+	//init Drag calendar
+	var cal = $('#calendar-content');
+	var _xO;
+	var _yO;
+	var _mxO;
+	var _myO;
+	var _x;
+	var _y;
+	var _lock;
+
+
+	setInitialListener();
+	function setInitialListener(){
+		cal.on('mousedown',startDrag);
+		$(window).on('mouseup',stopDrag);
+		setCalendarOrigin();
+	}
+	function setCalendarOrigin(){
+		pos = cal.position();
+		_xO = pos.left;
+		_yO = pos.top;
+	}
+	function setMouseOrigin(e){
+		_mxO = e.clientX +_xO;
+		_myO = e.clientY +_yO;
+	}
+	function startDrag(e){
+		var t = $(e.target);
+		if(t.is('span') || t.is('strong') || t.is('i') || t.is('p') || t.is('div') || t.is('a')) return; //if drag on text element stop script
+		console.log(e.button);
+		if ((e.button == 1 && window.event != null) || e.button == 0) {//if left mouse button
+			setMouseOrigin(e);
+			$(window).on('mousemove',dragCalendar);
+		}
+	}
+	function stopDrag(e){
+		$(window).off('mousemove');
+		if(_lock=='left'){ callPreviousWeek(); _lock='';}
+		else if(_lock=='right'){ callNextWeek(); _lock='';}
+		revert();
+	}
+	function revert(){
+		cal.animate({left:0}, 200, 'swing');
+	}
+	function dragCalendar(e){
+
+		var x;
+		_lock = '';
+
+		x = _xO + e.clientX - _mxO;
+
+		if(x>0 && isCurrentWeek()==true) return;
+
+		if(x==0 || x==1 ||x==-1 ||x==2 ||x==-2) return;
+
+		if(x>=200) {
+			lockLeft();
+			return;
+		}
+		if(x<=-200) {
+			lockRight();
+			return;
+		}
+
+		x += 'px';
+
+		cal.css('left',x);
+		cal.css('z-index',0);
+	}
+	function lockLeft(){
+		_lock = 'left';
+	}
+	function lockRight(){
+		_lock = 'right';
+	}
+
+
+
 
 	//Info bulle des activités
 	$('#calendar-content .events-link').livequery(function(){
@@ -323,13 +382,13 @@ $(document).ready(function(){
 		return 0;
 	}
 
-	function checkCurrentWeek(){
+	function isCurrentWeek(){
 		
-		if($('.events-weeks').last().attr('data-first-day')==current_date) $('.calendar-nav-prev').hide();
-		else $('.calendar-nav-prev').show();
+		if($('.events-weeks:last-child').hasClass('current-week')) return true;
+		return false;
 	}
 
-	function callWeek(url,direction){
+	function callWeek(url,direction){		
 
 		$('#calendar-loader > .text').show();		
 		var screenWidth = $(window).width();
@@ -348,7 +407,13 @@ $(document).ready(function(){
 
 				slideCalendar(direction,screenWidth);	  				
 				
-				checkCurrentWeek();
+				console.log(isCurrentWeek());
+				if(isCurrentWeek()){
+					$('.calendar-nav-prev').hide();
+				}
+				else{
+					$('.calendar-nav-prev').show();
+				}
 
 				$('#calendar-loader > .text').hide();
 
@@ -404,7 +469,7 @@ $(document).ready(function(){
 		});
 	});
 
-	/* detect mobile swipe event */
+	/* detect mobile swipe event 
 	$('#calendar-content').swipe({
 		swipeLeft:function(event,direction,distance,duration,fingerCount){
 			callNextWeek();
@@ -413,7 +478,7 @@ $(document).ready(function(){
 			callPreviousWeek();
 		}
 	});
-
+*/
 
 
 	//Demo Tourbus

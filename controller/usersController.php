@@ -1056,15 +1056,12 @@ class UsersController extends Controller{
     	extract($data);
 
 		$lien = Conf::getSiteUrl()."/users/recovery?c=".urlencode(base64_encode($code))."&u=".urlencode(base64_encode($user_id));
-
-        //Création d'une instance de swift mailer
-        $mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
        
         //Récupère le template et remplace les variables
         $body = file_get_contents('../view/email/recoveryPassword.html');
-        $body = preg_replace("~{site}~i", Conf::$website, $body);
-        $body = preg_replace("~{user}~i", $user, $body);
-        $body = preg_replace("~{lien}~i", $lien, $body);
+        $body = str_replace("{site}", Conf::$website, $body);
+        $body = str_replace("{user}", $user, $body);
+        $body = str_replace("{lien}", $lien, $body);
 
         //Création du mail
         $message = Swift_Message::newInstance()
@@ -1075,10 +1072,14 @@ class UsersController extends Controller{
           ->addPart("Hey {$user}, copy this link ".$lien." in your browser to change your password. Don't stop the Protest.", 'text/plain');
        
         //Envoi du message et affichage des erreurs éventuelles
-        if (!$mailer->send($message, $failures))
+        if (!Conf::getMailer()->send($message, $failures))
         {
             echo "Erreur lors de l'envoi du email à :";
             print_r($failures);
+
+            Conf::getMailLog();
+
+            exit();
         }
         else return true;
     }

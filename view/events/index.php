@@ -4,7 +4,7 @@
 
 ?>
 
-<table class="events-weeks <?php if($numWeeks>=3) echo 'minified-events';?>" data-first-day="<?php echo $firstday;?>">
+<table class="events-weeks <?php if($numWeeks>=3) echo 'minified-events';?> <?php if($firstday==date('Y-m-d')) echo 'current-week';?>" data-first-day="<?php echo $firstday;?>">
 	<?php
 		foreach ($weeks as $week):
 	?>

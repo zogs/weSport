@@ -126,9 +126,12 @@ $fontgrey:#9e9e34;
 html {	
 	font-size:62.5%;
 	background-color: $darkblue;
+	overflow-x:hidden;
 	
 }
 body{
+
+	overflow-x:hidden;
 	/*The Helvetica/Arial-based sans serif */  
 	//font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
@@ -657,16 +660,19 @@ div.mm-is-menu * {
 
 
 	.calendar-nav{
-
+		
 		.colomn-nav {
 			width:5%;
+			position:relative;
 			z-index:10;
+			
 		}
 		.colomn-prev{
 			background-color: $deepred;
 			a.calendar-nav-prev{
 				width: 100%;
 				float:right;
+				margin-right:-2px;
 				img{
 					width:100%;
 				}
@@ -689,8 +695,9 @@ div.mm-is-menu * {
 			height:100%;
 			min-height:650px;
 			position:relative;
-			overflow:hidden;
+			top:-1px;
 			@extend %clearfix;
+
 
 			 .events-weeks { 
 			 	position: absolute; 
@@ -726,12 +733,35 @@ div.mm-is-menu * {
 			 				text-shadow: none;
 			 			}
 			 		}
+			 	}			 				 
+			}		
+			&:after{
+				content:'';
+				position:relative;
+				left:100%;
+				width:200px;
+				height:100%;
+				background-color:$darkgreen;
+			}
+			&:before{
+				content:'';
+				position:absolute;
+				left:-200px;
+				width:200px;
+				height:100%;
+				background-color: $darkred;
+			}
 
-			 	}
-
-			 				 
-			 }
 		}
+		.calendar-content *{
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+		}
+
 	}
 
 	.addEvent{
@@ -779,7 +809,7 @@ div.mm-is-menu * {
 
 		tr.events-week {/*height:100%; min-height:1000px;*/}
 
-		td { vertical-align: top; padding-bottom:10px;/*height:1000px; min-height:1000px;*/ }
+		td { vertical-align: top; /*height:1000px; min-height:1000px;*/ }
 		td.colomn-1 { background-color: $red; @include box-shadow(inset 0 0 0 30px darken($red,$perCent));}
 		td.colomn-2 { background-color: $softred; @include box-shadow(inset 0 0 0 30px darken($softred,$perCent));}
 		td.colomn-3 { background-color: $lightred; @include box-shadow(inset 0 0 0 30px darken($lightred,$perCent));}

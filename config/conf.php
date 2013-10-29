@@ -25,6 +25,8 @@ class Conf {
 	static $contactEmail = 'contact@we-sport.fr';
 	static $debugIpAddress = array('127.0.0.1','193.52.250.230','88.162.98.17');
 	static $debugErrorEmails = array('guichardsim@gmail.com');
+	static $mailer = null;
+	static $mailLogger = null;
 	static $lang = 'fr';
 	static $pays = 'FR';
 
@@ -121,6 +123,29 @@ class Conf {
 		);
 
 
+		/**
+		 * getMailer
+		 * return instance of Swift_Mailer
+		 */
+		public static function getMailer(){
+
+			if(isset(self::$mailer)) return self::$mailer;
+
+			self::$mailer = Swift_Mailer::newInstance(self::getTransportSwiftMailer());
+			self::$mailLogger = new Swift_Plugins_Loggers_ArrayLogger();
+			self::$mailer->registerPlugin(new Swift_Plugins_LoggerPlugin(self::$mailLogger));
+			return self::$mailer;
+		}
+
+		/**
+		* getMailLog
+		* return swiftmailer error and logs
+		**/
+		public static function getMailLog(){
+
+			return self::$mailLogger->dump();
+		}
+		
 		/**
 		 * getTransportSwiftMailer
 		 * return instance of Swift_SmtpTransport
