@@ -181,6 +181,23 @@ var current_date = '<?php echo date("Y-m-d");?>';
 $(document).ready(function(){
 
 
+	//Drag calendar
+	var cal = $('#calendar-content');
+	var _xOrigin;
+	var _yOrigin;
+
+	$('#calendar-content').draggable({
+		axis:'x',
+		revert:true,
+		cancel: "div.events",
+		zIndex:0,
+	});
+
+	$('#calendar-content').on('drag',function(e,ui){
+		console.log(ui.position);
+
+	});
+
 	//Appel la semaine courante
 	callThisWeek();
 
