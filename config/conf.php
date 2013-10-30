@@ -145,7 +145,7 @@ class Conf {
 
 			return self::$mailLogger->dump();
 		}
-		
+
 		/**
 		 * getTransportSwiftMailer
 		 * return instance of Swift_SmtpTransport
@@ -154,6 +154,8 @@ class Conf {
 		 * or choose php mail() function (not recommended)
 		 */
 	    public static function getTransportSwiftMailer(){
+
+	    	return $transport = Swift_SmtpTransport::newInstance('smtp.we-sport.fr', 25);
 
 		//Local SMTP Config
 	    	$transport = Swift_SmtpTransport::newInstance('smtp.u-bourgogne.fr', 25)

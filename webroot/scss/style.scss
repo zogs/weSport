@@ -766,13 +766,14 @@ div.mm-is-menu * {
 
 	.addEvent{
  		display: block;
- 		width:70%;
- 		margin:10px 15% 30px;
- 		padding:20px;
+ 		width:100%;
+ 		margin-top:30px;
  		text-align: center;
- 		@include rem(70);
- 		span.ws-icon{
- 			color:inherit;			
+ 		a{
+ 			@include rem(70);
+	 		span.ws-icon{
+	 			color:inherit;			
+	 		}
  		}
  	}
 
@@ -809,7 +810,7 @@ div.mm-is-menu * {
 
 		tr.events-week {/*height:100%; min-height:1000px;*/}
 
-		td { vertical-align: top; /*height:1000px; min-height:1000px;*/ }
+		td { vertical-align: top;/*height:1000px; min-height:1000px;*/ }
 		td.colomn-1 { background-color: $red; @include box-shadow(inset 0 0 0 30px darken($red,$perCent));}
 		td.colomn-2 { background-color: $softred; @include box-shadow(inset 0 0 0 30px darken($softred,$perCent));}
 		td.colomn-3 { background-color: $lightred; @include box-shadow(inset 0 0 0 30px darken($lightred,$perCent));}
@@ -826,21 +827,21 @@ div.mm-is-menu * {
 		td.colomn-6 .colomn-date { background-color: darken($softgreen,$perCent);}
 		td.colomn-7 .colomn-date { background-color: darken($green,$perCent);}
 
-		td.colomn-1 .addEvent { color: darken($red,$perCent*2);}
-		td.colomn-2 .addEvent { color: darken($softred,$perCent*2);}
-		td.colomn-3 .addEvent { color: darken($lightred,$perCent*2);}
-		td.colomn-4 .addEvent { color: darken($softyellow,$perCent*2);}
-		td.colomn-5 .addEvent { color: darken($lightgreen,$perCent*2);}
-		td.colomn-6 .addEvent { color: darken($softgreen,$perCent*2);}
-		td.colomn-7 .addEvent { color: darken($green,$perCent*2);}
+		td.colomn-1 .addEvent a{ color: darken($red,$perCent*2);}
+		td.colomn-2 .addEvent a{ color: darken($softred,$perCent*2);}
+		td.colomn-3 .addEvent a{ color: darken($lightred,$perCent*2);}
+		td.colomn-4 .addEvent a{ color: darken($softyellow,$perCent*2);}
+		td.colomn-5 .addEvent a{ color: darken($lightgreen,$perCent*2);}
+		td.colomn-6 .addEvent a{ color: darken($softgreen,$perCent*2);}
+		td.colomn-7 .addEvent a{ color: darken($green,$perCent*2);}
 
-		td.colomn-1 .addEvent:hover { color: darken($red,10%);}
-		td.colomn-2 .addEvent:hover { color: darken($softred,10%);}
-		td.colomn-3 .addEvent:hover { color: darken($lightred,10%);}
-		td.colomn-4 .addEvent:hover { color: darken($softyellow,10%);}
-		td.colomn-5 .addEvent:hover { color: darken($lightgreen,10%);}
-		td.colomn-6 .addEvent:hover { color: darken($softgreen,10%);}
-		td.colomn-7 .addEvent:hover { color: darken($green,10%);}	
+		td.colomn-1 .addEvent:hover a{ color: darken($red,10%);}
+		td.colomn-2 .addEvent:hover a{ color: darken($softred,10%);}
+		td.colomn-3 .addEvent:hover a{ color: darken($lightred,10%);}
+		td.colomn-4 .addEvent:hover a{ color: darken($softyellow,10%);}
+		td.colomn-5 .addEvent:hover a{ color: darken($lightgreen,10%);}
+		td.colomn-6 .addEvent:hover a{ color: darken($softgreen,10%);}
+		td.colomn-7 .addEvent:hover a{ color: darken($green,10%);}	
 
 		td.colomn-last {		
 			a img {margin-left:-5px;}

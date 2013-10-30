@@ -1066,7 +1066,7 @@ class UsersController extends Controller{
         //Création du mail
         $message = Swift_Message::newInstance()
           ->setSubject("Change ton mot de passe")
-          ->setFrom('noreply@'.Conf::$websiteDOT, Conf::$website)
+          ->setFrom(Conf::$contactEmail, Conf::$websiteDOT)
           ->setTo($dest, $user)
           ->setBody($body, 'text/html', 'utf-8')
           ->addPart("Hey {$user}, copy this link ".$lien." in your browser to change your password. Don't stop the Protest.", 'text/plain');
