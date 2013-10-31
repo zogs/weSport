@@ -78,7 +78,7 @@
 				?>
 
 				<div class="addEvent">
-					<a class="tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>"><span class="ws-icon ws-icon-plus-alt"></span></a>
+					<a class="tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>" draggable='false'><span class="ws-icon ws-icon-plus-alt"></span></a>
 				</div>
 			</td>
 		<?php
@@ -90,3 +90,13 @@
 	endforeach;
 	?>
 </table>
+<div class="pullHelper pullNext" id="pullNext">
+	<div class="pull-in"><strong>Tirer</strong><p>pour les jours suivants</p></div>
+	<div class="pull-off"><strong>Relacher</strong><p>pour afficher</p></div>
+	<div class="pull-load"><strong>Chargement</strong></div>
+</div>
+<div class="pullHelper pullPrev" id="pullPrev">
+	<div class="pull-in"><strong>Tirer</strong><p>pour les jours précédant</p></div>
+	<div class="pull-off"><strong>Relacher</strong><p>pour afficher</p></div>
+	<div class="pull-load"><strong>Chargement</strong></div>
+</div>
