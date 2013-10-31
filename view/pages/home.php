@@ -250,26 +250,21 @@ $(document).ready(function(){
 		_cal.css('z-index',0);
 	}
 	function nolock(){
-		_lock = '';
-		$('#pullPrev .pull-off, #pullNext .pull-off').hide();
-		$('#pullPrev .pull-in, #pullNext .pull-in').show();
+		_lock = '';		
+		$('#pullPrev,#pullNext').removeClass('locked').removeClass('loading');
 
 	}
 	function lockPrev(){
 		_lock = 'left';
-		$('#pullPrev .pull-in').hide();
-		$('#pullPrev .pull-off').show();
+		$('#pullPrev').addClass('locked');
 	}
 	function lockNext(){
 		_lock = 'right';
-		$('#pullNext .pull-in').hide();
-		$('#pullNext .pull-off').show();
+		$('#pullNext').addClass('locked');		
 	}
 	function lockLoad(){
 		_lock='';
-		$('#pullPrev .pull-off, #pullNext .pull-off').hide();
-		$('#pullPrev .pull-in, #pullNext .pull-in').hide();
-		$('#pullPrev .pull-load, #pullNext .pull-load').show();
+		$('#pullNext,#pullPrev').removeClass('locked').addClass('loading');
 	}
 
 
@@ -369,13 +364,14 @@ $(document).ready(function(){
 
 		$('#calendar-content').css('left',0);
 
-		$(".events-weeks").last().css({'left':contentPosition+'px'}).addClass('new-week');
+		$(".events-weeks:first").addClass('old-week');
+		$(".events-weeks:last").css({'left':contentPosition+'px'}).addClass('new-week');
 
 		$('.events-weeks').animate({
 			left:contentSliding,
 			},duration,function(){ ;
 				if(!$(this).hasClass('new-week')) $(this).remove();
-				$(this).removeClass('new-week');				
+				$(this).removeClass('new-week').removeClass('old-week');				
 				return;
 		});
 	}

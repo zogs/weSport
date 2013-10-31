@@ -101,7 +101,12 @@ window.onload = function() {
 			'ws-icon-checkmark' : '&#xe017;',
 			'ws-icon-checkmark-2' : '&#xe018;',
 			'ws-icon-info' : '&#xe019;',
-			'ws-icon-info-2' : '&#xe01a;'
+			'ws-icon-info-2' : '&#xe01a;',
+			'ws-icon-arrow-left' : '&#xe01b;',
+			'ws-icon-arrow-right' : '&#xe01c;',
+			'ws-icon-arrow-up' : '&#xe01d;',
+			'ws-icon-arrow-down' : '&#xe01e;',
+			'ws-icon-loop' : '&#xe01f;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
