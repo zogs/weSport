@@ -155,7 +155,9 @@ class Conf {
 		 */
 	    public static function getTransportSwiftMailer(){
 
-	    	return $transport = Swift_SmtpTransport::newInstance('smtp.we-sport.fr', 25);
+	    	return $transport = Swift_SmtpTransport::newInstance('smtp.we-sport.fr', 465, 'ssl')
+	    	->setUsername('zogs')
+			->setPassword('sexwax');
 
 		//Local SMTP Config
 	    	$transport = Swift_SmtpTransport::newInstance('smtp.u-bourgogne.fr', 25)

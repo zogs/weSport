@@ -333,30 +333,35 @@ $(document).ready(function(){
 
 
 	
+	/*
+	slideCalendar(direction,width);
+	*/
+	function slideCalendar(d,w){
 
-	function slideCalendar(direction,width){
+		var t = 500;
+		var pos;
+		var slide;
 
-		duration = 500;
 
-		if(direction == 'right') {
-			contentPosition = width;
-			contentSliding = '-='+width;
+		if(d == 'right') {
+			pos = w;
+			slide = '-='+w;
 		}
-		if(direction == 'left') {
-			contentPosition = -width;
-			contentSliding = '+='+width;
+		if(d == 'left') {
+			pos = -w;
+			slide = '+='+w;
 		}
-		if(typeof direction == 'undefined'){
-			contentPosition = -width;
-			contentSliding = '+='+width;
+		if(typeof d == 'undefined'){
+			pos = -w;
+			slide = '+='+w;
 			duration = 0;
 		}
 
-		$(".events-weeks").last().css({'left':contentPosition+'px'}).addClass('new-week');
+		$(".events-weeks").last().css({'left':pos+'px'}).addClass('new-week');
 
 		$('.events-weeks').animate({
-			left:contentSliding,
-			},duration,function(){ ;
+			left:slide,
+			},t,function(){ ;
 				if(!$(this).hasClass('new-week')) $(this).remove();
 				$(this).removeClass('new-week');				
 				return;
@@ -364,9 +369,8 @@ $(document).ready(function(){
 	}
 
 	function setHeightCalendar(){
-
-		var heightCalendar = $("#calendar-content .events-weeks").height();
-		$("#calendar-content").css('height',heightCalendar);
+		var height = $("#calendar-content .events-weeks").height();
+		$("#calendar-content").css('height',height);
 	}
 
 	function findNumberDayPerWeek(){
