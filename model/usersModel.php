@@ -7,9 +7,18 @@ class UsersModel extends Model{
 	public $validates = array(
 		'register' => array(
 			'login' => array(
-				'rule'    => 'notEmpty',
-				'message' => 'Vous devez choisir un pseudo'		
-				),
+				'rules'=>array(
+						array(
+							'rule'    => 'notEmpty',
+							'message' => 'Vous devez choisir un pseudo'		
+						),
+						array(
+							'rule'=>'regex',
+							'regex'=>'[ \'\"@,\.;:\/\\!&$£*§~#|)(}{]',
+							'message'=>"Le login contient des caractères interdits"
+						)
+					)
+				),				
 			'email' => array(
 				'rules'=>array(
 							array(
