@@ -259,14 +259,14 @@ class MailingController extends Controller {
 
 			//send message for each recipient
 			foreach ($mailing_emails[$m->id] as $id => $email) {
-				debug($email);
+				
 				if(!$failures = $this->sendMail(array($email),$message)){
 					$mailing_send['errors'] = array_merge($mailing_send['errors'],$failures);
 					$total['errors'] = array_merge($total['errors'],$failures);
 				}
 				else{
 					$mailing_send['sended'] = array_merge($mailing_send['sended'],$emails);
-					$total['sended'] = array_merge($total['sended'],$failures);
+					$total['sended'] = array_merge($total['sended'],$emails);
 				}
 
 				//mark the email as sended
