@@ -308,7 +308,8 @@ class MailingController extends Controller {
 			}			
 		}
 
-		$res = ' La tâche cron denvoi de mailing a envoyé '.$total['sending'].' emails';
+		$res = date('Y-m-d');
+		$res .= ' La tache cron denvoi de mailing a envoyé '.$total['sending'].' emails';
 		$res .= ' dont '.count($total['errors']).' errors et '.count($total['sended']).' succes';
 		$res .= ' ERRORS: '.implode(',',$total['errors']);
 		$res .= ' SUCCESS: '.implode(',',$total['sended']);
