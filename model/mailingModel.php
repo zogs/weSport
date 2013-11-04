@@ -219,7 +219,7 @@ class MailingModel extends Model {
 
 	public function findMailing(){
 
-		$mailings =  $this->find(array('table'=>'mailing_sending'));
+		$mailings =  $this->find(array('table'=>'mailing_sending','order'=>'date_finished DESC'));
 		foreach ($mailings as $k => $m) {			
 			$mailings[$k] = new Mailing($m);			
 		}
