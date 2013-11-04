@@ -305,12 +305,12 @@ class MailingController extends Controller {
 			}			
 		}
 
-		echo 'La tâche cron denvoi de mailing a envoyé '.$total['sending'].' emails';
-		echo  'dont '.count($total['errors']).' errors et '.count($total['sended']).' succes';
-		echo ' ERRORS: '.implode(',',$total['errors']);
-		echo ' SUCCESS: '.implode(',',$total['success']);
+		$res = 'La tâche cron denvoi de mailing a envoyé '.$total['sending'].' emails';
+		$res .=  'dont '.count($total['errors']).' errors et '.count($total['sended']).' succes';
+		$res .= ' ERRORS: '.implode(',',$total['errors']);
+		$res .= ' SUCCESS: '.implode(',',$total['sended']);
 
-		exit();
+		exit($res);
 
 	}
 

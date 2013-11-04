@@ -17,7 +17,7 @@
 			 <?php foreach ($mailings as $m): ?>	
 			 	<tr>
 		 			<td>
-		 				<?php echo $m->getStatus(); ?>
+		 				<?php echo ucfirst($m->getStatus()); ?>
 		 				<?php if($m->getStatus()=='pending'): ?>
 		 					<a href="<?php echo Router::url('admin/mailing/launchmailing/'.$m->id);?>">Commencer</a>
 		 				<?php endif;?>
