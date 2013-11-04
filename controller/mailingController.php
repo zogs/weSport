@@ -269,7 +269,7 @@ class MailingController extends Controller {
 				}
 				else{
 					$mailing_send['sended'] = array_merge($mailing_send['sended'],$emails);
-					$total['sended'] = array_merge($total['sended'],$emails);
+					$total['sended'] = array_merge($total['sended'],$email);
 				}
 
 				//mark the email as sended
