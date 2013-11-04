@@ -155,30 +155,10 @@ class Conf {
 		 */
 	    public static function getTransportSwiftMailer(){
 
-	    	return $transport = Swift_SmtpTransport::newInstance('smtp.we-sport.fr', 25)
+	    	return $transport = Swift_SmtpTransport::newInstance('smtp.we-sport.fr', 587, 'tls')
 		    	->setUsername('contact@we-sport.fr')
 				->setPassword('justdoit');
 
-		//Local SMTP Config
-	    	$transport = Swift_SmtpTransport::newInstance('smtp.u-bourgogne.fr', 25)
-		->setUsername('si3804gu')
-		->setPassword('f4tb0ysl/m');
-
-		//Server SMTP Confif
-		$host = self::getHost();
-
-		if($host=='we-sport'){
-
-		    	//SMTP configuration
-		    	$transport = Swift_SmtpTransport::newInstance('localhost', 25)
-				->setUsername('contact@wesport.zogs.org')
-				->setPassword('fatboy');
-		}					
-
-		//PHP mail() function
-		//$transport = Swift_SendmailTransport::newInstance(); 
-
-	    	return $transport;
 	    }
 
 

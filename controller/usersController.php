@@ -1069,7 +1069,7 @@ class UsersController extends Controller{
           ->setFrom(Conf::$contactEmail, Conf::$websiteDOT)
           ->setTo($dest, $user)
           ->setBody($body, 'text/html', 'utf-8')
-          ->addPart("Hey {$user}, copy this link ".$lien." in your browser to change your password. Don't stop the Protest.", 'text/plain');
+          ->addPart("Hey ".$user.", copy this link ".$lien." in your browser to change your password", 'text/plain');
        
         //Envoi du message et affichage des erreurs éventuelles
         if (!Conf::getMailer()->send($message, $failures))

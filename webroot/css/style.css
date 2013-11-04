@@ -964,8 +964,8 @@ div.mm-is-menu * {
 }
 /* line 750, ../scss/style.scss */
 .calendar .calendar-nav .calendar-content .pullHelper span {
-  font-size: 10px;
-  font-size: 1rem;
+  font-size: 14px;
+  font-size: 1.4rem;
 }
 /* line 751, ../scss/style.scss */
 .calendar .calendar-nav .calendar-content .pullHelper i {
