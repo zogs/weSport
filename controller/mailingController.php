@@ -213,7 +213,7 @@ class MailingController extends Controller {
 		$emails = $this->Mailing->findEmailsToSend('cron',Conf::$mailingNbSendingByCron);
 
 		//exit if no mail
-		if(empty($emails)) exit('No mail to send');
+		if(empty($emails)) exit(date('Y-m-d h:m:s').' No mail to send');
 		
 		//ararnge mailing to sent and emails
 		$mailing = array();

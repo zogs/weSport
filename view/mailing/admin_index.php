@@ -16,11 +16,12 @@
 		<tbody>
 			 <?php foreach ($mailings as $m): ?>	
 			 	<tr>
-		 			<td>
-		 				<?php echo ucfirst($m->getStatus()); ?>
+		 			<td>		 				
 		 				<?php if($m->getStatus()=='pending'): ?>
 		 					<a href="<?php echo Router::url('admin/mailing/launchmailing/'.$m->id);?>">Commencer</a>
-		 				<?php endif;?>
+		 				<?php else:?>
+		 					<?php echo ucfirst($m->getStatus()); ?>
+		 				<?php endif; ?>
 		 			</td>
 		 			<td>
 		 				<?php echo $m->getMethod(); ?>
