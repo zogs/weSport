@@ -354,7 +354,7 @@ BACK END ADMIN
 .backend_admin {}
 .backend_admin .mainContainer {
     background-color:#FFF;
-    padding:0;
+    padding:20px 10px;
 }
 .backend_admin form input[type=text] { height:auto; width:60%; font-size:14px; padding:3px 2px;}
 .backend_admin form label {color:#888;}

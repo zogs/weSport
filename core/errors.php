@@ -5,6 +5,8 @@ class zHandlingErrors {
 
 		$error = self::objectError($Exception);
 
+		$IP = isset($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
+
 		if(DEBUG==0){
 			$controller = new Controller();
 			$controller->e404('Veuillez nous excusez pour cet erreur...','Oups une erreur !');
@@ -15,13 +17,13 @@ class zHandlingErrors {
 		}
 
 		if(DEBUG==2){			
-			if(in_array($_SERVER['REMOTE_ADDR'],Conf::$debugIpAddress))
+			if(in_array($IP,Conf::$debugIpAddress))
 				self::showError($error);			
 			else
 				self::alertError();
 		}
 
-		if($_SERVER['REMOTE_ADDR']!='127.0.0.1')
+		if($IP!='127.0.0.1')
 			self::emailError($error);
 	
 	}

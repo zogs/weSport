@@ -96,4 +96,12 @@ class String {
 	 	return $matches[0];
 	}
 
+	static function isSerialized($string){
+		$array = @unserialize($string);
+		if ($array === false && $string !== 'b:0;') {
+		    return false;
+		}
+		return true;
+	}
+
 } ?>

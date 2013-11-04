@@ -1,5 +1,5 @@
-<a href="<?php echo Router::url('admin/mailing/index');?>">Retour au menu Mailing</a>
-<h2>Mailing lists existantes <a class="btn btn-info" href="<?php echo Router::url('admin/mailing/editlist');?>">Créer une nouvelle liste</a></h2>
+<a href="<?php echo Router::url('admin/mailing/index');?>">Retour</a>
+<h3>Mailing lists existantes <a class="btn btn-mini btn-info" href="<?php echo Router::url('admin/mailing/editlist');?>">Créer une nouvelle liste</a></h3>
 <table class="table table-striped table-condensed table-hover">
 	<thead>
 		<th>Nom de la liste</th>
