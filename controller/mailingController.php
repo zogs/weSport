@@ -211,6 +211,9 @@ class MailingController extends Controller {
 
 		//find email not sent , with limit
 		$emails = $this->Mailing->findEmailsToSend('cron',Conf::$mailingNbSendingByCron);
+
+		//exit if no mail
+		if(empty($emails)) exit('No mail to send');
 		
 		//ararnge mailing to sent and emails
 		$mailing = array();
