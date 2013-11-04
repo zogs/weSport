@@ -76,7 +76,7 @@ class zHandlingErrors {
 
 	public static function showError($error){
 
-		include '../view/errors/exception.php';
+		include ROOT.'/view/errors/exception.php';
 
 	}
 
