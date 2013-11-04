@@ -200,6 +200,10 @@ class MailingController extends Controller {
 
 	public function sendByCron(){
 
+		//only if cron
+		if(get_class($this->request)!='Cron') exit();
+
+		//load
 		$this->loadModel('Mailing');
 
 		//set timer

@@ -43,7 +43,7 @@ class zHandlingErrors {
 		//Si il ny a pas d'email retourne vrai
 		if(empty(Conf::$debugErrorEmails)) return true;
 
-        $body = file_get_contents('../view/errors/debugmail.html');
+        $body = file_get_contents(ROOT.'/view/errors/debugmail.html');
         $body = preg_replace("~{site}~i", Conf::$website, $body);
         $body = preg_replace("~{msg}~i", $error->msg, $body);
         $body = preg_replace("~{code}~i", $error->code, $body);
