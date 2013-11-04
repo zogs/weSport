@@ -210,7 +210,7 @@ class MailingController extends Controller {
 		$timer = microtime(true);
 
 		//find email not sent , with limit
-		$emails = $this->Mailing->findEmailsToSend('cron',1);
+		$emails = $this->Mailing->findEmailsToSend('cron',Conf::$mailingNbSendingByCron);
 		
 		//ararnge mailing to sent and emails
 		$mailing = array();
@@ -235,7 +235,7 @@ class MailingController extends Controller {
 		foreach ($mailing as $m) {
 			
 			//récupère le template et remplace les variables
-			$body = file_get_contents('../view/email/freeMailing.html');
+			$body = file_get_contents(ROOT.'/view/email/freeMailing.html');
 			$body = preg_replace("~{content}~i", $m->content, $body);
 			$body = preg_replace("~{site}~i", Conf::getSiteUrl(), $body);
 

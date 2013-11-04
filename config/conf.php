@@ -27,6 +27,7 @@ class Conf {
 	static $debugErrorEmails = array('guichardsim@gmail.com');
 	static $mailer = null;
 	static $mailLogger = null;
+	static $mailingNbSendingByCron = 1;
 	static $lang = 'fr';
 	static $pays = 'FR';
 
