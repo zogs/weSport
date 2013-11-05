@@ -84,33 +84,34 @@ class Conf {
 
 	//Css to load
 	static $css = array(	
-						'bootstrap/css/bootstrap.css',
-						'css/default.css',
-						'css/style.css',
-						'css/font-icons/style.css',
-						'js/jquery/select2-2.1/select2.css',
-						'js/jquery/datepicker/css/datepicker.css',
-						'js/jquery/mmenu/mmenu.css',
-						'js/jquery/mmenu/mmenu-positioning.css'
-						);
+			'bootstrap/css/bootstrap.css',
+			"http://fonts.googleapis.com/css?family=Viga",
+			'css/default.css',
+			'css/style.css',
+			'css/font-icons/style.css',
+			'js/jquery/select2-2.1/select2.css',
+			'js/jquery/datepicker/css/datepicker.css',
+			'js/jquery/mmenu/mmenu.css',
+			'js/jquery/mmenu/mmenu-positioning.css'
+			);
 
 	//Js to load
 	static $js_main = 'js/main.js';
 	static $js_dependency = array(	
-									'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-									'js/jquery/jquery.livequery.min.js',
-									'bootstrap/js/bootstrap.js',
-									'js/jquery/jquery.flowslider.js',
-									'js/jquery/jquery.typeahead.js',
-									'js/jquery/hogan.mustache.js',
-									'js/phpfunctions.js',
-									'js/jquery/select2-2.1/select2.min.js',
-									'js/jquery/jquery.timeago.js',
-									'js/jquery/jquery.expander.min.js',
-									'js/jquery/datepicker/js/bootstrap-datepicker.js',
-									'js/jquery/datepicker/js/locales/bootstrap-datepicker.fr.js',
-									'js/jquery/mmenu/jquery.mmenu.js'
-								);
+					'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+					'js/jquery/jquery.livequery.min.js',
+					'bootstrap/js/bootstrap.js',
+					'js/jquery/jquery.flowslider.js',
+					'js/jquery/jquery.typeahead.js',
+					'js/jquery/hogan.mustache.js',
+					'js/phpfunctions.js',
+					'js/jquery/select2-2.1/select2.min.js',
+					'js/jquery/jquery.timeago.js',
+					'js/jquery/jquery.expander.min.js',
+					'js/jquery/datepicker/js/bootstrap-datepicker.js',
+					'js/jquery/datepicker/js/locales/bootstrap-datepicker.fr.js',
+					'js/jquery/mmenu/jquery.mmenu.js'
+				);
 
 
 	static $reserved = array(

@@ -825,15 +825,16 @@ div.mm-is-menu * {
 		width: 100%;
 		padding:15px 0;
 		text-align: center;
-		@include text-shadow(0 0 5px rgba(0,0,0,0.5));
+		@include text-shadow(0 0 10px rgba(0,0,0,0.6));
 		color:white;
 
 		strong {
 			text-transform: uppercase;
-				@include rem(20);
+			@include rem(23);
 		}
 		i {
 			font-style:normal;
+			@include rem(12);
 		}
 
 	}
@@ -891,11 +892,15 @@ div.mm-is-menu * {
 	.events {
 		width:96%;
 		margin:5px auto;
-		padding:12px 5px 10px 10px;
-		background-color:#FFF;
+		padding:10px 8px 8px 8px;
+		background-color:rgba(255,255,255,0.9);
 		border:1px solid rgba(0,0,0,0.1);
-		border-bottom:4px solid rgba(0,0,0,0.2);
-		@include border-radius(30px);
+		border-bottom:4px solid rgba(0,0,0,0.4);
+		@include border-radius(15px);
+	}
+
+	.events:hover {
+		background-color:rgba(255,255,255,1);
 	}
 
 	.events-link{
@@ -911,7 +916,7 @@ div.mm-is-menu * {
 	}
 
 	.events-content{
-		margin-left:50px;
+		margin-left:40px;
 		position:relative;
 
 		.events-meta{
@@ -924,9 +929,10 @@ div.mm-is-menu * {
 		.events-time {
 			display: block;
 			float:left;
+			font-family: Arial,sans-serif;
 			font-weight:bold;
-			@include rem(15);
-			color:#CCC;						
+			@include rem(14);
+			color:#888;						
 		}
 
 		.events-city{
@@ -954,12 +960,11 @@ div.mm-is-menu * {
 		.events-logo{
 			position:absolute;
 			top:0;
-			left:-50px;
+			left:-40px;
 
 			.ws-sport-icon { 					
-				margin-right:5px;
 				span {
-					@include rem(45); color:#000; 
+					@include rem(35); color:#111; 
 				}
 			}
 		}
@@ -967,6 +972,7 @@ div.mm-is-menu * {
 		.events-title{			
 			display:inline-block;
 			color:$deepblue;
+			font-family: "Viga";
 			@include rem(14);
 			font-weight: bold;
 			margin:2px 0 0 0;										
@@ -978,8 +984,8 @@ div.mm-is-menu * {
 	
 
 	.events-confirmed {
-		border-bottom-width: 7px;
-		border-color:$darkgreen;
+		border-bottom-width: 5px;
+		border-color:rgba($darkgreen,0.7);
 	}
 
 }
