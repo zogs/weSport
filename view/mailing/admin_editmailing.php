@@ -13,16 +13,23 @@
 			
 			<?php echo $this->Form->select('list_id','Selectionnez une mailing list',$mailingLists,array('default'=>$mailing->getMailingListId(),'helper'=>'<a href="'.Router::url("admin/mailing/editlist/").'">Créez une nouvelle liste</a>','placeholder'=>"Sélectionnez une mailing list")); ?>
 
-			<?php echo $this->Form->input('emails_added','Ou entrez une adresse mail',array('type'=>'text','placeholder'=>'Une ou plusieurs adresses mails ( séparez vos adresses par un ;)')) ?>
+			<?php echo $this->Form->input('emails_added','Ou entrez une adresse mail',array('type'=>'text','placeholder'=>'Ajouter une ou plusieurs adresses mails ( séparez vos adresses par un ;)')) ?>
 
 			<?php echo $this->Form->input('object','Objet de l\'email',array('type'=>'text','placeholder'=>"Object de l'email")); ?>
-
-			<?php echo $this->Form->input('content','Contenu de l\'email',array('type'=>'textarea','class'=>"wysiwyg","style"=>"width:100%;","rows"=>15)); ?>
 
 			<?php echo $this->Form->input('addpj','Pièce-jointe',array('type'=>'file','helper'=>(!empty($mailing->pj)? '<strong>Une pièce jointe est déjà associé à ce mail</strong> : '.$mailing->pj : ''))); ?>			
 			<?php echo $this->Form->input('pj','hidden');?>
 
-			<?php echo $this->Form->select('method','Méthode d\'envoi',array('allinone'=>'All in one (prefered)','cron'=>'Cron job','web'=>'Auto-refresh'),array('default'=>$mailing->getMethod(),'placeholder'=>'Choisir une méthode d\'envoi')); ?>
+			<?php echo $this->Form->input('content','Contenu de l\'email',array('type'=>'textarea',"style"=>"width:100%;","rows"=>15)); ?>
+
+			<?php echo $this->Form->select("signature","Ajouter signature",$signatures,array('default'=>0,'placeholder'=>'Choisir une signature')) ;?>
+
+			<?php echo $this->Form->select('method','Méthode d\'envoi',array('allinone'=>'All in one (prefered)','cron'=>'Cron job','refresh'=>'Auto-refresh 1min'),array('default'=>$mailing->getMethod(),'placeholder'=>'Choisir une méthode d\'envoi')); ?>
+
+			<?php echo $this->Form->input("grouped","Envois par tranche",array("type"=>"text",'placeholder'=>"Limite d'envoi par tranche (default:10)")) ;?>
+
+			<?php echo $this->Form->input("recipients","Nombre de co-destinataires",array("type"=>"text","placeholder"=>"Nombre de co-destinataire (defaut:1)")) ;?>
+
 
 			<?php echo $this->Form->input('id','hidden');?>
 			<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())); ?>
@@ -31,3 +38,10 @@
 
 		</form>
 	</div>	
+<script type="text/javascript">
+
+
+        CKEDITOR.replace( 'content', { filebrowserBrowseUrl: '/js/ckeditor_filemanager/index.html'});
+        
+
+</script>

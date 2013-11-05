@@ -112,7 +112,13 @@ class Form{
 		$attr='';	
 		if(!empty($options)){
 
-			unset($options['helper']);			
+			//helper not useful here
+			unset($options['helper']);	
+
+			//auto placeholder if not set
+			if(!isset($options['placeholder'])) $attr.= ' placeholder="'.$label.'" ';
+
+			//add options
 			foreach ($options as $k => $v) {
 				if($k!='type' && $k!='icon'){
 					$attr .= " $k=\"$v\"";
@@ -164,6 +170,9 @@ class Form{
 		}
 		elseif($options['type']=='password'){
 			$html .= '<input type="password" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
+		}
+		elseif($options['type']=='submit'){
+			$html .= '<input type="submit" id="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		else{
 			$html .= '<input type="'.$options['type'].'" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';

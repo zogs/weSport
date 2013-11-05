@@ -167,7 +167,7 @@
  	}
 
 
- 	public function reportPDOError($pdo,$function,$sql){
+ 	public function reportPDOError($pdo,$function,$sql,$val){
 
  		if(DEBUG>=1){
 
@@ -175,6 +175,7 @@
  			debug('SQL Error in: function '.$function.', class '.get_class($this).', '.__FILE__);
  			debug($error[2]); 				
  			debug($sql);
+ 			debug($val);
  			exit();
  				
 		}
@@ -278,7 +279,7 @@
  			}
  		} 			
  		else
- 			$this->reportPDOError($pre,__FUNCTION__,$sql);
+ 			$this->reportPDOError($pre,__FUNCTION__,$sql,$values);
  	}
  	
  	//=========================================
@@ -402,8 +403,6 @@
  		}
  		
  		$pre = $this->db->prepare($sql); //prepare la requete
- 		// debug($sql);
- 		// debug($tab);
  		$pre->execute($tab); //execute la requete grace au tableaux des valeurs ( :name, :contenu, :date, ...)
  		
  		//Si c'est un insert on recupere l'id de l'insertion
@@ -421,7 +420,7 @@
  		if($pre->errorCode()==0)
 			return $this->id; 		
  		else
- 			$this->reportPDOError($pre,__FUNCTION__,$sql);	
+ 			$this->reportPDOError($pre,__FUNCTION__,$sql,$tab);	
  		
  	}
 
@@ -450,9 +449,9 @@
 				$extension = substr(strrchr($file['name'], '.'),1);
 
 				if(isset($newname)){
-					$destname = $newname.'.'.$extension;
+					$destname = String::unixify($newname.'.'.$extension);
 				} else {
-					$destname = $file['name'];
+					$destname = String::unixify($file['name']);
 				}
 
 				if(isset($directory)){

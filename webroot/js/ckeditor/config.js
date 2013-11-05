@@ -22,12 +22,15 @@ CKEDITOR.editorConfig = function( config ) {
 	//];
 
 	config.toolbar = [
-		['Undo','Redo'],'-',['Scayt'],'-',['Link','Unlink','Image','Flash','Smiley','SpecialChar'],
+		['Source','-','Save'],'-',['Undo','Redo'],'-',['Scayt'],'-',['NumberedList','BulletedList','Table'],'-',['Blockquote','CreateDiv','SpecialChar','Iframe'],
 		'/',
-		['FontSize'],'-',['Bold','Italic','Underline','Strike'],'-',['NumberedList','BulletedList','Blockquote','CreateDiv'],'-',['JustifyLeft','JustifyRight','JustifyBlock'],
+		['FontSize'],'-',['Bold','Italic','Underline','Strike','TextColor'],'-',['Link','Unlink','Image','Flash','Smiley'],'-',['JustifyLeft','JustifyRight','JustifyBlock'],
 		'/',
 		['oembed','MediaEmbed']
-	]
+	];
+
+	config.baseUrl = "http://we-sport.fr/";
+	config.baseDir = "D:\wamp\www\weSport\webroot";
 
 
 };

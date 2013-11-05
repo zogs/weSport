@@ -4,6 +4,7 @@
 	<h2>Liste des mailings 
 		<a class="btn btn-mini btn-info" href="<?php echo Router::url('admin/mailing/editmailing');?>">Créer un nouveau mailing</a>
 		<a class="btn btn-mini btn-info" href="<?php echo Router::url('admin/mailing/listmailing');?>">Gestion des listes d'adresses</a>
+		<a class="btn btn-mini btn-info" href="<?php echo Router::url('admin/mailing/editsignature');?>">Gestion des signatures</a>
 	</h2>
 	<table class="table table-striped table-condensed table-hover">
 		<thead>

@@ -43,6 +43,10 @@ class String {
 	    return $text;
 	}
 
+	static function unixify($string){
+		return strtolower(str_replace(' ','-',$string));
+	}
+
 	static function br2nl($foo) {
 		return preg_replace("/\<br\s*\/?\>/i", "\n", $foo);
 	}

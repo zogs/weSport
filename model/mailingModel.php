@@ -11,11 +11,17 @@ class MailingModel extends Model {
 				'message'=>'Veuillez remplir avec au moins une adresse email'),
 			)
 		,
+		'editsignature'=>array(
+			'name'=>array(
+				'rule'=>'notEmpty',
+				'message'=>"Le nom ne peut être vide"
+				)
+			),
 		'editmailing'=>array(
 			'addpj'=>array(
 				'rule'=>'file',
 				'params'=>array(
-					'destination'=>'media/pj',
+					'destination'=>'media/mailing/pj',
 					//'extentions'=>array('doc'),
 					//'extentions_error'=>'Your document is not a .doc file',
 					//'max_size'=>500000,
@@ -147,6 +153,16 @@ class MailingModel extends Model {
 
 	}
 
+	public function findSignatures(){
+
+		return $this->find(array('table'=>'mailing_signature'));
+	}
+
+	public function getSignatureById($id){
+
+		return $this->findFirst(array('table'=>'mailing_signature','conditions'=>array('id'=>$id)));
+	}
+
 	public function getlistByID($lid){
 
 		return $this->findFirst(array('table'=>'mailing_mailinglist','conditions'=>array('list_id'=>$lid)));
@@ -171,6 +187,15 @@ class MailingModel extends Model {
 		return $li;
 	}
 
+	public function findMailingToSendByCron(){
+
+		$m = $this->find(array('table'=>'mailing_sending','conditions'=>array('method'=>'cron','finished'=>0)));
+		foreach ($m as $k => $v) {
+			$m[$k] = new Mailing($v);
+		}
+		return $m;
+	}
+
 	public function findEmailsToSend($method,$limit = 10){
 
 		$emails = $this->find(array('table'=>'mailing_mailtosend','conditions'=>array('method'=>$method,'sended'=>0),'limit'=>$limit));		
@@ -181,10 +206,16 @@ class MailingModel extends Model {
 		return $emails;
 	}
 
-	public function findEmailsToSendByMailingId($mid){
+	public function findEmailsToSendByMailingId($mid,$limit=10){
 
-		$m = $this->find(array('table'=>'mailing_mailtosend','conditions'=>array('mid'=>$mid,'sended'=>0)));
+		$m = $this->find(array('table'=>'mailing_mailtosend','conditions'=>array('mid'=>$mid,'sended'=>0),'limit'=>$limit));
 		return $m;
+	}
+
+	public function findNumberRestRefreshMailing($mid){
+
+		$m = $this->findFirst(array('table'=>'mailing_mailtosend','fields'=>'count(id) as count','conditions'=>array('mid'=>$mid,'sended'=>0)));
+		return $m->count;
 	}
 
 	public function isNoMoreMailToSendForMailing($mid){
@@ -204,8 +235,8 @@ class MailingModel extends Model {
 
 	public function markEmailAsSended($id){
 
-		$sql = 'UPDATE mailing_mailtosend SET sended=1 WHERE id=:id';
-		$tab = array(':id'=>$id);
+		$sql = 'UPDATE mailing_mailtosend SET sended=1,date=:date WHERE id=:id';
+		$tab = array(':id'=>$id,':date'=>Date::mysqlNow());
 		$this->query($sql,$tab);
 		return true;
 	}
@@ -219,7 +250,7 @@ class MailingModel extends Model {
 
 	public function findMailing(){
 
-		$mailings =  $this->find(array('table'=>'mailing_sending','order'=>'date_finished ASC'));
+		$mailings =  $this->find(array('table'=>'mailing_sending','order'=>'date_created DESC'));
 		foreach ($mailings as $k => $m) {			
 			$mailings[$k] = new Mailing($m);			
 		}
