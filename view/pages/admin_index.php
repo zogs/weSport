@@ -25,7 +25,7 @@
 		<th>Lang</th>		
 		<th>Action</th>
 		<th>Date</th>
-		<th>ID</th>
+		<th>Position</th>
 	</thead>
 	<tbody>
 
@@ -62,7 +62,7 @@
 
 			 		</td>
 			 		<td><?php echo $v->date;?></td>
-			 		<td><?php echo $v->id ?></td>
+			 		<td><?php echo $v->position ?></td>
 			 	</tr>
 			 	<?php echo $this->Form->input('id','hidden',array('value'=>$v->id)) ;?>
 			 	<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>

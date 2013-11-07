@@ -12,7 +12,7 @@
 			<div class="head-sheet"><h1 class="title-sheet"><?php echo $page->title;?></h1></div>
 
 			
-			<div class="page-content">
+			<div class="page-content <?php echo 'page-'.$page->slug;?>">
 				<?php echo $page->content; ?>
 			</div>				
 

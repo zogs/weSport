@@ -46,7 +46,7 @@
 
 			<?php echo $this->Form->input('id','hidden',array('value'=>$s->id));?>
 			<?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())); ?>
-			<?php echo $this->Form->input('submit','',array('type'=>'submit','class'=>'btn btn-large btn-primary','value'=>'Sauvegarder la signature')); ?>
+			<?php echo $this->Form->input('submit','',array('type'=>'submit','class'=>'btn btn-large btn-info','value'=>'Sauvegarder la signature')); ?>
 	
 			<script type="text/javascript">
 	        CKEDITOR.replace( '<?php echo "content".$s->id;?>', { filebrowserBrowseUrl: '/js/ckeditor_filemanager/index.html'});

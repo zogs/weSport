@@ -16,7 +16,7 @@
         "chars_only_latin": true,
         "dateFormat": "d M Y H:i",
         "serverRoot": true,
-        "fileRoot": "webroot/media/images/",
+        "fileRoot": "webroot/media/",
         "relPath": false,
         "logger": false,
         "capabilities": ["select", "download", "rename", "move", "delete"],

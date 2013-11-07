@@ -1,4 +1,5 @@
 <div class="page-header">
+	<a href="<?php echo Router::url('admin/pages/index');?>">Retour aux pages</a>
 	<h1>Editer une page</h1>
 	<?php if(!empty($trad)): ?>
 	<?php foreach ($trad as $lang) : ?> 
@@ -21,15 +22,16 @@
 <?php echo $this->Form->input('id','hidden');  ?>
 <?php echo $this->Form->input('page_id','hidden') ;?>
 <?php echo $this->Form->input('id_i18n','hidden') ;?>
-<?php echo $this->Form->input('content','Contenu',array("type"=>"textarea","class"=>"wysiwyg","style"=>"width:100%;","rows"=>5));  ?>
+<?php echo $this->Form->input('content','Contenu',array("type"=>"textarea","style"=>"width:100%;height:600px;","rows"=>5));  ?>
+<script type="text/javascript">
+        CKEDITOR.replace( 'content', { 
+        	height:'800px',        	
+        	filebrowserBrowseUrl: '/js/ckeditor_filemanager/index.html'
+        });
+        CKEDITOR.add;
+</script>
 
-<div class="control-group">
-	<label for="" class="control-label"></label>
-	<div class="controls">
-		<input type="submit" class="btn btn-primary" value="Envoyer" />
-	</div>
-</div>
-
+<?php echo $this->Form->input('','',array("type"=>"submit",'value'=>"Sauvegarder la page",'class'=>"btn btn-info btn-large")) ;?>
 
 <?php echo $this->Form->input('online','Publié',array("type"=>"checkbox")) ;?>
 <?php echo $this->Form->input('valid','Traduction valide',array("type"=>"checkbox")) ;?>
@@ -40,12 +42,8 @@
 
 <?php echo $this->Form->input('token','hidden',array('value'=>$this->session->token())) ;?>
 
-<div class="control-group">
-	<label for="" class="control-label"></label>
-	<div class="controls">
-		<input type="submit" class="btn btn-primary" value="Envoyer" />
-	</div>
-</div>
+<?php echo $this->Form->input('','',array("type"=>"submit",'value'=>"Sauvegarder la page",'class'=>"btn btn-info")) ;?>
+
 </form>
 
 <script type="text/javascript">

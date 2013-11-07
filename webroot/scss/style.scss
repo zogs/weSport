@@ -1098,7 +1098,7 @@ h1.title-sheet {
 	margin:0;
 	padding:0;
 	font-family:Verdana,sans-serif;
-	@include rem(20);
+	@include rem(25);
 	text-transform: uppercase;
 	color:#CCC;
 	text-shadow:1px 2px 0 #FFF;
@@ -2050,7 +2050,7 @@ div.col_small{
 
 .page-content{ 
 	width:100%;
-	padding:25px 25% 100px 25%;
+	padding:25px 20% 100px 20%;
 
 	p{
 		@include rem(13);
@@ -2067,24 +2067,14 @@ div.col_small{
 			margin:0 5px;
 		}
 	}
-	h1{ @include rem(42); color:$lightblue; text-shadow:1px 1px 0 $deepblue, 2px 2px 0 $deepblue, 3px 3px 0 $deepblue;}
+	h1{ @include rem(42); color:$lightblue; text-align: center; text-shadow:1px 1px 0 $deepblue, 2px 2px 0 $deepblue, 3px 3px 0 $deepblue;}
 	h2{ 
+		text-align: center;
 		margin-bottom:40px;
 		margin-top:20px;
-		@include rem(28);
-		background:$deepblue;
-		@include border-radius(20px);
-		box-shadow:0 3px 0 $darkblue;
-		span { text-shadow:1px 2px 0 rgba(0,0,0,0.3),-1px -1px 0 rgba(0,0,0,0.3);}
-		span:nth-child(1) { color:$deepred;}
-		span:nth-child(2) { color:$red;}
-		span:nth-child(3) { color:$softred;}
-		span:nth-child(4) { color:$lightred;}
-		span:nth-child(5) { color:$softyellow;}
-		span:nth-child(6) { color:$lightgreen;}
-		span:nth-child(7) { color:$softgreen;}
-		span:nth-child(8) { color:$green;}
-		span:nth-child(9) { color:$deepgreen;}
+		@include rem(24);
+		color:$deepblue;
+
 	}
 
 	h6{ 
@@ -2094,6 +2084,17 @@ div.col_small{
 			font-style:italic;			
 		}
 	}
+}
+.page-presse {
+	table{
+		border:0;
+		img{
+			width:200px;
+			max-width:200px;
+			margin-right:20px;
+		}
+	}
+	strong{ color:inherit;}
 }
 
 
@@ -2449,29 +2450,37 @@ div.col_small{
 ============
 */
 .footer {
-	width:100%;
+
 	border-top:15px solid $lightblue;
 	@include box-shadow(0 -35px 60px rgba($lightblue,0.7));
 	background-color:$darkblue;
-	padding:20px 5%;
+	padding:20px 0% 100px 0%;
 
-	ul li { display:inline-block; margin:0 40px; }
-	ul li a, ul li a:link, ul li a:visited {
-		font-family: Verdana,sans-serif;
-		@include rem(14);
-		color:$lightblue;	
-		text-transform: uppercase;	
-	}
-	ul li a:hover, ul li a:active{
-		text-decoration: underline;
+	ul.footer-menu {
+		margin:20px 50px;
+		text-align: center;
+		li { 
+			display:inline-block; margin:0 20px; 
+			a,a:link,a:visited {
+				font-family: Verdana,sans-serif;
+				@include rem(12);
+				color:$lightblue;	
+				text-transform: uppercase;	
+			}
+			a:hover,a:active{
+				text-decoration: underline;
+			}
+		}
 	}
 
 	ul.footer-cities {
-		padding:0;
+		padding:20px 10%;
 		margin:0;
+		margin-left:5%;
+
 		li {
 			text-align:left;
-			width:13%;
+			width:24%;
 			padding:0;
 			margin:0;
 			display:inline-block;
@@ -2479,6 +2488,9 @@ div.col_small{
 			@include rem(12);			
 			color:$deepblue;
 			text-transform: none;
+			}
+			a:hover{
+				text-decoration: underline;
 			}
 		}
 	}

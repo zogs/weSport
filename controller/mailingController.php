@@ -250,7 +250,7 @@ class MailingController extends Controller {
 		$this->Mailing->saveMailToSend($emails,$mailing->id,'refresh');
 
 		//update status of the mailing
-		$mailing->status = 'En cours';
+		$mailing->status = 'current';
 		$mailing->date_sended = Date::MysqlNow();
 		if($this->Mailing->saveMailing($mailing))
 			$this->session->setFlash('Le mailing est en cours de traitement. Ne pas fermer la fenetre','success');
@@ -412,7 +412,7 @@ class MailingController extends Controller {
 		$this->Mailing->saveMailToSend($emails,$mailing->id,'cron');
 
 		//update status of the mailing
-		$mailing->status = 'En cours';
+		$mailing->status = 'current';
 		$mailing->date_sended = Date::MysqlNow();
 		if($this->Mailing->saveMailing($mailing))
 			$this->session->setFlash('Le mailing sera envoyé par la tâche Cron du server','success');

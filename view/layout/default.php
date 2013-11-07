@@ -166,7 +166,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 		<div class="footer container-fluid">
 			<div class="container">
-				<ul>
+				<ul class="footer-menu">
 					<?php 					
 					reset($bottommenu);
 					foreach ($bottommenu as $page):
