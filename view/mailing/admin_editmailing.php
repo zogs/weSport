@@ -26,9 +26,9 @@
 
 			<?php echo $this->Form->select('method','Méthode d\'envoi',array('allinone'=>'All in one (prefered)','refresh'=>'Auto-refresh 1min','cron'=>'Cron job'),array('default'=>$mailing->getMethod(),'placeholder'=>'Choisir une méthode d\'envoi','helper'=>"<strong>AllinOne:</strong> Envoi tous les emails en une fois <br><strong>Refresh:</strong> Envoi les emails par tranche en rafraichissant la page toutes les minutes <br><strong>Cron:</strong> Envoi les emails par tranche par la tâche Cron du serveur ")); ?>
 
-			<?php echo $this->Form->input("grouped","Envois par tranche",array("type"=>"text",'placeholder'=>"Limite d'envoi par tranche (default:10)",'helper'=>"Nombre d'email envoyé par tranche. à ajuster en fonction du serveur de mail...")) ;?>
+			<?php echo $this->Form->input("grouped","Envois par tranche",array("type"=>"text",'placeholder'=>"Optionnel (default:10)",'helper'=>"Nombre d'email envoyé par tranche. à ajuster en fonction du serveur de mail...")) ;?>
 
-			<?php echo $this->Form->input("recipients","Nombre de co-destinataires",array("type"=>"text","placeholder"=>"Nombre de co-destinataire (defaut:1)",'helper'=>"Ajoute plusieurs destinataires par email")) ;?>
+			<?php echo $this->Form->input("recipients","Nombre de co-destinataires",array("type"=>"text","placeholder"=>"Optionnel (defaut:1)",'helper'=>"Ajoute plusieurs destinataires par email")) ;?>
 
 
 			<?php echo $this->Form->input('id','hidden');?>

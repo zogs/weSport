@@ -26,7 +26,7 @@
 			 		?>">
 		 			<td>			 			
 		 				<?php if($m->status=='pending'): ?>
-		 					<a href="<?php echo Router::url('admin/mailing/launchmailing/'.$m->id);?>"><span class="badge badge-info"><i class="icon icon-play"></i> Commencer</span> </a>
+		 					<a href="<?php echo Router::url('admin/mailing/launchmailing/'.$m->id);?>"><span class="badge badge-info"><i class="icon icon-play icon-white"></i> Commencer</span> </a>
 		 				<?php elseif($m->status=='finished'):?>
 		 					<span class="label label-success"><i class="icon icon-ok-circle icon-white"></i> Finished</span>
 		 				<?php elseif($m->status=='current'): ?>
