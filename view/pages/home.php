@@ -190,10 +190,11 @@ $(document).ready(function(){
 	var _lock;
 
 
+
 	setInitialListener();
 	function setInitialListener(){
-		_zone.on('mousedown',startDrag);
-		$(window).on('mouseup',stopDrag);
+		_zone.on('mousedown touchestart',startDrag);
+		$(window).on('mouseup touchend',stopDrag);
 		setCalendarOrigin();
 	}
 	function setCalendarOrigin(){
@@ -211,11 +212,11 @@ $(document).ready(function(){
 		if(t.is('span') || t.is('strong') || t.is('i') || t.is('p') || t.is('div') || t.is('a:not(.calendar-nav-link)')) return; //if drag on text element stop script
 		if ((e.button == 1 && window.event != null) || e.button == 0) {//if left mouse button
 			setMouseOrigin(e);
-			$(window).on('mousemove',dragCalendar);
+			$(window).on('mousemove touchmove',dragCalendar);
 		}
 	}
 	function stopDrag(e){
-		$(window).off('mousemove');
+		$(window).off('mousemove touchmove');
 		if(_lock=='left'){ callPreviousWeek(); lockLoad();}
 		else if(_lock=='right'){ callNextWeek();  lockLoad();}
 		else revert();
