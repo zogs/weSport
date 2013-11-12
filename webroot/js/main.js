@@ -12,12 +12,14 @@ $(document).ready(function(){
 	/*===========================================================
 		Autocomplete cityName input
 	============================================================*/
-
- 	$('#cityName').click(function(){
-			$(this).val('');
-			$('input#cityID').val('');
+	
+ 	$('input#cityName').click(function(e){ 		
+			if($(this).hasClass('empty')) { 
+				$(this).val('');
+				$('input#cityID').val('');
+		}
 	});
-
+	
     $('#cityName').typeahead({
     	name:'city',
     	valueKey:'name',
@@ -36,15 +38,15 @@ $(document).ready(function(){
 		//footer: 'footer',
 
 	}).on('typeahead:selected',function( evt, datum ){
-
-		$(this).val(datum.name);
-		$("#CityName").val( datum.name );
+		$(this).val(datum.name);		
+		$("#cityName").val( datum.name );
 		$('#cityID').val( datum.id );
+		$('#cityName').removeClass('empty');
 		//$('#cityName').val( datum.name);
-		
-
+	}).on('typeahead:opened',function(e){
+		$("#cityName").addClass('open');		
 	}).on('typeahead:closed',function(e){
-		
+		$("#cityName").removeClass('open');
 		
 	});
 
