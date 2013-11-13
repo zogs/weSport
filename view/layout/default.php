@@ -118,6 +118,11 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 					<li class="menu-full">
 						<a href="<?php echo Router::url('blog');?>">Blog</a>
 					</li>
+					<?php if($this->session->user()->isAdmin()):?>
+						<li>
+							<a href="<?php echo Router::url('admin/pages/index');?>"><span class="ws-icon ws-icon-quill "></span></a>
+						</li>
+					<?php endif;?>
 				</ul>
 
 				<ul class="menu-full nav pull-right" id="registerMenu">
