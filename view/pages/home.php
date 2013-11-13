@@ -120,7 +120,7 @@
 
 <ol class='tourbus-legs' id='wesport-demo'>
 
-  <li data-el='#logoWeSport' data-orientation='bottom' data-width='500' data-arrow='20%' data-margin='20' data-align="left">
+  <li data-el='#weSportBrand' data-orientation='bottom' data-width='500' data-arrow='20%' data-margin='20' data-align="left">
     <h2>Bienvenue sur WeSport !</h2>
     <p><strong>L'agenda des activités sportives de ta ville !</strong>
 		<br><small><i>Pour ne plus jamais jouer seul au Jokari</i></small>
@@ -130,20 +130,28 @@
   </li>
 
   <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
-    <p><strong>Tape ici la ville de ton choix et/ou choisis dans la liste déroulante</strong></p>
+    <p><strong>Entre ta ville !</strong></p>
     <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km ! )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Suivant</a>
   </li>
 
-  <li data-el='#sportCheckboxs' data-orientation='top' data-width='350'>
-    <p><strong>Tu peux afficher uniquement les sports que tu souhaites ! </strong></p>
+  <li data-el='#sportCheckboxs' data-orientation='bottom' data-width='400'>
+    <p><strong>Choisi les sports qui t'intéresse ! </strong></p>
     <p><small>( par défaut, tous les sports sont affichés )</small></p>
     <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Suivant</a>
   </li>
 
-  <li data-el="#calendar-content" data-orientation="top" data-width='400'>
-  	<p><strong>Les annonces apparaissent dans le calendrier</strong></p>
+  <li data-el="#calendar-content" data-orientation="top" data-width='400' data-align='left'>
+  	<p><strong>Trouve une annonce qui te plaît !</strong></p>
   	<p><small>( tu peux naviguer vers les jours suivants avec la flèche de droite, ou, pour les écrans tactiles, en slidant le calendrier !)</small></p>
+
+  	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Compris !</a>
+  </li>
+
+    <li data-el="#createEventButton" data-orientation="bottom" data-width='400' data-align='center'>
+  	<p><strong>Pas trouvé d'activité ?</strong></p>
+  	<p><small>Pas grave, en 2 min tu peux poster la tienne !</small></p>
+
   	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Compris !</a>
   </li>
 
@@ -508,8 +516,8 @@ $(document).ready(function(){
 	//Demo Tourbus
 	if(
 		$('#wesport-demo').length!=0 // if a demo tour is present on the DOM
-		&& $('body').attr('data-user_id')==0 // and if no user is log
-		&& $('body').attr('data-display-demo')==1 //and if the cookie settings are ok
+		//&& $('body').attr('data-user_id')==0 // and if no user is log
+		//&& $('body').attr('data-display-demo')==1 //and if the cookie settings are ok
 		&& $(window).width()>=768) // and if the screen is large enougth
 	{
 		//Init the demo tour

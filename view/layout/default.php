@@ -46,8 +46,8 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				<div class="mobileHead">
 					<a href="#mobMenuLeft"><span class="ws-icon-menu"></span></a>
 					<a class="weSport" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
-		      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
-		      			<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">
+			      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
+			      			<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">
 					</a>					
 					<a href="#mobMenuRight"><span class="ws-icon-home"></span></a>
 												
@@ -90,9 +90,9 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				<div class="desktop-menu">
 					<ul class="nav">
 						<li>
-							<a class="weSport" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
-				      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
-		      					<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">			      	  	
+							<a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+					      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
+			      					<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">			      	  	
 							</a>
 						</li>
 						<li class="searchbar">
@@ -113,7 +113,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 							<?php endif; ?>
 						</li>
 						<li>
-							<a class="mainbutton" href="<?php echo Router::url('events/create');?>">Poster un sport</a>
+							<a class="mainbutton" id="createEventButton" href="<?php echo Router::url('events/create');?>">Poster un sport</a>
 						</li>
 						<li class="menu-full">
 							<a href="<?php echo Router::url('blog');?>">Blog</a>

@@ -467,7 +467,7 @@ class UsersController extends Controller{
 					$this->redirect('users/login');
 			}
 			else {
-				debug($user);
+				
 				throw new zException("Error can't save user", 1);					
 			}					
 			
@@ -476,10 +476,7 @@ class UsersController extends Controller{
 		else {				
 			$this->session->setFlash("Veuillez vérifier vos informations",'error');
 			$this->set(array('data'=>$data));
-<<<<<<< HEAD
-=======
-			
->>>>>>> new-design
+
 			return;
 		}																		
 
