@@ -86,107 +86,107 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 				</div>					
 			</div>
 
-			<div class="desktopMenus">
-				<div class="desktop-menu">
-					<ul class="nav">
-						<li>
-							<a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
-					      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
-			      					<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">			      	  	
-							</a>
-						</li>
-						<li class="searchbar">
-							<?php if($this->isHomepage()): ?>
-							<form action="<?php echo Router::url('home/'.$this->cookieEventSearch->read('date'));?>" method="GET" id="formCity">
-								<label for="cityName">
-									<a class="cityIcon tooltipbottom" title="Supprimer la ville" href="?cityName=&cityID=" rel="nofollow"><span class="ws-icon ws-icon-office"></span><span class="ws-icon ws-icon-close"></span></a>							
-									<input type="text" id="cityName" name="cityName" class="cityName <?php echo ($this->cookieEventSearch->notempty('cityName'))? 'notempty' : 'empty';?>" value="<?php echo ($this->cookieEventSearch->notempty('cityName'))? $this->cookieEventSearch->read('cityName') : 'Votre ville ?';?>" placeholder="ex: dijon" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">																							
-									<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>	
-								</label>
+
+			<div class="desktop-menu" id="desktop-menu">
+				<ul class="nav">
+					<li>
+						<a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+				      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
+		      					<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">			      	  	
+						</a>
+					</li>
+					<li class="searchbar" id="menu-searchbar">
+						<?php if($this->isHomepage()): ?>
+						<form action="<?php echo Router::url('home/'.$this->cookieEventSearch->read('date'));?>" method="GET" id="formCity">
+							<label for="cityName">
+								<a class="cityIcon tooltipbottom" title="Supprimer la ville" href="?cityName=&cityID=" rel="nofollow"><span class="ws-icon ws-icon-office"></span><span class="ws-icon ws-icon-close"></span></a>							
+								<input type="text" id="cityName" name="cityName" class="cityName <?php echo ($this->cookieEventSearch->notempty('cityName'))? 'notempty' : 'empty';?>" value="<?php echo ($this->cookieEventSearch->notempty('cityName'))? $this->cookieEventSearch->read('cityName') : 'Votre ville ?';?>" placeholder="ex: dijon" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">																							
+								<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>	
+							</label>
+						
+							<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'+10km',30=>'+30km', 50=>'+50km',100=>'+100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>															
 							
-								<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'+10km',30=>'+30km', 50=>'+50km',100=>'+100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>															
-								
-								<button class="citySubmit"><span class="ws-icon-loupe"></span></button>
-							</form>
-							<?php else: ?>
-							<a id="backtohome" href="/" class="cityIcon"><span class="ws-icon ws-icon-arrow-left"></span> Retour au calendrier</a>
-							<?php endif; ?>
-						</li>
-						<li>
-							<a class="mainbutton" id="createEventButton" href="<?php echo Router::url('events/create');?>">Poster un sport</a>
-						</li>
-						<li class="menu-full">
-							<a href="<?php echo Router::url('blog');?>">Blog</a>
-						</li>
-					</ul>
-
-					<ul class="menu-full nav pull-right" id="registerMenu">
-						<?php if ($this->session->user()->isLog()): ?>
-							<li><a href="<?php echo Router::url('users/account');?>">
-									<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	
-									<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
-							</a></li>
-							<li class="dropdown">				
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<b class="caret"></b>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a href="<?php echo Router::url('users/account'); ?>">Mon Compte</a></li>						
-									<li class="divider"></li>
-									<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
-								</ul>
-							</li>
+							<button class="citySubmit"><span class="ws-icon-loupe"></span></button>
+						</form>
 						<?php else: ?>
-							<form class="loginForm" action="<?php echo Router::url('users/login'); ?>" method='post'>
-								<input type="login" name="login" required="required" placeholder="Login or email" autofocus="autofocus" value="admin"/>
-								<input type="password" name="password" required="required" placeholder="Password" value="fatboy" />
-								<input type="hidden" name="token" value="<?php echo $this->session->token();?>" />
-								<input type="submit" value="OK" />
-							</form>
-							<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
-							<li><a class="secondbutton" href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
-						<?php endif ?>
-					</ul>	
+						<a id="backtohome" href="/"><span class="cityIcon"><span class="ws-icon ws-icon-arrow-left"></span></span> Retour au calendrier</a>
+						<?php endif; ?>
+					</li>
+					<li id="menu-createevent">
+						<a class="mainbutton" href="<?php echo Router::url('events/create');?>">Poster un sport</a>
+					</li>
+					<li class="menu-full">
+						<a href="<?php echo Router::url('blog');?>">Blog</a>
+					</li>
+				</ul>
 
-					<ul class="menu-small nav pull-right">
-						<li class="dropdown">							
-							<?php if($this->session->user()->isLog()): ?>
-								<a href="<?php echo Router::url('users/account');?>">
-									<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	
-									<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
-								</a>
-							<?php else: ?>
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Menu <b class="caret"></b>
-								</a>
-							<?php endif;?>
+				<ul class="menu-full nav pull-right" id="registerMenu">
+					<?php if ($this->session->user()->isLog()): ?>
+						<li><a href="<?php echo Router::url('users/account');?>">
+								<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	
+								<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
+						</a></li>
+						<li class="dropdown">				
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<b class="caret"></b>
+							</a>
 							<ul class="dropdown-menu">
-								<?php if($this->session->user()->isLog()): ?>
-									<li><a href="<?php echo Router::url('users/account'); ?>">Mon Compte</a></li>						
-									<li class="divider"></li>
-									<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
-								<?php else: ?>
-									<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
-									<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
-								<?php endif;?>
-									<li><a href="<?php echo Router::url('blog');?>">Blog</a></li>
+								<li><a href="<?php echo Router::url('users/account'); ?>">Mon Compte</a></li>						
+								<li class="divider"></li>
+								<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
 							</ul>
 						</li>
-					</ul>
-				</div>
+					<?php else: ?>
+						<form class="loginForm" action="<?php echo Router::url('users/login'); ?>" method='post'>
+							<input type="login" name="login" required="required" placeholder="Login or email" autofocus="autofocus" value="admin"/>
+							<input type="password" name="password" required="required" placeholder="Password" value="fatboy" />
+							<input type="hidden" name="token" value="<?php echo $this->session->token();?>" />
+							<input type="submit" value="OK" />
+						</form>
+						<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
+						<li><a class="secondbutton" href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
+					<?php endif ?>
+				</ul>	
 
-				<div id="userCounter">
-					<span><b class="circle circle-grey"></b><?php echo $this->request('users','getCountTotalUsers',array());?> inscrits</span>
-					<span><b class="circle circle-green"></b><?php echo $this->session->getOnlineUsers();?></span>
-					<?php 
-					if($id = $this->cookieEventSearch->read('cityID')):?>
-						<br><span><b class="circle circle-blue"></b></span>
-						<?php echo $this->request('users','getCountTotalUsersByCity',array($id)); ?>
-						à
-						<?php echo $this->cookieEventSearch->read('cityName'); ?>
-					<?php endif; ?>													
-				</div>	
+				<ul class="menu-small nav pull-right">
+					<li class="dropdown">							
+						<?php if($this->session->user()->isLog()): ?>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo Router::url('users/account');?>">
+								<img class="nav-avatar" src="<?php echo $this->session->user()->getAvatar(); ?>" />	
+								<span class="nav-login"><?php echo $this->session->user()->getLogin(); ?></span>
+								<b class="caret"></b>
+							</a>
+						<?php else: ?>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								Menu <b class="caret"></b>
+							</a>
+						<?php endif;?>
+						<ul class="dropdown-menu">
+							<?php if($this->session->user()->isLog()): ?>
+								<li><a href="<?php echo Router::url('users/account'); ?>">Mon Compte</a></li>						
+								<li class="divider"></li>
+								<li><a href="<?php echo Router::url('users/logout'); ?>">Déconnexion</a></li>
+							<?php else: ?>
+								<li><a href="<?php echo Router::url('users/login');?>">Connexion</a></li>	
+								<li><a href="<?php echo Router::url('users/register');?>" >Inscription</a></li>
+							<?php endif;?>
+								<li><a href="<?php echo Router::url('blog');?>">Blog</a></li>
+						</ul>
+					</li>
+				</ul>
 			</div>
+
+			<div id="userCounter">
+				<span><b class="circle circle-grey"></b><?php echo $this->request('users','getCountTotalUsers',array());?> inscrits</span>
+				<span><b class="circle circle-green"></b><?php echo $this->session->getOnlineUsers();?></span>
+				<?php 
+				if($id = $this->cookieEventSearch->read('cityID')):?>
+					<br><span><b class="circle circle-blue"></b></span>
+					<?php echo $this->request('users','getCountTotalUsersByCity',array($id)); ?>
+					à
+					<?php echo $this->cookieEventSearch->read('cityName'); ?>
+				<?php endif; ?>													
+			</div>				
 		</div>
 
 

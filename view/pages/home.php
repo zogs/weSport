@@ -118,60 +118,76 @@
 	</div>
 </div>
 
-<ol class='tourbus-legs' id='wesport-demo'>
 
+<!-- DEMO TOUR :: http://ryanfunduk.com/jquery-tourbus/ -->
+<div class="tour-overlay"></div>
+<ol class='tourbus-legs' id='wesport-demo'>
   <li data-el='#weSportBrand' data-orientation='bottom' data-width='500' data-arrow='20%' data-margin='20' data-align="left">
-    <h2>Bienvenue sur WeSport !</h2>
-    <p><strong>L'agenda des activités sportives de ta ville !</strong>
+    <h2>Bienvenue sur <img src="<?php echo Router::webroot('img/BRAND.png');?>"></h2>
+    <p>
+    	<strong>We-Sport c'est l'agenda des activités sportives de ta ville&nbsp;!</strong>
 		<br><small><i>Pour ne plus jamais jouer seul au Jokari</i></small>
     </p>
-    <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Visite guidée</a>
-    <a href="javascript:void(0);" class='btn tourbus-stop' rel="nofollow"><i class="icon icon-remove"></i> Non merci</a>
+    <a href='javascript:void(0);' class='btn btn-info tourbus-next fright' rel="nofollow"><i class="icon icon-play icon-white"></i> Comment ça marche?</a>
+    <a href="javascript:void(0);" class='btn tourbus-stop fright btn-link' rel="nofollow"><i class="icon icon-remove"></i> Fermer</a>
   </li>
 
-  <li data-el='#cityName' data-orientation='bottom' data-width='450' data-arrow='20%' >
-    <p><strong>Entre ta ville !</strong></p>
-    <p><small> ( tu peux étendre le rayon d'activité jusqu'à 100km ! )</small></p>
-    <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Suivant</a>
+  <li data-el='#menu-searchbar' data-orientation='bottom' data-width='450' data-arrow='20%' data-highlight="true">
+    <h2><span class="stepNumber">1</span> Précise ta ville !</h2>
+    <p class='tabbed'>
+	    <strong>Tape ici le nom de ta ville et choisi dans la liste déroulante&nbsp;!</strong> 
+	    <small>Tu peux aussi étendre la recherche jusqu'à un rayon de 100km&nbsp;!</small>
+	</p>
+    <a href='javascript:void(0);' class='btn tourbus-next fright btn-info' rel="nofollow">Suivant <span class="ws-icon ws-icon-arrow-right"></span></a>
+    <a href="javascript:void(0);" class='btn tourbus-prev fright btn-link' rel="nofollow"><i class="icon icon-arrow-left"></i> Précedant</a>
   </li>
 
-  <li data-el='#sportCheckboxs' data-orientation='bottom' data-width='400'>
-    <p><strong>Choisi les sports qui t'intéresse ! </strong></p>
-    <p><small>( par défaut, tous les sports sont affichés )</small></p>
-    <a href='javascript:void(0);' class='btn tourbus-next' rel="nofollow">Suivant</a>
+  <li data-el='#sportCheckboxs' data-orientation='top' data-left='17%' data-width='600' data-highlight="true">
+    <h2><span class="stepNumber">2</span> Choisi tes sports préférés !</h2>
+    <p class='tabbed'>
+    	<strong>Beaucoup de sports et d'activités de nature sont possibles&nbsp;!</strong> 
+    	<small>Par défaut tous les sports sont affichés !</small>
+    </p>
+   <a href='javascript:void(0);' class='btn tourbus-next fright btn-info' rel="nofollow">Suivant <span class="ws-icon ws-icon-arrow-right "></span></a>
+    <a href="javascript:void(0);" class='btn tourbus-prev fright btn-link' rel="nofollow"><i class="icon icon-arrow-left"></i> Précedant</a>
   </li>
 
-  <li data-el="#calendar-content" data-orientation="top" data-width='400' data-align='left'>
-  	<p><strong>Trouve une annonce qui te plaît !</strong></p>
-  	<p><small>( tu peux naviguer vers les jours suivants avec la flèche de droite, ou, pour les écrans tactiles, en slidant le calendrier !)</small></p>
-
-  	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Compris !</a>
-  </li>
-
-    <li data-el="#createEventButton" data-orientation="bottom" data-width='400' data-align='center'>
-  	<p><strong>Pas trouvé d'activité ?</strong></p>
-  	<p><small>Pas grave, en 2 min tu peux poster la tienne !</small></p>
-
-  	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Compris !</a>
-  </li>
-
-  <li data-el="#contact" data-orientation="top" date-width='300' data-align="center">
-  	<h2>Soyez sympa</h2>
-  	<p>WeSport est encore en version de test !
-  	<br><strong>Donnez nous votre avis, vos idées, vos envies, vos difficultés, ect ...</strong>
-  	<br>On se fera un plaisir de vous répondre !
+  <li data-el="#calendar-content" data-orientation="top" data-left='25%' data-width='550' data-align='left' data-highlight="true">
+  	<h2><span class="stepNumber">3</span> Trouve une annonce qui te plaît&nbsp;!</h2>
+  	<p class='tabbed'>
+  		<strong>Regarde les annonces et fais défiler le calendrier !</strong>
+  		<br><small>Tu peux slider le calendrier vers la gauche ou vers la droite...</small>
   	</p>
-  	<a href="javascript:void(0);" class="btn tourbus-next" rel="nofollow">Une dernière chose</a>
-  	<a href="<?php echo Router::url('pages/contact');?>" class="btn" rel="nofollow">Donnez votre avis</a>
+  
+  	<a href='javascript:void(0);' class='btn tourbus-next fright btn-info' rel="nofollow">Suivant <span class="ws-icon ws-icon-arrow-right "></span></a>
+    <a href="javascript:void(0);" class='btn tourbus-prev fright btn-link' rel="nofollow"><i class="icon icon-arrow-left"></i> Précedant</a>
   </li>
 
-  <li data-el="#registerMenu" data-orientation="bottom" data-width='400' data-align="right">
-  	<h2>Inscrivez-vous :)</h2>
-  	<p>C'est facile, rapide, et gratuit !</p>
-  	<a href="javascript:void(0);" class='btn tourbus-stop' rel="nofollow"><i class="icon icon-remove"></i> Terminer</a>
-  	<a href="<?php echo Router::url('users/register');?>" class="btn" rel="nofollow">S'inscrire</a>
+   <li data-el="#menu-createevent" data-orientation="bottom" data-width='400' data-align='center' data-highlight="true">
+  	<h2><span class="stepNumber">4</span> Pas trouvé d'activité ?</h2>
+  	<p class='tabbed'><strong>Pas grave, tu peux poster la tienne en 2min&nbsp;!</strong></p>
+
+  	<a href='javascript:void(0);' class='btn tourbus-next fright btn-info' rel="nofollow">Suivant <span class="ws-icon ws-icon-arrow-right "></span></a>
+    <a href="javascript:void(0);" class='btn tourbus-prev fright btn-link' rel="nofollow"><i class="icon icon-arrow-left"></i> Précedant</a>
   </li>
 
+  <li data-el="#registerMenu" data-orientation="bottom" data-width='500' data-align="right" data-arrow='80%'>
+  	<h2>Voila <span class="ws-icon-happy"></span> !</h2>
+  	<p><strong>Inscrivez-vous !</strong><br> C'est simple, rapide, et gratuit&nbsp;!</p>
+  	<a href="<?php echo Router::url('users/register');?>" class="btn btn-info" rel="nofollow"><span class="ws-icon ws-icon-checkmark"></span> S'inscrire maintenant</a>
+  	<a href="javascript:void(0);" class="btn tourbus-next btn-link" rel="nofollow"><i class="icon icon-hand-right"></i> une dernière chose...</a>
+  </li>
+
+  <li data-el="#contact" data-orientation="top" date-width='400' data-align="center" data-margin='15'>
+  	<h2>Nous avons besoin de gens !</h2>  	
+  	<p><strong>Soyez sympa, donnez-nous votre avis, vos idées, ...</strong></p>
+  	<p>We-Sport est encore jeune et nous avons besoin de testeurs ! <small>( et bientôt de modérateur, d'ambassadeur, ... )</small></p>
+
+  	<a href="<?php echo Router::url('pages/contact');?>" class="btn btn-success" rel="nofollow"><span class="ws-icon ws-icon-happy"></span> Contactez-nous !</a>
+	<a href="<?php echo Router::url('users/register');?>" class="btn btn-link" rel="nofollow"><i class="icon icon-ok"></i> S'inscrire ! </a>
+	<a href="javascript:void(0);" class='btn tourbus-stop btn-link' rel="nofollow"><i class="icon icon-remove"></i> Non merci</a>
+
+  </li>
 </ol>
 
 <script type="text/javascript">
@@ -521,7 +537,21 @@ $(document).ready(function(){
 		&& $(window).width()>=768) // and if the screen is large enougth
 	{
 		//Init the demo tour
-		var demo = $('#wesport-demo').tourbus({leg:{scrollto:0}});
+		var demo = $('#wesport-demo').tourbus({
+			leg:{scrollto:0},
+			onLegStart: function( leg, bus ) {
+			    if( leg.rawData.highlight ) {
+			      leg.$target.addClass('tour-highlight');
+			      $('.tour-overlay').show();
+			    }
+			},
+			  onLegEnd: function( leg, bus ) {
+			    if( leg.rawData.highlight ) {
+			      leg.$target.removeClass('tour-highlight');
+			      $('.tour-overlay').hide();
+			    }
+			}
+		});
 		//Start the demo tour
 		demo.trigger('depart.tourbus');
 		
