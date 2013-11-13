@@ -1,14 +1,10 @@
 <div class="createEvent">
-	<div class="top-banner">
-		<div class="void"></div>
-		<div class="flash">
-			<?php echo $this->session->flash(); ?>			
-		</div>	
-	</div>
 
-	<div class="container">
+	<?php echo $this->session->flash(); ?>			
+
+	<div class="container page-container">
 		<div class="calendar-return"><a class="tooltiptop" data-toggle="tooltip" title="Retour au calendrier" rel="nofollow" href="<?php echo Router::url('calendar/date/'.$this->cookieEventSearch->read('date'));?>"></a></div>	
-		<div class="fresque fresque-mini"></div>
+		<div class="fresque"></div>
 		<div class="white-sheet">			
 			<div class="head-sheet">			
 				<?php if($event->exist()): ?>

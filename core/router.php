@@ -58,8 +58,7 @@ class Router{
 				$request->action = str_replace($v.'_', '', $request->action);
 			}
 		}
-		$request->params = array_slice( $params , 2); //et tout le reste en parametres
-
+		$request->params = array_slice( $params , 2); //et tout le reste en parametres		
 
 		return true;
 

@@ -1,13 +1,9 @@
 <div class="indexuser">
-	<div class="top-banner">
-		<div class="void"></div>		
-		<div class="flash">
-			<?php echo $this->session->flash() ;?>			
-		</div>
-	</div>
 
-	<div class="container">
-		<div class="fresque fresque-mini"></div>		
+			<?php echo $this->session->flash() ;?>			
+
+	<div class="container page-container">
+		<div class="fresque"></div>		
 		<div class="white-sheet">
 			<div class="head-sheet">
 				<h1 class="title-sheet">

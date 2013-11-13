@@ -1,14 +1,10 @@
 <div class="recovery">
-	<div class="top-banner">
-		<div class="void"></div>
-		<div class="flash">
-			<?php echo $this->session->flash() ;?>			
-		</div>		
-	</div>
 
-	<div class="container">
+	<?php echo $this->session->flash() ;?>			
+
+	<div class="container page_container">
 		<div class="white-sheet">
-			<div class="fresque fresque-mini"></div>
+			<div class="fresque"></div>
 			
 		<?php if($action=='' || $action=='show_form_email'): ?>
 		<div class="head-sheet"><h1 class="title-sheet">Mot de passe perdu </h1></div>	

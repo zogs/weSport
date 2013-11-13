@@ -1,48 +1,24 @@
 <div class="homepage">
-	<h1>Wesport. Faites du sport dans votre region !</h1>
+	<h1>Wesport ! Faire du sport dans votre ville !</h1>
 
 	<div class="row-fluid">
-		<div class="flash"><?php echo $this->session->flash() ;?></div>
+		<?php echo $this->session->flash() ;?>
 		
 		
 		<form id="formSearch" method="GET" action="<?php echo Router::url('home/'.$params['date']);?>" >
 			<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>					
-			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>				
-
-			<div class="cityRounded">
-				
-				<div class="cityInputs">
-					<div class="containerCityName">
-						<?php if(!empty($params['cityID'])): ?><a class="resetCity tooltiptop" title="Supprimer la ville" href="?cityName=&cityID=" rel="nofollow">x</a><?php endif; ?>
-						<input type="text" id="cityName" name="cityName" class="cityName" value="<?php echo (!empty($params['cityName']))? $params['cityName'] : 'Votre ville ?';?>" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">						
-					</div>
-					<div class="containerExtend">
-						<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'10km',30=>'30km', 50=>'50km',100=>'100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>								
-					</div>								
-				</div>
-
-				<button class="citySubmit"><span class="ws-icon-loupe"></span></button>
-				
-				<div class="cityAriane">
-					<span class="ws-icon ws-icon-location" style="color:white"></span>
-					<?php if($location = $this->cookieEventSearch->read('location')): ?>
-						<?php if(!empty($location['CC1'])) echo $location['CC1'].', ';?>
-						<?php if(!empty($location['ADM1'])) echo $location['ADM1'].', ';?>
-						<?php if(!empty($location['ADM2'])) echo $location['ADM2'].', ';?>
-						<?php if(!empty($location['ADM3'])) echo $location['ADM3'].', ';?>
-						<?php if(!empty($location['ADM4'])) echo $location['ADM4'].', ';?>
-						<?php if($this->cookieEventSearch->read('cityName')) echo $this->cookieEventSearch->read('cityName'); ?>
-					<?php else: ?>
-					<i>Taper une ville et sélectionner dans la liste déroulante</i>
-					<?php endif; ?>
-				</div>
-
-				<div class="clearfix"></div>
-			</div>
+			<?php echo $this->Form->input('user_id','hidden',array('value'=>$this->session->user()->getID())) ;?>							
 
 			<?php 
-			$sports_selected = $this->cookieEventSearch->read('sports');									
+			$sports_selected = $this->cookieEventSearch->read('sports');
+
+			$sport_list = array();
+				foreach ($sports_available as $key => $sport) {
+				 	$sports_list[$sport->slug] = $sport->name;
+				 }									
 			?>
+
+			
 			<div class="sportCheckboxs <?php if(empty($sports_selected)) echo 'allSportDisplayed';?>" id="sportCheckboxs">
 				<?php 																	
 					foreach ($sports_available as $sport):?>						
@@ -53,70 +29,90 @@
 							</label>
 							<a href="?sports%5B%5D=<?php echo $sport->slug;?>"><?php echo $sport->name;?></a>
 						</div>						
-				 	<?php endforeach; ?>					
-				<?php ?>				
+				<?php endforeach; ?>					
+			<?php reset($sports_available);?>
 			</div>	
-			<?php 
-				reset($sports_available);
-				$sport_list = array();
-				foreach ($sports_available as $key => $sport) {
-				 	$sports_list[$sport->slug] = $sport->name;
-				 } ?>
-			<div class="sportSelect">
-				<?php echo $this->Form->select('sport','Seulement le sport suivant',$sports_list,array('default'=>$sports_selected,'placeholder'=>"Choisir un sport",'style'=>'width:100%;')); ?>
+
+			
+			<div class="sportSelect" id="control-sport">
+				<?php echo $this->Form->_select('sport',$sports_list,array('default'=>$sports_selected,'placeholder'=>"Chercher un sport...")); ?>
 			</div>
 
-		<div class="calendar">
-			<div class="calendar-header">
-				<div class="calendar-period">
-					<div class="periodChoice">
-						<input type="radio" class="periodRadio" id="period1" name="nbdays" value="7" <?php if($params['nbdays']<=7) echo 'checked="checked"';?>>
-						<label for="period1">1 semaine</label>
-					</div>
-					<div class="periodChoice">
-						<input type="radio" class="periodRadio" id="period2" name="nbdays" value="14" <?php if($params['nbdays']>7) echo 'checked="checked"';?>>	
-						<label for="period2">2 semaines</label>
-					</div>
-					<div class="periodChoice">
-						<input type="radio" class="periodRadio" id="period4" name="nbdays" value="28" <?php if($params['nbdays']>21) echo 'checked="checked"';?>>
-						<label for="period4">1 mois</label>
-					</div>
-				</div>
-				<div class="calendar-loader" id="calendar-loader"><span class="text">Chargement ...</span></div>
-				<div class="fresque"></div>
-				<a style="display:none" class="with-ajax calendar-nav calendar-nav-now fleft" href="<?php echo Router::url('events/calendar/now');?>"><span>Now</span></a>
-			</div>
 
-			<table class="calendar-nav" id="calendar-nav">
-				<tr>
-					<td class="colomn-nav colomn-prev" id="colomn-prev">					
-						<a class="calendar-nav-prev calendar-nav-link fleft" id="colomn-prev-arrow" title="Semaine précédante" href="#!<?php echo Router::url('events/calendar/week/prev/');?>" draggable="false"></a>
-					</td>
+			<div class="calendar" id="calendar">
+				<div class="calendar-header">
+					<div class="week-nav previousWeek">
+						<a class="calendar-nav-prev calendar-nav-link" id="colomn-prev-arrow" title="Semaine précédante" href="#!<?php echo Router::url('events/calendar/week/prev/');?>" draggable="false">AVANT</a>
+					</div>
 
-					<td>
-						<div class="calendar-content"
-							id="calendar-content" 
-							data-url-calendar="<?php echo Router::url('events/calendar/');?>"
-							data-url-calendar-prev="<?php echo Router::url('events/calendar/week/prev');?>"
-							data-url-calendar-next="<?php echo Router::url('events/calendar/week/next');?>"
-							data-url-calendar-now="<?php echo Router::url('events/calendar/week/now');?>"
-							data-url-calendar-date="<?php echo Router::url('events/calendar/week/date');?>"
-							  >
-							<?php 
-							//appel les evenements de la semaine en cours
-							echo $this->request('events','calendar',array('now'));
-							?>
+					<div class="week-nav nextWeek">
+						<a class="calendar-nav-next calendar-nav-link" id="colomn-next-arrow" title="Semaine suivante" href="#!<?php echo Router::url('events/calendar/week/next/');?>" draggable='false' >APRES</a>
+					</div>
+
+					<div class="calendar-arianne">
+						<span class="ws-icon ws-icon-location" style="color:white"></span>
+						<?php if($location = $this->cookieEventSearch->read('location')): ?>
+							<?php if($this->cookieEventSearch->read('cityName')) echo '<strong>'.$this->cookieEventSearch->read('cityName').'</strong>'; ?>
+							<?php if($this->cookieEventSearch->read('extend')) echo '<strong>(+'.$this->cookieEventSearch->read('extend').'km)</strong>'; ?>
+							<?php if(!empty($location['ADM4'])) echo '<i>'.$location['ADM4'].'</i>';
+									elseif(!empty($location['ADM3'])) echo '<i>'.$location['ADM3'].'</i>';
+									elseif(!empty($location['ADM2'])) echo '<i>'.$location['ADM2'].'</i>';
+									elseif(!empty($location['ADM1'])) echo '<i>'.$location['ADM1'].'</i>';
+									elseif(!empty($location['CC1'])) echo'<i>'. $location['CC1'].'</i>';?>
+						<?php else: ?>
+						<i>Toute la France</i>
+						<?php endif; ?>
+					</div>
+					<div class="calendar-period">
+						<strong>Affichage:</strong>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period1" name="nbdays" value="7" <?php if($params['nbdays']<=7) echo 'checked="checked"';?>>
+							<label for="period1">1 semaine</label>
 						</div>
-					</td>
-				
-					<td class="colomn-nav colomn-next" id="colomn-next">		
-						<a class="calendar-nav-next calendar-nav-link fright" id="colomn-next-arrow" title="Semaine suivante" href="#!<?php echo Router::url('events/calendar/week/next/');?>" draggable='false' ></a>
-					</td>
-				</tr>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period2" name="nbdays" value="14" <?php if($params['nbdays']>7) echo 'checked="checked"';?>>	
+							<label for="period2">2 semaines</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period4" name="nbdays" value="28" <?php if($params['nbdays']>21) echo 'checked="checked"';?>>
+							<label for="period4">1 mois</label>
+						</div>
+					</div>
+					<div class="calendar-loader" id="calendar-loader"><img id="loadingweeks" src="<?php echo Router::webroot('img/ajax-loader-bar.gif');?>" title="Chargement..." /></div>
+					<div class="fresque"></div>
+					<a style="display:none" class="with-ajax calendar-nav calendar-nav-now fleft" href="<?php echo Router::url('events/calendar/now');?>"><span>Now</span></a>
+				</div>
 
-			</table>
-			<div class="calendar-footer"></div>
-		</div>
+				<table class="calendar-nav" >
+					<tr>
+						<td class="colomn-nav colomn-prev" id="colomn-prev">					
+							<a class="calendar-nav-prev calendar-nav-link fleft" id="colomn-prev-arrow" title="Semaine précédante" href="#!<?php echo Router::url('events/calendar/week/prev/');?>" draggable="false"></a>
+						</td>
+
+						<td>
+							<div class="calendar-content"
+								id="calendar-content" 
+								data-url-calendar="<?php echo Router::url('events/calendar/');?>"
+								data-url-calendar-prev="<?php echo Router::url('events/calendar/week/prev');?>"
+								data-url-calendar-next="<?php echo Router::url('events/calendar/week/next');?>"
+								data-url-calendar-now="<?php echo Router::url('events/calendar/week/now');?>"
+								data-url-calendar-date="<?php echo Router::url('events/calendar/week/date');?>"
+								  >
+								<?php 
+								//appel les evenements de la semaine en cours
+								echo $this->request('events','calendar',array('now'));
+								?>
+							</div>
+						</td>
+					
+						<td class="colomn-nav colomn-next" id="colomn-next">		
+							<a class="calendar-nav-next calendar-nav-link fright" id="colomn-next-arrow" title="Semaine suivante" href="#!<?php echo Router::url('events/calendar/week/next/');?>" draggable='false' ></a>
+						</td>
+					</tr>
+
+				</table>
+				<div class="calendar-footer"></div>
+			</div>
 		</form>
 
 	</div>
@@ -179,8 +175,8 @@ $(document).ready(function(){
 
 	//init Drag calendar
 	var _cal = $('#calendar-content');
-	var _zone = $('#calendar-nav');
-	var _w = 200;
+	var _zone = $('#calendar');
+	var _w = 150;
 	var _xO;
 	var _yO;
 	var _mxO;
@@ -209,11 +205,14 @@ $(document).ready(function(){
 	function startDrag(e){
 
 		var t = $(e.target);
-		if(t.is('span') || t.is('strong') || t.is('i') || t.is('p') || t.is('div') || t.is('a:not(.calendar-nav-link)')) return; //if drag on text element stop script
-		if ((e.button == 1 && window.event != null) || e.button == 0) {//if left mouse button
-			setMouseOrigin(e);
-			$(window).on('mousemove touchmove',dragCalendar);
-		}
+		console.log(t);
+		if(t.is('span:not(.calendar-nav-tx)') || t.is('strong') || t.is('i') || t.is('p') || t.is('div') || t.is('a:not(.calendar-nav-link)')) return; //if drag on text element stop script
+		console.log('ok');
+		if(e.which == 2 ||e.which == 3) return; //if middle click or right click , stop script
+
+		setMouseOrigin(e);
+		$(window).on('mousemove touchmove',dragCalendar);
+		
 	}
 	function stopDrag(e){
 		$(window).off('mousemove touchmove');
@@ -285,14 +284,20 @@ $(document).ready(function(){
 
 
 	//Sport checkbox slider
-	$('#sportCheckboxs').FlowSlider();
+	$('#sportCheckboxs').FlowSlider({animation:'None',detectCssTransition:'true'});
 	$('#sportCheckboxs').css('overflow','visible');
 
 	//Sport button
 	//Submit form on click
-	$('.sportCheckbox, .periodRadio').change(function(){
+	$('.sportCheckbox, .periodRadio, #sport').change(function(e){
 		//call same week
 		callCurrentWeek();
+
+		if($(e.target).is("select#sport")){
+			var s = $(e.target).val();
+			$("#label-"+s).attr('checked',true);
+			$('#sportCheckboxs').removeClass('allSportDisplayed');		
+		}
 
 		if($('.sportCheckbox:checked').length!=0)
 			$('#sportCheckboxs').removeClass('allSportDisplayed');		
@@ -404,7 +409,7 @@ $(document).ready(function(){
 
 	function callWeek(url,direction){		
 
-		$('#calendar-loader > .text').show();		
+		$('#calendar-loader #loadingweeks').show();		
 		var screenWidth = $(window).width();
 		var form = $('#formSearch').serialize();
 		form += '&maxdays='+findNumberDayPerWeek();
@@ -421,16 +426,14 @@ $(document).ready(function(){
 
 				slideCalendar(direction,screenWidth);	  				
 				
-				console.log(isCurrentWeek());
-				if(isCurrentWeek()){
-					console.log('is current week');
+				if(isCurrentWeek()){					
 					$('.calendar-nav-prev').hide();
 				}
 				else{
 					$('.calendar-nav-prev').show();
 				}
 
-				$('#calendar-loader > .text').hide();
+				$('#calendar-loader #loadingweeks').hide();
 
 
 			},
@@ -464,21 +467,27 @@ $(document).ready(function(){
 	}
 
 	$('.calendar-nav-prev').livequery(function(){
-		$(this).click(function(){
+		$(this).click(function(e){
 			callPreviousWeek();
+			e.preventDefault();
+			e.stopPropagation();
 			return false;
 		});
 	});
 
 	$('.calendar-nav-next').livequery(function(){
-		$(this).click(function(){
+		$(this).click(function(e){
 			callNextWeek();
+			e.preventDefault();
+			e.stopPropagation();
 			return false;
 		});
 	});
 
 	$('.calendar-nav-now').livequery(function(){
-		$(this).click(function(){
+		$(this).click(function(e){
+			e.preventDefault();
+			e.stopPropagation();
 			callThisWeek('prev');
 			return false;
 		});

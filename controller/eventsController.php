@@ -102,8 +102,9 @@ class EventsController extends Controller{
 		//
 		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed, E.description';
 
-		//if some sport are selected
+		//if some sports are selected
 		if(!empty($params['sports'])){
+
 			$query['sports'] = $params['sports'];
 			$cookie['sports'] = $params['sports'];
 		}
@@ -112,6 +113,17 @@ class EventsController extends Controller{
 		}
 
 
+		//if one sport is selected
+		if(!empty($params['sport']) && trim($params['sport'])!=''){			
+			if(!empty($query['sports']) && is_array($query['sports'])) $query['sports'][] = $params['sport'];
+			else $query['sports'] = array($params['sport']);
+			if(!empty($cookie['sport']) && is_array($cookie['sport'])) $cookie['sport'][] = $params['sport'];
+			else $cookie['sport'] = array($params['sport']);
+		}
+		else
+			$cookie['sport'] = '';
+
+		
 		//Rewrite cookie to remember the search				
 		$this->cookieEventSearch->write($cookie);
 

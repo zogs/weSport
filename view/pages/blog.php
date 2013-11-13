@@ -1,11 +1,11 @@
 <div class="blog">
-	<div class="top-banner">
-		<div class="void"></div>
-		<div class="fresque"></div>
-		<?php echo $this->session->flash(); ?>
-	</div>
 
-	<div class="container">		
+	<?php echo $this->session->flash(); ?>
+	
+	<div class="container page-container">	
+
+		<div class="fresque"></div>	
+
 		<div class="blog-banner">
 			<img src="<?php echo Router::url('img/blog_banner.jpg');?>" alt="">
 		</div>

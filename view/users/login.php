@@ -1,14 +1,11 @@
 <div class="connexion">
-	<div class="top-banner">
-		<div class="void"></div>
-		<div class="flash">
-			<?php echo $this->session->flash() ;?>			
-		</div>		
-	</div>
+
+	<?php echo $this->session->flash() ;?>			
+
 	
-	<div class="container">
+	<div class="container page-container">
 		<div class="white-sheet">
-			<div class="fresque fresque-mini"></div>
+			<div class="fresque"></div>
 			<div class="head-sheet"><h1 class="title-sheet">CONNEXION</h1></div>		
 
 			<form class="form form-ws label-hidden w50 fleft form-register" action="<?php echo Router::url('users/login'); ?>" method='post'>
@@ -38,7 +35,7 @@
 				<p class="btn-facebook">
 					<a class="btn-facebook" rel='nofollow' href="<?php echo $this->request('users','link_register_with_facebook');?>"><img src="<?php echo Router::webroot('img/connect_with_facebook.png');?>"/></a>					
 				</p>
-				<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FWesport-Community%2F642996032385245&amp;width=292&amp;height=300&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=153720748148187" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:258px;" allowTransparency="true"></iframe>
+				<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FWesport-Community%2F642996032385245&amp;width=292&amp;height=400&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=153720748148187" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:300px;" allowTransparency="true"></iframe>
 			</form>
 
 		</div>	

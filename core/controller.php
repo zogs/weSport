@@ -325,6 +325,18 @@ class Controller {
 	}
 
 
+	public function isHomepage(){
+		
+		if($this->pageName()=='pages/home') return true;
+		return false;
+	}
+
+	public function pageName(){
+
+		return $this->request->controller.'/'.$this->request->action;
+	}
+
+
 	//Permet de vérifier le jeton de securité
 	//@params request object
 	public function security($request){

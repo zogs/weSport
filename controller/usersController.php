@@ -476,6 +476,10 @@ class UsersController extends Controller{
 		else {				
 			$this->session->setFlash("Veuillez vérifier vos informations",'error');
 			$this->set(array('data'=>$data));
+<<<<<<< HEAD
+=======
+			
+>>>>>>> new-design
 			return;
 		}																		
 

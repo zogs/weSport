@@ -62,24 +62,26 @@ class Session {
 
 	public function flash(){
 
+		$icons = array('success'=>'<span class="ws-icon-checkmark"></span>',
+						'info'=>'<span class="ws-icon-info"></span>',
+						'warning'=>'<span class="ws-icon-spam"></span>',
+						'error'=>'<span class="ws-icon-blocked"></span>');
+
 		if(isset($_SESSION['flash'])){
 			$html='';
+			$html.='<div class="flash">';
 			foreach($_SESSION['flash'] as $v){
-
+				$v['duration'] = 0; //no css animation
 				if(isset($v['message'])){
-					$html .= '<div class="alert alert-'.$v['type'].' alert-hide-'.$v['duration'].'s">
-								<div class="alert-progress alert-progress-'.$v['duration'].'s"></div>
-								
-								<p>'.$v['message'].'</p>
-								
-								<button class="close" data-dismiss="alert">×</button>
-								';
-								
-
-					$html .= '</div>';				
+					$html .= '<div class="ws-alert alert-'.$v['type'].' alert-hide-'.$v['duration'].'s">
+								<span class="flash-icon">'.$icons[$v['type']].'</span>
+								<div class="alert-progress alert-progress-'.$v['duration'].'s"></div>							
+								<p>'.$v['message'].'</p>								
+								<button class="close" data-dismiss="alert"><span class="ws-icon-close"></span></button>
+							</div>';													
 				}
 			}
-
+			$html .= '</div>';
 			$_SESSION['flash'] = array();
 			return $html;
 		}

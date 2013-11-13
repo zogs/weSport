@@ -31,8 +31,10 @@
 	 		//Sinon récupération des infos de connexion
 	 		if(isset(Conf::$databases[$host]))
 	 			$conf = Conf::$databases[$host];
-	 		else
-	 			throw new zException("Missing databases connexion for '".$host." '", 1);
+	 		else {
+	 			$p = Conf::getParsedUrl();
+	 			throw new zException("Missing databases connexion for '".implode(',',$p)." '", 1);
+	 		}
 
  		} 
  		

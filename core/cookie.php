@@ -47,6 +47,27 @@
             }
         }
     }
+
+    public function notempty($item){
+        if($this->cSerialize) {
+            $name = $this->cName . "_S";
+            if(isset($_COOKIE[$name])){            
+                $sCookie = unserialize($_COOKIE[$name]);
+                if(isset($sCookie[$item])&&!empty($sCookie[$item]))
+                    return true;
+                else
+                    return false;
+            }else
+                return false;
+            
+        }else{
+        $name = $this->cName . "_" . $item;
+        if(isset($_COOKIE[$name]) && !empty($_COOKIE[$name]))
+            return true;
+        else
+            return false;
+        }
+    }
     public function read($item)
     {
         if($this->cSerialize)

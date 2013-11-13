@@ -93,6 +93,8 @@ class PagesController extends Controller {
 
 				//If sport not defined set sport to zero
 				if(!$this->request->get('sports') && empty($params['sports'])) $params['sports'] = '';
+				
+				if($this->request->get('sport')) $params['sports'] = array($this->request->get('sport'));
 
 				//si l'ID de la ville n'est pas fourni, on cherche une ville par son nom
 				if(empty($params['cityID'])) {					

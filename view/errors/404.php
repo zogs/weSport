@@ -7,15 +7,12 @@
 ?>
 
 <div class="ws-error-page">
-	<div class="top-banner">
-		<div class="void"></div>
-		<div class="flash">
-			<?php echo $this->session->flash();?>			
-		</div>
-	</div>
-	<div class="container">
+
+	<?php echo $this->session->flash();?>			
+
+	<div class="container page-container">
 		<div class="white-sheet">
-			<div class="fresque fresque-mini"></div>
+			<div class="fresque"></div>
 			<div class="head-sheet"></div>
 			<div class="col_large">	
 				<div class="title">
