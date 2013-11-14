@@ -63,9 +63,10 @@ class Session {
 	public function flash(){
 
 		$icons = array('success'=>'<span class="ws-icon-checkmark"></span>',
-						'info'=>'<span class="ws-icon-info"></span>',
-						'warning'=>'<span class="ws-icon-spam"></span>',
-						'error'=>'<span class="ws-icon-blocked"></span>');
+				'info'=>'<span class="ws-icon-info"></span>',
+				'warning'=>'<span class="ws-icon-spam"></span>',
+				'error'=>'<span class="ws-icon-blocked"></span>',
+				'danger'=>'<span class="ws-icon-blocked"></span>');
 
 		if(isset($_SESSION['flash'])){
 			$html='';
