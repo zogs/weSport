@@ -347,7 +347,7 @@ div.mm-is-menu * {
 			.tt-hint {
 				font-family: 'Harlow';
 				@include rem(36);
-				padding-left:20px;
+				margin-left:15%;
 				color:rgba($lightblue,0.5);
 				line-height: 200%;				
 				margin-top:-25px;
@@ -2892,11 +2892,10 @@ TYPEAHEAD CUSTOM STYLE
 					width:100%;
 					margin:0; padding:0;
 					text-align: center;
-					.cityIcon {display:none;}
-					a#backtohome{
-						padding-left:0;
-						@include rem(16);
-					}
+					input#cityName {width:60%; margin-left:5%;}
+					select#extend { width:15%;}
+					button.citySubmit{width:15%;}
+					.search-bar-icons {display: none;}
 				}
 			}
 			ul.menu-full,ul.menu-small {display:none;}

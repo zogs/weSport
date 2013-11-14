@@ -215,33 +215,35 @@ $(document).ready(function(){
 
 	setInitialListener();
 	function setInitialListener(){
-		_zone.on('mousedown',startDrag);
-		$(window).on('mouseup',stopDrag);
+		_zone.on('mousedown touchstart',startDrag);
+		$(window).on('mouseup touchend',stopDrag);
 		setCalendarOrigin();
 	}
 	function setCalendarOrigin(){
 		pos = _cal.position();
 		_xO = pos.left;
-		_yO = pos.top;
 	}
 	function setMouseOrigin(e){
-		_mxO = e.clientX +_xO;
-		_myO = e.clientY +_yO;
+		_mxO = getClientX(e) +_xO;
 	}
 
-	function startDrag(e){
+	function getClientX(e){
+		if(e.clientX) return e.clientX;
+		if(e.originalEvent.changedTouches[0].clientX) return e.originalEvent.changedTouches[0].clientX;
+	}
 
-		var t = $(e.target);				
+	function startDrag(e){			
 		
 		if(e.which == 2 ||e.which == 3) return; //if middle click or right click , stop script
 
 		setMouseOrigin(e);
-		$(window).on('mousemove',dragCalendar);
+
+		$(window).on('mousemove touchmove',dragCalendar);
 		
 	}
 	function stopDrag(e){
 
-		$(window).off('mousemove');
+		$(window).off('mousemove touchmove');
 		if(_lock=='left'){ 
 			callPreviousWeek(); 
 			lockLoad();
@@ -264,7 +266,7 @@ $(document).ready(function(){
 
 		var x;
 	
-		x = _xO + e.clientX - _mxO;
+		x = _xO + getClientX(e) - _mxO;
 
 		if(x>0 && isCurrentWeek()==true) return;
 

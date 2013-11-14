@@ -38,7 +38,7 @@ class PagesController extends Controller {
 				//'js/jquery/jquery.touchSwipe.min.js',				
 				'js/jquery/tourbus/jquery.tourbus.min.js',
 				'js/jquery/jquery.scrollTo-min.js',
-				'js/jquery/jquery.ui.touch-punch.min.js',				
+				//'js/jquery/jquery.ui.touch-punch.min.js',				
 				);
 			$this->loadCSS = array(
 				'js/jquery/tourbus/tourbus.css'

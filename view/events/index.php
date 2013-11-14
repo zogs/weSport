@@ -33,7 +33,8 @@
 					<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
 						<a class="events-link" 
 							href="<?php echo $event->getUrl();?>"	
-							draggable="false"					
+							draggable="false"
+							ondragstart="return false;"					
 							data-content="Ville : <strong><?php echo $event->getCityName();?></strong><br />													
 											Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge();?>)<br />
 											Participants : <strong><?php echo $event->getNbParticipants();?></strong><br />
