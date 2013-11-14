@@ -314,14 +314,19 @@ class EventsModel extends Model{
 		$results = $this->query($sql,$values);
 
 		$events = array();
-		foreach ($results as $event) {
+		foreach ($results as $k => $event) {
 			
+			//join the author of the event
 			$event->author = $this->eventAuthor($event->user_id);
 			
+			//jump oup if the author doesn't exist anymore
+			if(!$event->author->exist()) continue;
+
+			//if recurrent event, join days of recurrence
 			if(isset($event->recur) && $event->recur==1)
 				$event->recur_day = $this->eventRecurrence($event->id);
 			
-			
+			//instanciate new Event
 			$events[] = new Event($event);
 		}
 

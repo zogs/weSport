@@ -98,18 +98,22 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 					<li class="searchbar" id="menu-searchbar">
 						<?php if($this->isHomepage()): ?>
 						<form action="<?php echo Router::url('home/'.$this->cookieEventSearch->read('date'));?>" method="GET" id="formCity">
-							<label for="cityName">
-								<a class="cityIcon tooltipbottom" title="Supprimer la ville" href="?cityName=&cityID=" rel="nofollow"><span class="ws-icon ws-icon-office"></span><span class="ws-icon ws-icon-close"></span></a>							
-								<input type="text" id="cityName" name="cityName" class="cityName <?php echo ($this->cookieEventSearch->notempty('cityName'))? 'notempty' : 'empty';?>" value="<?php echo ($this->cookieEventSearch->notempty('cityName'))? $this->cookieEventSearch->read('cityName') : 'Votre ville ?';?>" placeholder="ex: dijon" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">																							
-								<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>	
-							</label>
-						
-							<?php echo $this->Form->_select("extend",array(0=>'0km',10=>'+10km',30=>'+30km', 50=>'+50km',100=>'+100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>															
+							<span class="search-bar-icons">
+								<label class="search-bar-icon search-bar-icon-default" for="cityName"><span class="ws-icon ws-icon-office"></span></label>
+								<a class="search-bar-icon search-bar-icon-reset  tooltipbottom" title="Supprimer la ville" href="?cityName=&cityID=" rel="nofollow"><span class="ws-icon ws-icon-close"></span></a>						
+							</span>
+
+							<input type="text" id="cityName" name="cityName" class="cityName <?php echo ($this->cookieEventSearch->notempty('cityName'))? 'notempty' : 'empty';?>" value="<?php echo ($this->cookieEventSearch->notempty('cityName'))? $this->cookieEventSearch->read('cityName') : 'Votre ville ?';?>" placeholder="ex: dijon" autocomplete='off' data-autocomplete-url="<?php echo Router::url('world/suggestCity');?>">																							
+							<?php echo $this->Form->input('cityID','hidden',array("value"=>$this->cookieEventSearch->read('cityID'))) ;?>							
+							<?php echo $this->Form->_select("extend",array(0=>'+0km',10=>'+10km',30=>'+30km', 50=>'+50km',100=>'+100km'),array("default"=>$this->cookieEventSearch->read('extend'),"placeholder"=>"Etendre à :")) ;?>															
 							
 							<button class="citySubmit"><span class="ws-icon-loupe"></span></button>
 						</form>
-						<?php else: ?>
-						<a id="backtohome" href="/"><span class="cityIcon"><span class="ws-icon ws-icon-arrow-left"></span></span> Retour au calendrier</a>
+						<?php else: ?>	
+							
+								<a class="search-bar-icon search-bar-icon-back" href="/"><span class="ws-icon ws-icon-arrow-left"></span> Retour au calendrier</a>								
+							
+
 						<?php endif; ?>
 					</li>
 					<li id="menu-createevent">

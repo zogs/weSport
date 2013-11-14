@@ -350,7 +350,7 @@ class EventsController extends Controller{
 				//On annule sa participation
 				if($this->Events->cancelParticipation($check->id)){
 					//On previens
-					$this->session->setFlash("Tanpis, à une prochaine fois!","success",3);					
+					$this->session->setFlash("Pas grave, à la prochaine !","success",3);					
 					//On vérifie si le nombre min nest pas atteint
 					//nombre actuel de participants
 					$nbparticip = $this->Events->countParticipants($event->id);
@@ -576,7 +576,6 @@ class EventsController extends Controller{
 						$evt = $this->Events->findEventById($event_id);
 					
 											
-
 						//if the event is new
 						if($is_new==true){
 													
@@ -591,7 +590,7 @@ class EventsController extends Controller{
 							//email the changes 
 							if(!empty($changes)&&$evt->timingSituation()!='past'){
 								
-								if($this->sendEventChanges($new,$changes)){
+								if($this->sendEventChanges($evt,$changes)){
 
 									$this->session->setFlash('Les modifications ont été envoyées aux participants','warning');
 								}

@@ -35,6 +35,7 @@
 
 			
 			<div class="sportSelect" id="control-sport">
+			<a class="resetSports tooltipbottom" href="?sports=&sport=" title="Supprimer les sports"><span class="ws-icon ws-icon-close"></span></a>
 				<?php echo $this->Form->_select('sport',$sports_list,array('default'=>$sports_selected,'placeholder'=>"Chercher un sport...")); ?>
 			</div>
 
@@ -308,7 +309,13 @@ $(document).ready(function(){
 
 
 	//Sport checkbox slider
-	$('#sportCheckboxs').FlowSlider({animation:'None',detectCssTransition:'true'});
+	$('#sportCheckboxs').FlowSlider({
+		animation:'None',
+		detectCssTransition:'true',
+		detectTouchDevice:'true',
+		controllers:['HoverCenter','Touch'],
+		controllerOptions:[{mouseStart:100,mouseEnd:100,coefficient:0.08}]
+	});
 	$('#sportCheckboxs').css('overflow','visible');
 
 	//Sport button

@@ -82,7 +82,7 @@ class zHandlingErrors {
 
 	public static function alertError(){
 
-		echo '<div class="zerror"><strong>Attention, une erreur a lieu !</strong> Le reste de la page est peut être cassée...</div>';
+		echo '<div class="zerror"><strong>Attention, une erreur a lieu !</strong> Le reste de la page est peut être incorrect...</div>';
 	}
 }
 

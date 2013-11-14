@@ -306,6 +306,7 @@ div.mm-is-menu * {
 
 			form{
 				display: inline;
+				position:relative;
 			}
 			input,select,button,label{
 				display:inline;
@@ -330,7 +331,8 @@ div.mm-is-menu * {
 				font-family:'Harlow';
 				line-height: 200%;
 				margin-left:6%;				
-				text-overflow: ellipsis;				
+				text-overflow: ellipsis;
+				overflow:hidden;				
 				@include rem(36);
 				@include long-shadow(text,#152e35,50,false,false,right);
 			
@@ -374,12 +376,39 @@ div.mm-is-menu * {
 				}
 				&:hover { @include rotate(360deg);}
 			}
+
+			.search-bar-icons{
+
+				position:absolute;
+				left:-35px;
+				top:-17px;				
+								
+				.search-bar-icon-reset {display:none;}
+				&:hover	.search-bar-icon-reset{display: inline;}
+				&:hover	.search-bar-icon-default {display: none;}
+							
+			}
+
+			.search-bar-icon span.ws-icon{
+					padding:10px;
+					color:$lightblue;
+					border:4px solid $deepblue;
+					background-color: $darkblue;
+					@include rem(24);
+					@include border-radius(30px);
+			}
+				
+			.search-bar-icon-back { 
+				margin-left:-50px;
+				&:hover,&:active { color:$lightblue;}
+			}
+			
+
 			.cityIcon{	
 				position:absolute;
 				height:inherit;
-				padding-top:9px;
-				left:-25px;
-				top:0;
+				left:-30px;
+				top:-15px;
 
 				span{
 					padding:10px;
@@ -714,15 +743,44 @@ div.mm-is-menu * {
 }
 
 .sportCheckboxs:hover ~ .sportSelect { opacity: 1;}
+.sportCheckboxs:hover ~ .sportSelect a.resetSports { opacity: 1;}
 
 .sportSelect {
+	display: table-cell;
+	vertical-align:middle;
 	position:absolute;
 	top:-50px;
 	right:20px;			
 	opacity: 0.2;
 	@include transition(0.5s ease);
-	input[type=submit] { margin-top:-20px;}	
-	&:hover { opacity: 1;}
+	&:hover { 
+		opacity: 1;
+		a.resetSports{
+			opacity: 1;
+		}
+	}
+
+	input{
+		float:left;
+	}
+
+	a.resetSports {
+		opacity: 0;
+		float:right;
+		position:relative;		
+		display: block;
+		padding:10px 20px;
+		margin:0 5px;
+		text-align: center;
+		background-color:$darkblue;
+		@include border-radius(7px);
+		@include transition(0.5s ease);
+	
+		.ws-icon {
+			color:$lightblue;
+			@include rem(18);
+		}
+	}
 }
 
 
