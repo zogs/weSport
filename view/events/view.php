@@ -47,9 +47,9 @@
 							<span class="nb-participant">de <?php echo ($event->nbmin-count($event->participants));?> participants</span>						
 					<?php endif;?>	
 				<?php elseif($event->timing=='past'): ?>			
-							<span class="label">Cette activité est terminée</span> <span class="nb-participant"><abbr title="<?php echo $event->date;?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
+							<span class="label">Cette activité est terminée</span> <span class="nb-participant"><abbr title="<?php echo $event->getDatetime()?>" class="date timeago"><?php echo $event->getDatetime();?></abbr></span>
 				<?php endif; ?>
-					
+
 				</div>
 
 				<div class="event-action">

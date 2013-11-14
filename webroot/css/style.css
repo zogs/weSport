@@ -939,11 +939,11 @@ div.mm-is-menu * {
 }
 /* line 767, ../scss/style.scss */
 .sportSelect a.resetSports {
-  opacity: 0;
+  opacity: 0.3;
   float: right;
   position: relative;
   display: block;
-  padding: 10px 20px;
+  padding: 8px 15px;
   margin: 0 5px;
   text-align: center;
   background-color: #1b3a43;

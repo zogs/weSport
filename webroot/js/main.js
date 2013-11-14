@@ -10,7 +10,7 @@ $(document).ready(function(){
 	
 
 	/*===========================================================
-		Autocomplete cityName input
+		// Autocomplete cityName input
 	============================================================*/
 	
  	$('input#cityName').click(function(e){ 		
@@ -389,7 +389,7 @@ $(document).ready(function(){
 
         function CKupdate(){
 
-        	if(CKEDITOR=='undefined') return true;
+        	if(typeof CKEDITOR == 'undefined') return true;
 		    for ( instance in CKEDITOR.instances )
 		        CKEDITOR.instances[instance].updateElement();
 		}
