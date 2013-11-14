@@ -539,8 +539,8 @@ $(document).ready(function(){
 	//Demo Tourbus
 	if(
 		$('#wesport-demo').length!=0 // if a demo tour is present on the DOM
-		//&& $('body').attr('data-user_id')==0 // and if no user is log
-		//&& $('body').attr('data-display-demo')==1 //and if the cookie settings are ok
+		&& $('body').attr('data-user_id')==0 // and if no user is log
+		&& $('body').attr('data-display-demo')==1 //and if the cookie settings are ok
 		&& $(window).width()>=768) // and if the screen is large enougth
 	{
 		//Init the demo tour
