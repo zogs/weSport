@@ -201,6 +201,7 @@ $(document).ready(function(){
 	//init Drag calendar
 	var _cal = $('#calendar-content');
 	var _zone = $('#calendar');
+	var _drag = false;
 	var _w = 150;
 	var _xO;
 	var _yO;
@@ -214,8 +215,8 @@ $(document).ready(function(){
 
 	setInitialListener();
 	function setInitialListener(){
-		_zone.on('mousedown touchestart',startDrag);
-		$(window).on('mouseup touchend',stopDrag);
+		_zone.on('mousedown',startDrag);
+		$(window).on('mouseup',stopDrag);
 		setCalendarOrigin();
 	}
 	function setCalendarOrigin(){
@@ -227,23 +228,34 @@ $(document).ready(function(){
 		_mxO = e.clientX +_xO;
 		_myO = e.clientY +_yO;
 	}
+
 	function startDrag(e){
 
-		var t = $(e.target);
-		console.log(t);
-		if(t.is('span:not(.calendar-nav-tx)') || t.is('strong') || t.is('i') || t.is('p') || t.is('div') || t.is('a:not(.calendar-nav-link)')) return; //if drag on text element stop script
-		console.log('ok');
+		var t = $(e.target);				
+		
 		if(e.which == 2 ||e.which == 3) return; //if middle click or right click , stop script
 
 		setMouseOrigin(e);
-		$(window).on('mousemove touchmove',dragCalendar);
+		$(window).on('mousemove',dragCalendar);
 		
 	}
 	function stopDrag(e){
-		$(window).off('mousemove touchmove');
-		if(_lock=='left'){ callPreviousWeek(); lockLoad();}
-		else if(_lock=='right'){ callNextWeek();  lockLoad();}
-		else revert();
+
+		$(window).off('mousemove');
+		if(_lock=='left'){ 
+			callPreviousWeek(); 
+			lockLoad();
+			_drag=true;
+		}
+		else if(_lock=='right'){ 
+			callNextWeek();  
+			lockLoad();
+			_drag=true;
+		}
+		else {
+			revert();
+			_drag = false;
+		}
 	}
 	function revert(){
 		_cal.animate({left:0}, _w, 'swing');
@@ -256,7 +268,7 @@ $(document).ready(function(){
 
 		if(x>0 && isCurrentWeek()==true) return;
 
-		if(x==0 || x==1 ||x==-1 ||x==2 ||x==-2) return;
+		if(Math.sqrt(Math.pow(x,2))<10) return;
 
 		if(x>=_w) {
 			lockPrev();
@@ -303,8 +315,12 @@ $(document).ready(function(){
 			placement:'top',
 			container:'body',			
 			speed:10,
-			delay: { show: 800, hide: 100 }		
+			delay: { show: 1200, hide: 100 }		
 		});
+		$(this).on('click',function(e){
+			if(_drag==true) e.preventDefault();
+		});
+
 	});
 
 
@@ -347,38 +363,6 @@ $(document).ready(function(){
 		$item.stop().animate({'margin': 150}, 150);
 		});
 	}); 
-
-	// $('.colomn-date a').click(function(e){
-		
-	// 	e.preventDefault();
-
-	// 	var colomn = $(this).parent().parent();			
-	// 	var others = $('.events-colomn');
-	// 	var ms = 200;
-
-	// 	if(colomn.hasClass('colomn-open')==true) { 
-
-
-	// 		colomn.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});
-	// 		others.find('.events-bb').animate({width:'100%',margin:'0%'},{duration:ms,queue:false,ease:'ease-out'});
-	// 		others.animate({width:'14%'},{duration:ms,queue:false,ease:'ease-out'});	
-	// 		colomn.removeClass('colomn-open');		
-			
-	// 	}
-	// 	else {
-
-	// 		others.removeClass('colomn-open');			
-	// 		$('.events-colomn').animate({width:'10%'},{duration:ms,queue:false,ease:'ease-out'});
-	// 		colomn.animate({width:'40%'},{duration:ms,queue:false,ease:'ease-out'});
-	// 		others.find('.events-bb').animate({width:'100%'},{duration:ms,queue:false,ease:'ease-out'});
-	// 		colomn.find('.events-bb').animate({width:'30%',margin:'1%'},{duration:ms,queue:false,ease:'ease-out'});
-	// 		colomn.addClass('colomn-open');
-			
-	// 	}
-		
-	// });
-
-
 	
 
 	function slideCalendar(direction,width){
