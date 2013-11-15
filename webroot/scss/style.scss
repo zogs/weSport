@@ -584,7 +584,7 @@ div.mm-is-menu * {
 .ws-alert {	
 	position:relative;
 	display: inline-block;
-	margin:10px 0;
+	margin:10px 5px;
 	padding:15px 100px;
 	@include rem(18);
 	background-color: $lightgrey;

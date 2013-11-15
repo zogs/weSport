@@ -41,7 +41,7 @@
 							data-content="Ville : <strong><?php echo $event->getCityName();?></strong><br />													
 											Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge();?>)<br />
 											Participants : <strong><?php echo $event->getNbParticipants();?></strong><br />
-											<i><?php echo substr($event->getDescription(),0,100);?></i>
+											<i><?php echo substr(str_replace('"',' ',$event->getDescription()),0,100);?></i>
 										"
 							<?php if(!$event->confirmed):?>title="<span style='color:grey'>En attente de participants</span>"<?php endif;?>
 						>
