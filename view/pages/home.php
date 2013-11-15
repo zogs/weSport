@@ -330,9 +330,7 @@ $(document).ready(function(){
 	$('#sportCheckboxs').FlowSlider({
 		animation:'None',
 		detectCssTransition:'true',
-		detectTouchDevice:'true',
-		controllers:['HoverCenter','Touch'],
-		controllerOptions:[{mouseStart:100,mouseEnd:100,coefficient:0.08}]
+		detectTouchDevice:'true'
 	});
 	$('#sportCheckboxs').css('overflow','visible');
 
@@ -354,17 +352,7 @@ $(document).ready(function(){
 			$('#sportCheckboxs').addClass('allSportDisplayed');				
 	});
 
-	// On mouse over change widht of the items
-	
-	$(".www_FlowSlider_com-item").each(function(_, item) {
-		var $item = $(item).children('.ws-icon-small');
-		$item.mouseenter(function() {
-		$item.stop().animate({'margin': 300}, 150);
-		});
-		$item.mouseleave(function() {
-		$item.stop().animate({'margin': 150}, 150);
-		});
-	}); 
+
 	
 
 	function slideCalendar(direction,width){

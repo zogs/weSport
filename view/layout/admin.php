@@ -11,14 +11,12 @@
 </head>
 <body class="backend_admin">
 
-        <div class="navbar navbar-fixed-top">
-                
-
+        <div class="navbar-ws navbar navbar-fixed-top">            
                 <ul class="nav">
-                        <li><a class="weSport" href="<?php echo Router::url('home');?>">
-                                <img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
-                                <i>we</i><strong>Sport</strong>                                
-                           </a>
+                        <li><a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+                                <img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">                           
+                                <img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">                     
+                        </a>
                         </li>
                         <li><a href="<?php echo Router::url('/'); ?>"><span class="ws-icon-home"></span> Site</a></li>                             
                         <li><a href="<?php echo Router::url('admin/pages/index'); ?>"><span class="ws-icon-menu"></span> Pages</a></li>
@@ -27,7 +25,6 @@
                         <li><a href="<?php echo Router::url('admin/pages/blog');?>"><span class="ws-icon-book"></span> Blog</a></li>
                         <li><a href="<?php echo Router::url('users/logout'); ?>"><span class="ws-icon-exit"></span> Deconnexion</a></li>
                 </ul>
-
         </div>
 
         <div class="container mainContainer">

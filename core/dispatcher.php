@@ -18,18 +18,21 @@ class Dispatcher{
 		
 		
 		
-		//Si il ya un prefix on ajoute le prefixe a l'action
-		if(isset($this->request->prefix) && $this->request->prefix == Conf::$adminPrefix){
+		//Si le prefixe d'action est admin, on change l'action en admin_action
+		if(isset($this->request->prefix) && $this->request->prefix == 'admin'){
 			$action = $this->request->prefix.'_'.$action;
 		}
 		
-		if(!in_array($action,array_diff(get_class_methods($controller),get_class_methods('Controller')))){ //Si la methode demandé n'est pas une methode du controlleur on renvoi sur error()
+		 //Si l'action demandé n'est pas une methode du controlleur on renvoi sur error()
+		if(!in_array($action,array_diff(get_class_methods($controller),get_class_methods('Controller')))){
 			$this->error("Le controller ".$this->request->controller." n'a pas de méthode ".$action);
 		}
 			
 		//Appel de la methode demandé sur le controller demandé
 		call_user_func_array(array($controller,$action),$this->request->params);
 
+
+		//On change le layout en fonction des prefixes (optionnel)
 		if(isset($this->request->prefix)){
 			if($this->request->prefix == 'nolayout' ){
 				$controller->layout = 'none';

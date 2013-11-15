@@ -275,7 +275,7 @@ div.mm-is-menu * {
 
 .navbar-ws{
 	background-color:$lightblue;
-	padding:0 3%;
+	padding:0 1%;
 	box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
 	
 	.nav{
@@ -667,6 +667,7 @@ div.mm-is-menu * {
 .sportCheckboxs {
 	width:100%;
 	margin:80px 0 0 0;
+	height:70px;
 	@extend %clearfix;
 	.sportChoice:after{
 		content:'';
@@ -749,15 +750,14 @@ div.mm-is-menu * {
 	display: table-cell;
 	vertical-align:middle;
 	position:absolute;
-	top:-50px;
-	right:20px;			
-	opacity: 0.2;
+	top:0px;
+	right:0px;	
+	margin-top:-50px;		
+	opacity: 0;
+	z-index:10000;
 	@include transition(0.5s ease);
 	&:hover { 
-		opacity: 1;
-		a.resetSports{
-			opacity: 1;
-		}
+		opacity: 1;		
 	}
 
 	input{
@@ -765,7 +765,7 @@ div.mm-is-menu * {
 	}
 
 	a.resetSports {
-		opacity: 0.3;
+		opacity: 1;
 		float:right;
 		position:relative;		
 		display: block;
@@ -773,8 +773,7 @@ div.mm-is-menu * {
 		margin:0 5px;
 		text-align: center;
 		background-color:$darkblue;
-		@include border-radius(7px);
-		@include transition(0.5s ease);
+		@include border-radius(7px);		
 	
 		.ws-icon {
 			color:$lightblue;
@@ -2896,6 +2895,12 @@ TYPEAHEAD CUSTOM STYLE
 					select#extend { width:15%;}
 					button.citySubmit{width:15%;}
 					.search-bar-icons {display: none;}
+
+					.tt-hint {margin-left:7%;}
+					.tt-dropdown-menu {
+						width:100%;
+						margin-left:0;
+					}
 				}
 			}
 			ul.menu-full,ul.menu-small {display:none;}
@@ -2922,22 +2927,27 @@ TYPEAHEAD CUSTOM STYLE
 	#formSearch{
 		width:100%;
 		margin:10px 0 0 0;
-		
-	.sportCheckboxs{ display:none;}
-		.sportSelect {
-			float:none;
-			display:block;  		
-			position:initial;
-			text-align: center;
-			opacity: 0.8;
-			width:100%;
-			padding:0 5%;
-			margin:10px 0 0 0;
-
-			select{ width:80%; margin:0 10%;}
-		}
-		
 	}
+	.sportCheckboxs{ display:none;}
+
+	.sportSelect {
+		float:none;
+		display:block;  		
+		position:initial;
+		text-align: center;
+		opacity: 0.8;
+		width:100%;
+		padding:0 5%;
+		margin:10px 0 0 0;
+		
+		.select2-container { text-align:left; }
+
+
+		
+		select{ width:80%; margin:0 10%;}
+	}
+		
+	
 
 	.calendar{
 		.calendar-header{
@@ -3157,7 +3167,7 @@ h1.title-sheet{
 
 
 /* Tablets landscape and Small computer----------- */  
-@media only screen and (min-width : 768px) and (max-width : 1125px) {  
+@media only screen and (min-width : 770px) and (max-width : 1300px) {  
    
 	.navbar-ws{
 		padding:0;
@@ -3169,7 +3179,7 @@ h1.title-sheet{
 						img.wesport {display:none;}
 					}
 					a {
-						@include rem(14);
+						@include rem(18);
 					}
 				}
 				li.searchbar{
