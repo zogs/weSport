@@ -17,14 +17,8 @@ class Request{
 
 		//Récuperation des données GET dans un objet
 		if(!empty($_GET)){
-
-			$this->get = new stdClass();
-			foreach ($_GET as $k => $v) {
-
-				if($k!='_')
-					$this->get->$k = $v;
-			}						
-
+								
+			$this->setGet($_GET);
 		}
 		
 		if(!isset($this->get->page) || $this->get->page <=0 ){
@@ -37,28 +31,41 @@ class Request{
 
 		//Récuperation des données POST dans un objet
 		if(!empty($_POST)){
-			$this->data = new stdClass();
-			foreach ($_POST as $k => $v) {
-
-				if($k!='_')
-					$this->data->$k = $v;
-			}
+			$this->setPost($_POST);
 
 		}
 
 	}
 
+	public function setGet($params){
+
+		$this->get = new stdClass();
+		foreach ($params as $k => $v) {
+			if($k!='_') $this->get->$k = $v;
+		}
+
+	}
+
+	public function setPost($params){
+
+		$this->data = new stdClass();
+		foreach ($params as $k => $v) {
+			if($k!='_') $this->data->$k = $v;
+		}
+	}
+
+
 	//Renvoi le parametre GET demandé ou renvoi false
 	public function get($param = null){	
 
-		if($param){	
+		if(!empty($param)){	
 			if(!empty($this->get->$param)){
 				return $this->get->$param;
 			}
 			else return false;
 		}
-		else {
-			if(!empty($_GET)){
+		else {			
+			if(!empty($this->get)){
 				return $this->get;
 			} 
 			else {
@@ -69,14 +76,14 @@ class Request{
 
 	public function post($param = null){
 
-		if($param){
+		if(!empty($param)){
 			if(!empty($this->data->$param)){
 				return $this->data->$param;
 			}
 			else return false;
 		}
 		else {
-			if(!empty($_POST)){
+			if(!empty($this->data)){
 				return $this->data;
 			}
 			else {

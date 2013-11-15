@@ -32,7 +32,7 @@ class UsersController extends Controller{
 
 				if($user->valid==1){
 
-					if($user->hash == md5($user->salt.$data->password)){
+					if($user->hash == md5($user->salt.$data->password)){										
 
 						//if the remember checbox is checked
 						if(isset($data->remember)){
@@ -59,23 +59,16 @@ class UsersController extends Controller{
 
 						//redirection
 						// redirect to the previous location if the user use the login page
-						if(isset($data->previous_url)){
-							if(strpos($data->previous_url,'/events/')) { //if the previous page is about an event redirect to the page						
+						if(!empty($data->previous_url)){							
+							if(strpos($data->previous_url,Conf::getSiteUrl())===0) { //if the previous page is a wesport page				
 								header('Location: '.$data->previous_url);
-								exit();
+								exit();							
 							}
 						}
 						//else the user is using the navbar formular, redirect current page
 						else {
-
 							$this->reload();
-						}
-
-						//if the current page is an user action, redirect to the homepage
-						if(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'/users/')){
-
-							$this->redirect('/');
-						}				
+						}			
 					
 					}
 					else {

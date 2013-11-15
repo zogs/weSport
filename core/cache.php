@@ -93,7 +93,10 @@ class Cache {
 
 	private function path($file){
 
-		return $file = (DIRECTORY_SEPARATOR === '\\')? str_replace('/','\\',$file) : str_replace('\\','/',$file);
+		$file = (DIRECTORY_SEPARATOR === '\\')? str_replace('/','\\',$file) : str_replace('\\','/',$file);
+		$file = (preg_match('/(\.[a-zA-Z0-9]{2,6})$/',$file))? $file : $file.'.cache';
+		
+		return $file;
 	}
 
 

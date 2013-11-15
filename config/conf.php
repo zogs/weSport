@@ -15,7 +15,7 @@ class Conf {
 	static $website = 'we-Sport';
 	static $websiteURL = 'wesport.zogs.org';
 	static $websiteURLs = array(
-		'localwesport'=>'http://localhost/wesport',
+		'localwesport'=>'http://localwesport.fr',
 		'zogs'=>'http://wesport.zogs.org',
 		'we-sport' => 'http://we-sport.fr',
 		'default' => 'http://we-sport.fr'

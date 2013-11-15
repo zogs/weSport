@@ -100,8 +100,10 @@
 								data-url-calendar-date="<?php echo Router::url('events/calendar/week/date');?>"
 								  >
 								<?php 
+
+								$this->request->setGet($params);
 								//appel les evenements de la semaine en cours
-								echo $this->request('events','calendar',array('now'));
+								echo $this->request('events','calendar',array(array('week','now')));
 								?>
 							</div>
 						</td>

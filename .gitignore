@@ -8,6 +8,7 @@ webroot/cache/events_weather_forecast/*
 webroot/cache/users_location/*
 webroot/media/*
 .sass-cache/*
+*.cache
 
 
 #################
