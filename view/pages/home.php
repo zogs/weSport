@@ -297,22 +297,19 @@ $(document).ready(function(){
 	}
 	function nolock(){
 		_lock = '';		
-		_aPrev.removeClass('locked').removeClass('loading');
-		_aNext.removeClass('locked').removeClass('loading');
-
+		_cal.find('#pullPrev,#pullNext').removeClass('locked').removeClass('loading');
 	}
 	function lockPrev(){
 		_lock = 'left';
-		_aPrev.addClass('locked');
+		_cal.find('#pullPrev').addClass('locked');
 	}
 	function lockNext(){
 		_lock = 'right';
-		_aNext.addClass('locked');		
+		_cal.find('#pullNext').addClass('locked');		
 	}
 	function lockLoad(){
 		_lock='';
-		_aNext.removeClass('locked').addClass('loading');
-		_aPrev.removeClass('locked').addClass('loading');
+		_cal.find('#pullPrev,#pullNext').removeClass('locked').addClass('loading');
 	}
 
 	function slideCalendar(direction,width){
