@@ -1138,7 +1138,7 @@ div.mm-is-menu * {
   background-color: #1a9850;
 }
 /* line 913, ../scss/style.scss */
-.calendar .calendar-header .nextWeek a.calendar-nav-prev {
+.calendar .calendar-header .nextWeek a.calendar-nav-next {
   position: relative;
   padding: 7px 50px;
   color: #006837;
@@ -1149,7 +1149,7 @@ div.mm-is-menu * {
   font-size: 1.8rem;
 }
 /* line 922, ../scss/style.scss */
-.calendar .calendar-header .nextWeek a.calendar-nav-prev:before {
+.calendar .calendar-header .nextWeek a.calendar-nav-next:before {
   content: '';
   display: block;
   position: absolute;
