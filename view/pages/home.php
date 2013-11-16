@@ -198,13 +198,13 @@
 
 $(document).ready(function(){
 
-	//Appel la semaine courante
-	callThisWeek();
-
-	//init Drag calendar
+	//init var 
 	var _cal = $('#calendar-content');
 	var _zone = $('#calendar');
+	var _aPrev = $('#pullPrev');
+	var _aNext = $('#pullNext');
 	var _drag = false;
+	var _cWeek = true;
 	var _w = 150;
 	var _xO;
 	var _yO;
@@ -215,7 +215,11 @@ $(document).ready(function(){
 	var _lock;
 
 
+	//Appel la semaine courante
+	callThisWeek();
 
+
+	//set drag listeners
 	setInitialListener();
 	function setInitialListener(){
 		_zone.on('mousedown touchstart',startDrag);
@@ -266,24 +270,22 @@ $(document).ready(function(){
 		_cal.animate({left:0}, _w, 'swing');
 	}
 	function dragCalendar(e){
-
-		var x;
-	
-		x = _xO + getClientX(e) - _mxO;
-
-		if(x>0 && isCurrentWeek()==true) return;
-
+		//distance between mouse coord and initial coord
+		var x = _xO + getClientX(e) - _mxO;
+		//if it is the first week and drag to previous return false
+		if(isCurrentWeek()==true && x>0 ) return;
+		//if the drag distance if inferior to 10 px , return false
 		if(Math.sqrt(Math.pow(x,2))<10) return;
-
+		//if the drag distance is superior to the trigger width
 		if(x>=_w) {
-			lockPrev();
+			lockPrev(); //set lock to previous
 			return;
 		}
 		if(x<=-_w) {
-			lockNext();
+			lockNext(); //set lock to next week
 			return;
 		}
-
+		//set no lock
 		nolock();
 
 		x += 'px';
@@ -293,27 +295,181 @@ $(document).ready(function(){
 	}
 	function nolock(){
 		_lock = '';		
-		$('#pullPrev,#pullNext').removeClass('locked').removeClass('loading');
+		_aPrev.removeClass('locked').removeClass('loading');
+		_aNext.removeClass('locked').removeClass('loading');
 
 	}
 	function lockPrev(){
 		_lock = 'left';
-		$('#pullPrev').addClass('locked');
+		_aPrev.addClass('locked');
 	}
 	function lockNext(){
 		_lock = 'right';
-		$('#pullNext').addClass('locked');		
+		_aNext.addClass('locked');		
 	}
 	function lockLoad(){
 		_lock='';
-		$('#pullNext,#pullPrev').removeClass('locked').addClass('loading');
+		_aNext.removeClass('locked').addClass('loading');
+		_aPrev.removeClass('locked').addClass('loading');
 	}
 
+	function slideCalendar(direction,width){
+
+		duration = 500;
+
+		if(direction == 'right') {
+			contentPosition = width;
+			contentSliding = '-='+width;
+		}
+		if(direction == 'left') {
+			contentPosition = -width;
+			contentSliding = '+='+width;
+		}
+		if(typeof direction == 'undefined'){
+			contentPosition = -width;
+			contentSliding = '+='+width;
+			duration = 0;
+		}
+
+		_cal.css('left',0);
+
+		_cal.find(".events-weeks:first").addClass('old-week');
+		_cal.find(".events-weeks:last").css({'left':contentPosition+'px'}).addClass('new-week');
+
+		_cal.find('.events-weeks').animate({
+			left:contentSliding,
+			},duration,function(){ ;
+				if(!$(this).hasClass('new-week')) $(this).remove();
+				$(this).removeClass('new-week').removeClass('old-week');				
+				return;
+		});
+	}
+
+	function setHeightCalendar(){
+
+		var heightCalendar = _cal.find(".events-weeks").height();
+		_cal.css('height',heightCalendar);
+	}
+
+	function findNumberDayPerWeek(){
+
+		//Nombre de jour à afficher en fonction de la largeur de l'écran
+		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
+		
+		var screenWidth = $(window).width();
+		var nb;
+		for(var maxwidth in dayPerWeek){	
+			if(screenWidth<=maxwidth) return dayPerWeek[maxwidth];	
+		}
+		return 0;
+	}
+
+	function isCurrentWeek(){
+		
+		if(_cWeek==true) return true;
+		return false;
+	}
+
+	function setCurrentWeek(){
+		
+		if(_cal.find('.events-weeks:last').hasClass('current-week')) _cWeek = true;
+		else _cWeek = false;
+		return _cWeek;
+	}
+
+	function callWeek(url,direction){		
+
+		$('#calendar-loader #loadingweeks').show();		
+		var screenWidth = $(window).width();
+		var form = $('#formSearch').serialize();
+		form += '&maxdays='+findNumberDayPerWeek();
+
+		$.ajax({
+			type:'GET',
+			url: url,
+			data : form,
+			success: function( data ){
+				
+				_cal.append( data );				
+				
+				setHeightCalendar();
+
+				slideCalendar(direction,screenWidth);	  				
+				
+				setCurrentWeek();
+
+				if(isCurrentWeek()){					
+					$('a.calendar-nav-prev').hide();
+				}
+				else{
+					$('a.calendar-nav-prev').show();
+				}
+
+				$('#calendar-loader #loadingweeks').hide();
 
 
+			},
+			dataType:'html'
+		});		
+
+		return false;
+	}
+	function callNextWeek(){
+		var url = _cal.attr('data-url-calendar-next');
+		var direction = 'right';
+		callWeek(url,direction);
+	}
+
+	function callPreviousWeek(){
+		var url = _cal.attr('data-url-calendar-prev');
+		var direction = 'left';
+		callWeek(url,direction);
+	}
+
+	function callThisWeek(direction){
+		var url = _cal.attr('data-url-calendar-now');
+		callWeek(url,direction);
+	}
+
+	function callCurrentWeek(direction){
+		var url = _cal.attr('data-url-calendar-date');
+		var date = $('.events-weeks').attr('data-first-day');
+		url = url+'/'+date;
+		callWeek(url,direction);
+	}
+
+	$('a.calendar-nav-prev').livequery(function(){
+		$(this).click(function(e){
+			callPreviousWeek();
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		});
+	});
+
+	$('a.calendar-nav-next').livequery(function(){
+		$(this).click(function(e){
+			callNextWeek();
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		});
+	});
+
+	$('a.calendar-nav-now').livequery(function(){
+		$(this).click(function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			callThisWeek('prev');
+			return false;
+		});
+	});
+
+
+	
 
 	//Info bulle des activités
-	$('#calendar-content .events-link').livequery(function(){
+	_cal.find('.events-link').livequery(function(){
 		$(this).popover({
 			html:true,
 			trigger:'hover',
@@ -339,7 +495,7 @@ $(document).ready(function(){
 
 	//Sport button
 	//Submit form on click
-	$('.sportCheckbox, .periodRadio, #sport').change(function(e){
+	$('input[type=checkbox].sportCheckbox, input[type=radio].periodRadio, select#sport').change(function(e){
 		//call same week
 		callCurrentWeek();
 
@@ -356,161 +512,6 @@ $(document).ready(function(){
 	});
 
 
-	
-
-	function slideCalendar(direction,width){
-
-		duration = 500;
-
-		if(direction == 'right') {
-			contentPosition = width;
-			contentSliding = '-='+width;
-		}
-		if(direction == 'left') {
-			contentPosition = -width;
-			contentSliding = '+='+width;
-		}
-		if(typeof direction == 'undefined'){
-			contentPosition = -width;
-			contentSliding = '+='+width;
-			duration = 0;
-		}
-
-		$('#calendar-content').css('left',0);
-
-		$(".events-weeks:first").addClass('old-week');
-		$(".events-weeks:last").css({'left':contentPosition+'px'}).addClass('new-week');
-
-		$('.events-weeks').animate({
-			left:contentSliding,
-			},duration,function(){ ;
-				if(!$(this).hasClass('new-week')) $(this).remove();
-				$(this).removeClass('new-week').removeClass('old-week');				
-				return;
-		});
-	}
-
-	function setHeightCalendar(){
-
-		var heightCalendar = $("#calendar-content .events-weeks").height();
-		$("#calendar-content").css('height',heightCalendar);
-	}
-
-	function findNumberDayPerWeek(){
-
-		//Nombre de jour à afficher en fonction de la largeur de l'écran
-		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
-		
-		var screenWidth = $(window).width();
-		var nb;
-		for(var maxwidth in dayPerWeek){	
-			if(screenWidth<=maxwidth) return dayPerWeek[maxwidth];	
-		}
-		return 0;
-	}
-
-	function isCurrentWeek(){
-		
-		if($('.events-weeks:last').hasClass('current-week')) return true;
-		return false;
-	}
-
-	function callWeek(url,direction){		
-
-		$('#calendar-loader #loadingweeks').show();		
-		var screenWidth = $(window).width();
-		var form = $('#formSearch').serialize();
-		form += '&maxdays='+findNumberDayPerWeek();
-
-		$.ajax({
-			type:'GET',
-			url: url,
-			data : form,
-			success: function( data ){
-				
-				$("#calendar-content").append( data );				
-				
-				setHeightCalendar();
-
-				slideCalendar(direction,screenWidth);	  				
-				
-				if(isCurrentWeek()){					
-					$('.calendar-nav-prev').hide();
-				}
-				else{
-					$('.calendar-nav-prev').show();
-				}
-
-				$('#calendar-loader #loadingweeks').hide();
-
-
-			},
-			dataType:'html'
-		});		
-
-		return false;
-	}
-	function callNextWeek(){
-		var url = $('#calendar-content').attr('data-url-calendar-next');
-		var direction = 'right';
-		callWeek(url,direction);
-	}
-
-	function callPreviousWeek(){
-		var url = $('#calendar-content').attr('data-url-calendar-prev');
-		var direction = 'left';
-		callWeek(url,direction);
-	}
-
-	function callThisWeek(direction){
-		var url = $('#calendar-content').attr('data-url-calendar-now');
-		callWeek(url,direction);
-	}
-
-	function callCurrentWeek(direction){
-		var url = $('#calendar-content').attr('data-url-calendar-date');
-		var date = $('.events-weeks').attr('data-first-day');
-		url = url+'/'+date;
-		callWeek(url,direction);
-	}
-
-	$('.calendar-nav-prev').livequery(function(){
-		$(this).click(function(e){
-			callPreviousWeek();
-			e.preventDefault();
-			e.stopPropagation();
-			return false;
-		});
-	});
-
-	$('.calendar-nav-next').livequery(function(){
-		$(this).click(function(e){
-			callNextWeek();
-			e.preventDefault();
-			e.stopPropagation();
-			return false;
-		});
-	});
-
-	$('.calendar-nav-now').livequery(function(){
-		$(this).click(function(e){
-			e.preventDefault();
-			e.stopPropagation();
-			callThisWeek('prev');
-			return false;
-		});
-	});
-
-	/* detect mobile swipe event 
-	$('#calendar-content').swipe({
-		swipeLeft:function(event,direction,distance,duration,fingerCount){
-			callNextWeek();
-		},
-		swipeRight:function(event,direction,distance,duration,fingerCount){
-			callPreviousWeek();
-		}
-	});
-*/
 
 
 	//Demo Tourbus

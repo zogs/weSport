@@ -673,10 +673,10 @@ div.mm-is-menu * {
 		content:'';
 		display: block;
 		position:absolute;
-		top:12px;
-		left:50px;
+		top:20px;
+		left:30px;
 		width:100%;
-		height:150px;
+		height:100px;
 		z-index:0;
 		@include rotate(-40deg);
 		background-color:rgba(0,0,0,0.1);
@@ -702,7 +702,7 @@ div.mm-is-menu * {
 			border:10px solid #FFF; 
 			@include border-radius(100px);
 			@include transition(0.2s ease);				
-			/*@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
+			@include rotate3d(0, 0, 0, 0deg); /* activation de l'AM */
 			
 		}
 
@@ -872,7 +872,9 @@ div.mm-is-menu * {
 			height:100%; 
 			text-align: center;
 			background-color:$deepred;
-			a{
+
+			a.calendar-nav-prev{
+				display: none;
 				position: relative;
 				padding:10px 50px;
 				color:$darkred;
@@ -907,7 +909,8 @@ div.mm-is-menu * {
 			vertical-align: middle;	height:100%; 
 			text-align: center;
 			background-color:$deepgreen;
-			a{
+			
+			a.calendar-nav-prev{
 				position: relative;
 				padding:7px 50px;
 				color:$darkgreen;
