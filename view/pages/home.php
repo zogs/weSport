@@ -278,10 +278,12 @@ $(document).ready(function(){
 		if(Math.sqrt(Math.pow(x,2))<10) return;
 		//if the drag distance is superior to the trigger width
 		if(x>=_w) {
+			_cal.css('left',_w);
 			lockPrev(); //set lock to previous
 			return;
 		}
 		if(x<=-_w) {
+			_cal.css('left',-_w);
 			lockNext(); //set lock to next week
 			return;
 		}
