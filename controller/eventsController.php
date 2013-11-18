@@ -857,7 +857,7 @@ class EventsController extends Controller{
 		$json = json_decode($json);
 
 		//if weather data is not retrieve, that mean taht the request limit have been reached		
-		if(!isset($json->data)){
+		if(!isset($json->data->weather)){
 			$this->set('error','max_limit_request');
 			return;
 		}
