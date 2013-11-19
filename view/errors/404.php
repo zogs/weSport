@@ -19,7 +19,7 @@
 					<h1><?php echo $title; ?></h1>
 				</div>
 				<div class="message">
-					Désolé... <?php echo $message; ?>		
+					<?php echo $message; ?>		
 				</div>
 				<div class="forgive">
 					Pour nous faire pardonner, voila une petite image aléatoire :)

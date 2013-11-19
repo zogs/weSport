@@ -36,8 +36,6 @@
 
  	/*=======================================
  	Show the whole comment system
- 	@param $context ( manif, group, user ...)
- 	@param $context_id int
  	========================================*/
  	public function show( $params = array()){
 
@@ -59,7 +57,9 @@
 
  	}
 
- 	private function overrideConfig( $config = array() ){ 		
+ 	private function overrideConfig( $config ){ 		
+
+ 		if(empty($config)) return;
 
  		foreach ($config as $key => $value) {			
  			if(isset($this->$key)) {
@@ -214,8 +214,8 @@
  		$d = array();
 
  		//if no POST data
- 		if(!$this->request->post()) throw new zException("No post data sended",1);
- 		else $com = $this->request->post();
+ 		if(!$this->request->get()) throw new zException("No post data sended",1);
+ 		else $com = $this->request->get();
 
  		//if there is a user logged in
  		if($this->session->user()->isLog()){
@@ -224,13 +224,18 @@
  			$com->user_id = $this->session->user()->getID();
  			$com->lang = $this->getLang();
 
+ 			//encode to prevent XSS for user != admin
+ 			if(!$this->session->user()->isAdmin())
+ 				$com->content = String::htmlEncode($com->content);
+
+
  			if($id = $this->Comments->saveComment($com)){
 
 
  				if($com->context=='events'){
 
  					$event = new EventsController();
- 					$event->sendMailNewComment($com->context_id,$id);
+ 					//$event->sendMailNewComment($com->context_id,$id);
  				}
  				
 

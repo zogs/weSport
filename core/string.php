@@ -108,4 +108,13 @@ class String {
 		return true;
 	}
 
+	static function htmlEncode($s,$encode = 'UTF-8') {
+    	return htmlspecialchars($s, ENT_QUOTES, $encode);
+	}
+
+	static function htmlDecode($s){
+		return htmlspecialchars_decode($s, ENT_QUOTES);
+	}
+
+
 } ?>

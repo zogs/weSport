@@ -439,7 +439,7 @@ $(document).ready(function(){
 	        	//send POST request
 	            $.ajax({
 	            	url:url, 
-	            	type:"POST", 
+	            	type:"GET", 
 	            	data: data, 
 	            	dataType: 'json',
 	                success: function( com ){

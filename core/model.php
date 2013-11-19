@@ -676,6 +676,9 @@ public function validates($data, $rules = null, $field = null){
 							$now = date('Y/m/d');		
 							if(strtotime($data->$field) < strtotime($now)) $errors[$field] = $rule['message'];
 						}
+						elseif($rule['rule']=='encodeHTML'){
+							$data->$field = String::htmlEncode($data->$field);							
+						}
 						elseif($rule['rule']=='file'){
 							continue;
 						}

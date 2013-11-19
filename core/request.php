@@ -55,6 +55,8 @@ class Request{
 	}
 
 
+
+
 	//Renvoi le parametre GET demandé ou renvoi false
 	public function get($param = null){	
 

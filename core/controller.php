@@ -43,7 +43,11 @@ class Controller {
 		
 		//redirect on facebook connect method if its a facebook log in request
 		if((isset($_GET['fb_source']) || isset($_GET['fb_connect'])) && isset($_GET['code'])) $this->redirect('users/facebook_connect?code='.$_GET['code'].'&source='.(isset($_GET['fb_source'])? $_GET['fb_source'] : ''));		
-		
+		//redirect error if facebook return error
+		if(isset($_GET['fb_connect']) && isset($_GET['error'])){
+			$msg = "Facebook a retourné une erreur : <i>".(isset($_GET['error_description'])? $_GET['error_description']:'')."</i><br /><small>( Pensez à bien autoriser l'application si ce n'est pas encore fait ! )</small>";
+			$this->e404($msg,"Aïe !");
+		}
 
 		
 	}
@@ -102,6 +106,26 @@ class Controller {
 		$this->rendered = true;
 	
 	}
+
+	//Rend la vue Erreur 404
+	//@param string $message 
+	//@param string $oups 
+	public function e404($message = 'Page introuvable', $title = '404'){
+
+		header("HTTP/1.0 404 Not Found"); 
+		$this->set('message',$message);
+		$this->set('title',$title);
+		$this->view = 'errors/404';
+
+		//reset GET params
+		if(!empty($_GET)) $_GET = null;
+
+		$this->render();
+		
+		die();
+		
+	}
+
 
 	//Permet de créer une variable du controller
 	//@params $key : nom de la variable
@@ -194,20 +218,7 @@ class Controller {
 		}
 	}
 
-	//Rend la vue Erreur 404
-	//@param string $message 
-	//@param string $oups 
-	public function e404($message = 'Page introuvable', $title = '404'){
 
-		header("HTTP/1.0 404 Not Found"); 
-		$this->set('message',$message);
-		$this->set('title',$title);
-		$this->view = 'errors/404';
-		$this->render();
-		
-		die();
-		
-	}
 
 	//Permet d'appeler un controller depuis une vue
 	// @params 
