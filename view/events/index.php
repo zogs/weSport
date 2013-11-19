@@ -83,7 +83,7 @@
 					?>
 
 					<div class="addEvent">
-						<a class="tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>" draggable='false'><span class="ws-icon ws-icon-plus-alt"></span></a>
+						<a class="tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>" draggable='false' ondragstart="return false;"><span class="ws-icon ws-icon-plus-alt"></span></a>
 					</div>
 				</td>
 			<?php

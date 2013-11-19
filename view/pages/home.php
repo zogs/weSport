@@ -269,6 +269,8 @@ $(document).ready(function(){
 	function revert(){
 		_cal.animate({left:0}, _w, 'swing');
 	}
+
+
 	function dragCalendar(e){
 		//distance between mouse coord and initial coord
 		var x = _xO + getClientX(e) - _mxO;
