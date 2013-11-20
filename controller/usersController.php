@@ -67,7 +67,7 @@ class UsersController extends Controller{
 						}
 						//else the user is using the navbar formular, redirect current page
 						else {
-							$this->reload();
+							$this->redirect('/');
 						}			
 					
 					}
