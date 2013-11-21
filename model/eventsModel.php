@@ -489,15 +489,8 @@ class EventsModel extends Model{
 			$tab[':lang'] = Conf::$languageDefault;
 			$res = $this->query($sql,$tab);
 		}
-		$sports = array();
-		//set the 'other' sport at the end of the list
-		foreach ($res as $k => $v) {
-			if($v->slug!='other') $sports[] = $v;
-			else $other = $v;
-		}
-		$sports[] = $other;
 		
-		return $sports;
+		return $res;
 	}
 
 	public function findSportsList($lang){

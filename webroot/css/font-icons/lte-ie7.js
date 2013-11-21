@@ -107,7 +107,9 @@ window.onload = function() {
 			'ws-icon-arrow-up' : '&#xe01d;',
 			'ws-icon-arrow-down' : '&#xe01e;',
 			'ws-icon-loop' : '&#xe01f;',
-			'ws-icon-office' : '&#xe020;'
+			'ws-icon-office' : '&#xe020;',
+			'ws-icon-martial-art' : '&#xe021;',
+			'ws-icon-target' : '&#xe022;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;

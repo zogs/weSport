@@ -114,7 +114,7 @@ class EventsController extends Controller{
 
 
 		//if one sport is selected
-		if(!empty($params['sport']) && trim($params['sport'])!=''){			
+		if(!empty($params['sport']) && is_string($params['sport']) && trim($params['sport'])!=''){			
 			if(!empty($query['sports']) && is_array($query['sports'])) $query['sports'][] = $params['sport'];
 			else $query['sports'] = array($params['sport']);
 			if(!empty($cookie['sport']) && is_array($cookie['sport'])) $cookie['sport'][] = $params['sport'];
@@ -613,7 +613,9 @@ class EventsController extends Controller{
 		
 		}
 		
-		$d['sports_available'] = $this->Events->findSportsList($this->getLang());
+		$sports = $this->Events->findSportsList($this->getLang());		
+		unset($sports['other']);
+		$d['sports_available'] = $sports;
 
 		$eventfutur = $this->Events->findEvents(array('tempo'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
 		$eventfutur = $this->Events->joinSports($eventfutur,$this->getLang());
