@@ -238,13 +238,13 @@ class PagesController extends Controller {
 			$d['all_tables'] = $this->Pages->findAllTables();
 
 			if($data = $this->request->post()){
-				
-				if(isset($data->table_choice) && !empty($data->table)){
+						
+				if(!empty($data->table)){
 
 					$d['all_fields'] = $this->Pages->findFieldsForTable($data->table);
 					$d['primaryKey'] = $this->Pages->findPrimaryKeyForTable($data->table);
 					$d['table'] = $data->table;
-				}
+				}				
 
 				if(isset($data->query)){
 

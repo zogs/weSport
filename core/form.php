@@ -172,7 +172,7 @@ class Form{
 			$html .= '<input type="password" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		elseif($options['type']=='submit'){
-			$html .= '<input type="submit" id="'.$id.'" value="'.$value.'" '.$attr.'>';
+			$html .= '<input type="submit" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
 		}
 		else{
 			$html .= '<input type="'.$options['type'].'" id="'.$id.'" name="'.$id.'" value="'.$value.'" '.$attr.'>';
