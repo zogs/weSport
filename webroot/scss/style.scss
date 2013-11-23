@@ -2972,6 +2972,16 @@ TYPEAHEAD CUSTOM STYLE
 			}
 			
 		}	
+
+		.events-weeks table{
+			td.colomn-1 { box-shadow:none;	}
+			td.colomn-2 { box-shadow:none;}
+			td.colomn-3 { box-shadow:none;}
+			td.colomn-4 { box-shadow:none;}
+			td.colomn-5 { box-shadow:none;}
+			td.colomn-6 { box-shadow:none;}
+			td.colomn-7 { box-shadow:none;}
+		}
 	}
 
 h1.title-sheet{
@@ -3204,6 +3214,16 @@ h1.title-sheet{
 				display:none;
 			}
 		}
+	}
+
+	.events-weeks table{
+			td.colomn-1 { box-shadow:none;}
+			td.colomn-2 { box-shadow:none;}
+			td.colomn-3 { box-shadow:none;}
+			td.colomn-4 { box-shadow:none;}
+			td.colomn-5 { box-shadow:none;}
+			td.colomn-6 { box-shadow:none;}
+			td.colomn-7 { box-shadow:none;}
 	}
 
    #formSearch{

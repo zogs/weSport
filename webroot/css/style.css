@@ -3918,112 +3918,140 @@ TYPEAHEAD CUSTOM STYLE
   .calendar .calendar-header .week-nav a.calendar-nav-link:after, .calendar .calendar-header .week-nav a.calendar-nav-link:before {
     display: none;
   }
-
   /* line 2977, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-1 {
+    box-shadow: none;
+  }
+  /* line 2978, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-2 {
+    box-shadow: none;
+  }
+  /* line 2979, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-3 {
+    box-shadow: none;
+  }
+  /* line 2980, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-4 {
+    box-shadow: none;
+  }
+  /* line 2981, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-5 {
+    box-shadow: none;
+  }
+  /* line 2982, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-6 {
+    box-shadow: none;
+  }
+  /* line 2983, ../scss/style.scss */
+  .calendar .events-weeks table td.colomn-7 {
+    box-shadow: none;
+  }
+
+  /* line 2987, ../scss/style.scss */
   h1.title-sheet {
     font-size: 14px;
     font-size: 1.4rem;
   }
 
-  /* line 2983, ../scss/style.scss */
+  /* line 2993, ../scss/style.scss */
   .form-ws {
     width: 100%;
     float: left;
   }
-  /* line 2986, ../scss/style.scss */
+  /* line 2996, ../scss/style.scss */
   .form-ws .control-submit {
     width: 100%;
   }
 
-  /* line 2992, ../scss/style.scss */
+  /* line 3002, ../scss/style.scss */
   .form-register .control-radio {
     display: block;
     width: 100%;
   }
 
-  /* line 2998, ../scss/style.scss */
+  /* line 3008, ../scss/style.scss */
   .form-facebook {
     width: 100%;
     float: left;
   }
 
-  /* line 3004, ../scss/style.scss */
+  /* line 3014, ../scss/style.scss */
   .createEvent .col_large {
     width: 100%;
     padding: 0;
   }
-  /* line 3008, ../scss/style.scss */
+  /* line 3018, ../scss/style.scss */
   .createEvent .col_large .control-group .control-label {
     width: 25%;
   }
-  /* line 3015, ../scss/style.scss */
+  /* line 3025, ../scss/style.scss */
   .createEvent .col_small {
     width: 100%;
     padding: 0;
   }
 
-  /* line 3022, ../scss/style.scss */
+  /* line 3032, ../scss/style.scss */
   .viewevent .container {
     width: 100%;
   }
-  /* line 3025, ../scss/style.scss */
+  /* line 3035, ../scss/style.scss */
   .viewevent .container .content-header .header-left {
     width: 100%;
   }
-  /* line 3028, ../scss/style.scss */
+  /* line 3038, ../scss/style.scss */
   .viewevent .container .content-header .event-sportLogo {
     width: 100%;
     text-align: center;
   }
-  /* line 3032, ../scss/style.scss */
+  /* line 3042, ../scss/style.scss */
   .viewevent .container .content-header h1.event-title {
     width: 100%;
     text-align: center;
   }
-  /* line 3035, ../scss/style.scss */
+  /* line 3045, ../scss/style.scss */
   .viewevent .container .content-header h1.event-title .fb-like {
     display: none;
   }
-  /* line 3038, ../scss/style.scss */
+  /* line 3048, ../scss/style.scss */
   .viewevent .container .content-header .header-right {
     width: 100%;
   }
-  /* line 3039, ../scss/style.scss */
+  /* line 3049, ../scss/style.scss */
   .viewevent .container .content-header .orga-avatar {
     width: 20%;
   }
-  /* line 3040, ../scss/style.scss */
+  /* line 3050, ../scss/style.scss */
   .viewevent .container .content-header .orga-info {
     width: 70%;
   }
-  /* line 3041, ../scss/style.scss */
+  /* line 3051, ../scss/style.scss */
   .viewevent .container .content-header .orga-name {
     font-size: 18px;
     font-size: 1.8rem;
   }
-  /* line 3045, ../scss/style.scss */
+  /* line 3055, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-action {
     width: 100%;
     margin: 10px 0;
     text-align: center;
   }
-  /* line 3049, ../scss/style.scss */
+  /* line 3059, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-action .btn-ws {
     padding: 10px 20px;
   }
-  /* line 3053, ../scss/style.scss */
+  /* line 3063, ../scss/style.scss */
   .viewevent .container .event-action-bar .event-status {
     width: 100%;
     margin: 10px 0;
     text-align: center;
     margin-top: 2px;
   }
-  /* line 3061, ../scss/style.scss */
+  /* line 3071, ../scss/style.scss */
   .viewevent .container .col_large {
     width: 100%;
     padding: 10px 1%;
   }
-  /* line 3064, ../scss/style.scss */
+  /* line 3074, ../scss/style.scss */
   .viewevent .container .col_large .event-info {
     padding: 5px 2px;
     margin-bottom: 0;
@@ -4031,113 +4059,113 @@ TYPEAHEAD CUSTOM STYLE
     font-size: 20px;
     font-size: 2rem;
   }
-  /* line 3074, ../scss/style.scss */
+  /* line 3084, ../scss/style.scss */
   .viewevent .container .col_small {
     width: 100%;
     padding: 0;
     margin-top: 50px;
   }
-  /* line 3078, ../scss/style.scss */
+  /* line 3088, ../scss/style.scss */
   .viewevent .container .col_small #eventmap {
     width: 100%;
   }
 
-  /* line 3087, ../scss/style.scss */
+  /* line 3097, ../scss/style.scss */
   .viewuser .container {
     width: 100%;
   }
-  /* line 3090, ../scss/style.scss */
+  /* line 3100, ../scss/style.scss */
   .viewuser .container .content-header .header-left {
     width: 100%;
   }
-  /* line 3094, ../scss/style.scss */
+  /* line 3104, ../scss/style.scss */
   .viewuser .container .content-header .header-right {
     width: 100%;
   }
-  /* line 3098, ../scss/style.scss */
+  /* line 3108, ../scss/style.scss */
   .viewuser .container .content-header .user-login img {
     width: 60px;
     height: 60px;
   }
-  /* line 3099, ../scss/style.scss */
+  /* line 3109, ../scss/style.scss */
   .viewuser .container .content-header .user-login h1 {
     display: inline-block;
     font-size: 25px;
     font-size: 2.5rem;
     white-space: nowrap;
   }
-  /* line 3101, ../scss/style.scss */
+  /* line 3111, ../scss/style.scss */
   .viewuser .container .content-header .user-descr {
     display: block;
   }
-  /* line 3105, ../scss/style.scss */
+  /* line 3115, ../scss/style.scss */
   .viewuser .container .content-header .user-info span {
     text-align: left;
   }
-  /* line 3110, ../scss/style.scss */
+  /* line 3120, ../scss/style.scss */
   .viewuser .container .user-status .count_activity {
     float: left;
     width: auto;
     margin-right: 10px;
   }
-  /* line 3115, ../scss/style.scss */
+  /* line 3125, ../scss/style.scss */
   .viewuser .container .user-status .which_activity {
     float: left;
     width: auto;
   }
-  /* line 3120, ../scss/style.scss */
+  /* line 3130, ../scss/style.scss */
   .viewuser .container .col_large {
     width: 100%;
     margin-top: 20px;
     padding: 0 2%;
   }
-  /* line 3125, ../scss/style.scss */
+  /* line 3135, ../scss/style.scss */
   .viewuser .container .col_small {
     width: 100%;
     margin-top: 20px;
     padding: 0 2%;
   }
 
-  /* line 3134, ../scss/style.scss */
+  /* line 3144, ../scss/style.scss */
   #account .container {
     width: 100%;
   }
-  /* line 3136, ../scss/style.scss */
+  /* line 3146, ../scss/style.scss */
   #account .container .col_small {
     width: 100%;
     padding: 10px 5px;
   }
-  /* line 3140, ../scss/style.scss */
+  /* line 3150, ../scss/style.scss */
   #account .container .col_large {
     width: 100%;
     padding: 0 5px;
   }
-  /* line 3143, ../scss/style.scss */
+  /* line 3153, ../scss/style.scss */
   #account .container .col_large #account-form {
     padding: 0 5px;
     margin-top: 0;
   }
-  /* line 3144, ../scss/style.scss */
+  /* line 3154, ../scss/style.scss */
   #account .container .col_large #account-form h2 {
     text-align: center;
     font-size: 25px;
     font-size: 2.5rem;
   }
 
-  /* line 3157, ../scss/style.scss */
+  /* line 3167, ../scss/style.scss */
   .contact .form-contact {
     width: 90%;
     padding: 10px 5%;
   }
 
-  /* line 3162, ../scss/style.scss */
+  /* line 3172, ../scss/style.scss */
   .footer {
     display: none;
   }
 }
 /* very small smartphone */
 @media only screen and (max-width: 240px) {
-  /* line 3170, ../scss/style.scss */
+  /* line 3180, ../scss/style.scss */
   .form-register .control-radio {
     display: block;
     width: 100%;
@@ -4145,74 +4173,103 @@ TYPEAHEAD CUSTOM STYLE
 }
 /* Tablets landscape and Small computer----------- */
 @media only screen and (min-width: 770px) and (max-width: 1300px) {
-  /* line 3182, ../scss/style.scss */
+  /* line 3192, ../scss/style.scss */
   .navbar-ws {
     padding: 0;
   }
-  /* line 3184, ../scss/style.scss */
+  /* line 3194, ../scss/style.scss */
   .navbar-ws .mobilesMenus {
     display: none;
   }
-  /* line 3189, ../scss/style.scss */
+  /* line 3199, ../scss/style.scss */
   .navbar-ws .desktop-menu ul.nav li a.weSport img.wesport {
     display: none;
   }
-  /* line 3191, ../scss/style.scss */
+  /* line 3201, ../scss/style.scss */
   .navbar-ws .desktop-menu ul.nav li a {
     font-size: 18px;
     font-size: 1.8rem;
   }
-  /* line 3195, ../scss/style.scss */
+  /* line 3205, ../scss/style.scss */
   .navbar-ws .desktop-menu ul.nav li.searchbar {
     width: 320px;
   }
-  /* line 3199, ../scss/style.scss */
+  /* line 3209, ../scss/style.scss */
   .navbar-ws .desktop-menu ul.menu-small {
     display: inline;
   }
-  /* line 3201, ../scss/style.scss */
+  /* line 3211, ../scss/style.scss */
   .navbar-ws .desktop-menu ul.menu-small li a span.nav-login {
     display: none;
   }
-  /* line 3203, ../scss/style.scss */
+  /* line 3213, ../scss/style.scss */
   .navbar-ws .desktop-menu ul.menu-full, .navbar-ws .desktop-menu ul.nav li.menu-full {
     display: none;
   }
 
-  /* line 3209, ../scss/style.scss */
+  /* line 3220, ../scss/style.scss */
+  .events-weeks table td.colomn-1 {
+    box-shadow: none;
+  }
+  /* line 3221, ../scss/style.scss */
+  .events-weeks table td.colomn-2 {
+    box-shadow: none;
+  }
+  /* line 3222, ../scss/style.scss */
+  .events-weeks table td.colomn-3 {
+    box-shadow: none;
+  }
+  /* line 3223, ../scss/style.scss */
+  .events-weeks table td.colomn-4 {
+    box-shadow: none;
+  }
+  /* line 3224, ../scss/style.scss */
+  .events-weeks table td.colomn-5 {
+    box-shadow: none;
+  }
+  /* line 3225, ../scss/style.scss */
+  .events-weeks table td.colomn-6 {
+    box-shadow: none;
+  }
+  /* line 3226, ../scss/style.scss */
+  .events-weeks table td.colomn-7 {
+    box-shadow: none;
+  }
+
+  /* line 3229, ../scss/style.scss */
   #formSearch {
     width: 100%;
   }
-  /* line 3214, ../scss/style.scss */
+  /* line 3234, ../scss/style.scss */
   #formSearch .sportCheckboxs .sportChoice label span {
     font-size: 30px;
     font-size: 3rem;
   }
-  /* line 3218, ../scss/style.scss */
+  /* line 3238, ../scss/style.scss */
   #formSearch .calendar .calendar-header {
     margin-bottom: 10px;
   }
-  /* line 3221, ../scss/style.scss */
+  /* line 3241, ../scss/style.scss */
   #formSearch .calendar .calendar-period {
     visibility: hidden;
   }
 
-  /* line 3228, ../scss/style.scss */
+  /* line 3248, ../scss/style.scss */
   div.col_large {
     width: 60%;
   }
 
-  /* line 3231, ../scss/style.scss */
+  /* line 3251, ../scss/style.scss */
   div.col_small {
     width: 40%;
   }
 
-  /* line 3236, ../scss/style.scss */
+  /* line 3256, ../scss/style.scss */
   .createEvent .container {
     width: 100%;
   }
 
-  /* line 3241, ../scss/style.scss */
+  /* line 3261, ../scss/style.scss */
   .connexion .container {
     width: 100%;
   }
