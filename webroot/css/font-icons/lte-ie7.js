@@ -72,11 +72,9 @@ window.onload = function() {
 			'ws-icon-thumbs-up-2' : '&#x62;',
 			'ws-icon-loupe' : '&#x64;',
 			'ws-icon-plus-alt' : '&#x63;',
-			'ws-icon-danse' : '&#x65;',
 			'ws-icon-voile' : '&#x66;',
 			'ws-icon-paintball' : '&#x21;',
 			'ws-icon-flying' : '&#xe000;',
-			'ws-icon-other' : '&#xe002;',
 			'ws-icon-swimming' : '&#xe003;',
 			'ws-icon-busy' : '&#xe004;',
 			'ws-icon-neutral' : '&#xe005;',
@@ -109,7 +107,10 @@ window.onload = function() {
 			'ws-icon-office' : '&#xe020;',
 			'ws-icon-martial-art' : '&#xe021;',
 			'ws-icon-target' : '&#xe022;',
-			'ws-icon-fighting' : '&#xe001;'
+			'ws-icon-fighting' : '&#xe001;',
+			'ws-icon-athle' : '&#xe023;',
+			'ws-icon-danse' : '&#xe024;',
+			'ws-icon-gym' : '&#xe025;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
