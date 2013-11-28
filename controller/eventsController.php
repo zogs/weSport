@@ -614,7 +614,6 @@ class EventsController extends Controller{
 		}
 		
 		$sports = $this->Events->findSportsList($this->getLang());		
-		unset($sports['other']);
 		$d['sports_available'] = $sports;
 
 		$eventfutur = $this->Events->findEvents(array('tempo'=>'futur','conditions'=>array('user_id'=>$this->session->user()->getID())));
