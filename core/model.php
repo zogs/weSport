@@ -739,11 +739,33 @@ public function validates($data, $rules = null, $field = null){
 		 				else {
 
 		 					//if the upload is optional , continue
-		 					if(isset($validates[$key]['optional'])) continue;
+		 					if(isset($validates[$key]['optional'])) continue;		 					
 
-		 					//if the upload is required
+		 					//if error
+		 					$error = $file['error'];
+							switch($error)
+							{
+								case 1:
+								$msg = "L'image est trop grosse...";
+								break;
+
+								case 2:
+								$msg = "L'image est trop grosse.";
+								break;
+
+								case 3:
+								$msg = "Le téléchargement à échoue, veuillez réessayer.";
+								break;
+
+								case 4:
+								$msg = "Veuillez choisir un fichier";
+								break;
+			 				}
+			 				$errors[$input] = $msg;
+
+			 				//if the upload is required
 		 					if(isset($validates[$key]['required']))
-		 						$errors[$input] =$validates[$key]['message'];
+		 						$errors[$input] = $validates[$key]['message'];
 		 				}
 		 			}
 		 			else {
