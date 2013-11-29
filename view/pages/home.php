@@ -348,7 +348,7 @@ $(document).ready(function(){
 
 	function setHeightCalendar(){
 
-		var heightCalendar = _cal.find(".events-weeks").height();
+		var heightCalendar = _cal.find(".events-weeks").height();		
 		_cal.css('height',heightCalendar);
 	}
 

@@ -161,7 +161,7 @@ $fontgrey:#9e9e34;
 }
 
 
-/* Scroll bar */
+/* Scroll bar 
 ::-webkit-scrollbar {  
     width: 15px;  
 }  
@@ -182,6 +182,8 @@ $fontgrey:#9e9e34;
     box-shadow:inset -5px 0 6px rgba(0,0,0,0.3);
     
 } 
+*/
+
 .disable-select {
   -webkit-user-select: none;  
   -moz-user-select: none;    
@@ -1024,8 +1026,8 @@ div.mm-is-menu * {
 
 		.calendar-content{			
 			width:100%;
-			height:100%;
-			min-height:1000px;
+			//height:100%;
+			//min-height:1000px;
 			position:relative;
 			top:-1px;
 			@extend %clearfix;

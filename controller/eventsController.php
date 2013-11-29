@@ -482,13 +482,7 @@ class EventsController extends Controller{
 			if(!$evt->isAdmin($this->session->user()->getID())){
 				$this->session->setFlash("Vous n'êtes pas le créateur de cette annonce","error");				
 				$this->redirect('users/login');			
-			}	
-			
-			//if event is confirm , dont allow modification
-			if($evt->isConfirm()){				
-				$this->session->setFlash('Cette activité a été confirmé, vous ne pouvez la modifier !','danger');
-				$this->request->data = null;
-			}		
+			}						
 			
 		}
 		else{
