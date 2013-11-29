@@ -13,7 +13,7 @@
 
         <div class="navbar-ws navbar navbar-fixed-top">            
                 <ul class="nav">
-                        <li><a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+                        <li><a class="weSport" id="weSportBrand" href="<?php echo Router::url('admin/');?>" title="Du Sport ! Vite !">
                                 <img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">                           
                                 <img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">                     
                         </a>
