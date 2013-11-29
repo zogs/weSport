@@ -3,7 +3,7 @@
 </div>
 
 <div>
-	<a href="https://www.google.com/analytics/web/?hl=fr&pli=1#report/visitors-overview/a42468932w72230201p74541839/">Google Analytics</a>
+	<a href="https://www.google.com/analytics/web/?hl=fr&pli=1#report/visitors-overview/a42468932w72230201p74541839/" target="_blank">Google Analytics</a>
 </div>
 
 <div>
