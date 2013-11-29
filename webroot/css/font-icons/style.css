@@ -28,7 +28,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="ws-icon-"] {
 */
-.ws-icon-relaxation, .ws-icon-volley, .ws-icon-velo, .ws-icon-ultimate, .ws-icon-tree, .ws-icon-tennis, .ws-icon-surf, .ws-icon-squash, .ws-icon-ski, .ws-icon-skate, .ws-icon-running, .ws-icon-rugby, .ws-icon-roller, .ws-icon-rando, .ws-icon-pingpong, .ws-icon-patin, .ws-icon-laser, .ws-icon-kayak, .ws-icon-karting, .ws-icon-horse, .ws-icon-handball, .ws-icon-golf, .ws-icon-FootUS, .ws-icon-foot, .ws-icon-fitness, .ws-icon-climbing, .ws-icon-circus, .ws-icon-bowls, .ws-icon-bowling, .ws-icon-bmx, .ws-icon-billard, .ws-icon-basketball, .ws-icon-baseball, .ws-icon-badminton, .ws-icon-phone, .ws-icon-location, .ws-icon-location-2, .ws-icon-tags, .ws-icon-tag, .ws-icon-alarm, .ws-icon-stopwatch, .ws-icon-calendar, .ws-icon-compass, .ws-icon-map, .ws-icon-map-2, .ws-icon-calendar-2, .ws-icon-bubble, .ws-icon-bubbles, .ws-icon-bubbles-2, .ws-icon-bubble-2, .ws-icon-bubbles-3, .ws-icon-bubbles-4, .ws-icon-user, .ws-icon-users, .ws-icon-thumbs-up, .ws-icon-heart, .ws-icon-heart-2, .ws-icon-star, .ws-icon-star-2, .ws-icon-happy, .ws-icon-happy-2, .ws-icon-smiley, .ws-icon-smiley-2, .ws-icon-thumbs-up-2, .ws-icon-loupe, .ws-icon-plus-alt, .ws-icon-voile, .ws-icon-paintball, .ws-icon-flying, .ws-icon-swimming, .ws-icon-busy, .ws-icon-neutral, .ws-icon-smiley-3, .ws-icon-menu, .ws-icon-cog, .ws-icon-exit, .ws-icon-lightning, .ws-icon-envelop, .ws-icon-library, .ws-icon-book, .ws-icon-pacman, .ws-icon-enter, .ws-icon-quill, .ws-icon-home, .ws-icon-blocked, .ws-icon-cancel-circle, .ws-icon-checkmark-circle, .ws-icon-spam, .ws-icon-close, .ws-icon-checkmark, .ws-icon-checkmark-2, .ws-icon-info, .ws-icon-info-2, .ws-icon-arrow-left, .ws-icon-arrow-right, .ws-icon-arrow-up, .ws-icon-arrow-down, .ws-icon-loop, .ws-icon-office, .ws-icon-martial-art, .ws-icon-target, .ws-icon-fighting, .ws-icon-athle, .ws-icon-danse, .ws-icon-gym {
+.ws-icon-relaxation, .ws-icon-volley, .ws-icon-velo, .ws-icon-ultimate, .ws-icon-tree, .ws-icon-tennis, .ws-icon-surf, .ws-icon-squash, .ws-icon-ski, .ws-icon-skate, .ws-icon-running, .ws-icon-rugby, .ws-icon-roller, .ws-icon-rando, .ws-icon-pingpong, .ws-icon-patin, .ws-icon-laser, .ws-icon-kayak, .ws-icon-karting, .ws-icon-horse, .ws-icon-handball, .ws-icon-FootUS, .ws-icon-foot, .ws-icon-fitness, .ws-icon-circus, .ws-icon-bowls, .ws-icon-bmx, .ws-icon-billard, .ws-icon-basketball, .ws-icon-baseball, .ws-icon-badminton, .ws-icon-phone, .ws-icon-location, .ws-icon-location-2, .ws-icon-tags, .ws-icon-tag, .ws-icon-alarm, .ws-icon-stopwatch, .ws-icon-calendar, .ws-icon-compass, .ws-icon-map, .ws-icon-map-2, .ws-icon-calendar-2, .ws-icon-bubble, .ws-icon-bubbles, .ws-icon-bubbles-2, .ws-icon-bubble-2, .ws-icon-bubbles-3, .ws-icon-bubbles-4, .ws-icon-user, .ws-icon-users, .ws-icon-thumbs-up, .ws-icon-heart, .ws-icon-heart-2, .ws-icon-star, .ws-icon-star-2, .ws-icon-happy, .ws-icon-happy-2, .ws-icon-smiley, .ws-icon-smiley-2, .ws-icon-thumbs-up-2, .ws-icon-loupe, .ws-icon-paintball, .ws-icon-flying, .ws-icon-swimming, .ws-icon-busy, .ws-icon-neutral, .ws-icon-smiley-3, .ws-icon-menu, .ws-icon-cog, .ws-icon-exit, .ws-icon-lightning, .ws-icon-envelop, .ws-icon-library, .ws-icon-book, .ws-icon-pacman, .ws-icon-enter, .ws-icon-quill, .ws-icon-home, .ws-icon-blocked, .ws-icon-cancel-circle, .ws-icon-checkmark-circle, .ws-icon-spam, .ws-icon-close, .ws-icon-checkmark, .ws-icon-checkmark-2, .ws-icon-info, .ws-icon-info-2, .ws-icon-arrow-left, .ws-icon-arrow-right, .ws-icon-arrow-up, .ws-icon-arrow-down, .ws-icon-loop, .ws-icon-office, .ws-icon-martial-art, .ws-icon-target, .ws-icon-fighting, .ws-icon-athle, .ws-icon-danse, .ws-icon-gym, .ws-icon-climbing, .ws-icon-voile, .ws-icon-bowling, .ws-icon-board-games, .ws-icon-video-games, .ws-icon-golf {
 	font-family: 'ws-font';
 	speak: none;
 	font-style: normal;
@@ -101,9 +101,6 @@ you can use the generic selector below, but it's slower:
 .ws-icon-handball:before {
 	content: "\37";
 }
-.ws-icon-golf:before {
-	content: "\38";
-}
 .ws-icon-FootUS:before {
 	content: "\39";
 }
@@ -113,17 +110,11 @@ you can use the generic selector below, but it's slower:
 .ws-icon-fitness:before {
 	content: "\3b";
 }
-.ws-icon-climbing:before {
-	content: "\3c";
-}
 .ws-icon-circus:before {
 	content: "\3d";
 }
 .ws-icon-bowls:before {
 	content: "\3e";
-}
-.ws-icon-bowling:before {
-	content: "\3f";
 }
 .ws-icon-bmx:before {
 	content: "\40";
@@ -232,12 +223,6 @@ you can use the generic selector below, but it's slower:
 }
 .ws-icon-loupe:before {
 	content: "\64";
-}
-.ws-icon-plus-alt:before {
-	content: "\63";
-}
-.ws-icon-voile:before {
-	content: "\66";
 }
 .ws-icon-paintball:before {
 	content: "\21";
@@ -352,4 +337,22 @@ you can use the generic selector below, but it's slower:
 }
 .ws-icon-gym:before {
 	content: "\e025";
+}
+.ws-icon-climbing:before {
+	content: "\e002";
+}
+.ws-icon-voile:before {
+	content: "\e026";
+}
+.ws-icon-bowling:before {
+	content: "\e027";
+}
+.ws-icon-board-games:before {
+	content: "\e028";
+}
+.ws-icon-video-games:before {
+	content: "\e029";
+}
+.ws-icon-golf:before {
+	content: "\e02a";
 }
