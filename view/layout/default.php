@@ -124,7 +124,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 					</li>
 					<?php if($this->session->user()->isAdmin()):?>
 						<li>
-							<a href="<?php echo Router::url('admin/pages/index');?>"><span class="ws-icon ws-icon-quill "></span></a>
+							<a href="<?php echo Router::url('admin/');?>"><span class="ws-icon ws-icon-quill "></span></a>
 						</li>
 					<?php endif;?>
 				</ul>
