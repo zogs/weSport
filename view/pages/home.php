@@ -205,7 +205,8 @@ $(document).ready(function(){
 	var _aNext = $('#pullNext');
 	var _drag = false;
 	var _cWeek = true;
-	var _w = 150;
+	var _newWeek, _oldWeek;
+	var _wDrag = 150;
 	var _xO;
 	var _yO;
 	var _mxO;
@@ -266,8 +267,9 @@ $(document).ready(function(){
 			_drag = false;
 		}
 	}
+
 	function revert(){
-		_cal.animate({left:0}, _w, 'swing');
+		_cal.animate({left:0}, _wDrag, 'swing');
 	}
 
 
@@ -279,13 +281,13 @@ $(document).ready(function(){
 		//if the drag distance if inferior to 10 px , return false
 		if(Math.sqrt(Math.pow(x,2))<10) return;
 		//if the drag distance is superior to the trigger width
-		if(x>=_w) {
-			_cal.css('left',_w);
+		if(x>=_wDrag) {
+			_cal.css('left',_wDrag);
 			lockPrev(); //set lock to previous
 			return;
 		}
-		if(x<=-_w) {
-			_cal.css('left',-_w);
+		if(x<=-_wDrag) {
+			_cal.css('left',-_wDrag);
 			lockNext(); //set lock to next week
 			return;
 		}
@@ -334,36 +336,30 @@ $(document).ready(function(){
 
 		_cal.css('left',0);
 
-		_cal.find(".events-weeks:first").addClass('old-week');
-		_cal.find(".events-weeks:last").css({'left':contentPosition+'px'}).addClass('new-week');
+		_newWeek.css({'left':contentPosition+'px'});
 
 		_cal.find('.events-weeks').animate({
 			left:contentSliding,
-			},duration,function(){ ;
-				if(!$(this).hasClass('new-week')) $(this).remove();
-				$(this).removeClass('new-week').removeClass('old-week');				
+			},duration,function(){ 
+				_oldWeek.remove();							
 				return;
 		});
 	}
 
 	function setHeightCalendar(){
 
-		var heightCalendar = _cal.find(".events-weeks").height();		
-		_cal.css('height',heightCalendar);
-	}
-
-	function findNumberDayPerWeek(){
-
-		//Nombre de jour à afficher en fonction de la largeur de l'écran
-		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
-		
-		var screenWidth = $(window).width();
-		var nb;
-		for(var maxwidth in dayPerWeek){	
-			if(screenWidth<=maxwidth) return dayPerWeek[maxwidth];	
+		var minHeight = parseInt(_newWeek.css('minHeight'));
+		var heightCalendar = _newWeek.height();		
+		if(heightCalendar > minHeight){
+			_cal.css('height',heightCalendar);
+			_newWeek.css('height',heightCalendar);
+		} else {
+			_cal.css('height',minHeight);
+			_newWeek.css('height',minHeight);
 		}
-		return 0;
+		
 	}
+
 
 	function isCurrentWeek(){
 		
@@ -373,7 +369,7 @@ $(document).ready(function(){
 
 	function setCurrentWeek(){
 		
-		if(_cal.find('.events-weeks:last').hasClass('current-week')) _cWeek = true;
+		if(_newWeek.hasClass('current-week')) _cWeek = true;
 		else _cWeek = false;
 		return _cWeek;
 	}
@@ -391,9 +387,10 @@ $(document).ready(function(){
 			data : form,
 			success: function( data ){
 				
-				_cal.append( data );				
-				
-				setHeightCalendar();
+				_cal.append( data );	
+
+				_oldWeek = _cal.find(".events-weeks:first");
+				_newWeek = _cal.find(".events-weeks:last");										
 
 				slideCalendar(direction,screenWidth);	  				
 				
@@ -406,6 +403,8 @@ $(document).ready(function(){
 					$('a.calendar-nav-prev').show();
 				}
 
+				setHeightCalendar();
+			
 				$('#calendar-loader #loadingweeks').hide();
 
 
@@ -415,6 +414,20 @@ $(document).ready(function(){
 
 		return false;
 	}
+
+	function findNumberDayPerWeek(){
+
+		//Nombre de jour à afficher en fonction de la largeur de l'écran
+		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6};
+		
+		var screenWidth = $(window).width();
+		var nb;
+		for(var maxwidth in dayPerWeek){	
+			if(screenWidth<=maxwidth) return dayPerWeek[maxwidth];	
+		}
+		return 0;
+	}
+
 	function callNextWeek(){
 		var url = _cal.attr('data-url-calendar-next');
 		var direction = 'right';
@@ -477,7 +490,7 @@ $(document).ready(function(){
 			placement:'top',
 			container:'body',			
 			speed:10,
-			delay: { show: 1200, hide: 100 }		
+			delay: { show: 1500, hide: 100 }		
 		});
 		$(this).on('click',function(e){
 			if(_drag==true) e.preventDefault();
