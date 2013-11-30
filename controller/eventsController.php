@@ -673,6 +673,38 @@ class EventsController extends Controller{
 		
 	}
 
+	public function serieDelete($eid,$token){
+
+		//tcheck token
+		if($token!=$this->session->token()) $this->e404('Vous devez vous connecter avant de faire cette opération','Error');
+
+		//find Event
+		$this->loadModel('Events');
+		$this->view = 'none';
+		$evt = $this->Events->findEventById($eid);	
+
+		//check if event exit
+		if(!$evt->exist()) $this->e404('Cette activité n\'existe pas');
+
+		//check if user is admin
+		if(!$evt->isAdmin($this->session->user()->getID())) $this->e404('Vous ne pouvez pas supprimé cette activité','Error');
+
+		//find all event of the serie
+		$evts = $this->Events->findEventsBySerie($evt->serie_id);
+
+		foreach ($evts as $i => $evt) {
+			
+			$this->Events->deleteEvent($evt);
+			$this->sendEventDeleting($evt);
+				
+		}
+
+		$this->session->setFlash($i." événements correctement supprimés !");
+
+		$this->redirect('events/create');
+		
+	}
+
 
 	public function fb_og_WantSport($event,$user){
 

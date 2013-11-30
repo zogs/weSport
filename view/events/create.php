@@ -89,10 +89,18 @@
 					<?php if($event->exist()): ?>
 						<?php echo $this->Form->input("Mettre à jour l'annonce",'submit',array('class'=>'btn-ws')) ;?>					
 						<ul>
-							<li><a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('L\'événement va être supprimé, êtes-vous sûr ?')">Supprimer l'activité </a></li>
 							<?php if(!$event->isConfirm()): ?>
-							<li><a href="<?php echo Router::url('events/confirm/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('Confirmer l\'activité même si le nombre de participants n\'est pas atteint ?')">Confirmer l'activité</a></li>
+								<li><a href="<?php echo Router::url('events/confirm/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('Confirmer l\'activité même si le nombre de participants n\'est pas atteint ?')">Confirmer l'activité</a></li>
 							<?php endif; ?>
+
+							<li><a href="<?php echo Router::url('events/delete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('Êtes-vous sûr ?')">Supprimer l'activité </a></li>
+							
+							<?php if($event->isASerie()): ?>
+								<li><a href="<?php echo Router::url('events/serieDelete/'.$event->getID().'/'.$this->session->token());?>" class="btn btn-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer toutes les dates ?')">Supprimer toutes les dates</a></li>
+							<?php endif;?>
+
+							
+
 							<li><a href="<?php echo Router::url('events/create');?>" class="btn btn-link">Proposer une nouvelle activité</a></li>
 						</ul>
 					<?php else: ?>

@@ -362,6 +362,13 @@ class EventsModel extends Model{
 			return new Event();
 		
 	}
+
+	public function findEventsBySerie($sid){
+
+		return $this->findEvents(array('conditions'=>array('serie_id'=>$sid)));
+	}
+
+
 	/**
 	 * return events in the futur
 	 *
@@ -1113,6 +1120,11 @@ class Event{
 		return false;
 	}
 
+	public function isASerie(){
+		if($this->serie_id!=0) return true;
+		return false;
+	}
+
 	public function getTitle(){
 
 		return ucfirst($this->title);
@@ -1195,6 +1207,10 @@ class Event{
 	public function getID(){
 
 		return $this->id;
+	}
+
+	public function getSerieId(){
+		return $this->serie_id;
 	}
 
 	public function getSlug(){
