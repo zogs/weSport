@@ -2911,9 +2911,10 @@ TYPEAHEAD CUSTOM STYLE
 /* Smartphones (portrait) ----------- */  
 @media only screen and (max-width : 768px) {  
   
-	.navbar { padding:0 1%;}
+	
 	.navbar .weSport { margin:5px 5px 0 5px; padding:0;}
 	.navbar {
+		position:absolute;
 		padding:0;
 		.desktop-menu {
 			ul.nav{
@@ -3215,6 +3216,7 @@ h1.title-sheet{
 @media only screen and (min-width : 770px) and (max-width : 1300px) {  
    
 	.navbar-ws{
+		position:absolute;
 		padding:0;
 		.mobilesMenus {display:none;}
 		.desktop-menu {
