@@ -199,16 +199,19 @@
 $(document).ready(function(){
 
 	//init var 
+	var _body = $('body');
 	var _cal = $('#calendar-content');
 	var _zone = $('#calendar');
 	var _aPrev = $('#pullPrev');
 	var _aNext = $('#pullNext');
 	var _drag = false;
 	var _cWeek = true;
+	var _anim;
 	var _newWeek, _oldWeek;
 	var _wDrag = 150;
 	var _xO;
 	var _yO;
+	var _cX,_cY;
 	var _mxO;
 	var _myO;
 	var _x;
@@ -218,6 +221,26 @@ $(document).ready(function(){
 
 	//Appel la semaine courante
 	callThisWeek();
+
+	window.cancelRequestAnimFrame = ( function() {
+	    return window.cancelAnimationFrame          ||
+	        window.webkitCancelRequestAnimationFrame    ||
+	        window.mozCancelRequestAnimationFrame       ||
+	        window.oCancelRequestAnimationFrame     ||
+	        window.msCancelRequestAnimationFrame        ||
+	        clearTimeout
+	} )();
+
+	window.requestAnimFrame = (function(){
+	    return  window.requestAnimationFrame       || 
+	        window.webkitRequestAnimationFrame || 
+	        window.mozRequestAnimationFrame    || 
+	        window.oRequestAnimationFrame      || 
+	        window.msRequestAnimationFrame     || 
+	        function(/* function */ callback, /* DOMElement */ element){
+	            return window.setTimeout(callback, 1000 / 60);
+	        };
+	})();
 
 
 	//set drag listeners
@@ -234,25 +257,27 @@ $(document).ready(function(){
 	function setMouseOrigin(e){
 		_mxO = getClientX(e) +_xO;
 	}
-
+	function setMouseCoord(e){
+		_cX = getClientX(e);
+	}
 	function getClientX(e){
 		if(e.clientX) return e.clientX;
 		if(e.originalEvent.changedTouches[0].clientX) return e.originalEvent.changedTouches[0].clientX;
 	}
-
 	function startDrag(e){			
 		
-		if(e.which == 2 ||e.which == 3) return; //if middle click or right click , stop script
+		if(e.which == 2 ||e.which == 3) return; //if middle click or right click , cancel drag
 
 		setMouseOrigin(e);
+		setMouseCoord(e);
+		
+		$(window).on('mousemove touchmove',setMouseCoord);
 
-		
-		$(window).on('mousemove touchmove',dragCalendar);
-		
+		dragCalendar();
 	}
+
 	function stopDrag(e){
 
-		$(window).off('mousemove touchmove');
 		if(_lock=='left'){ 
 			callPreviousWeek(); 
 			lockLoad();
@@ -267,36 +292,44 @@ $(document).ready(function(){
 			revert();
 			_drag = false;
 		}
-	}
 
-	function revert(){
-		_cal.animate({left:0}, _wDrag, 'swing');
+		$(window).off('mousemove touchmove');
+		cancelRequestAnimFrame(_anim);
 	}
-
 
 	function dragCalendar(e){
 		//distance between mouse coord and initial coord
-		var x = _xO + getClientX(e) - _mxO;
+		var x = _xO + _cX - _mxO;
+
+		//console.log('_xO='+_xO+' _cX='+_cX+' _mxO='+_mxO+' == '+x);
 		//if it is the first week and drag to previous return false
-		if(isCurrentWeek()==true && x>0 ) return;
+		if(isCurrentWeek()==true && x>0 ) {
+			_anim = requestAnimFrame(dragCalendar,_cal);
+			return;
+		}
 		//if the drag distance if inferior to 10 px , return false
-		if(Math.sqrt(Math.pow(x,2))<10) return;
+		if(Math.sqrt(Math.pow(x,2))<10) {
+			_anim = requestAnimFrame(dragCalendar,_cal);
+			return;
+		}
 		//if the drag distance is superior to the trigger width
 
 		//prevent android bug where touchmove fire only once
-		if( navigator.userAgent.match(/Android/i) ) {
-		    e.preventDefault();
-		}
+		//if( navigator.userAgent.match(/Android/i) ) {
+		//    e.preventDefault();
+		//}
 
 
 		if(x>=_wDrag) {
 			_cal.css('left',_wDrag);
 			lockPrev(); //set lock to previous
+			_anim = requestAnimFrame(dragCalendar,_cal);
 			return;
 		}
 		if(x<=-_wDrag) {
 			_cal.css('left',-_wDrag);
 			lockNext(); //set lock to next week
+			_anim = requestAnimFrame(dragCalendar,_cal);
 			return;
 		}
 		//set no lock
@@ -306,7 +339,14 @@ $(document).ready(function(){
 
 		_cal.css('left',x);
 		_cal.css('z-index',0);
+
+		_anim = requestAnimFrame(dragCalendar,_cal);
 	}
+
+	function revert(){
+		_cal.animate({left:0}, _wDrag, 'swing');
+	}
+
 	function nolock(){
 		_lock = '';		
 		_cal.find('#pullPrev,#pullNext').removeClass('locked').removeClass('loading');
@@ -326,7 +366,7 @@ $(document).ready(function(){
 
 	function slideCalendar(direction,width){
 
-		duration = 500;
+		duration = 700;
 
 		if(direction == 'right') {
 			contentPosition = width;
@@ -346,10 +386,13 @@ $(document).ready(function(){
 
 		_newWeek.css({'left':contentPosition+'px'});
 
+		_body.addClass('disable-hover');
+
 		_cal.find('.events-weeks').animate({
 			left:contentSliding,
 			},duration,function(){ 
-				_oldWeek.remove();							
+				_oldWeek.remove();
+				_body.removeClass('disable-hover');							
 				return;
 		});
 	}
@@ -489,7 +532,7 @@ $(document).ready(function(){
 
 
 	
-
+	/*
 	//Info bulle des activités
 	_cal.find('.events-link').livequery(function(){
 		$(this).popover({
@@ -505,7 +548,8 @@ $(document).ready(function(){
 		});
 
 	});
-
+	*/
+	
 
 	//Sport checkbox slider
 	$('#sportCheckboxs').FlowSlider({

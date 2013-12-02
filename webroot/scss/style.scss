@@ -1172,7 +1172,7 @@ div.mm-is-menu * {
 		width: 100%;
 		padding:15px 0 10px 0;
 		text-align: center;
-		@include text-shadow(0 0 10px rgba(0,0,0,0.6));
+		@include text-shadow(0 0 5px #666);
 		color:white;
 
 		strong {
@@ -1242,15 +1242,10 @@ div.mm-is-menu * {
 		width:96%;
 		margin:5px auto;
 		padding:10px 8px 8px 8px;
-		background-color:rgba(255,255,255,0.9);
+		background-color:#FFF;
 		border:1px solid rgba(0,0,0,0.1);
 		border-bottom:4px solid rgba(0,0,0,0.4);
 		@include border-radius(15px);
-	}
-
-	.events:hover {
-		background-color:rgba(255,255,255,1);
-
 	}
 
 	.events-link{
