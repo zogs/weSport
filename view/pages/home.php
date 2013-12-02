@@ -246,11 +246,7 @@ $(document).ready(function(){
 
 		setMouseOrigin(e);
 
-		//prevent android bug where touchmove fire only once
-		if( navigator.userAgent.match(/Android/i) ) {
-		    //e.preventDefault();
-		}
-
+		
 		$(window).on('mousemove touchmove',dragCalendar);
 		
 	}
@@ -286,6 +282,13 @@ $(document).ready(function(){
 		//if the drag distance if inferior to 10 px , return false
 		if(Math.sqrt(Math.pow(x,2))<10) return;
 		//if the drag distance is superior to the trigger width
+
+		//prevent android bug where touchmove fire only once
+		if( navigator.userAgent.match(/Android/i) ) {
+		    e.preventDefault();
+		}
+
+
 		if(x>=_wDrag) {
 			_cal.css('left',_wDrag);
 			lockPrev(); //set lock to previous
