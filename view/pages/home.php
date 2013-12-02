@@ -248,7 +248,7 @@ $(document).ready(function(){
 
 		//prevent android bug where touchmove fire only once
 		if( navigator.userAgent.match(/Android/i) ) {
-		    e.preventDefault();
+		    //e.preventDefault();
 		}
 
 		$(window).on('mousemove touchmove',dragCalendar);
