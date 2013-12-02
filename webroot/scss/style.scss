@@ -191,6 +191,13 @@ $fontgrey:#9e9e34;
   user-select: none;
 }
 
+//disable pointer-event for better performance
+//aplly on the body
+.disable-hover,
+.disable-hover * {
+  pointer-events: none !important;
+}
+
 html {	
 	font-size:62.5%;
 	background-color: $darkblue;

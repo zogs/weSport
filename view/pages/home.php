@@ -246,6 +246,11 @@ $(document).ready(function(){
 
 		setMouseOrigin(e);
 
+		//prevent android bug where touchmove fire only once
+		if( navigator.userAgent.match(/Android/i) ) {
+		    e.preventDefault();
+		}
+
 		$(window).on('mousemove touchmove',dragCalendar);
 		
 	}
