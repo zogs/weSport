@@ -298,7 +298,10 @@ class EventsModel extends Model{
 		//set limit
 		if(!empty($limit) && is_numeric($limit)){
 
-			$sql .= ' LIMIT '.$limit;
+			if(!isset($page) || empty($page) ||  !is_numeric($page)) $page = 1;			
+			
+			$sql .= ' LIMIT '.(($page-1)*$limit).','.$limit;			
+			
 		}
 
 		//add string to the end of the query

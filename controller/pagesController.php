@@ -38,7 +38,7 @@ class PagesController extends Controller {
 				'js/jquery/tourbus/jquery.tourbus.min.js',
 				'js/jquery/jquery.scrollTo-min.js',	
 				'js/jquery/jquery.easing.1.3.js',
-				'js/jquery/jquery.requestAnimationFrame.js',			
+				//'js/jquery/jquery.requestAnimationFrame.js',			
 				);
 			$this->loadCSS = array(
 				'js/jquery/tourbus/tourbus.css'

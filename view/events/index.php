@@ -16,7 +16,7 @@
 					$noCol++;
 					//$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1; //compute the number of day between this date and today (modulo 7)
 			?>
-				<td style="width:2%" class="events-day colomn-<?php echo $noCol;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $noCol;?>">
+				<td style="width:2%" class="events-day colomn-<?php echo $noCol;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $noCol;?>" data-date="<?php echo $date;?>">
 					<div class="colomn-date" id="colomn-date-<?php echo $noCol;?>">
 						<?php
 							if($date==date('Y-m-d')){
@@ -37,7 +37,7 @@
 						<a class="events-link" 
 							href="<?php echo $event->getUrl();?>"	
 							draggable="false"
-							ondragstart="return false;"					
+							ondragstart="return false;"				
 							data-content="Ville : <strong><?php echo $event->getCityName();?></strong><br />													
 											Organisateur : <strong><?php echo $event->getAuthor();?></strong> (<?php echo $event->author->getAge();?>)<br />
 											Participants : <strong><?php echo $event->getNbParticipants();?></strong><br />

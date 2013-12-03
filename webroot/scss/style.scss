@@ -857,21 +857,7 @@ div.mm-is-menu * {
 		width:100%;
 		height:40px;
 		position:relative;	
-		border-top:1px solid rgba(255,255,255,0.4);
-
-		
-		.calendar-loader{
-			position: absolute;
-			top:0;
-			width:400px;
-			left:50%;
-			margin-left:-200px;
-			text-align: center;
-			padding-top:6px;
-			.loadingweeks{
-				display: none;
-			}
-		}
+		border-top:1px solid rgba(255,255,255,0.4);		
 
 		.previousWeek{
 			float:left;
@@ -1077,7 +1063,9 @@ div.mm-is-menu * {
 			 		}
 			 	}			 				 
 			}
-			.events-weeks.new-week .pullHelper, .events-weeks.old-week .pullHelper { display:none;}
+
+
+			.events-weeks.new-week .pullHelper, .events-weeks.old-week .pullHelper, .events-weeks.sliding .pullHelper { display:none;}
 
 
 			.pullHelper{
@@ -1161,7 +1149,21 @@ div.mm-is-menu * {
  		}
  	}
 
+ 	.calendar-loader{
+			position: absolute;
+			top:0;
+			width:400px;
+			left:50%;
+			margin-left:-200px;
+			text-align: center;
+			padding-top:6px;
+			.loadingbar{
+				display: none;
+			}
+		}
+
 	.calendar-footer {
+		position:relative;
 		background:$darkblue;
 		width:100%;
 		height:50px;
@@ -1246,18 +1248,29 @@ div.mm-is-menu * {
 		background-color:#FFF;
 		border:1px solid rgba(0,0,0,0.1);
 		border-bottom:4px solid rgba(0,0,0,0.4);
-		@include border-radius(15px);
+		@include border-radius(10px);
 		@include transition(all 0.2s ease-in-out);
 	}
 
-	.events .loader {display:none};
-	.events.clicked .loader {	
-		display: block;	
+	.events .loader {
+		display:none;
 		position:absolute;
 		top:0; left:0; right:0; bottom:0;		
 		background:rgba(255,255,255,0.6) url('../img/ajax-loader.gif') no-repeat;
 		background-position: 50%;
-	}	
+	}
+	
+	.events.clicked .loader { display: block;	}	
+
+	.events-weeks.sliding{
+
+		.events { display:none; }
+
+		.events-day.displayed{
+
+			.events { display:block;}
+		}
+	}
 
 
 	.events-link{
@@ -1327,7 +1340,7 @@ div.mm-is-menu * {
 		}
 	
 		.events-title{			
-			display:inline-block;
+			display:inline-block;			
 			color:$deepblue;
 			font-family: "Viga";
 			@include rem(14);

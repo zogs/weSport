@@ -47,6 +47,7 @@ class EventsController extends Controller{
 
 				//day param			
 				if($action=='now') $day = date('Y-m-d');
+				elseif($action=='bottom') $day = $this->cookieEventSearch->read('date');
 				elseif($action=='date') $day = $date;
 				elseif($action=='prev'){
 					if(isset($date)) $day = date('Y-m-d',strtotime($date.' - '.$numDaysPerWeek.' days'));
@@ -99,8 +100,16 @@ class EventsController extends Controller{
 			$cookie['extend'] = '';
 		}
 
-		//
+		//Fields
 		$query['fields'] = 'E.id, E.user_id, E.cityID, E.cityName, E.sport, E.date, E.time, E.title, E.slug, E.confirmed, E.description';
+
+
+		//Limit
+		$query['limit'] = 5;
+		if(!empty($params['page']) && is_numeric($params['page'])){
+			$query['page'] = $params['page'];
+		}
+		
 
 		//if some sports are selected
 		if(!empty($params['sports'])){
@@ -167,6 +176,9 @@ class EventsController extends Controller{
 		$d['numDaysPerWeek'] = $numDaysPerWeek;
 		
 		$this->set($d);
+
+		if($action=='bottom') $this->view = 'events/bottom';
+
 		$this->render();
 	}
 

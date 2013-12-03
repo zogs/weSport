@@ -111,7 +111,8 @@ window.onload = function() {
 			'ws-icon-board-games' : '&#xe028;',
 			'ws-icon-video-games' : '&#xe029;',
 			'ws-icon-golf' : '&#xe02a;',
-			'ws-icon-kayak' : '&#xe02b;'
+			'ws-icon-kayak' : '&#xe02b;',
+			'ws-icon-plus-alt' : '&#x63;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
