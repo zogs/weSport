@@ -390,7 +390,7 @@ $(document).ready(function(){
 
 		_cal.find('.events-weeks').animate({
 			left:contentSliding,
-			},duration,function(){ 
+			},duration,'easeOutCirc',function(){ 
 				_oldWeek.remove();
 				_body.removeClass('disable-hover');							
 				return;
