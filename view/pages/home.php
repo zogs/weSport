@@ -532,23 +532,25 @@ $(document).ready(function(){
 
 
 	
-	/*
-	//Info bulle des activités
+	
 	_cal.find('.events-link').livequery(function(){
-		$(this).popover({
+		/*$(this).popover({
 			html:true,
 			trigger:'hover',
 			placement:'top',
 			container:'body',			
 			speed:10,
 			delay: { show: 1500, hide: 100 }		
-		});
+		})*/
 		$(this).on('click',function(e){
 			if(_drag==true) e.preventDefault();
+			else {
+				$(this).parent().addClass('clicked');				
+			}
 		});
 
 	});
-	*/
+	
 	
 
 	//Sport checkbox slider

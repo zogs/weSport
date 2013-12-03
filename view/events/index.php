@@ -73,6 +73,7 @@
 							</div>
 						</a>
 						<div class="clearfix"></div>
+						<div class="loader"></div>
 					</div>
 
 					<?php	

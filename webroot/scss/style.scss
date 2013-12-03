@@ -1239,6 +1239,7 @@ div.mm-is-menu * {
 
 	}
 	.events {
+		position:relative;
 		width:96%;
 		margin:5px auto;
 		padding:10px 8px 8px 8px;
@@ -1246,7 +1247,18 @@ div.mm-is-menu * {
 		border:1px solid rgba(0,0,0,0.1);
 		border-bottom:4px solid rgba(0,0,0,0.4);
 		@include border-radius(15px);
+		@include transition(all 0.2s ease-in-out);
 	}
+
+	.events .loader {display:none};
+	.events.clicked .loader {	
+		display: block;	
+		position:absolute;
+		top:0; left:0; right:0; bottom:0;		
+		background:rgba(255,255,255,0.6) url('../img/ajax-loader.gif') no-repeat;
+		background-position: 50%;
+	}	
+
 
 	.events-link{
 		display:block;
