@@ -206,7 +206,7 @@ $(document).ready(function(){
 	var _cal = $('#calendar-content');
 	var _zone = $('#calendar');
 	var _aPrev = $('#pullPrev');
-	var _aNext = $('#pullNext');
+	var _aNext = $('#pullNext');	
 	var _loader = $('#calendar .calendar-loader .loadingbar');
 	var _screenWidth = $(window).width();
 	var _drag = false;
@@ -214,7 +214,7 @@ $(document).ready(function(){
 	var _anim;
 	var _nbDays = 0, _displayDays, _dayDisplayed = 0;
 	var _newPage=1, _loadingEvents= false, _moreEvents = true;
-	var _newWeek, _oldWeek, _newDays;
+	var _newWeek, _oldWeek, _newDays, _addEvt;
 	var _wDrag = 150;
 	var _xO;
 	var _yO;
@@ -514,6 +514,7 @@ $(document).ready(function(){
 				_oldWeek = _cal.find(".events-weeks:first").attr('id','old-week');
 				_newWeek = _cal.find(".events-weeks:last").attr('id','new-week');	
 				_newDays = _newWeek.find('td.events-day');
+				_addEvt  = _newDays.find('div.addEvent');
 
 				setHeightCalendar();
 
@@ -600,17 +601,30 @@ $(document).ready(function(){
 
         $(window).scroll(function(){
             
-            var yLastEvent = $("#calendar-footer").offset(); 
+            //position du scrolling
             var scrollPos = parseInt($(window).scrollTop()+$(window).height());
-            //console.log(yLastEvent.top+' <= '+scrollPos+' && '+_drag+' && '+_loadingEvents+' && '+_moreEvents);
-            if( (yLastEvent.top <= scrollPos ) && _drag===false && _loadingEvents === false && _moreEvents === true ) 
+
+            //position du bas du calendrier
+            var yBottomCalendar = $("#calendar-footer").offset(); 
+
+            //si le bas du calendrier est atteint
+            //charger la suite des événements
+            //console.log(yBottomCalendar.top+' <= '+scrollPos+' && '+_drag+' && '+_loadingEvents+' && '+_moreEvents);
+            if( (yBottomCalendar.top <= scrollPos ) && _drag===false && _loadingEvents === false && _moreEvents === true ) 
             {               	
             	
                 _loadingEvents = true;
                 _newPage        = _newPage+1;                                
-                loadBottomEvents();		                    
-                
+                loadBottomEvents();		                                   
             }
+
+            //position du bas des colonnes
+            var y;
+            for(var i=0; i<_addEvt.length ; i++){
+            	y = $(_addEvt[i]).offset().top;            	
+            	console.log(y);
+            }
+            //console.log(s);
 
         });
     };
