@@ -515,10 +515,14 @@ class UsersController extends Controller{
 				}
 			}
 			else {	
-			debug('lol');			
-				$this->session->setFlash("Pas trouvé dans la bdd",'error');
+						
+				$this->session->setFlash("Le lien d'activation est incorrect... Veuillez réessayer.",'error');
+				$this->session->setFlash("Vous pouvez demander un nouveau lien d'activation en essayant de vous connecter, et en cliquant sur <i>Demander un nouveau mail d'activation</i>",'info');
 			}
-
+		}
+		else{
+			$this->session->setFlash("Le lien d'activation est incorrect... Veuillez réessayer.",'error');
+			$this->session->setFlash("Vous pouvez demander un nouveau lien d'activation en essayant de vous connecter, et en cliquant sur <i>Demander un nouveau mail d'activation</i>",'info');
 		}
 
 	}
