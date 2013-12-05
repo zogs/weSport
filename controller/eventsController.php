@@ -105,7 +105,7 @@ class EventsController extends Controller{
 
 
 		//Limit
-		$query['limit'] = 5;
+		$query['limit'] = 12;
 		if(!empty($params['page']) && is_numeric($params['page'])){
 			$query['page'] = $params['page'];
 		}
@@ -154,6 +154,10 @@ class EventsController extends Controller{
 			$dayevents = $this->Worlds->JOIN_GEO($dayevents);
 			$dayevents = $this->Events->joinEventsParticipants($dayevents);
 			$dayevents = $this->Events->joinUserParticipation($dayevents,$this->session->user()->getID());
+
+			//test purpose
+			//$dayevents = array_merge($dayevents,$dayevents,$dayevents,$dayevents);
+
 			$events[$weekday] = $dayevents;
 			//set next day			
 			$weekday = date("Y-m-d", strtotime($weekday. " +1 day"));

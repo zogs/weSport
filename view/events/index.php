@@ -16,7 +16,7 @@
 					$noCol++;
 					//$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1; //compute the number of day between this date and today (modulo 7)
 			?>
-				<td style="width:2%" class="events-day colomn-<?php echo $noCol;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $noCol;?>" data-date="<?php echo $date;?>">
+				<td style="width:2%" class="events-day colomn-<?php echo $noCol;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $date;?>" data-date="<?php echo $date;?>">
 					<div class="colomn-date" id="colomn-date-<?php echo $noCol;?>">
 						<?php
 							if($date==date('Y-m-d')){
@@ -30,10 +30,13 @@
 						?>
 					</div>
 
-					<?php				
-					foreach ($evts as $event):				
+					<?php		
+
+					$n = 0;		
+					foreach ($evts as $event):
+					$n++;				
 					?>				
-					<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
+					<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?> <?php if($n>10) echo 'hidden';?>" id="event<?php echo $event->getID();?>">				
 						<a class="events-link" 
 							href="<?php echo $event->getUrl();?>"	
 							draggable="false"
@@ -76,16 +79,19 @@
 						<div class="loader"></div>
 					</div>
 
-					<?php	
-						$nbevents++;
+						
 
+					<?php	
+
+					$nbevents++;
 					endforeach;
 
 					?>
-
-					<div class="addEvent">
+					
+					<div class="addEvent" id="addPoint<?php echo $date;?>">
 						<a class="tooltipbottom" data-toggle="tooltip" title="Ajouter un sport" href="<?php echo Router::url('events/create/?date='.$date);?>" draggable='false' ondragstart="return false;"><span class="ws-icon ws-icon-plus-alt"></span></a>
 					</div>
+						
 				</td>
 			<?php
 				$cdate = $date;

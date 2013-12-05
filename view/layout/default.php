@@ -331,8 +331,11 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	  ga('create', 'UA-42468932-1', 'zogs.org');
+
+	  ga('create', 'UA-42468932-1', 'we-sport.fr');
 	  ga('send', 'pageview');
+
+</script>
 
 
 

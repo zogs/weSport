@@ -214,7 +214,7 @@ $(document).ready(function(){
 	var _anim;
 	var _nbDays = 0, _displayDays, _dayDisplayed = 0;
 	var _newPage=1, _loadingEvents= false, _moreEvents = true;
-	var _newWeek, _oldWeek, _newDays, _addEvt;
+	var _newWeek, _oldWeek, _newDays, _newHidden, _hidden;
 	var _wDrag = 150;
 	var _xO;
 	var _yO;
@@ -285,9 +285,7 @@ $(document).ready(function(){
 		dragCalendar();
 	}
 
-	function stopDrag(e){
-
-		_drag = false;
+	function stopDrag(e){		
 
 		if(_lock=='left'){ 
 			callPreviousWeek(); 
@@ -299,10 +297,13 @@ $(document).ready(function(){
 		}
 		else {
 			revert();
+			_drag = false;
 		}
 
 		$(window).off('mousemove touchmove');
 		cancelRequestAnimFrame(_anim);
+
+
 	}
 
 	function dragCalendar(e){
@@ -376,7 +377,7 @@ $(document).ready(function(){
 	function slideCalendar(direction){
 
 		var width = _screenWidth;
-		var slideDuration = 1000;
+		var slideDuration = 700;
 		var delayDisplay = parseInt(slideDuration/_nbDays);
 
 		if(direction == 'right') {
@@ -401,18 +402,21 @@ $(document).ready(function(){
 
 		_newWeek.css({'left':contentPosition+'px'});
 
-		_body.addClass('disable-hover');
-
 		if(direction=='left') _newDays = _newDays.get().reverse(); //reverse order the colomn are displayed
 		_displayDays = setInterval(function(){ displayColomns(direction)},delayDisplay);
 
-		weeks.animate({
+		_oldWeek.remove();
+		_newWeek.animate({
 			left:contentSliding,
-			},slideDuration,'easeOutCirc',function(){ 				
-				_newWeek.removeClass('sliding');
-				_body.removeClass('disable-hover');	
-				setTimeout(function(){ _oldWeek.remove()},250);						
-				return;
+			},slideDuration,'easeOutCirc',function(){ 
+
+				if($(this).is('#new-week')){
+
+					_newWeek.removeClass('sliding');
+					setHeightCalendar();						
+					return;
+				}
+				
 		});
 
 
@@ -420,18 +424,23 @@ $(document).ready(function(){
 
 	function clickEvent(e){
 		
-		if(_drag==true) e.preventDefault();
+		if(_drag==true) {
+			e.preventDefault();
+			return false;
+		}
 		else {
 			var link = e.currentTarget;			
 			$(link).parent().addClass('clicked');				
 		}
 	}
 
+
 	function displayColomns(direction){
 
 		var colomn = $(_newDays[_dayDisplayed])
 		colomn.addClass('displayed');		
 		colomn.on('click','.events-link',clickEvent);
+		colomn.find('.tooltipbottom').tooltip({ placement : 'bottom', delay: { show: 200, hide: 100 }});
 
 		_dayDisplayed++;
 		if(_dayDisplayed>=_nbDays) {
@@ -440,30 +449,7 @@ $(document).ready(function(){
 		}
 	}
 
-	function addEventBefore(obj,evt){
 
-		$(obj).before(evt);
-		setHeightCalendar();
-	}
-
-	function addEventsToColomn(colomn,evts){
-
-		var obj = $(colomn).find('.addEvent');
-		var delay = 50;
-
-		for(var i in evts){
-			setTimeout(function(){
-				addEventBefore(obj,evts[i]);
-			},delay*i);			
-		}
-
-		//setTimeout(function(){ setHeightCalendar();	},delay*evts.length);
-		//console.log(ev);
-		//setTimeout(function(){ addEventToColomn(colomn,evts[i],200);
-
-		
-		$(colomn).on('click','.events-link',clickEvent);
-	}
 
 
 
@@ -507,16 +493,22 @@ $(document).ready(function(){
 			type:'GET',
 			url: url,
 			data : form,
-			success: function( data ){
-				
-				_cal.append( data );	
+			success: function( newhtml ){						
+
+				var oldhtml = _cal.html();
+				document.getElementById('calendar-content').innerHTML = oldhtml+newhtml;
 
 				_oldWeek = _cal.find(".events-weeks:first").attr('id','old-week');
 				_newWeek = _cal.find(".events-weeks:last").attr('id','new-week');	
 				_newDays = _newWeek.find('td.events-day');
-				_addEvt  = _newDays.find('div.addEvent');
+				_newHidden = _newDays.find('.hidden');
 
-				setHeightCalendar();
+				_hidden = [];
+				for(var i=0; i<_newHidden.length; i++){
+					var obj = $(_newHidden[i]);									
+					_hidden[obj.attr('id')] = obj.offset().top;
+					
+				}				
 
 				slideCalendar(direction);	  				
 				
@@ -524,6 +516,7 @@ $(document).ready(function(){
 
 				_newPage = 1;
 				_moreEvents = true;
+				_drag = false;
 
 				if(isCurrentWeek()){					
 					$('a.calendar-nav-prev').hide();
@@ -544,6 +537,27 @@ $(document).ready(function(){
 		return false;
 	}
 
+
+
+	function addEventBefore(obj,evt){
+
+		$(obj).before(evt);
+
+		setHeightCalendar();
+	}
+
+	function addEventsToColomn(colomn,evts){
+
+		var obj = $(colomn).find('.addEvent');
+		var delay = 50;
+
+		for(var i in evts){
+			setTimeout(function(){
+				addEventBefore(obj,evts[i]);
+			},delay*i);			
+		}		
+		$(colomn).on('click','.events-link',clickEvent);
+	}
 	function loadBottomEvents(){
 
 		console.log('load bottom');
@@ -564,16 +578,24 @@ $(document).ready(function(){
 				if(data.results!='empty'){
 
 					var results = data.results;
-					//console.log(results);
+					
 					$(_newDays).each(function(){						
 
 						var date = $(this).attr('data-date');
 
-						//console.log(date);
-
 						if(results[date]){
 
-							addEventsToColomn(this,results[date]);
+							//addEventsToColomn(this,results[date]);
+							$('#addPoint'+date).before(results[date]);
+
+							setHeightCalendar();
+
+							var new_events = $('#colomn-'+date).find('.hidden');
+							new_events.each(function(){								
+								_hidden[$(this).attr('id')] = $(this).offset().top;
+							});
+
+							$(window).scroll(); //refresh scroll function to display new event
 							
 						}
 					});	
@@ -596,6 +618,7 @@ $(document).ready(function(){
 
 	}
 
+
 	infiniteEvents();
     function infiniteEvents() {
 
@@ -604,12 +627,24 @@ $(document).ready(function(){
             //position du scrolling
             var scrollPos = parseInt($(window).scrollTop()+$(window).height());
 
+
+            //vérifie si chaque evenement caché est revélé par le scroll
+            for(var id in _hidden){
+            	var y = _hidden[id];            	
+            	if( y <= scrollPos){
+					//si oui afficher l'evenement avec un petit delai            		          		            		
+            		$('#'+id).css('visibility','visible').hide().delay(300).fadeIn(200);
+            		//enlever l'evenement concerné du tableau
+            		delete _hidden[id];
+            		  
+            	}
+            }
+
+
             //position du bas du calendrier
             var yBottomCalendar = $("#calendar-footer").offset(); 
-
-            //si le bas du calendrier est atteint
-            //charger la suite des événements
-            //console.log(yBottomCalendar.top+' <= '+scrollPos+' && '+_drag+' && '+_loadingEvents+' && '+_moreEvents);
+            //si le bas du calendrier est atteint on charge la suite des événements
+            	//console.log(yBottomCalendar.top+' <= '+scrollPos+' && '+_drag+' && '+_loadingEvents+' && '+_moreEvents);
             if( (yBottomCalendar.top <= scrollPos ) && _drag===false && _loadingEvents === false && _moreEvents === true ) 
             {               	
             	
@@ -618,14 +653,7 @@ $(document).ready(function(){
                 loadBottomEvents();		                                   
             }
 
-            //position du bas des colonnes
-            var y;
-            for(var i=0; i<_addEvt.length ; i++){
-            	y = $(_addEvt[i]).offset().top;            	
-            	console.log(y);
-            }
-            //console.log(s);
-
+            
         });
     };
 
@@ -638,7 +666,10 @@ $(document).ready(function(){
 		var dayPerWeek = {320:1,480:2,768:3,1024:4,1280:5,1440:6,10000:7};
 
 		for(var maxwidth in dayPerWeek){	
-			if(_screenWidth<=maxwidth) _nbDays = dayPerWeek[maxwidth];	
+			if(_screenWidth<=maxwidth) {
+				_nbDays = dayPerWeek[maxwidth];	
+				return _nbDays;
+			}
 		}
 		return _nbDays;
 	}

@@ -65,7 +65,7 @@
 									<a class="btn btn-link" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>" rel="nofollow"><i class="icon-remove"></i> Annuler</a>
 								<?php else: ?>
 									<a class="btn-ws btn-ws-small" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">											
-										Je veux participer !
+										<i class="icon-white icon-plus"></i> Participer !
 									</a>
 									<a style="display:none" class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>" rel="nofollow">											
 										Peut-être
@@ -181,8 +181,8 @@
 									<a class="btn btn-link" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>" rel="nofollow"><i class="icon-remove"></i> Annuler</a>
 								<?php else: ?>
 									<a class="btn-ws" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">
-										<i class="icon-white icon-ok"></i>
-										Je veux en être!
+										<i class="icon-white icon-plus"></i>
+										Je veux participer!
 									</a>									
 								<?php endif; ?>
 							

@@ -1241,6 +1241,8 @@ div.mm-is-menu * {
 		}
 
 	}
+
+
 	.events {
 		position:relative;
 		width:96%;
@@ -1250,7 +1252,7 @@ div.mm-is-menu * {
 		border:1px solid rgba(0,0,0,0.1);
 		border-bottom:4px solid rgba(0,0,0,0.4);
 		@include border-radius(10px);
-		@include transition(all 0.2s ease-in-out);
+		//@include transition(all 0.2s ease-in-out);
 	}
 
 	.events .loader {
@@ -1261,15 +1263,19 @@ div.mm-is-menu * {
 		background-position: 50%;
 	}
 	
+	.events.hidden {
+		visibility:hidden;
+	}
+
 	.events.clicked .loader { display: block;	}	
 
 	.events-weeks.sliding{
 
-		.events { display:none; }
+		.events { visibility:hidden; }
 
 		.events-day.displayed{
 
-			.events { display:block;}
+			.events:not(.hidden) { visibility:visible;}
 		}
 	}
 
@@ -1593,6 +1599,7 @@ h1.title-sheet {
 		padding:0;
 		padding-bottom:15px;
 		border-right:1px solid #DDD;
+		overflow:visible;
 
 		#control-account{
 			margin-top:0;

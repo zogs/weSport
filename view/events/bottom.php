@@ -15,7 +15,7 @@
 
 			ob_start();			
 			?>				
-			<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?>">				
+			<div class="events <?php if($event->getUserParticipation()) echo 'events-userin' ?> <?php if($event->isConfirm()) echo 'events-confirmed';?> hidden" id="event<?php echo $event->getID();?>">				
 				<a class="events-link" 
 					href="<?php echo $event->getUrl();?>"	
 					draggable="false"

@@ -99,7 +99,7 @@ class Conf {
 	static $js_main = 'js/main.js';
 	static $js_dependency = array(	
 					'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-					'js/jquery/jquery.livequery.min.js',
+					//'js/jquery/jquery.livequery.min.js',
 					'bootstrap/js/bootstrap.js',
 					'js/jquery/jquery.flowslider.js',
 					'js/jquery/jquery.typeahead.js',
