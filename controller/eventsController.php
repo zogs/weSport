@@ -31,13 +31,13 @@ class EventsController extends Controller{
 			if(!Date::is_valid_date($date,'yyyy-mm-dd')) exit('date is not valid');
 		
 		//Number of day of the week
-		$numDaysPerWeek = 7;		
+		$numDaysPerWeek = 7; //default	
 		if(isset($params['nbdays']) && is_numeric($params['nbdays'])){
 			$numDaysPerWeek = $params['nbdays'];		
 			$cookie['nbdays'] = $params['nbdays'];
 		}
 		
-		if(isset($params['maxdays']) && 0 != $params['maxdays'] && is_numeric($params['maxdays']))
+		if(isset($params['maxdays']) && is_numeric($params['maxdays']) && 0 != $params['maxdays'] && $params['maxdays'] < 7)
 			$numDaysPerWeek = $params['maxdays'];
 
 		
@@ -145,7 +145,7 @@ class EventsController extends Controller{
 
 		//for each days , get the events
 		for($i=1; $i<= $numDaysPerWeek; $i++){
- 
+ 		
 			//set date param
 			$query['date'] = array('day'=> $weekday) ;
 			//find events in db
@@ -164,7 +164,7 @@ class EventsController extends Controller{
 
 		}
 
-		if($numDaysPerWeek<=7){
+		if($numDaysPerWeek<=14){
 			$numWeeks = 1;
 			$weeks = array($events);
 		}
@@ -177,7 +177,7 @@ class EventsController extends Controller{
 		$d['weeks'] = $weeks;
 		$d['firstday'] = $firstday;
 		$d['numWeeks'] = $numWeeks;
-		$d['numDaysPerWeek'] = $numDaysPerWeek;
+		$d['numDays'] = $numDaysPerWeek;
 		
 		$this->set($d);
 

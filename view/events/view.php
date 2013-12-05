@@ -64,20 +64,17 @@
 									</a>
 									<a class="btn btn-link" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>" rel="nofollow"><i class="icon-remove"></i> Annuler</a>
 								<?php else: ?>
-									<a class="btn-ws btn-ws-small" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">											
+									<a class="btn-ws btn-ws-small btn-ws-submit" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">											
 										<i class="icon-white icon-plus"></i> Participer !
-									</a>
-									<a style="display:none" class="btn btn-info" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=0');?>" rel="nofollow">											
-										Peut-être
-									</a>
+									</a>									
 								<?php endif; ?>
 							
 							<?php else: ?>	
 							<a class="btn btn-small" href="<?php echo Router::url('events/create/'.$event->id);?>" rel="nofollow">Modifier mon annonce</a>					
 							<?php endif;?>
 						<?php else: ?>		
-							<a class="btn-ws btn-ws-small" href="<?php echo Router::url('users/login');?>">Connexion</a>
-							<a class="btn-ws btn-ws-small" href="<?php echo Router::url('users/register');?>">Inscription</a>
+							<a class="btn-ws btn-ws-small btn-ws-submit" href="<?php echo Router::url('users/login');?>">Connexion</a>
+							<a class="btn-ws btn-ws-small btn-ws-submit" href="<?php echo Router::url('users/register');?>">Inscription</a>
 						<?php endif; ?>	
 					<?php endif; ?>
 					
@@ -180,7 +177,7 @@
 									</a>
 									<a class="btn btn-link" href="<?php echo Router::url('events/removeParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID());?>" rel="nofollow"><i class="icon-remove"></i> Annuler</a>
 								<?php else: ?>
-									<a class="btn-ws" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">
+									<a class="btn-ws btn-ws-submit" href="<?php echo Router::url('events/addParticipant?event_id='.$event->id.'&user_id='.$this->session->user()->getID().'&proba=1');?>" rel="nofollow">
 										<i class="icon-white icon-plus"></i>
 										Je veux participer!
 									</a>									

@@ -3,7 +3,7 @@
 	$nbevents=0;
 
 ?>
-<div class="events-weeks <?php if($numWeeks>=3) echo 'minified-events';?> <?php if($firstday==date('Y-m-d')) echo 'current-week';?>" data-first-day="<?php echo $firstday;?>">
+<div class="events-weeks <?php if($numDays>7) echo 'minified-events';?> <?php if($firstday==date('Y-m-d')) echo 'current-week';?>" data-first-day="<?php echo $firstday;?>">
 	<table>
 		<?php
 			foreach ($weeks as $week):
@@ -14,9 +14,9 @@
 				foreach ($week as $date => $evts):
 
 					$noCol++;
-					//$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1; //compute the number of day between this date and today (modulo 7)
+					$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1; //compute the number of day between this date and today (modulo 7)
 			?>
-				<td style="width:2%" class="events-day colomn-<?php echo $noCol;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $date;?>" data-date="<?php echo $date;?>">
+				<td style="width:2%" class="events-day colomn-<?php echo $datediff;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $date;?>" data-date="<?php echo $date;?>">
 					<div class="colomn-date" id="colomn-date-<?php echo $noCol;?>">
 						<?php
 							if($date==date('Y-m-d')){

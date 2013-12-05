@@ -123,6 +123,19 @@ $(document).ready(function(){
 	});
 	*/
 
+	/*=====================
+		Submit Button
+	=======================*/
+	bindEvent_submitButton();
+	function bindEvent_submitButton(){
+		$('input.btn-ws-submit,a.btn-ws-submit,button.btn-ws-submit').on('click',function(){
+			var btn = $(this);
+			btn.addClass('btn-ws-submit-clicked');
+			setTimeout(function(){ btn.removeClass('btn-ws-submit-clicked');},4000);
+		})
+	}
+
+
 
 	/*===========================================================
 		Time Ago

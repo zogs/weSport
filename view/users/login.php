@@ -19,7 +19,7 @@
 					
 					<div class="control-group control-submit">
 						<label for="" class="control-label"></label>
-						<input type="submit" class="btn-ws" value="Se connecter"/>
+						<button type="submit" class="btn-ws btn-ws-submit">Se connecter</button>
 						<p class="help help-center">
 							<a href="<?php echo Router::url('users/register');?>">Pas encore inscrit ?</a>	    			
 						</p>	

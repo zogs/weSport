@@ -66,18 +66,42 @@
 						<?php endif; ?>
 					</div>
 					<div class="calendar-period">
-						<strong>Affichage:</strong>
+						<strong>Jours</strong>
 						<div class="periodChoice">
-							<input type="radio" class="periodRadio" id="period1" name="nbdays" value="7" <?php if($params['nbdays']<=7) echo 'checked="checked"';?>>
-							<label for="period1">1 semaine</label>
+							<input type="radio" class="periodRadio" id="period1" name="nbdays" value="1" <?php if($params['nbdays']==1) echo 'checked="checked"';?>>
+							<label for="period1">1</label>
 						</div>
 						<div class="periodChoice">
-							<input type="radio" class="periodRadio" id="period2" name="nbdays" value="14" <?php if($params['nbdays']>7) echo 'checked="checked"';?>>	
-							<label for="period2">2 semaines</label>
+							<input type="radio" class="periodRadio" id="period2" name="nbdays" value="2" <?php if($params['nbdays']==2) echo 'checked="checked"';?>>
+							<label for="period2">2</label>
 						</div>
 						<div class="periodChoice">
-							<input type="radio" class="periodRadio" id="period4" name="nbdays" value="28" <?php if($params['nbdays']>21) echo 'checked="checked"';?>>
-							<label for="period4">1 mois</label>
+							<input type="radio" class="periodRadio" id="period3" name="nbdays" value="3" <?php if($params['nbdays']==3) echo 'checked="checked"';?>>
+							<label for="period3">3</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period4" name="nbdays" value="4" <?php if($params['nbdays']==4) echo 'checked="checked"';?>>
+							<label for="period4">4</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period5" name="nbdays" value="5" <?php if($params['nbdays']==5) echo 'checked="checked"';?>>
+							<label for="period5">5</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period6" name="nbdays" value="6" <?php if($params['nbdays']==6) echo 'checked="checked"';?>>
+							<label for="period6">6</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period7" name="nbdays" value="7" <?php if($params['nbdays']==7) echo 'checked="checked"';?>>
+							<label for="period7">1 semaine</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period8" name="nbdays" value="14" <?php if($params['nbdays']>7) echo 'checked="checked"';?>>	
+							<label for="period8">2 semaines</label>
+						</div>
+						<div class="periodChoice">
+							<input type="radio" class="periodRadio" id="period9" name="nbdays" value="28" <?php if($params['nbdays']>21) echo 'checked="checked"';?>>
+							<label for="period9">1 mois</label>
 						</div>
 					</div>
 					<div class="calendar-loader"><img class="loadingbar" src="<?php echo Router::webroot('img/ajax-loader-bar.gif');?>" title="Chargement..." /></div>
@@ -214,7 +238,7 @@ $(document).ready(function(){
 	var _anim;
 	var _nbDays = 0, _displayDays, _dayDisplayed = 0;
 	var _newPage=1, _loadingEvents= false, _moreEvents = true;
-	var _newWeek, _oldWeek, _newDays, _newHidden, _hidden;
+	var _newWeeks, _newWeekFirst, _oldWeek, _newDays, _newHidden, _hidden;
 	var _wDrag = 150;
 	var _xO;
 	var _yO;
@@ -394,29 +418,26 @@ $(document).ready(function(){
 			slideDuration = 0;
 		}
 
-		var weeks = _oldWeek.add(_newWeek);
+		var weeks = _oldWeek.add(_newWeeks);
 
 		_cal.css('left',0);
 		
 		weeks.addClass('sliding');
 
-		_newWeek.css({'left':contentPosition+'px'});
+		_newWeeks.css({'left':contentPosition+'px'});
 
 		if(direction=='left') _newDays = _newDays.get().reverse(); //reverse order the colomn are displayed
 		_displayDays = setInterval(function(){ displayColomns(direction)},delayDisplay);
 
-		_oldWeek.remove();
-		_newWeek.animate({
+		_oldWeek.find('.events-day').empty();
+		_newWeeks.animate({
 			left:contentSliding,
 			},slideDuration,'easeOutCirc',function(){ 
 
-				if($(this).is('#new-week')){
-
-					_newWeek.removeClass('sliding');
+					_oldWeek.remove();
+					_newWeeks.removeClass('sliding');
 					setHeightCalendar();						
-					return;
-				}
-				
+					return;				
 		});
 
 
@@ -455,15 +476,15 @@ $(document).ready(function(){
 
 	function setHeightCalendar(){
 
-		var minHeight = parseInt(_newWeek.css('minHeight'));
-		var heightCalendar = _newWeek.css('height','auto').height();	
+		var minHeight = parseInt(_newWeeks.css('minHeight'));
+		var heightCalendar = _newWeeks.css('height','auto').height();	
 
 		if(heightCalendar > minHeight){
 			_cal.css('height',heightCalendar);
-			_newWeek.css('height',heightCalendar);
+			_newWeeks.css('height',heightCalendar);
 		} else {
 			_cal.css('height',minHeight);
-			_newWeek.css('height',minHeight);
+			_newWeeks.css('height',minHeight);
 		}
 		
 	}
@@ -477,7 +498,7 @@ $(document).ready(function(){
 
 	function setCurrentWeek(){
 		
-		if(_newWeek.hasClass('current-week')) _cWeek = true;
+		if(_newWeeks.hasClass('current-week')) _cWeek = true;
 		else _cWeek = false;
 		return _cWeek;
 	}
@@ -499,8 +520,9 @@ $(document).ready(function(){
 				document.getElementById('calendar-content').innerHTML = oldhtml+newhtml;
 
 				_oldWeek = _cal.find(".events-weeks:first").attr('id','old-week');
-				_newWeek = _cal.find(".events-weeks:last").attr('id','new-week');	
-				_newDays = _newWeek.find('td.events-day');
+				_newWeeks = _cal.find(".events-weeks:last").attr('id','new-week');	
+				_newWeekFirst = _newWeeks.find('.events-week:first');				
+				_newDays = _newWeeks.find('td.events-day');
 				_newHidden = _newDays.find('.hidden');
 
 				_hidden = [];
@@ -588,15 +610,15 @@ $(document).ready(function(){
 							//addEventsToColomn(this,results[date]);
 							$('#addPoint'+date).before(results[date]);
 
-							setHeightCalendar();
-
 							var new_events = $('#colomn-'+date).find('.hidden');
 							new_events.each(function(){								
 								_hidden[$(this).attr('id')] = $(this).offset().top;
 							});
 
-							$(window).scroll(); //refresh scroll function to display new event
+							//$(window).scroll(); //refresh scroll function to display new event
 							
+							setHeightCalendar();
+
 						}
 					});	
 					
@@ -641,17 +663,22 @@ $(document).ready(function(){
             }
 
 
-            //position du bas du calendrier
-            var yBottomCalendar = $("#calendar-footer").offset(); 
-            //si le bas du calendrier est atteint on charge la suite des événements
-            	//console.log(yBottomCalendar.top+' <= '+scrollPos+' && '+_drag+' && '+_loadingEvents+' && '+_moreEvents);
-            if( (yBottomCalendar.top <= scrollPos ) && _drag===false && _loadingEvents === false && _moreEvents === true ) 
-            {               	
-            	
-                _loadingEvents = true;
-                _newPage        = _newPage+1;                                
-                loadBottomEvents();		                                   
+
+            //
+            if($(_newWeekFirst).length!=0){
+            	//position du bas de la premiere ligne
+            	var y = parseInt($(_newWeekFirst).offset().top+$(_newWeekFirst).height()); 
+            
+	            //si le bas est atteint && calendar is not dragged && no events is loading && more events are possibbly to call
+	            //console.log(y+' <= '+scrollPos+' && '+_drag+' && '+_loadingEvents+' && '+_moreEvents);
+	            if( (y <= scrollPos ) && _drag===false && _loadingEvents === false && _moreEvents === true ) 
+	            {               		            	
+	                _loadingEvents = true;
+	                _newPage        = _newPage+1;                                
+	                loadBottomEvents();		                                   
+	            }
             }
+            
 
             
         });
