@@ -150,6 +150,7 @@
 </div>
 
 
+<?php if(isset($display_demo) && $display_demo == true): ?>
 <!-- DEMO TOUR :: http://ryanfunduk.com/jquery-tourbus/ -->
 <div class="tour-overlay"></div>
 <ol class='tourbus-legs' id='wesport-demo'>
@@ -220,6 +221,9 @@
 
   </li>
 </ol>
+<?php endif; ?>
+
+
 
 <script type="text/javascript">
 
@@ -459,15 +463,20 @@ $(document).ready(function(){
 	function displayColomns(direction){
 
 		var colomn = $(_newDays[_dayDisplayed])
-		colomn.addClass('displayed');		
-		colomn.on('click','.events-link',clickEvent);
-		colomn.find('.tooltipbottom').tooltip({ placement : 'bottom', delay: { show: 200, hide: 100 }});
+		colomn.addClass('displayed');
+
+		colomnBindEvent(colomn);
 
 		_dayDisplayed++;
 		if(_dayDisplayed>=_nbDays) {
 			clearInterval(_displayDays);
 			_dayDisplayed = 0;
 		}
+	}
+
+	function colomnBindEvent(colomn){
+		colomn.on('click','.events-link',clickEvent);
+		colomn.find('.tooltipbottom').tooltip({ placement : 'bottom', delay: { show: 200, hide: 100 }});
 	}
 
 
@@ -535,6 +544,8 @@ $(document).ready(function(){
 				slideCalendar(direction);	  				
 				
 				setCurrentWeek();
+
+				$(window).scroll(); //refresh scroll function to display new event
 
 				_newPage = 1;
 				_moreEvents = true;
@@ -615,9 +626,12 @@ $(document).ready(function(){
 								_hidden[$(this).attr('id')] = $(this).offset().top;
 							});
 
-							//$(window).scroll(); //refresh scroll function to display new event
-							
-							setHeightCalendar();
+							$(window).scroll(); //refresh scroll function to display new event
+						
+							colomnBindEvent($(this));
+
+							//reset height of the calendar after all the hidden events have been displayed
+							setTimeout(function(){ setHeightCalendar();},1000);
 
 						}
 					});	

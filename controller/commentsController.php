@@ -235,7 +235,7 @@
  				if($com->context=='events'){
 
  					$event = new EventsController();
- 					//$event->sendMailNewComment($com->context_id,$id);
+ 					$event->sendMailNewComment($com->context_id,$id);
  				}
  				
 
