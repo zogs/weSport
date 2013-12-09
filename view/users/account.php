@@ -164,10 +164,10 @@
 						</div>
 
 						<p><strong>Les sports où je participe</strong></p>
-						<?php echo $this->Form->checkbox('eventConfirmed','NULL',array(1=>"Recevoir un mail quand l'activité est confirmé"),array(''=>1,'switch'=>1)) ;?>
-						<?php echo $this->Form->checkbox('eventCanceled','NULL',array(1=>"Recevoir un mail quand l'activité est annulé"),array(''=>1,'switch'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventConfirmed','NULL',array(1=>"Recevoir un mail quand l'activité est confirmée"),array(''=>1,'switch'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventCanceled','NULL',array(1=>"Recevoir un mail quand l'activité est annulée"),array(''=>1,'switch'=>1)) ;?>
 						<?php echo $this->Form->checkbox('eventChanged','NULL',array(1=>"Recevoir un mail quand l'organisateur change l'événement"),array(''=>1,'switch'=>1)) ;?>
-						<?php echo $this->Form->checkbox('eventOpinion','NULL',array(1=>"Recevoir un mail aprés l'événement pour donner votre avis"),array(''=>1,'switch'=>1)) ;?>
+						<?php echo $this->Form->checkbox('eventOpinion','NULL',array(1=>"Recevoir un mail après l'événement pour donner votre avis"),array(''=>1,'switch'=>1)) ;?>
 						<?php echo $this->Form->checkbox('eventOrgaReply','NULL',array(1=>"Recevoir un mail quand l'organisateur répond à votre question"),array(''=>1,'switch'=>1)) ;?>
 						
 						<p><strong>Les sports que j'organise</strong></p>
