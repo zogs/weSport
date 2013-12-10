@@ -64,11 +64,10 @@ class UsersController extends Controller{
 								header('Location: '.$data->previous_url);
 								exit();							
 							}
-						}
-						//else the user is using the navbar formular, redirect current page
-						else {
-							$this->redirect('/');
-						}			
+						}						
+
+						$this->redirect('/');
+									
 					
 					}
 					else {
@@ -484,7 +483,6 @@ class UsersController extends Controller{
 	public function validate(){
 
 		$this->loadModel('Users');
-		$this->view = 'users/login';
 
 		if($this->request->get('c') && $this->request->get('u') ) {
 
@@ -524,6 +522,9 @@ class UsersController extends Controller{
 			$this->session->setFlash("Le lien d'activation est incorrect... Veuillez réessayer.",'error');
 			$this->session->setFlash("Vous pouvez demander un nouveau lien d'activation en essayant de vous connecter, et en cliquant sur <i>Demander un nouveau mail d'activation</i>",'info');
 		}
+
+
+		$this->redirect('users/login');
 
 	}
 
