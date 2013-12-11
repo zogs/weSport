@@ -331,14 +331,6 @@ $(document).ready(function(){
 
         	return false;
         });
-        /*===========================================================
-        	hover comments
-        ============================================================*/
-
-        /*===========================================================
-        	init bind events
-        ============================================================*/
-	    bindEventToPosts();
 		
 
 	    /*===========================================================	        
@@ -657,15 +649,19 @@ $(document).ready(function(){
 
     
     function bindEvent_ShowReplies(){
-        	$('#comments').on('click','a.showReplies',function(e){
-        		$(e.currentTarget).parent().next('.hiddenReplies').show();
-        		$(e.currentTarget).parent().remove();
-        		e.preventDefault();
-        		return false;
-        	});
-        }
+    	$('#comments')
+    	.off('click','a.showReplies')
+    	.on('click','a.showReplies',function(e){
+    		$(e.currentTarget).parent().next('.hiddenReplies').show();
+    		$(e.currentTarget).parent().remove();
+    		e.preventDefault();
+    		return false;
+    	});
+    }
     function bindEvent_Post(){
-    	$("#comments").on('mouseenter','.post',function(e){
+    	$("#comments")
+    	.off('mouseenter','.post')
+    	.on('mouseenter','.post',function(e){
     		$(e.currentTarget).find('.actions').css('visibility','visible'); 
     	})
     	.on('mouseleave','.post',function(e){
@@ -673,13 +669,16 @@ $(document).ready(function(){
     	});
     }
     function bindEvent_btnCommentReply(){
-    	$('#comments').on('click','a.btn-comment-reply',function(e){
+    	$('#comments')
+		.off('click','a.btn-comment-reply')
+		.on('click','a.btn-comment-reply',function(e){
     		var form = $('#formCommentReply').detach();
             var reply_to = $(e.currentTarget).attr('href');
             var reply_login = $(e.currentTarget).attr('data-comlogin');
             var comment_id = $(e.currentTarget).attr('data-comid');
 
             form.find('input[name=reply_to]').val(reply_to);
+            form.find('input[name=content]').val('');
             form.find('textarea').attr('placeholder','Répondre à '+reply_login);
             $("#com"+comment_id).after(form);  
 
@@ -688,7 +687,10 @@ $(document).ready(function(){
     	});
     }        
     function bindEvent_formCommentReply(){
-    	$('#comments').on('submit','form.formCommentReply',function(e){
+    	$('#comments')
+    	.off('submit','form.formCommentReply')
+    	.on('submit','form.formCommentReply',function(e){
+    		
     		var url = $(e.currentTarget).attr('action');
             var datas = $(e.currentTarget).serialize();
             var parent_id = $(e.currentTarget).find('input[name=reply_to]').val();            
@@ -700,8 +702,9 @@ $(document).ready(function(){
                 success: function( com ){
 
                    if(!com.fail){
-							                    
-                    $(e.currentTarget).remove();                    
+					
+					$("#formCommentReply").detach().appendTo('#hiddenFormReply');	                                                            
+
                     $("#replies"+parent_id).remove();
                     $("#com"+parent_id).replaceWith(com.content);
 
@@ -718,7 +721,9 @@ $(document).ready(function(){
     }
     
     function bindEvent_btnVote(){
-    	$('#comments').on('click','a.btn_vote',function(e){
+    	$('#comments')
+    	.off('click','a.btn_vote')
+    	.on('click','a.btn_vote',function(e){
     		var badge = $(e.currentTarget).find('.badge');
             var id = $(e.currentTarget).attr('data-id');
             var url = $(e.currentTarget).attr('data-url');
@@ -736,7 +741,9 @@ $(document).ready(function(){
     	});
     }
     function bindEvent_moderated(){
-    	$('#comments').on('click','.commentIsModerate',function(e){
+    	$('#comments')
+    	.off('click','.commentIsModerate')
+    	.on('click','.commentIsModerate',function(e){
     		$(e.currentTarget).next().hide();
 	    	$(e.currentTarget).find('a').click(function(){
 	    		$(e.currentTarget).parent().next().toggle();
@@ -757,14 +764,18 @@ $(document).ready(function(){
 		
 	}
     function bindEvent_closePreviewMedia(){
-    	$('#commentPreview').on('click','.previewMedia-close',function(e){
+    	$('#commentPreview')
+    	.off('click','.previewMedia-close')
+    	.on('click','.previewMedia-close',function(e){
     		$("#commentPreview").empty();
 	        $("input#media").val('');
 	        $("input#type").val('com');
     	});
     }
     function bindEvent_nextThumbnail(){
-    	$('#next_thumb').on('click',function(e){
+    	$('#next_thumb')
+    	.off('click')
+    	.on('click',function(e){
     		var img = $('#commentPreview .previewMedia-thumbnails').find('.previewMedia-thumbnail:visible');
 	        var next = img.next('.previewMedia-thumbnail');
 	        if(next.length>0) {
@@ -776,7 +787,9 @@ $(document).ready(function(){
     	});
     }
     function bindEvent_prevThumbnail(){
-    	$('#prev_thumb').on('click',function(){
+    	$('#prev_thumb')
+    	.off('click')
+    	.on('click',function(){
     		var img = $('#commentPreview .previewMedia-thumbnails').find('.previewMedia-thumbnail:visible');
 	        var prev = img.prev('.previewMedia-thumbnail');     
 	        if(prev.length>0){
@@ -788,7 +801,9 @@ $(document).ready(function(){
     	});
     }	    
     function bindEvent_launchMedia(){
-    	$('#comments').on('click','.previewMedia-thumbnail',function(e){
+    	$('#comments')
+    	.off('click','.previewMedia-thumbnail')
+    	.on('click','.previewMedia-thumbnail',function(e){
 
     		var id = $(e.currentTarget).attr('data-comid');
 	        var media = $(e.currentTarget).attr('data-media-url');
