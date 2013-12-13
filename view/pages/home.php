@@ -328,6 +328,7 @@ $(document).ready(function(){
 			_drag = false;
 		}
 
+		if (navigator.vibrate) { navigator.vibrate(0); }
 		$(window).off('mousemove touchmove');
 		cancelRequestAnimFrame(_anim);
 
@@ -361,12 +362,14 @@ $(document).ready(function(){
 		if(x>=_wDrag) {
 			_cal.css('left',_wDrag);
 			lockPrev(); //set lock to previous
+			if (navigator.vibrate) { navigator.vibrate(2000); }
 			_anim = requestAnimFrame(dragCalendar,_cal);
 			return;
 		}
 		if(x<=-_wDrag) {
 			_cal.css('left',-_wDrag);
 			lockNext(); //set lock to next week
+			if (navigator.vibrate) { navigator.vibrate(2000); }
 			_anim = requestAnimFrame(dragCalendar,_cal);
 			return;
 		}

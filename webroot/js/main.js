@@ -1,7 +1,9 @@
 var spanLoader = '<span class="ajaxLoader" id="ajaxLoader"></span>';
 var ajaxLoader = "#ajaxLoader";
 
-
+// enable vibration support
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+ 
 
 /*===========================================================
 	JQUERY 
