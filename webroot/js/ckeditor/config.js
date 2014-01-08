@@ -31,6 +31,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.baseUrl = "http://we-sport.fr/";
 	config.baseDir = "D:\wamp\www\weSport\webroot";
+	config.enterMod = 'ENTER_P';
 
 
 };

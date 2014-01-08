@@ -182,19 +182,7 @@ $(document).ready(function(){
 	    	});
 		});
 	}
-	/*var expands = $('.expandable');
-	if(expands.size()){
-		expands.livequery(function(){
-	    	$(this).expander({
-	    		slicePoint: $(this).attr('data-maxlength'),
-	    		expandPrefix: ' ',
-	    		expandText: $(this).attr('data-expandtext'),
-	    		userCollapseText: $(this).attr('data-collapsetext'),
-	    		userCollapsePrefix: ' ',
-	    	});
-    	});
-	}*/
-    
+
 
 		
 	/*===========================================================
@@ -372,6 +360,10 @@ $(document).ready(function(){
 	            //set media_url with currentUrlPreview
 	            media_url.val(CurrentUrlPreview);           
 	        }
+
+	        console.log(data);
+
+	        return;
 
 	        //if comment not empty
 	        if( trim(text) != "") {

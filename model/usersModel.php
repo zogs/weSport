@@ -26,7 +26,7 @@ class UsersModel extends Model{
 								'message' => "L'adresse email n'est pas valide"),
 							array(
 								'rule' => 'notEmpty',
-								'Vous devez remplir une adresse email')
+								'message' => 'Vous devez remplir une adresse email')
 							)
 				),
 			'password' => array(

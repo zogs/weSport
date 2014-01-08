@@ -59,10 +59,15 @@ class UsersController extends Controller{
 
 						//redirection
 						// redirect to the previous location if the user use the login page
-						if(!empty($data->previous_url)){							
-							if(strpos($data->previous_url,Conf::getSiteUrl())===0) { //if the previous page is a wesport page				
-								header('Location: '.$data->previous_url);
-								exit();							
+						if(!empty($data->previous_url)){	
+							//if the previous page is a wesport page						
+							if(strpos($data->previous_url,Conf::getSiteUrl())===0) {
+								//if it is not a /users/ page 				
+								if(strpos($data->previous_url,'/users/')==0){
+									//redirect to previous url
+									header('Location: '.$data->previous_url);
+									exit();																
+								}
 							}
 						}						
 
