@@ -53,7 +53,7 @@ class zHandlingErrors {
         $body = preg_replace("~{useragent}~i", $_SERVER['HTTP_USER_AGENT'] . ' IP:'.$_SERVER['REMOTE_ADDR'], $body);
         $body = preg_replace("~{date}~i", date("Y-m-d H:i:s"), $body);
         $body = preg_replace("~{context}~i", $error->context, $body);
-        $body = preg_replace("~{post}~i",$HTTP_RAW_POST_DATA,$body);
+        $body = preg_replace("~{post}~i",serialize($_POST),$body);
 
 		//Création d'une instance de swift mailer
 		$mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
