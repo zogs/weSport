@@ -605,7 +605,11 @@ class EventsModel extends Model{
 			}			
 
 			//return first event_id
-			return $occurences[0];
+			if(isset($occurences[0]))
+				return $occurences[0];				
+			//return false if there is no occurence in the serie
+			return false;
+
 
 	}
 
