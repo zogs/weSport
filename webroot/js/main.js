@@ -360,10 +360,7 @@ $(document).ready(function(){
 	            //set media_url with currentUrlPreview
 	            media_url.val(CurrentUrlPreview);           
 	        }
-
-	        console.log(data);
-
-	        return;
+	        
 
 	        //if comment not empty
 	        if( trim(text) != "") {
