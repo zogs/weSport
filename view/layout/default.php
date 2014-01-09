@@ -29,7 +29,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 	?>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3">
 	<meta http-equip="cache-control" content="no-cache">
 	<link rel="icon" type="image/png" href="<?php echo Router::webroot('img/LOGO.gif');?>">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo Router::webroot('img/wesport.ico');?>">
