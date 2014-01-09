@@ -368,7 +368,7 @@ $(document).ready(function(){
 	        	//send POST request
 	            $.ajax({
 	            	url:url, 
-	            	type:"GET", 
+	            	type:"POST", 
 	            	data: data, 
 	            	dataType: 'json',
 	                success: function( com ){
@@ -494,7 +494,7 @@ $(document).ready(function(){
     @param use params in showComments_params[]
     @param use $arguments[] , string clear,newest,start
     ============================================================*/ 
-    	function show_comments( action ){
+	function show_comments( action ){
 		
 		$("#ajaxLoader").show();		
 		$("#loadingComments").show();

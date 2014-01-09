@@ -212,45 +212,48 @@
  		$this->layout = 'none';
 
  		$d = array();
+ 		
+ 		if($com = $this->request->post()){
 
- 		//if no POST data
- 		if(!$this->request->get()) throw new zException("No post data sended",1);
- 		else $com = $this->request->get();
+	 		//if there is a user logged in
+	 		if($this->session->user()->isLog()){
 
- 		//if there is a user logged in
- 		if($this->session->user()->isLog()){
+	 			$com->user_id = $this->session->user()->getID();
+	 			$com->lang = $this->getLang();
 
-
- 			$com->user_id = $this->session->user()->getID();
- 			$com->lang = $this->getLang();
-
- 			//encode to prevent XSS for user != admin
- 			if(!$this->session->user()->isAdmin())
- 				$com->content = String::htmlEncode($com->content);
+	 			//encode to prevent XSS for user != admin
+	 			if(!$this->session->user()->isAdmin())
+	 				$com->content = String::htmlEncode($com->content);
 
 
- 			if($id = $this->Comments->saveComment($com)){
+	 			if($id = $this->Comments->saveComment($com)){
 
 
- 				if($com->context=='events'){
+	 				if($com->context=='events'){
 
- 					$event = new EventsController();
- 					$event->sendMailNewComment($com->context_id,$id);
- 				}
- 				
+	 					$event = new EventsController();
+	 					$event->sendMailNewComment($com->context_id,$id);
+	 				}
+	 				
 
 
- 				$com = $this->Comments->getComment($id);
- 				if($com->isEmpty()) $d['fail'] = 'The comment is empty';
- 				$d['com'] = $com;
- 			}
- 			else {
- 				$d['fail'] = 'Error while saving comment ( add:commentsModel)'; 				
- 			}			
+	 				$com = $this->Comments->getComment($id);
+	 				if($com->isEmpty()) $d['fail'] = 'The comment is empty';
+	 				$d['com'] = $com;
+	 			}
+	 			else {
+	 				$d['fail'] = 'Error while saving comment ( add:commentsModel)'; 				
+	 			}			
+	 		}
+	 		else {
+	 			$d['fail'] = "You should log in first...";
+	 		} 		 		
  		}
  		else {
- 			$d['fail'] = "You should log in first...";
- 		} 		 		
+ 			throw new zException("No data sended",1);
+ 		}
+
+
 
  		$this->set($d);
  	}
