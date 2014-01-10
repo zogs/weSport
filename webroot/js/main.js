@@ -1001,28 +1001,39 @@ $(document).ready(function(){
 			control.addClass('control-error');
 			help.removeClass('hide').empty().html("Le caractère suivant n'est pas autorisé : "+c);
 		}
-		else {
-			control.removeClass('control-error');
-			help.addClass('hide').empty();
 
+		if(type=='email') {
 
-			$.ajax({
-				type: 'GET',
-				url: url,
-				data: {type : type, value : value},
-				success: function(data){					
-					if(data.error){						
-						control.removeClass('control-success');					
-						control.addClass('control-error');
-						help.removeClass('hide').empty().html( data.error );
-					}
-					else {
-						control.removeClass('control-error');
-						control.addClass('control-success');						
-					}
-				},
-				dataType: 'json'
-			});
+			var regex = new RegExp("[_a-zA-Z0-9-+]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-z]{2,4})","g");
+			var valid = value.match(regex);
+			if(valid){
+				control.removeClass('control-error');
+				help.addClass('hide').empty();
+
+				$.ajax({
+					type: 'GET',
+					url: url,
+					data: {type : type, value : value},
+					success: function(data){
+						console.log(data);					
+						if(data.error){						
+							control.removeClass('control-success');					
+							control.addClass('control-error');
+							help.removeClass('hide').empty().html( data.error );
+						}
+						else {
+							control.removeClass('control-error');
+							control.addClass('control-success');						
+						}
+					},
+					dataType: 'json'
+				});				
+			}
+			else{
+				control.addClass('control-error');
+				help.removeClass('hide').empty().html("L'adresse doit être une adresse email valide");
+			}
+
 		}
 
 		return false;
