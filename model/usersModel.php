@@ -141,7 +141,7 @@ class UsersModel extends Model{
 		parent::__construct();
 		
 		//cache for cluster of wesporter location
-		$this->cacheData = new Cache(Conf::getCachePath().'/statistics',1440); //one day
+		$this->cacheData = new Cache(Conf::getCachePath().'/statistics',60); //one day
 
 	}
 	public function saveUser($user,$user_id = null){
