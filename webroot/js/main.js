@@ -26,7 +26,8 @@ $(document).ready(function(){
     	name:'city',
     	valueKey:'name',
 		limit: 5,
-		minLength: 3,	
+		minLength: 3,
+		allowDuplicates: true,	
 		//local: array of datums,
 		//prefetch: link to a json file with array of datums,
 		remote: $("#cityName").attr('data-autocomplete-url')+'?query=%QUERY',			
@@ -41,10 +42,9 @@ $(document).ready(function(){
 
 	}).on('typeahead:selected',function( evt, datum ){
 		$(this).val(datum.name);		
-		$("#cityName").val( datum.name );
 		$('#cityID').val( datum.id );
 		$('#cityName').removeClass('empty');
-		//$('#cityName').val( datum.name);
+		$('#cityName').val(datum.name);
 	}).on('typeahead:opened',function(e){
 		$("#cityName").addClass('open');		
 	}).on('typeahead:closed',function(e){

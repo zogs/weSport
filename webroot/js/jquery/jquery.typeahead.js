@@ -394,6 +394,8 @@
             this.itemHash = {};
             this.adjacencyList = {};
             this.storage = o.name ? new PersistentStorage(o.name) : null;
+            //perso added
+            this.allowDuplicates = o.allowDuplicates || false;
         }
         utils.mixin(Dataset.prototype, {
             _processLocalData: function(data) {
@@ -534,7 +536,9 @@
                     suggestions = suggestions.slice(0);
                     utils.each(data, function(i, datum) {
                         var item = that._transformDatum(datum), isDuplicate;
-                        isDuplicate = utils.some(suggestions, function(suggestion) {
+                        //perso change
+                        //isDuplicate = utils.some(suggestions, function(suggestion) {
+                        isDuplicate = that.allowDuplicates ? false : utils.some(suggestions, function(suggestion) {
                             return item.value === suggestion.value;
                         });
                         !isDuplicate && suggestions.push(item);
