@@ -14,6 +14,7 @@ class Form{
 	public function setErrors($errors){
 
 		$this->errors = $errors;
+		
 	}
 
 	public function wrapInput($id, $label, $input, $params = null){		

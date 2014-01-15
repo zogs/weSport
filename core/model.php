@@ -577,27 +577,11 @@ public function validates($data, $rules = null, $field = null){
 				//Si la donnée correspondant est manquante -> erreur				
 				if(!isset($data->$field)){
 
-
-					//Si il y a plusiers regles
-					if(isset($model['rules'])){
-						$rules = $model['rules']; 						
-						if(in_array('optional',$rules)) $optional=true;
-						//if not optional
-						if(!isset($optional)){
-							$rule = $rules[0];
-							$errors[$field] = $rule['message'];
-						}
-						
-					}
-					//Si il y a qu'une regle (et que ce nest pas un upload de fichier)
-					if(isset($model['rule']) && $model['rule']!='file'){
-						
-						//Si le champ est optionnel, sauter au prochain champ
-						if($model['rule']=='optional' || isset($model['optional'])) continue;
-						//Sinon on ajoute une erreur, si le message est défini
-						if(isset($model['message']))					
-							$errors[$field] = $model['message'];
-					}
+					//Sauter au prochain champ si le champ est vide ET optionel
+					if(isset($model['optional']))
+					{
+						continue;
+					}						
 					
 				}
 				else{
@@ -612,8 +596,17 @@ public function validates($data, $rules = null, $field = null){
 						 $rules = array($model);
 					}
 
+					//Passer au prochain champ si le champ est vide et qu'il est optionel
+					if(empty($data->$field)){										
+						if(in_array('optional',$rules)) {
+							continue;												
+						}
+					}				
+
 					//Pour toutes les regles correspondante
 					foreach ($rules as $rule) {
+
+
 
 						if($rule['rule']=='notEmpty'){
 

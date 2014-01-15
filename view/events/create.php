@@ -47,12 +47,21 @@
 							<?php echo $this->Form->_input('enddate','',array('class'=>'datepicker','placeholder'=>'Date de fin','style'=>'flaot:left;width:46%')); ?>
 							<?php echo $this->Form->_checkbox('recur_day[]','',Form::WeekDays(),array('openwrap'=>'<div class="checkbox_recur_day">','closewrap'=>'</div>'));?>
 							</div>
+							
+							<?php if(isset($this->errors['date']) ||isset($this->errors['startdate']) || isset($this->errors['enddate'])): ?>
+								<p class="help-inline help-error">
+									<?php if(isset($this->errors['date'])) echo $this->errors['date'].'<br/>'; ?>
+									<?php if(isset($this->errors['startdate'])) echo $this->errors['startdate'].'<br/>'; ?>
+									<?php if(isset($this->errors['enddate'])) echo $this->errors['enddate'].'<br/>'; ?>
+								</p>
+							<?php endif; ?>
+
 							<p class="help-inline">
 								<?php if(!$event->isRecurrent()):?>
 								<a href="#" id="open-control-recur">Date régulière ?</a>
 							<?php else:?>
 								<small>Cet événement fait partie d'une série</small>
-							<?php endif; ?>								
+							<?php endif; ?>	
 							</p>
 								
 						</div>

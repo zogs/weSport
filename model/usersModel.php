@@ -38,10 +38,10 @@ class UsersModel extends Model{
 				'message' => "Vos mots de passe ne sont pas identiques"
 				),
 			'prenom' => array(
-				'rule'=> 'optional',
+				'optional'=> 'optional',
 				),
 			'nom' => array(
-				'rule' => 'optional',
+				'optional'=> 'optional',
 				),
 			'day' => array(
 				'rules'=> array(

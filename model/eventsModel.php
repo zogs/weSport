@@ -34,18 +34,31 @@ class EventsModel extends Model{
 				),
 				array('rule'=>'notNull','message'=>"Une ville doit être renseigné1")
 			)
-		),/*
-		'date' => array(
-			"rules"=>array(
-				array(
-					'rule'=>'notEmpty',
-					'message'=>"Une date doit être renseigné"
-				),
+		),
+		'date' => array(			
+			"rules"=>array(	
+				'optional'=> 'optional',			
 				array(
 					'rule'=>'datefutur',
-					'message'=>'La date de l\'événement doit être dans le futur')
+					'message'=>'La date doit être dans le futur')
 			)
-		),*/
+		),
+		'startdate' => array(			
+			"rules"=>array(	
+				'optional'=> 'optional',			
+				array(
+					'rule'=>'datefutur',
+					'message'=>'La date de début doit être dans le futur')
+			)
+		),
+		'enddate' => array(			
+			"rules"=>array(
+				'optional'=> 'optional',				
+				array(
+					'rule'=>'datefutur',
+					'message'=>'La date de fin doit être dans le futur')
+			)
+		),
 		'hours' => array(
 			"rules"=>array(
 				array(

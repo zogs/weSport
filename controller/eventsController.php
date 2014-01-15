@@ -618,7 +618,7 @@ class EventsController extends Controller{
 					//if not validate , return a incomplete event fill with the data
 					$evt = new Event($new);					
 					$this->session->setFlash("Veuillez revoir votre formulaire",'error');
-					
+					$this->errors = $this->Events->errors;
 				}		
 		
 		}
