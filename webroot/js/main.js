@@ -16,7 +16,7 @@ $(document).ready(function(){
 	============================================================*/
 	
  	$('input#cityName').click(function(e){ 		
-			if($(this).hasClass('empty')) { 
+			if($(this).hasClass('notempty')) { 
 				$(this).val('');
 				$('input#cityID').val('');
 		}
