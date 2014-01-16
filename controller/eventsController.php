@@ -10,6 +10,94 @@ class EventsController extends Controller{
 		$this->cacheWeather = new Cache(Conf::getCachePath().'/events_weather_forecast',2); //3 hours
 	}
 
+	public function admin_index(){
+
+		$this->loadModel('Events');
+
+		$events = $this->Events->findEvents(array(
+			'order'=>'E.date_depot DESC',
+			'limit'=>100,
+			'online'=>'both',
+			'tempo'=>'futur'
+			));
+
+		$events = $this->Events->joinSports($events,$this->getLang());
+
+		$array = array();
+		foreach ($events as $key => $event) {
+			if($event->getSerieId()==0)
+			{
+				$array[] = $event;
+				continue;
+			}
+
+
+			if($key>=1 && $event->getSerieId()!=$events[$key-1]->getSerieId())
+			{
+				$array[] = $event;
+				continue;	
+			} 
+		}
+
+		$this->set(array(
+			'events'=>$array
+			));
+	}
+
+	public function admin_desactivate($id){
+
+		$this->loadModel('Events');
+
+		$event = $this->Events->findEventByID($id);
+
+		$events = $this->Events->findSerieByEvent($event);
+
+		foreach ($events as $i => $e) {
+			
+			$this->Events->desactivateEvent($e);			
+		}
+
+		$this->session->setFlash('Evénement '.$event->getTitle().' désactivé');
+
+		$this->redirect('admin/events/index');
+	}
+
+	public function admin_activate($id){
+
+		$this->loadModel('Events');
+
+		$event = $this->Events->findEventByID($id);
+
+		$events = $this->Events->findSerieByEvent($event);
+
+		foreach ($events as $i => $e) {
+			
+			$this->Events->activateEvent($e);			
+		}
+
+		$this->session->setFlash('Evénement '.$event->getTitle().' activé');
+
+		$this->redirect('admin/events/index');
+	}
+
+	public function admin_delete($id){
+
+		$this->loadModel('Events');
+
+		$event = $this->Events->findEventByID($id);
+
+		$events = $this->Events->findSerieByEvent($event);
+
+		foreach ($events as $i => $e) {
+			
+			$this->Events->deleteEvent($e);			
+		}
+
+		$this->session->setFlash('Evénement '.$event->getTitle().' supprimé');
+
+		$this->redirect('admin/events/index');
+	}
+
 	public function calendar($period='week',$action = 'now',$date = null){
 
 		$this->view = 'events/index';

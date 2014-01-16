@@ -20,6 +20,7 @@
                         </li>
                         <li><a href="<?php echo Router::url('/'); ?>"><span class="ws-icon-home"></span> Site</a></li>                             
                         <li><a href="<?php echo Router::url('admin/pages/index'); ?>"><span class="ws-icon-menu"></span> Pages</a></li>
+                        <li><a href="<?php echo Router::url('admin/events/index'); ?>"><span class="ws-icon-menu"></span> New Events</a></li>
                         <li><a href="<?php echo Router::url('admin/pages/request');?>"><span class="ws-icon-cog"></span> Requete</a></li>
                         <li><a href="<?php echo Router::url('admin/sports/index');?>"><span class="ws-icon-star"></span> Sports</a></li>
                         <li><a href="<?php echo Router::url('admin/mailing/index');?>"><span class="ws-icon-envelop"></span> Mailing</a></li>

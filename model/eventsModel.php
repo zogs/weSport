@@ -185,6 +185,13 @@ class EventsModel extends Model{
 		if(isset($conditions))
 			$sql .= ' AND '.$this->sqlConditions($conditions);
 
+		if(isset($online))
+		{
+			if($online===0) $sql .= ' AND E.online=0 ';
+			if($online===1) $sql .= ' AND E.online=1 ';
+			
+		}
+
 
 		if(!empty($date)){
 			if(is_string($date)){
@@ -329,6 +336,7 @@ class EventsModel extends Model{
 		//exit();
 		$results = $this->query($sql,$values);
 
+
 		$events = array();
 		foreach ($results as $k => $event) {
 			
@@ -382,6 +390,13 @@ class EventsModel extends Model{
 	public function findEventsBySerie($sid){
 
 		return $this->findEvents(array('conditions'=>array('serie_id'=>$sid)));
+	}
+
+	public function findSerieByEvent($event){
+
+		if($event->getSerieId()==0) return array($event);
+
+		return $this->findEvents(array('conditions'=>array('serie_id'=>$event->getSerieId())));
 	}
 
 
@@ -964,10 +979,36 @@ class EventsModel extends Model{
 			if($this->delete($event))
 				return true;
 			else
-				return false;
-			
+				return false;		
 
+	}
 
+	public function desactivateEvent($event){
+
+		$update = new stdClass();
+		$update->table = 'events';
+		$update->key = 'id';
+		$update->id = $event->getID();
+		$update->online = 0;
+
+		if($this->save($update)){
+			return true;
+		}
+		return false;
+	}
+
+	public function activateEvent($event){
+
+		$update = new stdClass();
+		$update->table = 'events';
+		$update->key = 'id';
+		$update->id = $event->getID();
+		$update->online = 1;
+
+		if($this->save($update)){
+			return true;
+		}
+		return false;
 	}
 
 	public function findReviewByEvent($event_id){
@@ -1087,6 +1128,7 @@ class Event{
 	public $timing  = '';
 	public $confirmed = 0;
 	public $recur_day = array();
+	public $online  = 0;
 
 	public function __construct( $fields = array() ){
 		
@@ -1251,6 +1293,15 @@ class Event{
 	public function getCityID(){
 
 		return $this->cityID;
+	}
+
+	public function getOnline(){
+		return $this->online;
+	}
+
+	public function isOnline(){
+		if(isset($this->online) && $this->online==1) return true;
+		return false;
 	}
 
 	public function getRegions($ADM = null){
