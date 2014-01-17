@@ -16,7 +16,7 @@ class EventsController extends Controller{
 
 		$events = $this->Events->findEvents(array(
 			'order'=>'E.date_depot DESC',
-			'limit'=>100,
+			'limit'=>1000,
 			'online'=>'both',
 			'tempo'=>'futur',
 
