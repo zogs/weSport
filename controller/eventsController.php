@@ -18,7 +18,8 @@ class EventsController extends Controller{
 			'order'=>'E.date_depot DESC',
 			'limit'=>100,
 			'online'=>'both',
-			'tempo'=>'futur'
+			'tempo'=>'futur',
+			'end'=>'DISTINCT serie_id'
 			));
 
 		$events = $this->Events->joinSports($events,$this->getLang());
