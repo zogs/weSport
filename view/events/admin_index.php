@@ -59,13 +59,15 @@
 		 		</td>
 
 		 		<td>
-		 			<table>
-		 				<tr><td><?php echo $event->author->login;?></td></tr>
+		 			
+		 				<?php echo $event->author->login;?>
+		 				<br>
 		 				<?php if($event->author->isAsso() || $event->author->isPro()): ?>
-		 				<tr><td><span class="label"><?php echo $event->author->account;?></span></td></tr>
+		 				<span class="label"><?php echo $event->author->account;?></span>
+		 				<br>
 		 				<?php endif; ?>
-		 				<tr><td><small><?php echo $event->author->email;?></small></td></tr>
-		 			</table>
+		 				<small><?php echo $event->author->email;?></small>
+		 			
 		 		</td>
 
 		 		<td>

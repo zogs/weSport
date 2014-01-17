@@ -308,8 +308,8 @@ class EventsModel extends Model{
 		//Order by default or perso
 		if(!empty($order)){
 
-			$sql .= ' ORDER BY :order';
-			$values[':order'] = $order;
+			$sql .= ' ORDER BY '.$order;
+
 		}
 		else {
 			$sql .= ' ORDER BY E.date ASC, E.time ASC';
@@ -335,7 +335,6 @@ class EventsModel extends Model{
 		//debug($values);
 		//exit();
 		$results = $this->query($sql,$values);
-
 
 		$events = array();
 		foreach ($results as $k => $event) {
