@@ -131,13 +131,14 @@ class WorldController extends Controller
 			$params['arround'] = $this->request->get('arround');
 			$params['Lat'] = $city->LATITUDE;
 			$params['Lon'] = $city->LONGITUDE;
-			$params['location'] = array('CC1'=>'FR','ADM1'=>'A1');
+			$params['location'] = array('CC1'=>'FR');
 			$params['km'] = true;
 
 			$cities = $this->Worlds->findCitiesArround($params);
-
+		
 			return $cities;
 		}
+
 	}
 
 

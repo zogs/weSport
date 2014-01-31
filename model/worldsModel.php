@@ -518,8 +518,7 @@ class WorldsModel extends Model
 		$sql .= ' AND C.LONGITUDE BETWEEN '.$lon1.' AND '.$lon2.' AND C.LATITUDE BETWEEN '.$lat1.' AND '.$lat2.' ';
 
 		$sql .= 'having distance < '.$distance;
-		
-		
+				
 		$pre = $this->db->prepare($sql);
 		$pre->execute();
 		$cities = $pre->fetchAll(PDO::FETCH_OBJ);
