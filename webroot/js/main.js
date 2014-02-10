@@ -15,11 +15,11 @@ $(document).ready(function(){
 		// Autocomplete cityName input
 	============================================================*/
 	
- 	$('input#cityName').click(function(e){ 		
-			if($(this).hasClass('notempty')) { 
-				$(this).val('');
-				$('input#cityID').val('');
-		}
+	$('input#cityName').click(function(e){ 		
+		if($(this).hasClass('empty')) { 
+			$(this).val('');
+			$('input#cityID').val('');
+	}
 	});
 	
     $('#cityName').typeahead({
