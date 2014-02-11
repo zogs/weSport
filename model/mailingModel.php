@@ -160,8 +160,9 @@ class MailingModel extends Model {
 	}
 
 	public function getSignatureById($id){
-
-		return $this->findFirst(array('table'=>'mailing_signature','conditions'=>array('id'=>$id)));
+		if(empty($id)) return '';
+		$s = $this->findFirst(array('table'=>'mailing_signature','conditions'=>array('id'=>$id)));
+		return $s->content;
 	}
 
 	public function getlistByID($lid){

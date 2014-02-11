@@ -310,7 +310,7 @@ class MailingController extends Controller {
 		$body = file_get_contents(ROOT.'/view/email/freeMailing.html');
 		$body = preg_replace("~{content}~i", $m->content, $body);
 		$body = preg_replace("~{site}~i", Conf::getSiteUrl(), $body);
-		$body = preg_replace("~{signature}~i",$sign->content, $body);
+		$body = preg_replace("~{signature}~i",$sign, $body);
 
 		$body = preg_replace("~{mailing_name}~i",Conf::$website.'-mailing_-_'.String::slugify($m->title), $body);
 		$body = preg_replace("~{mailing_count}~i",count($emails).'_sended', $body);
@@ -617,7 +617,7 @@ class MailingController extends Controller {
 		$body = file_get_contents('../view/email/freeMailing.html');
 		$body = preg_replace("~{content}~i", $mailing->content, $body);
 		$body = preg_replace("~{site}~i", Conf::getSiteUrl(), $body);
-		$body = preg_replace("~{signature}~i", $sign->content, $body);
+		$body = preg_replace("~{signature}~i", $sign, $body);
 
 		$body = preg_replace("~{mailing_name}~i",Conf::$website.'-mailing_-_'.String::slugify($mailing->title), $body);
 		$body = preg_replace("~{mailing_count}~i",count($emails).'_sended', $body);
@@ -629,8 +629,8 @@ class MailingController extends Controller {
 		 ->setBody($body, 'text/html', 'utf-8');
 
 		 //attach pj
-		  if(!empty($mailing->pj)){
-		  	$pj = Swift_Attachment::FromPath($mailing->pj);
+		  if(!empty($mailing->path)){
+		  	$pj = Swift_Attachment::FromPath($mailing->path);
 		  	$message->attach($pj);
 		  }
 
@@ -769,8 +769,8 @@ class MailingController extends Controller {
 				 ->setBody($body, 'text/html', 'utf-8');
 
 				 //attach pj
-				  if(!empty($pj)){
-				  	$pj = Swift_Attachment::FromPath($pj);
+				  if(!empty($path)){
+				  	$pj = Swift_Attachment::FromPath($path);
 				  	$message->attach($pj);
 				  }
 
