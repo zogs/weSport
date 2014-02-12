@@ -474,11 +474,18 @@ div.mm-is-menu * {
 			a.dropdown-toggle { padding:0;}
 			b.caret { margin-top:-3px; vertical-align: middle; border-top:8px solid $deepblue; border-right:8px solid transparent; border-left:8px solid transparent;}
 		}
+
+		li.social-btn {
+			padding:0px;
+			a { padding:5px;}
+		}
 	}
 
 	.menu-small {
 		display: none;
 	}
+
+
 
 	.mobileMenus{display:none;}
 	.mobileHead{
