@@ -25,7 +25,7 @@ $(document).ready(function(){
     $('#cityName').typeahead({
     	name:'city',
     	valueKey:'name',
-		limit: 6,
+		limit: 10,
 		minLength: 3,
 		allowDuplicates: true,	
 		//local: array of datums,
