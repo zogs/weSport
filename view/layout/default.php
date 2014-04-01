@@ -354,6 +354,9 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 	  ga('create', 'UA-42468932-1', 'we-sport.fr');
 	  ga('send', 'pageview');
 
+	  //prevent GA bounce event after 10s
+	  setTimeout(function(){ ga('send','event','PasDeRebond','Timer');},10000);
+
 </script>
 
 

@@ -746,12 +746,16 @@ $(document).ready(function(){
 			callPreviousWeek();
 			e.preventDefault();
 			e.stopPropagation();
+			ga('send','event','Calendrier','SemainePrecedante');
+			ga('send', 'pageview', '/calendar/prev');
 			return false;
 	});
 	$('a.calendar-nav-next').on('click',function(e){
 			callNextWeek();
 			e.preventDefault();
 			e.stopPropagation();
+			ga('send','event','Calendrier','SemaineSuivante');
+			ga('send', 'pageview', '/calendar/next');
 			return false;		
 	});
 	$('a.calendar-nav-now').on('click',function(e){
