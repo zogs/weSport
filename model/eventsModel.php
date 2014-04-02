@@ -257,16 +257,15 @@ class EventsModel extends Model{
 		}
 
 		//get only sports of
-		if(!empty($sports)){
-
-			$sql .= 'AND ';
+		if(!empty($sports)){			
 
 			if(is_array($sports)){
 
+				$sql .= 'AND ';
 				if(count($sports)>1){
 
 					$i=1;
-
+					
 					$arr = array();
 					foreach ($sports as $sport) {
 					
@@ -284,9 +283,8 @@ class EventsModel extends Model{
 				}
 			}
 			else{
-
 				if(is_numeric($sports)){
-
+					$sql .= 'AND ';
 					if($sports!=0){
 						$sql .= 'E.sport='.$sport;		
 					}
@@ -294,8 +292,7 @@ class EventsModel extends Model{
 						$sql .= ' E.sport!=0 ';
 					}
 				}
-				else
-					throw new zException("Sport parameter must be an integer", 1);
+				
 			}
 					
 		}		
