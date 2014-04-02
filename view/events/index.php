@@ -16,7 +16,7 @@
 					$noCol++;
 					$datediff = Date::dateDiff(date('Y-m-d'),$date)%7+1; //compute the number of day between this date and today (modulo 7)
 			?>
-				<td style="width:2%" class="events-day colomn-<?php echo $datediff;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $date;?>" data-date="<?php echo $date;?>">
+				<td style="width:2%" class="events-day colomn-<?php echo $noCol;?> <?php if(Date::dateStatus($date)=='past') echo 'colomn-past'; ?>" id="colomn-<?php echo $date;?>" data-date="<?php echo $date;?>">
 					<div class="colomn-date" id="colomn-date-<?php echo $noCol;?>">
 						<?php
 							if($date==date('Y-m-d')){
