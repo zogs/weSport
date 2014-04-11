@@ -114,16 +114,10 @@ $(document).ready(function(){
 	/*===========================================================
 		Tooltip bootstrap
 	============================================================*/
-	/*
-	$('.tooltiptop').livequery(function(){
+	
+	$('.tooltiptop').tooltip( { delay: { show: 200, hide: 100 }} );
 
-		$(this).tooltip( { delay: { show: 200, hide: 100 }} );
-	});
-	$('.tooltipbottom').livequery(function(){
-
-		$(this).tooltip( { placement : 'bottom', delay: { show: 200, hide: 100 }} );
-	});
-	*/
+	$('.tooltipbottom').tooltip( { placement : 'bottom', delay: { show: 200, hide: 100 }} );
 
 	/*=====================
 		Submit Button

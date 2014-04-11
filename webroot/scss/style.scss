@@ -338,7 +338,7 @@ div.mm-is-menu * {
 			    outline: none;
 			}
 			input.cityName{		
-				width:70%;	
+				width:65%;	
 				color:$lightblue;	
 				font-family:'Harlow';
 				line-height: 200%;							
@@ -364,14 +364,15 @@ div.mm-is-menu * {
 
 			}
 			select#extend{
-				width:10%;
+				width:15%;
 				color:$deepblue;
-				font-style:italic;	
-			    appearance: none;			
+				font-family: 'Harlow';
+				@include rem(24);
+			    	appearance: none;			
 				-webkit-appearance: none;
 				-moz-appearance: none; /* hide select arrow FF */
-			    text-indent: 0.01px; /* hide select arrow FF */
-			    text-overflow: ''; /* hide select arrow FF */
+			   	 text-indent: 0.01px; /* hide select arrow FF */
+			    	text-overflow: ''; /* hide select arrow FF */
 				&::-ms-expand { /* hide select arrow in IE */
 				    display: none;
 				}
