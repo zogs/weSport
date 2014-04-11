@@ -11,16 +11,14 @@ navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mo
 $(document).ready(function(){
 	
 
-	/*===========================================================
-		// Autocomplete cityName input
-	============================================================*/
-	
-	$('input#cityName').click(function(e){ 		
-		if($(this).hasClass('notempty')) { 
-			$(this).val('');
-			$('input#cityID').val('');
-	}
-	});
+/*===========================================================
+	// Autocomplete cityName input
+============================================================*/
+
+$('input#cityName').click(function(e){ 		
+		$(this).val('');
+		$('input#cityID').val('');
+});
 	
     $('#cityName').typeahead({
     	name:'city',
@@ -43,7 +41,6 @@ $(document).ready(function(){
 	}).on('typeahead:selected',function( evt, datum ){
 		$(this).val(datum.name);		
 		$('#cityID').val( datum.id );
-		$('#cityName').removeClass('empty');
 		$('#cityName').val(datum.name);
 	}).on('typeahead:opened',function(e){
 		$("#cityName").addClass('open');		
