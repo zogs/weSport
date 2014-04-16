@@ -24,7 +24,7 @@ class Conf {
 	static $websiteDOT = 'we-sport.fr';
 	static $contactEmail = 'contact@we-sport.fr';
 	static $debugIpAddress = array('127.0.0.1','193.52.250.230','88.162.98.17','80.119.95.169');
-	static $debugErrorEmails = array(); // array('guichardsim@gmail.com');
+	static $debugErrorEmails = array('guichardsim@gmail.com');
 	static $mailer = null;
 	static $mailLogger = null;
 	static $mailingNbSendingByCron = 1;
