@@ -2050,23 +2050,12 @@ div.col_small{
 		color:#888;			
 		@include rem(14);
 		@include box-shadow(inset 10px 0 0 0 rgba(0,0,0,0.02));
-
 		
 
 		a{
 			padding:5px;
 			line-height:14px;
-
-			img{
-				float:left;
-				width:40px;
-				height:40px;
-				margin-right:5px;
-				padding:1px;
-				border:1px solid #CCC;
-				background-color:#FFF;
-
-			}			
+					
 			strong{
 				float:left;
 				@include rem(11);
@@ -2142,6 +2131,17 @@ div.col_small{
 		padding-left:25px;
 	}	
 }
+
+.event-avatar {
+	float:left;
+	width:40px;
+	height:40px;
+	margin-right: 5px;
+	padding:1px;
+	border:1px solid #CCC;
+	background-color:#FFF;
+}
+
 .event-participants{
 	.block-content{
 		@extend %clearfix;
@@ -2158,11 +2158,7 @@ div.col_small{
 			a{		
 				padding:0;			
 				word-wrap:break-word;				
-			}
-			img {
-				float:left;
-				width:40px;
-			}
+			}		
 			p{ 
 				display: block;
 				float:left; 
