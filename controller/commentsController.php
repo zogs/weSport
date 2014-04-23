@@ -249,9 +249,7 @@
 	 			$d['fail'] = "You should log in first...";
 	 		} 		 		
  		}
- 		else {
- 			throw new zException("No data sended",1);
- 		}
+
 
 
 
