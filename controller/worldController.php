@@ -112,9 +112,12 @@ class WorldController extends Controller
 			}
 
 			$json = $suggestions;
+		
+			$this->set($json);
+		} else {
+			$this->e404();
 		}
 
-		$this->set($json);
 	}
 
 	public function citiesArround(){

@@ -78,8 +78,8 @@
  	=========================================*/
  	public function index($context, $context_id, $comment_id = null) {
 
-		$context         = (strlen($context)<=10)? $context : exit('wrong url context parameter');
-		$context_id      = (is_numeric($context_id))? $context_id : exit('wrong url id parameter');
+		$context         = (strlen($context)<=10)? $context : $this->e404();
+		$context_id      = (is_numeric($context_id))? $context_id : $this->e404(); 
 		$comment_id      = (isset($comment_id) && is_numeric($comment_id))? $comment_id : null;
 		
 		$d['context']    = $context;
@@ -101,10 +101,11 @@
 			"lang"       =>$this->request->get('lang')
 			);
 		
-		if(isset($this->request->get)){
+		if(!empty($this->request->get)){
 
 			$params = array_merge( get_object_vars($this->request->get) ,$params);					
 		}
+		
 		
 		
 		if($context=='events' ||$context=='group'){

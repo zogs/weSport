@@ -54,6 +54,7 @@ class zHandlingErrors {
         $body = preg_replace("~{date}~i", date("Y-m-d H:i:s"), $body);
         $body = preg_replace("~{context}~i", $error->context, $body);
         $body = preg_replace("~{post}~i",serialize($_POST),$body);
+        $body = preg_replace("~{referer}~i",$_SERVER['HTTP_REFERER'],$body);
 
 		//Création d'une instance de swift mailer
 		$mailer = Swift_Mailer::newInstance(Conf::getTransportSwiftMailer());
