@@ -543,6 +543,27 @@ div.mm-is-menu * {
 			background:#a3caea;
 		}
 	}
+
+	#redirection {
+		position:absolute;
+		top:100%;
+		left:0;
+		padding:2px 20px;
+
+		@include rem(12);
+		background: $lightred;
+		color: $darkred;
+		box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+
+		.ws-icon {
+			color:$darkred;
+			@include rem(14);
+		}
+
+		a {
+			font-weight: bold;
+		}
+	}
 }
 
 /* /!\ Important */

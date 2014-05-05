@@ -55,11 +55,11 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 	
 	<div>
 		<div class="navbar navbar-fixed-top navbar-ws">
-
+	
 			<div class="mobileMenus" id="mobileMenus">
 				<div class="mobileHead">
 					<a href="#mobMenuLeft"><span class="ws-icon-menu"></span></a>
-					<a class="weSport" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+					<a class="weSport" href="<?php echo Router::url('');?>" title="Bientôt Cosporturage.fr !">
 			      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
 			      			<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">
 					</a>					
@@ -107,7 +107,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 			<div class="desktop-menu" id="desktop-menu">
 				<ul class="nav">
 					<li>
-						<a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+						<a class="weSport" id="weSportBrand" href="<?php echo Router::url('');?>" title="Bientôt Cosporturage.fr !">
 				      			<img class="logo" src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="Logo">				      	  	
 		      					<img class="wesport" src="<?php echo Router::webroot('img/BRAND.png');?>" alt="WeSport.fr">			      	  	
 						</a>
@@ -224,6 +224,11 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 					à
 					<?php echo $this->cookieEventSearch->read('cityName'); ?>
 				<?php endif; ?>													
+			</div>
+
+
+			<div id="redirection">
+				<span class="ws-icon ws-icon-info"></span> <strong>we-sport.fr</strong> va bientôt devenir <a href="http://www.cosporturage.fr" title="Le nouveau site pour faire du sport">Cosporturage.fr</a> :)
 			</div>				
 		</div>
 
@@ -237,7 +242,7 @@ if(isset($this->OpenGraphObject)) $openGraph = $this->OpenGraphObject;;
 
 					<ul class="nav">
 						<li>
-							<a class="weSport" href="<?php echo Router::url('');?>" title="Du Sport ! Vite !">
+							<a class="weSport" href="<?php echo Router::url('');?>" title="Bientôt Cosporturage.fr !">
 				      			<img src="<?php echo Router::webroot('img/LOGO.gif');?>" alt="">
 					      	  	<i>we</i><strong>Sport</strong>
 							</a>

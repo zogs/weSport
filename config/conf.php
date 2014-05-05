@@ -31,6 +31,9 @@ class Conf {
 	static $lang = 'fr';
 	static $pays = 'FR';
 
+	//Set global redirection
+	static $globalRedirection = false;
+
 	static $facebook = array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637');
 
 	//Database connexion

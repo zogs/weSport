@@ -35,6 +35,9 @@ class Controller {
 		//Initialisation autoconnection
 		UsersController::auto_connect($this->session);
 
+		//Redirection
+		$this->ifGlobalRedirection();
+
 
 		//on instancie un objet facebook pour nous permettre de faire de appel à l'API
 		require_once LIB.'/facebook-php-sdk-master/src/facebook.php';
@@ -284,6 +287,16 @@ class Controller {
 		
 		exit();
 
+	}
+
+	private function ifGlobalRedirection(){
+		if(false !== Conf::$globalRedirection){
+			$url = Conf::getProtocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = str_replace(Conf::getSiteUrl(),Conf::$globalRedirection,$url);
+			
+			//redirection permanent 301
+			$this->redirect($url,301);
+		}
 	}
 
 
