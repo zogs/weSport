@@ -32,7 +32,8 @@ class Conf {
 	static $pays = 'FR';
 
 	//Set global redirection
-	static $globalRedirection = false;
+	// @param string or false
+	static $globalRedirection = 'http://www.cosporturage.fr';
 
 	static $facebook = array('appId'=>'153720748148187','secret'=>'7a181d394b1f1dab0054176f9031a637');
 
