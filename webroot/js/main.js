@@ -990,7 +990,7 @@ $('input#cityName').click(function(e){
 		var c = forbiddenchar(value);
 		if(c && type=='login'){
 			control.addClass('control-error');
-			help.removeClass('hide').empty().html("Le caractère suivant n'est pas autorisé : "+c);
+			help.removeClass('hide').empty().html("Les caractères suivants ne sont pas autorisés : "+c);
 		}
 
 		if(type=='email') {

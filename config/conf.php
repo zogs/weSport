@@ -162,7 +162,7 @@ class Conf {
 	    public static function getTransportSwiftMailer(){
 
 	    	return $transport = Swift_SmtpTransport::newInstance('smtp.we-sport.fr', 587, 'tls')
-		    	->setUsername('contact@we-sport.fr')
+		    	->setUsername('contact@cosporturage.fr')
 				->setPassword('justdoit');
 
 	    }
